@@ -1,7 +1,0 @@
-C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\PrjHinnakalkulaator\obj\Debug\PrjHinnakalkulaator.Resources.resources
-C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\PrjHinnakalkulaator\obj\Debug\PrjHinnakalkulaator.Form1.resources
-C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\PrjHinnakalkulaator\obj\Debug\PrjTeisendajad.vbproj.GenerateResource.cache
-C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\PrjHinnakalkulaator\obj\Debug\PrjTeisendajad.vbproj.CoreCompileInputs.cache
-C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\PrjHinnakalkulaator\obj\Debug\PrjTeisendajad.Resources.resources
-C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\PrjHinnakalkulaator\obj\Debug\PrjTeisendajad.Form1.resources
-C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\PrjHinnakalkulaator\obj\Debug\PrjTeisendajad.vbproj.AssemblyReference.cache

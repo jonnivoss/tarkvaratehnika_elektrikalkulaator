@@ -74,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CKiiruseTeisendaja.vb" />
+    <Compile Include="CTemperatuuriTeisendaja.vb" />
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -82,11 +83,14 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="IKiiruseTeisendaja.vb" />
+    <Compile Include="ITemperatuuriTeisendaja.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
     </Compile>
+    <Compile Include="My Project\CTemperatuuriTeisendaja.vb" />
+    <Compile Include="My Project\ITemperatuuriTeisendaja.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

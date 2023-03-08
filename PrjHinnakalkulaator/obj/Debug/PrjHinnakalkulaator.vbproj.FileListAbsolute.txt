@@ -1,0 +1,5 @@
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\PrjHinnakalkulaator\obj\Debug\PrjHinnakalkulaator.vbproj.AssemblyReference.cache
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\PrjHinnakalkulaator\obj\Debug\PrjHinnakalkulaator.Resources.resources
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\PrjHinnakalkulaator\obj\Debug\PrjHinnakalkulaator.Form1.resources
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\PrjHinnakalkulaator\obj\Debug\PrjHinnakalkulaator.vbproj.GenerateResource.cache
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\PrjHinnakalkulaator\obj\Debug\PrjHinnakalkulaator.vbproj.CoreCompileInputs.cache

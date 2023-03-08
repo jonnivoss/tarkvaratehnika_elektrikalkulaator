@@ -1,0 +1,11 @@
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\PrjTeisendajad\bin\Debug\PrjTeisendajad.exe.config
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\PrjTeisendajad\bin\Debug\PrjTeisendajad.exe
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\PrjTeisendajad\bin\Debug\PrjTeisendajad.pdb
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\PrjTeisendajad\bin\Debug\PrjTeisendajad.xml
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\PrjTeisendajad\obj\Debug\PrjTeisendajad.Resources.resources
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\PrjTeisendajad\obj\Debug\PrjTeisendajad.TeisendajaAken.resources
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\PrjTeisendajad\obj\Debug\PrjTeisendajad.vbproj.GenerateResource.cache
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\PrjTeisendajad\obj\Debug\PrjTeisendajad.vbproj.CoreCompileInputs.cache
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\PrjTeisendajad\obj\Debug\PrjTeisendajad.exe
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\PrjTeisendajad\obj\Debug\PrjTeisendajad.xml
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\PrjTeisendajad\obj\Debug\PrjTeisendajad.pdb

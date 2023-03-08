@@ -6,9 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F821BE36-BB8B-4892-8A4C-FED120D49DFD}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>PrjHinnakalkulaator.My.MyApplication</StartupObject>
-    <RootNamespace>PrjHinnakalkulaator</RootNamespace>
-    <AssemblyName>PrjHinnakalkulaator</AssemblyName>
+    <StartupObject>PrjTeisendajad.My.MyApplication</StartupObject>
+    <RootNamespace>PrjTeisendajad</RootNamespace>
+    <AssemblyName>PrjTeisendajad</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -22,7 +22,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>PrjHinnakalkulaator.xml</DocumentationFile>
+    <DocumentationFile>PrjTeisendajad.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -32,7 +32,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>PrjHinnakalkulaator.xml</DocumentationFile>
+    <DocumentationFile>PrjTeisendajad.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -75,14 +75,13 @@
   <ItemGroup>
     <Compile Include="CDistantsiTeisendaja.vb" />
     <Compile Include="CKiiruseTeisendaja.vb" />
-    <Compile Include="CTemperatuuriTeisendaja.vb" />
     <Compile Include="IDistantsiTeisendaja.vb" />
     <Compile Include="IKiiruseTeisendaja.vb" />
-    <Compile Include="ITemperatuuriTeisendaja.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\CTemperatuuriTeisendaja.vb" />
     <Compile Include="My Project\ITemperatuuriTeisendaja.vb" />

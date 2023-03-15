@@ -80,9 +80,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClassTest\ClassTest.csproj">
-      <Project>{70011907-659f-4b18-9d0a-e16d8dbda17a}</Project>
-      <Name>ClassTest</Name>
+    <ProjectReference Include="..\Arvutaja\Arvutaja.csproj">
+      <Project>{c921fa8b-6b9b-403a-b316-4c2eba950da7}</Project>
+      <Name>Arvutaja</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InternetiAndmepyydja\InternetiAndmepyydja.csproj">
+      <Project>{24eb378a-eb2e-4b18-ba5b-365e541d4215}</Project>
+      <Name>InternetiAndmepyydja</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LokaalneAndmepyydja\LokaalneAndmepyydja.csproj">
+      <Project>{0986332a-24b6-49da-8d38-d840ff5f0b4b}</Project>
+      <Name>LokaalneAndmepyydja</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

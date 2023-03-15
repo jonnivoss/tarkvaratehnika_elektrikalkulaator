@@ -1,0 +1,13 @@
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\Kasutajaliides.exe.config
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\Kasutajaliides.exe
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\Kasutajaliides.pdb
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.csproj.AssemblyReference.cache
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.Form1.resources
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.Properties.Resources.resources
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.csproj.GenerateResource.cache
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.csproj.CoreCompileInputs.cache
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.exe
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.pdb
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\ClassTest.dll
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\ClassTest.pdb
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.csproj.CopyComplete

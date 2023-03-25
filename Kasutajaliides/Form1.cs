@@ -20,6 +20,15 @@ namespace Kasutajaliides
 
         private void button1_Click(object sender, EventArgs e)
         {
+            var bot = new LokaalneAndmepyydja.CLAP();
+            bot.chooseFile();
+            string contents = "";
+            bot.readFile(ref contents);
+            var data = bot.parseContents(contents);
+
+            string msg = data[1].Item1.ToString() + " " + data[1].Item2.ToString();
+
+            MessageBox.Show(msg);
         }
     }
 }

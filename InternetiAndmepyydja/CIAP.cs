@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net;
 
+//https://dashboard.elering.ee/assets/api-doc.html#/balance-controller/getAllUsingGET
+
 namespace InternetiAndmepyydja
 {
     public class CIAP:IIAP

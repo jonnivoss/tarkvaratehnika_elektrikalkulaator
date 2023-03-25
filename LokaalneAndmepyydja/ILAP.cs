@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace LokaalneAndmepyydja
 {
-    public class Class1
+    interface ILAP
     {
+        bool chooseFile();
+
+        bool readFile(byte[] contents);
     }
 }

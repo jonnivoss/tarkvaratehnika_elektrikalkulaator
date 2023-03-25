@@ -72,7 +72,7 @@ namespace LokaalneAndmepyydja
                     // Carry on, ;)
                     continue;
                 }
-                var item = new Tuple<DateTime, float>(d, num);
+                var item = new DatePriceT(d, num);
                 v.Add(item);
             }
 

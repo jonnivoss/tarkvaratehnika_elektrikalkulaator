@@ -8,6 +8,12 @@ C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\ob
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.csproj.CoreCompileInputs.cache
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.exe
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.pdb
-C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\ClassTest.dll
-C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\ClassTest.pdb
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.csproj.CopyComplete
+C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\AndmeSalvestaja.dll
+C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\Arvutaja.dll
+C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\InternetiAndmepyydja.dll
+C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\LokaalneAndmepyydja.dll
+C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\AndmeSalvestaja.pdb
+C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\Arvutaja.pdb
+C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\InternetiAndmepyydja.pdb
+C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\LokaalneAndmepyydja.pdb

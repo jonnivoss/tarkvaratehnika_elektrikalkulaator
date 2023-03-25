@@ -11,11 +11,11 @@ using System.Windows.Forms;
 namespace Kasutajaliides
 {
 
-    public partial class Form1 : Form
+    public partial class UserInterface : Form
     {
         protected ClassTest.CClassTest component = new ClassTest.CClassTest();
         
-        public Form1()
+        public UserInterface()
         {
             InitializeComponent();
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InternetiAndmepyydja
 {
-    public class Class1
+    public class AndmePüüdiaInternetist
     {
     }
 }

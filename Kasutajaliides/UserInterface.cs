@@ -13,17 +13,19 @@ namespace Kasutajaliides
 
     public partial class UserInterface : Form
     {
-        protected ClassTest.CClassTest component = new ClassTest.CClassTest();
-        
-        public UserInterface()
+        private void UserInterface_Load(object sender, EventArgs e)
         {
-            InitializeComponent();
+
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void lblKasutusmall_Click(object sender, EventArgs e)
         {
-            int arv = component.arvuta(1, 2);
-            MessageBox.Show("Hello world " + arv.ToString(), "title", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+        }
+
+        private void lblVoimsus_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

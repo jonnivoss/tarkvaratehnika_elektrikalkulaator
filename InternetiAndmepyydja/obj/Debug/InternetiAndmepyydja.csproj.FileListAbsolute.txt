@@ -1,0 +1,6 @@
+C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\InternetiAndmepyydja\bin\Debug\InternetiAndmepyydja.dll
+C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\InternetiAndmepyydja\bin\Debug\InternetiAndmepyydja.pdb
+C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\InternetiAndmepyydja\obj\Debug\InternetiAndmepyydja.csproj.AssemblyReference.cache
+C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\InternetiAndmepyydja\obj\Debug\InternetiAndmepyydja.csproj.CoreCompileInputs.cache
+C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\InternetiAndmepyydja\obj\Debug\InternetiAndmepyydja.dll
+C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\InternetiAndmepyydja\obj\Debug\InternetiAndmepyydja.pdb

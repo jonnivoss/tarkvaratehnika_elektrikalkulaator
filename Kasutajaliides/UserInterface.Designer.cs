@@ -48,6 +48,8 @@ namespace Kasutajaliides
             // 
             // chartElektrihind
             // 
+            chartArea1.AxisX.MajorGrid.Enabled = false;
+            chartArea1.AxisY.MajorGrid.Enabled = false;
             chartArea1.Name = "ChartArea1";
             this.chartElektrihind.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
@@ -55,8 +57,9 @@ namespace Kasutajaliides
             this.chartElektrihind.Location = new System.Drawing.Point(346, 12);
             this.chartElektrihind.Name = "chartElektrihind";
             series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
             series1.Legend = "Legend1";
-            series1.Name = "Series1";
+            series1.Name = "Elektrihind";
             this.chartElektrihind.Series.Add(series1);
             this.chartElektrihind.Size = new System.Drawing.Size(625, 420);
             this.chartElektrihind.TabIndex = 0;

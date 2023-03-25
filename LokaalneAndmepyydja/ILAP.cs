@@ -10,6 +10,6 @@ namespace LokaalneAndmepyydja
     {
         bool chooseFile();
 
-        bool readFile(byte[] contents);
+        bool readFile(ref string contents);
     }
 }

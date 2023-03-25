@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace LokaalneAndmepyydja
 {
@@ -25,9 +26,15 @@ namespace LokaalneAndmepyydja
             return true;
         }
 
-        public bool readFile(byte[] contents)
+        public bool readFile(ref string contents)
         {
-            return true;
+            if (this.fname == "")
+            {
+                return false;
+            }
+            contents = File.ReadAllText(this.fname, Encoding.UTF8);
+
+            return (contents != "");
         }
     }
 }

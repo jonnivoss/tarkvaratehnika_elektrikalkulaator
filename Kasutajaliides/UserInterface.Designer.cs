@@ -60,6 +60,8 @@ namespace Kasutajaliides
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
             series1.Legend = "Legend1";
             series1.Name = "Elektrihind";
+            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Time;
+            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             this.chartElektrihind.Series.Add(series1);
             this.chartElektrihind.Size = new System.Drawing.Size(625, 420);
             this.chartElektrihind.TabIndex = 0;

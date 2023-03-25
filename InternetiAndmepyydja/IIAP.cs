@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InternetiAndmepyydja
 {
-    public class AndmePüüdiaInternetist
+    interface IIAP
     {
     }
 }

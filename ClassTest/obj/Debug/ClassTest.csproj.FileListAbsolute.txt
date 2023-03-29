@@ -1,5 +1,0 @@
-C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\ClassTest\bin\Debug\ClassTest.dll
-C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\ClassTest\bin\Debug\ClassTest.pdb
-C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\ClassTest\obj\Debug\ClassTest.csproj.CoreCompileInputs.cache
-C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\ClassTest\obj\Debug\ClassTest.dll
-C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\ClassTest\obj\Debug\ClassTest.pdb

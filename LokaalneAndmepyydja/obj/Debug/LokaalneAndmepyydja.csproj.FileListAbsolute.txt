@@ -1,6 +1,6 @@
-C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\bin\Debug\LokaalneAndmepyydja.dll
-C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\bin\Debug\LokaalneAndmepyydja.pdb
-C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\obj\Debug\LokaalneAndmepyydja.csproj.AssemblyReference.cache
-C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\obj\Debug\LokaalneAndmepyydja.csproj.CoreCompileInputs.cache
-C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\obj\Debug\LokaalneAndmepyydja.dll
-C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\obj\Debug\LokaalneAndmepyydja.pdb
+C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\bin\Debug\LokaalneAndmepyydja.dll
+C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\bin\Debug\LokaalneAndmepyydja.pdb
+C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\obj\Debug\LokaalneAndmepyydja.csproj.AssemblyReference.cache
+C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\obj\Debug\LokaalneAndmepyydja.csproj.CoreCompileInputs.cache
+C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\obj\Debug\LokaalneAndmepyydja.dll
+C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\obj\Debug\LokaalneAndmepyydja.pdb

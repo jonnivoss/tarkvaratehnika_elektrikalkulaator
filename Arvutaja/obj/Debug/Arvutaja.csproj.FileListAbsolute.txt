@@ -1,6 +1,6 @@
-C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\bin\Debug\Arvutaja.dll
-C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\bin\Debug\Arvutaja.pdb
-C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\obj\Debug\Arvutaja.csproj.AssemblyReference.cache
-C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\obj\Debug\Arvutaja.csproj.CoreCompileInputs.cache
-C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\obj\Debug\Arvutaja.dll
-C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\obj\Debug\Arvutaja.pdb
+C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\bin\Debug\Arvutaja.dll
+C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\bin\Debug\Arvutaja.pdb
+C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\obj\Debug\Arvutaja.csproj.AssemblyReference.cache
+C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\obj\Debug\Arvutaja.csproj.CoreCompileInputs.cache
+C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\obj\Debug\Arvutaja.dll
+C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\obj\Debug\Arvutaja.pdb

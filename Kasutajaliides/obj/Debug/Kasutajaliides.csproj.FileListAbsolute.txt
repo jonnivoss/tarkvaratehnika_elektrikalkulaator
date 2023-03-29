@@ -2,14 +2,11 @@ C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bi
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\Kasutajaliides.exe
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\Kasutajaliides.pdb
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.csproj.AssemblyReference.cache
-C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.Form1.resources
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.Properties.Resources.resources
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.csproj.GenerateResource.cache
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.csproj.CoreCompileInputs.cache
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.exe
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.pdb
-C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\ClassTest.dll
-C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\ClassTest.pdb
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.csproj.CopyComplete
 C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\Kasutajaliides.exe.config
 C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\Kasutajaliides.exe
@@ -30,3 +27,12 @@ C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\ob
 C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.csproj.CopyComplete
 C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.exe
 C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.pdb
+C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\AndmeSalvestaja.dll
+C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\Arvutaja.dll
+C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\InternetiAndmepyydja.dll
+C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\LokaalneAndmepyydja.dll
+C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\AndmeSalvestaja.pdb
+C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\Arvutaja.pdb
+C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\InternetiAndmepyydja.pdb
+C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\LokaalneAndmepyydja.pdb
+C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.UserInterface.resources

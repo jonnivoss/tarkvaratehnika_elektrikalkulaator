@@ -16,7 +16,6 @@ namespace InternetiAndmepyydja
         {
             static async Task Main(string[] args)
             {
-                Console.WriteLine("mine putsi \n");
                 using (var httpClient = new HttpClient())
                 {
                     var url = "https://dashboard.elering.ee/api/balance?start=2020-06-30T10%3A59%3A59.999Z&end=2020-06-30T20%3A00%3A00.999Z";

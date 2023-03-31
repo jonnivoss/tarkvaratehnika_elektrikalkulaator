@@ -42,7 +42,17 @@ namespace AndmeSalvestaja
         }
         public bool saveFile()
         {
-            return true;
+            try
+            {
+                var contents = JsonConvert.SerializeObject(this.setMap, Formatting.Indented);
+                File.WriteAllText(this.path, contents);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            
         }
 
         public bool changeSetting(ASSetting setting, string value)

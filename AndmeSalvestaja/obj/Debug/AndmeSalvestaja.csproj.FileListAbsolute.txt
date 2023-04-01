@@ -10,3 +10,9 @@ C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\o
 C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\obj\Debug\AndmeSalvestaja.csproj.CoreCompileInputs.cache
 C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\obj\Debug\AndmeSalvestaja.dll
 C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\obj\Debug\AndmeSalvestaja.pdb
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\bin\Debug\AndmeSalvestaja.dll
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\bin\Debug\AndmeSalvestaja.pdb
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\obj\Debug\AndmeSalvestaja.csproj.AssemblyReference.cache
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\obj\Debug\AndmeSalvestaja.csproj.CoreCompileInputs.cache
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\obj\Debug\AndmeSalvestaja.dll
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\obj\Debug\AndmeSalvestaja.pdb

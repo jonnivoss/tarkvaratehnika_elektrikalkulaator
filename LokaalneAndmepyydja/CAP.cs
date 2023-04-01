@@ -40,9 +40,15 @@ namespace Andmepyydja
             {
                 return false;
             }
-            contents = File.ReadAllText(this.fname, Encoding.UTF8);
-
-            return (contents != "");
+            try
+            {
+                contents = File.ReadAllText(this.fname, Encoding.UTF8);
+                return (contents != "");
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public VecT parseContents(string contents)

@@ -89,20 +89,43 @@ namespace Andmepyydja
             return v;
         }
 
+        static void aia(string a)
+        {
+
+            string[] nameParts = a.Split('{', '[', '}', ']', ',');
+
+            for (int i = 3; i < nameParts.Length; i++)
+            {
+                if (String.Equals(nameParts[i], "\"fi\":"))
+                {
+                    break;
+                }
+                if (String.IsNullOrEmpty(nameParts[i]))
+                {
+                    continue;
+                }
+                Console.WriteLine(nameParts[i]);
+            }
+
+        }
+
         static async Task Main(string[] args)
         {
+            string urla = "https://dashboard.elering.ee/api/nps/price?";
+            // Console.WriteLine("mine putsi \n");
+
             using (var httpClient = new HttpClient())
             {
-                var url = "https://dashboard.elering.ee/api/balance?start=2020-06-30T10%3A59%3A59.999Z&end=2020-06-30T20%3A00%3A00.999Z";
+                string starTime = "2023-03-25T10";
+                string endTime = "2023-03-25T20";
+                string url = urla + "start=" + starTime + "%3A00%3A00.999Z&end=" + endTime + "%3A00%3A00.999Z";
 
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
 
                 var responseString = await httpClient.GetStringAsync(url);
+                aia(responseString);
 
-
-
-                Console.WriteLine(responseString);
             }
             Console.ReadKey();
 

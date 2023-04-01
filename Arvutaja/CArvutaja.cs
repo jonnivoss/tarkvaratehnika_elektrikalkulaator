@@ -38,13 +38,10 @@ namespace Arvutaja
             // alumisele ja ülemisele rajale vastavate indekside määramine
             int alumineIndeks = andmed.FindIndex(Tuple => Tuple.Item1 == alumine);
             int ylemineIndeks = andmed.FindIndex(Tuple => Tuple.Item1 == ylemine);
-            if (alumineIndeks >= 0)
+            if (alumineIndeks >= 0 && ylemineIndeks >= 0)
             {
                 alumineRaja = andmed[alumineIndeks].Item1;
-            }
-            if (ylemineIndeks >= 0)
-            {
-                ylemineRaja = andmed[alumineIndeks].Item1;
+                ylemineRaja = andmed[ylemineIndeks].Item1;
             }
             else
             {
@@ -56,6 +53,11 @@ namespace Arvutaja
             int indeks = alumineIndeks;
             System.DateTime raja = andmed[indeks].Item1;
             integraal = 0.0f; // NB! viidana antud muutuja, omandab pärast integraaali väärtuse
+            if (alumine == ylemine)
+            {
+                // rajad on võrdsed, integraal on null
+                return 2;
+            }
             while (indeks <= ylemineIndeks)
             {
                 integraal += andmed[indeks].Item2;

@@ -6,13 +6,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Globalization;
+using System.Net.Http;
+using System.Net;
+
+//https://dashboard.elering.ee/assets/api-doc.html#/balance-controller/getAllUsingGET
 
 using DatePriceT = System.Tuple<System.DateTime, float>;
 using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, float>>;
 
-namespace LokaalneAndmepyydja
+namespace Andmepyydja
 {
-    public class CLAP : LokaalneAndmepyydja.ILAP
+    public class CAP : Andmepyydja.IAP
     {
         private OpenFileDialog ofd = new OpenFileDialog();
         private string fname = "";
@@ -77,6 +81,25 @@ namespace LokaalneAndmepyydja
             }
 
             return v;
+        }
+
+        static async Task Main(string[] args)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var url = "https://dashboard.elering.ee/api/balance?start=2020-06-30T10%3A59%3A59.999Z&end=2020-06-30T20%3A00%3A00.999Z";
+
+                httpClient.DefaultRequestHeaders.Accept.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
+
+                var responseString = await httpClient.GetStringAsync(url);
+
+
+
+                Console.WriteLine(responseString);
+            }
+            Console.ReadKey();
+
         }
     }
 }

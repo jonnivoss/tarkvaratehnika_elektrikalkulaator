@@ -8,6 +8,7 @@ using System.IO;
 using System.Globalization;
 using System.Net.Http;
 using System.Net;
+using sys
 
 //https://dashboard.elering.ee/assets/api-doc.html#/balance-controller/getAllUsingGET
 
@@ -89,12 +90,22 @@ namespace Andmepyydja
             return v;
         }
 
+        //brb il be black
+
+        static void abua(string a)
+        {
+            long unixTime = long.Parse(a);
+            DateTimeOffset systemTime = DateTimeOffset.FromUnixTimeSeconds(unixTime);
+
+            Console.Write(systemTime + " ");
+        }
+
         static void aia(string a)
         {
 
             string[] nameParts = a.Split('{', '[', '}', ']', ',');
 
-            for (int i = 3; i < nameParts.Length; i++)
+            for (int i = 4; i < nameParts.Length; i++)
             {
                 if (String.Equals(nameParts[i], "\"fi\":"))
                 {
@@ -104,20 +115,28 @@ namespace Andmepyydja
                 {
                     continue;
                 }
-                Console.WriteLine(nameParts[i]);
+                nameParts[i] = nameParts[i].Substring(nameParts[i].IndexOf(":") + 1);
+                if ((i % 2) == 1)
+                {
+                    abua(nameParts[i]);
+                }
+                else
+                {
+                    Console.WriteLine(nameParts[i]);
+                }
             }
 
         }
 
-        static async Task Main(string[] args)
+        static async Task abine(string[] args)
         {
             string urla = "https://dashboard.elering.ee/api/nps/price?";
             // Console.WriteLine("mine putsi \n");
 
             using (var httpClient = new HttpClient())
             {
-                string starTime = "2023-03-25T10";
-                string endTime = "2023-03-25T20";
+                string starTime = "2023-03-26T20";
+                string endTime = "2023-03-26T23";
                 string url = urla + "start=" + starTime + "%3A00%3A00.999Z&end=" + endTime + "%3A00%3A00.999Z";
 
                 httpClient.DefaultRequestHeaders.Accept.Clear();

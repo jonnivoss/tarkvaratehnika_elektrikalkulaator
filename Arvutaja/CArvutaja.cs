@@ -35,6 +35,11 @@ namespace Arvutaja
         }
         public int integreerija(VecT andmed, System.DateTime alumine, System.DateTime ylemine, ref float integraal)
         {
+            if (alumine > ylemine)
+            {
+                // VIGA! RAJAD ON SUURUSE POOLEST VAHETUSES!
+                return 3;
+            }
             // alumisele ja ülemisele rajale vastavate indekside määramine
             int alumineIndeks = andmed.FindIndex(Tuple => Tuple.Item1 == alumine);
             int ylemineIndeks = andmed.FindIndex(Tuple => Tuple.Item1 == ylemine);

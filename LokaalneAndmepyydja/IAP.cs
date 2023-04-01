@@ -9,9 +9,9 @@ using System.Runtime;
 using DatePriceT = System.Tuple<System.DateTime, float>;
 using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, float>>;
 
-namespace LokaalneAndmepyydja
+namespace Andmepyydja
 {
-    interface ILAP
+    interface IAP
     {
         bool chooseFile();
 

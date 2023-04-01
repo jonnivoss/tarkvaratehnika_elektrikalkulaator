@@ -7,8 +7,8 @@
     <ProjectGuid>{0986332A-24B6-49DA-8D38-D840FF5F0B4B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LokaalneAndmepyydja</RootNamespace>
-    <AssemblyName>LokaalneAndmepyydja</AssemblyName>
+    <RootNamespace>Andmepyydja</RootNamespace>
+    <AssemblyName>Andmepyydja</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -42,8 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CLAP.cs" />
-    <Compile Include="ILAP.cs" />
+    <Compile Include="CAP.cs" />
+    <Compile Include="IAP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

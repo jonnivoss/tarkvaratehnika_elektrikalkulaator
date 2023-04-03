@@ -55,9 +55,17 @@ namespace Andmepyydja
         {
             VecT v = new VecT();
 
-            contents = contents.Substring(contents.IndexOf("Algus"));
-            var splitcontent = contents.Split('\n').ToList();
-            splitcontent.RemoveAt(0);
+            System.Collections.Generic.List<string> splitcontent;
+            try
+            {
+                contents = contents.Substring(contents.IndexOf("Algus"));
+                splitcontent = contents.Split('\n').ToList();
+                splitcontent.RemoveAt(0);
+            }
+            catch (Exception)
+            {
+                return v;
+            }
 
             foreach (string i in splitcontent)
             {

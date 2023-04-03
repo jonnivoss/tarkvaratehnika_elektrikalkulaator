@@ -19,5 +19,9 @@ namespace Kasutajaliides
             AP.chooseFile();
 
         }
+        public UserInterface()
+        {
+            InitializeComponent();
+        }
     }
 }

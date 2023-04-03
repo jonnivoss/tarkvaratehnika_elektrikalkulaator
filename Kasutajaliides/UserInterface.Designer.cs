@@ -55,7 +55,8 @@ namespace Kasutajaliides
             this.chartElektrihind.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chartElektrihind.Legends.Add(legend1);
-            this.chartElektrihind.Location = new System.Drawing.Point(346, 12);
+            this.chartElektrihind.Location = new System.Drawing.Point(461, 15);
+            this.chartElektrihind.Margin = new System.Windows.Forms.Padding(4);
             this.chartElektrihind.Name = "chartElektrihind";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
@@ -64,7 +65,7 @@ namespace Kasutajaliides
             series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Time;
             series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             this.chartElektrihind.Series.Add(series1);
-            this.chartElektrihind.Size = new System.Drawing.Size(625, 420);
+            this.chartElektrihind.Size = new System.Drawing.Size(833, 517);
             this.chartElektrihind.TabIndex = 0;
             this.chartElektrihind.Text = "chartElektrihind";
             // 
@@ -75,18 +76,20 @@ namespace Kasutajaliides
             this.cbKasutusmall.FormattingEnabled = true;
             this.cbKasutusmall.Items.AddRange(new object[] {
             "Auto"});
-            this.cbKasutusmall.Location = new System.Drawing.Point(16, 57);
+            this.cbKasutusmall.Location = new System.Drawing.Point(21, 70);
+            this.cbKasutusmall.Margin = new System.Windows.Forms.Padding(4);
             this.cbKasutusmall.Name = "cbKasutusmall";
-            this.cbKasutusmall.Size = new System.Drawing.Size(113, 28);
+            this.cbKasutusmall.Size = new System.Drawing.Size(149, 33);
             this.cbKasutusmall.TabIndex = 2;
             // 
             // lblKasutusmall
             // 
             this.lblKasutusmall.AutoSize = true;
             this.lblKasutusmall.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblKasutusmall.Location = new System.Drawing.Point(12, 34);
+            this.lblKasutusmall.Location = new System.Drawing.Point(16, 42);
+            this.lblKasutusmall.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblKasutusmall.Name = "lblKasutusmall";
-            this.lblKasutusmall.Size = new System.Drawing.Size(132, 20);
+            this.lblKasutusmall.Size = new System.Drawing.Size(167, 25);
             this.lblKasutusmall.TabIndex = 3;
             this.lblKasutusmall.Text = "Kasutusmalli valik";
             // 
@@ -94,27 +97,30 @@ namespace Kasutajaliides
             // 
             this.lblAeg.AutoSize = true;
             this.lblAeg.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAeg.Location = new System.Drawing.Point(12, 99);
+            this.lblAeg.Location = new System.Drawing.Point(16, 122);
+            this.lblAeg.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAeg.Name = "lblAeg";
-            this.lblAeg.Size = new System.Drawing.Size(65, 20);
+            this.lblAeg.Size = new System.Drawing.Size(83, 25);
             this.lblAeg.TabIndex = 4;
             this.lblAeg.Text = "Ajakulu:";
             // 
             // txtAjakulu
             // 
             this.txtAjakulu.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAjakulu.Location = new System.Drawing.Point(16, 122);
+            this.txtAjakulu.Location = new System.Drawing.Point(21, 150);
+            this.txtAjakulu.Margin = new System.Windows.Forms.Padding(4);
             this.txtAjakulu.Name = "txtAjakulu";
-            this.txtAjakulu.Size = new System.Drawing.Size(110, 26);
+            this.txtAjakulu.Size = new System.Drawing.Size(145, 30);
             this.txtAjakulu.TabIndex = 5;
             // 
             // lblTund
             // 
             this.lblTund.AutoSize = true;
             this.lblTund.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTund.Location = new System.Drawing.Point(136, 125);
+            this.lblTund.Location = new System.Drawing.Point(181, 154);
+            this.lblTund.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTund.Name = "lblTund";
-            this.lblTund.Size = new System.Drawing.Size(44, 20);
+            this.lblTund.Size = new System.Drawing.Size(54, 25);
             this.lblTund.TabIndex = 6;
             this.lblTund.Text = "tundi";
             // 
@@ -122,27 +128,30 @@ namespace Kasutajaliides
             // 
             this.lblVoimsus.AutoSize = true;
             this.lblVoimsus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVoimsus.Location = new System.Drawing.Point(12, 171);
+            this.lblVoimsus.Location = new System.Drawing.Point(16, 210);
+            this.lblVoimsus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblVoimsus.Name = "lblVoimsus";
-            this.lblVoimsus.Size = new System.Drawing.Size(109, 20);
+            this.lblVoimsus.Size = new System.Drawing.Size(137, 25);
             this.lblVoimsus.TabIndex = 7;
             this.lblVoimsus.Text = "Võimsustarve:";
             // 
             // txtVoimsus
             // 
             this.txtVoimsus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtVoimsus.Location = new System.Drawing.Point(16, 194);
+            this.txtVoimsus.Location = new System.Drawing.Point(21, 239);
+            this.txtVoimsus.Margin = new System.Windows.Forms.Padding(4);
             this.txtVoimsus.Name = "txtVoimsus";
-            this.txtVoimsus.Size = new System.Drawing.Size(110, 26);
+            this.txtVoimsus.Size = new System.Drawing.Size(145, 30);
             this.txtVoimsus.TabIndex = 8;
             // 
             // lblkW
             // 
             this.lblkW.AutoSize = true;
             this.lblkW.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblkW.Location = new System.Drawing.Point(136, 201);
+            this.lblkW.Location = new System.Drawing.Point(181, 247);
+            this.lblkW.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblkW.Name = "lblkW";
-            this.lblkW.Size = new System.Drawing.Size(32, 20);
+            this.lblkW.Size = new System.Drawing.Size(42, 25);
             this.lblkW.TabIndex = 9;
             this.lblkW.Text = "kW";
             // 
@@ -150,9 +159,10 @@ namespace Kasutajaliides
             // 
             this.lblHind.AutoSize = true;
             this.lblHind.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHind.Location = new System.Drawing.Point(16, 246);
+            this.lblHind.Location = new System.Drawing.Point(21, 303);
+            this.lblHind.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblHind.Name = "lblHind";
-            this.lblHind.Size = new System.Drawing.Size(46, 20);
+            this.lblHind.Size = new System.Drawing.Size(58, 25);
             this.lblHind.TabIndex = 10;
             this.lblHind.Text = "Hind:";
             // 
@@ -160,17 +170,19 @@ namespace Kasutajaliides
             // 
             this.txtHind.Enabled = false;
             this.txtHind.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtHind.Location = new System.Drawing.Point(16, 269);
+            this.txtHind.Location = new System.Drawing.Point(21, 331);
+            this.txtHind.Margin = new System.Windows.Forms.Padding(4);
             this.txtHind.Name = "txtHind";
-            this.txtHind.Size = new System.Drawing.Size(110, 26);
+            this.txtHind.Size = new System.Drawing.Size(145, 30);
             this.txtHind.TabIndex = 11;
             // 
             // btnAvaCSV
             // 
             this.btnAvaCSV.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAvaCSV.Location = new System.Drawing.Point(20, 404);
+            this.btnAvaCSV.Location = new System.Drawing.Point(27, 497);
+            this.btnAvaCSV.Margin = new System.Windows.Forms.Padding(4);
             this.btnAvaCSV.Name = "btnAvaCSV";
-            this.btnAvaCSV.Size = new System.Drawing.Size(124, 27);
+            this.btnAvaCSV.Size = new System.Drawing.Size(165, 33);
             this.btnAvaCSV.TabIndex = 12;
             this.btnAvaCSV.Text = "Ava CŠV fail";
             this.btnAvaCSV.UseVisualStyleBackColor = true;
@@ -178,9 +190,9 @@ namespace Kasutajaliides
             // 
             // UserInterface
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(983, 453);
+            this.ClientSize = new System.Drawing.Size(1311, 558);
             this.Controls.Add(this.btnAvaCSV);
             this.Controls.Add(this.txtHind);
             this.Controls.Add(this.lblHind);
@@ -193,7 +205,7 @@ namespace Kasutajaliides
             this.Controls.Add(this.lblKasutusmall);
             this.Controls.Add(this.cbKasutusmall);
             this.Controls.Add(this.chartElektrihind);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "UserInterface";
             this.Text = "Elektrihinna kalkulaator";
             ((System.ComponentModel.ISupportInitialize)(this.chartElektrihind)).EndInit();

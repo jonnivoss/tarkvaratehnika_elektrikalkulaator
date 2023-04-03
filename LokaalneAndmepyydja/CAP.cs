@@ -131,7 +131,6 @@ namespace Andmepyydja
         static async Task abine(string[] args)
         {
             string urla = "https://dashboard.elering.ee/api/nps/price?";
-            // Console.WriteLine("mine putsi \n");
 
             using (var httpClient = new HttpClient())
             {

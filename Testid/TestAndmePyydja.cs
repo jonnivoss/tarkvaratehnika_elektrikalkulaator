@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-using PairT = System.Tuple<System.DateTime, float>;
+using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, float>>;
 
 namespace Testid
 {
@@ -10,14 +10,26 @@ namespace Testid
     {
         [DataTestMethod]
         [Timeout(1000)]
-        [DataRow("asd", new PairT[] () )]
-        [DataRow("asd;asd;asd;\n01.01.1111 11:11;30.05.2020 10:00;123\n", new PairT[] () )]
-        public void Test_AP_parseContents(string contents, PairT[] vec)
+        public void Test_AP_parseContents()
         {
+            // make content array
+            string[] contarr =
+            {
+                ""
+            };
             var ap = new Andmepyydja.CAP();
+            VecT[] vecs =
+            {
+                new VecT { }
+            };
 
-            PairT[] vec2 = ap.parseContents(contents).ToArray();
-            CollectionAssert.AreEqual(vec, vec2);
+            Assert.AreEqual(contarr.Length, vecs.Length);
+
+            for (int i = 0; i < contarr.Length; ++i)
+            {
+                var vec2 = ap.parseContents(contarr[i]);
+                CollectionAssert.AreEqual(vecs[i], vec2);
+            }
         }
     }
 }

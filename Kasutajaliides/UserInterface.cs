@@ -13,17 +13,7 @@ namespace Kasutajaliides
 
     public partial class UserInterface : Form
     {
-        private void UserInterface_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblKasutusmall_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblVoimsus_Click(object sender, EventArgs e)
+        private void btnAvaCSV_Click(object sender, EventArgs e)
         {
 
         }

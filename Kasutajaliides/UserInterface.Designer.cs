@@ -43,6 +43,7 @@ namespace Kasutajaliides
             this.lblkW = new System.Windows.Forms.Label();
             this.lblHind = new System.Windows.Forms.Label();
             this.txtHind = new System.Windows.Forms.TextBox();
+            this.btnAvaCSV = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chartElektrihind)).BeginInit();
             this.SuspendLayout();
             // 
@@ -88,7 +89,6 @@ namespace Kasutajaliides
             this.lblKasutusmall.Size = new System.Drawing.Size(132, 20);
             this.lblKasutusmall.TabIndex = 3;
             this.lblKasutusmall.Text = "Kasutusmalli valik";
-            this.lblKasutusmall.Click += new System.EventHandler(this.lblKasutusmall_Click);
             // 
             // lblAeg
             // 
@@ -127,7 +127,6 @@ namespace Kasutajaliides
             this.lblVoimsus.Size = new System.Drawing.Size(109, 20);
             this.lblVoimsus.TabIndex = 7;
             this.lblVoimsus.Text = "Võimsustarve:";
-            this.lblVoimsus.Click += new System.EventHandler(this.lblVoimsus_Click);
             // 
             // txtVoimsus
             // 
@@ -166,11 +165,23 @@ namespace Kasutajaliides
             this.txtHind.Size = new System.Drawing.Size(110, 26);
             this.txtHind.TabIndex = 11;
             // 
+            // btnAvaCSV
+            // 
+            this.btnAvaCSV.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAvaCSV.Location = new System.Drawing.Point(20, 404);
+            this.btnAvaCSV.Name = "btnAvaCSV";
+            this.btnAvaCSV.Size = new System.Drawing.Size(124, 27);
+            this.btnAvaCSV.TabIndex = 12;
+            this.btnAvaCSV.Text = "Ava CŠV fail";
+            this.btnAvaCSV.UseVisualStyleBackColor = true;
+            this.btnAvaCSV.Click += new System.EventHandler(this.btnAvaCSV_Click);
+            // 
             // UserInterface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(983, 453);
+            this.Controls.Add(this.btnAvaCSV);
             this.Controls.Add(this.txtHind);
             this.Controls.Add(this.lblHind);
             this.Controls.Add(this.lblkW);
@@ -185,7 +196,6 @@ namespace Kasutajaliides
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "UserInterface";
             this.Text = "Elektrihinna kalkulaator";
-            this.Load += new System.EventHandler(this.UserInterface_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chartElektrihind)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -205,6 +215,7 @@ namespace Kasutajaliides
         private System.Windows.Forms.Label lblkW;
         private System.Windows.Forms.Label lblHind;
         private System.Windows.Forms.TextBox txtHind;
+        private System.Windows.Forms.Button btnAvaCSV;
     }
 }
 

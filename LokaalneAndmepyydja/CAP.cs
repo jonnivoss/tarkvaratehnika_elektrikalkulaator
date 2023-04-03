@@ -8,6 +8,7 @@ using System.IO;
 using System.Globalization;
 using System.Net.Http;
 using System.Net;
+using sys
 
 //https://dashboard.elering.ee/assets/api-doc.html#/balance-controller/getAllUsingGET
 
@@ -89,20 +90,61 @@ namespace Andmepyydja
             return v;
         }
 
-        static async Task Main(string[] args)
+        //brb il be black
+
+        static void abua(string a)
         {
+            long unixTime = long.Parse(a);
+            DateTimeOffset systemTime = DateTimeOffset.FromUnixTimeSeconds(unixTime);
+
+            Console.Write(systemTime + " ");
+        }
+
+        static void aia(string a)
+        {
+
+            string[] nameParts = a.Split('{', '[', '}', ']', ',');
+
+            for (int i = 4; i < nameParts.Length; i++)
+            {
+                if (String.Equals(nameParts[i], "\"fi\":"))
+                {
+                    break;
+                }
+                if (String.IsNullOrEmpty(nameParts[i]))
+                {
+                    continue;
+                }
+                nameParts[i] = nameParts[i].Substring(nameParts[i].IndexOf(":") + 1);
+                if ((i % 2) == 1)
+                {
+                    abua(nameParts[i]);
+                }
+                else
+                {
+                    Console.WriteLine(nameParts[i]);
+                }
+            }
+
+        }
+
+        static async Task abine(string[] args)
+        {
+            string urla = "https://dashboard.elering.ee/api/nps/price?";
+            // Console.WriteLine("mine putsi \n");
+
             using (var httpClient = new HttpClient())
             {
-                var url = "https://dashboard.elering.ee/api/balance?start=2020-06-30T10%3A59%3A59.999Z&end=2020-06-30T20%3A00%3A00.999Z";
+                string starTime = "2023-03-26T20";
+                string endTime = "2023-03-26T23";
+                string url = urla + "start=" + starTime + "%3A00%3A00.999Z&end=" + endTime + "%3A00%3A00.999Z";
 
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
 
                 var responseString = await httpClient.GetStringAsync(url);
+                aia(responseString);
 
-
-
-                Console.WriteLine(responseString);
             }
             Console.ReadKey();
 

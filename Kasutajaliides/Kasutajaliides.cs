@@ -9,11 +9,18 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
+using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, float>>;
+
 namespace Kasutajaliides
 {
     
     public partial class Kasutajaliides : Form
     {
+        List<DateTime> aeg = new List<DateTime>();
+        List<double> maksumus = new List<double>();
+
+        VecT andmed = new VecT();
+
         private Andmepyydja.CAP AP = new Andmepyydja.CAP();
         private void btnAvaCSV_Click(object sender, EventArgs e)
         {
@@ -23,6 +30,13 @@ namespace Kasutajaliides
         public Kasutajaliides() 
         {
             InitializeComponent();
+            
+
+            foreach(var item in )
+            {
+
+            }
+
         }
     }
 }

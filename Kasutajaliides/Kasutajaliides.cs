@@ -25,18 +25,19 @@ namespace Kasutajaliides
         private Andmepyydja.CAP AP = new Andmepyydja.CAP();
         private void btnAvaCSV_Click(object sender, EventArgs e)
         {
-            AP.chooseFile();
-            if (AP.chooseFile())
+            if (AP.chooseFile() && AP.readFile(ref fileContents))
             {
-                AP.readFile(ref fileContents);
                 data = AP.parseContents(fileContents);
+
+                time.Clear();
+                cost.Clear();
 
                 foreach (var item in data)
                 {
                     time.Add(item.Item1);
                     cost.Add(item.Item2);
                 }
-                chartElektrihind.Series["Elektrihind"].Points.DataBindXY(time, data);
+                chartElektrihind.Series["Tarbimine"].Points.DataBindXY(time, cost);
                 chartElektrihind.Invalidate();
             }
 

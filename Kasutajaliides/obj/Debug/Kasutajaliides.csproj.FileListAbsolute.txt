@@ -26,7 +26,6 @@ C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bi
 C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\Arvutaja.dll
 C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\AndmeSalvestaja.pdb
 C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\Arvutaja.pdb
-C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.UserInterface.resources
 C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\Andmepyydja.dll
 C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\Newtonsoft.Json.dll
 C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\Andmepyydja.pdb
@@ -36,3 +35,4 @@ C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bi
 C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\Andmepyydja.pdb
 C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\Newtonsoft.Json.xml
 C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.Kasutajaliides.resources
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.Kasutajaliides.resources

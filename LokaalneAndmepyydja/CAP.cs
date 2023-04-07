@@ -83,7 +83,11 @@ namespace Andmepyydja
                 DateTime d;
                 try
                 {
-                    d = DateTime.ParseExact(rida[0], "dd.MM.yyyy hh:mm", CultureInfo.InvariantCulture);
+                    d = DateTime.ParseExact(
+                        rida[0],
+                        "dd.MM.yyyy HH:mm",
+                        CultureInfo.InvariantCulture
+                    );
                 }
                 catch (Exception)
                 {

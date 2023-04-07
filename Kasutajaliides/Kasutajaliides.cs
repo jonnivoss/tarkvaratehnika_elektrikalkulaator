@@ -36,6 +36,11 @@ namespace Kasutajaliides
                 {
                     time.Add(item.Item1);
                     cost.Add(item.Item2);
+
+                    string line = item.Item1.ToString() + ": " + item.Item2.ToString();
+
+                    txtDebug.AppendText(line);
+                    txtDebug.AppendText(Environment.NewLine);
                 }
                 chartElektrihind.Series["Tarbimine"].Points.DataBindXY(time, cost);
                 chartElektrihind.Invalidate();

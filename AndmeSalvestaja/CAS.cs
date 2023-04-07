@@ -6,16 +6,24 @@ using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json;
 
+using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
+
 namespace AndmeSalvestaja
 {
+    public class Serializable
+    {
+        public Dictionary<ASSetting, string> setMap = new Dictionary<ASSetting, string>
+        {
+            { ASSetting.tarbijaAndmed,    "" },
+            { ASSetting.suurendusLubatud, "0" }
+        };
+        public VecT marketData = new VecT { };
+    }
+
     public class CAS : AndmeSalvestaja.IAS
     {
         private string path = "";
-        private Dictionary<ASSetting, string> setMap = new Dictionary<ASSetting, string>
-        {
-            { ASSetting.test0, "" },
-            { ASSetting.test1, "" }
-        };
+        private Serializable data;
 
         public CAS(string savepath)
         {
@@ -32,7 +40,7 @@ namespace AndmeSalvestaja
             try
             {
                 var contents = File.ReadAllText(this.path);
-                this.setMap = JsonConvert.DeserializeObject<Dictionary<ASSetting, string>>(contents);
+                this.data = JsonConvert.DeserializeObject<Serializable>(contents);
                 return true;
             }
             catch (Exception)
@@ -44,7 +52,7 @@ namespace AndmeSalvestaja
         {
             try
             {
-                var contents = JsonConvert.SerializeObject(this.setMap, Formatting.Indented);
+                var contents = JsonConvert.SerializeObject(this.data, Formatting.Indented);
                 File.WriteAllText(this.path, contents);
                 return true;
             }
@@ -64,7 +72,7 @@ namespace AndmeSalvestaja
 
             try
             {
-                this.setMap[setting] = value;
+                this.data.setMap[setting] = value;
                 return true;
             }
             catch (Exception)
@@ -80,7 +88,16 @@ namespace AndmeSalvestaja
                 return null;
             }
 
-            return this.setMap[setting];
+            return this.data.setMap[setting];
+        }
+
+        public void setMarketData(VecT data)
+        {
+            this.data.marketData = data;
+        }
+        public VecT getMarketData()
+        {
+            return this.data.marketData;
         }
     }
 }

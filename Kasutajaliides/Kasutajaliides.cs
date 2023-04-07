@@ -52,5 +52,27 @@ namespace Kasutajaliides
         {
             chartElektrihind.Series["Elektrihind"].Points.DataBindXY(time, data);
         }
+
+        private void txtAjakulu_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            double parsedValue;
+            if (!double.TryParse(txtAjakulu.Text + e.KeyChar, out parsedValue) && e.KeyChar !=8 && e.KeyChar != 46)
+            {
+                MessageBox.Show("Palun sisestage ainult numbreid!");
+                e.Handled = true;
+                return;
+            }
+        }
+
+        private void txtVoimsus_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            double parsedValue;
+            if (!double.TryParse(txtVoimsus.Text + e.KeyChar, out parsedValue) && e.KeyChar != 8 && e.KeyChar != 46)
+            {
+                MessageBox.Show("Palun sisestage ainult numbreid!");
+                e.Handled = true;
+                return;
+            }
+        }
     }
 }

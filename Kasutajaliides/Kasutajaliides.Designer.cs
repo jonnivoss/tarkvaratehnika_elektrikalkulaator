@@ -29,15 +29,15 @@ namespace Kasutajaliides
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint7 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(44956D, 250D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint8 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(44959D, 420D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint9 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(44960D, 50D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint10 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(44963D, 56D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint11 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(45028D, 421D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint12 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(45029D, 69D);
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint43 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(44956D, 250D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint44 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(44959D, 420D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint45 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(44960D, 50D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint46 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(44963D, 56D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint47 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(45028D, 421D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint48 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(45029D, 69D);
             this.chartElektrihind = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.cbKasutusmall = new System.Windows.Forms.ComboBox();
             this.lblKasutusmall = new System.Windows.Forms.Label();
@@ -55,28 +55,28 @@ namespace Kasutajaliides
             // 
             // chartElektrihind
             // 
-            chartArea2.AxisX.MajorGrid.Enabled = false;
-            chartArea2.AxisY.MajorGrid.Enabled = false;
-            chartArea2.Name = "ChartArea1";
-            this.chartElektrihind.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chartElektrihind.Legends.Add(legend2);
+            chartArea8.AxisX.MajorGrid.Enabled = false;
+            chartArea8.AxisY.MajorGrid.Enabled = false;
+            chartArea8.Name = "ChartArea1";
+            this.chartElektrihind.ChartAreas.Add(chartArea8);
+            legend8.Name = "Legend1";
+            this.chartElektrihind.Legends.Add(legend8);
             this.chartElektrihind.Location = new System.Drawing.Point(404, 13);
             this.chartElektrihind.Name = "chartElektrihind";
             this.chartElektrihind.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series2.Legend = "Legend1";
-            series2.Name = "Elektrihind";
-            series2.Points.Add(dataPoint7);
-            series2.Points.Add(dataPoint8);
-            series2.Points.Add(dataPoint9);
-            series2.Points.Add(dataPoint10);
-            series2.Points.Add(dataPoint11);
-            series2.Points.Add(dataPoint12);
-            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
-            series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            this.chartElektrihind.Series.Add(series2);
+            series8.ChartArea = "ChartArea1";
+            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series8.Legend = "Legend1";
+            series8.Name = "Elektrihind";
+            series8.Points.Add(dataPoint43);
+            series8.Points.Add(dataPoint44);
+            series8.Points.Add(dataPoint45);
+            series8.Points.Add(dataPoint46);
+            series8.Points.Add(dataPoint47);
+            series8.Points.Add(dataPoint48);
+            series8.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series8.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            this.chartElektrihind.Series.Add(series8);
             this.chartElektrihind.Size = new System.Drawing.Size(729, 485);
             this.chartElektrihind.TabIndex = 0;
             this.chartElektrihind.Text = "chartElektrihind";
@@ -131,6 +131,7 @@ namespace Kasutajaliides
             this.txtAjakulu.Name = "txtAjakulu";
             this.txtAjakulu.Size = new System.Drawing.Size(177, 26);
             this.txtAjakulu.TabIndex = 5;
+            this.txtAjakulu.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAjakulu_KeyPress);
             // 
             // lblTund
             // 
@@ -159,6 +160,7 @@ namespace Kasutajaliides
             this.txtVoimsus.Name = "txtVoimsus";
             this.txtVoimsus.Size = new System.Drawing.Size(177, 26);
             this.txtVoimsus.TabIndex = 8;
+            this.txtVoimsus.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtVoimsus_KeyPress);
             // 
             // lblkW
             // 

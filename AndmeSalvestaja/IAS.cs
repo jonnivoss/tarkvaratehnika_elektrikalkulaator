@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
+using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
+
 namespace AndmeSalvestaja
 {
     public enum ASSetting
     {
-        test0,
-        test1,
+        tarbijaAndmed,
+        suurendusLubatud,
 
         size
     };
@@ -22,5 +24,8 @@ namespace AndmeSalvestaja
 
         bool changeSetting(ASSetting setting, string value);
         string getSetting(ASSetting setting);
+
+        void setMarketData(VecT data);
+        VecT getMarketData();
     }
 }

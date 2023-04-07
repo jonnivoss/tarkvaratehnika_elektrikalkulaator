@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\InternetiAndmepyydja",
+    "\\LokaalneAndmepyydja"
   ],
-  "SelectedNode": "\\Tarkvaratehnika-elektrikalkulaator.sln",
+  "SelectedNode": "\\LokaalneAndmepyydja\\CAP.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -9,34 +9,48 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
-using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, float>>;
+using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
 
 namespace Kasutajaliides
 {
     
     public partial class Kasutajaliides : Form
     {
-        List<DateTime> aeg = new List<DateTime>();
-        List<double> maksumus = new List<double>();
+        List<DateTime> time = new List<DateTime>();
+        List<double> cost = new List<double>();
 
-        VecT andmed = new VecT();
+        VecT data = new VecT();
+        string fileContents;
 
         private Andmepyydja.CAP AP = new Andmepyydja.CAP();
         private void btnAvaCSV_Click(object sender, EventArgs e)
         {
             AP.chooseFile();
+            if (AP.chooseFile())
+            {
+                AP.readFile(ref fileContents);
+                data = AP.parseContents(fileContents);
 
+                foreach (var item in data)
+                {
+                    time.Add(item.Item1);
+                    cost.Add(item.Item2);
+                }
+                chartElektrihind.Series["Elektrihind"].Points.DataBindXY(time, data);
+                chartElektrihind.Invalidate();
+            }
+
+            
         }
         public Kasutajaliides() 
         {
             InitializeComponent();
             
+        }
 
-            foreach(var item in )
-            {
-
-            }
-
+        private void Kasutajaliides_Load(object sender, EventArgs e)
+        {
+            chartElektrihind.Series["Elektrihind"].Points.DataBindXY(time, data);
         }
     }
 }

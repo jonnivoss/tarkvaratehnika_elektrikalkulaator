@@ -87,7 +87,7 @@ namespace Andmepyydja
                 }
                 catch (Exception)
                 {
-                    // Carry on, ;)
+                    // Carry on, ;) (:
                     continue;
                 }
                 var item = new DatePriceT(d, num);

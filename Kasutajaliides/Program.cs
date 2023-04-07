@@ -16,7 +16,7 @@ namespace Kasutajaliides
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Kasutajaliides.UserInterface());
+            Application.Run(new global::Kasutajaliides.Kasutajaliides());
         }
     }
 }

@@ -7,11 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Kasutajaliides
 {
     
-    public partial class UserInterface : Form
+    public partial class Kasutajaliides : Form
     {
         private Andmepyydja.CAP AP = new Andmepyydja.CAP();
         private void btnAvaCSV_Click(object sender, EventArgs e)
@@ -19,7 +20,7 @@ namespace Kasutajaliides
             AP.chooseFile();
 
         }
-        public UserInterface() 
+        public Kasutajaliides() 
         {
             InitializeComponent();
         }

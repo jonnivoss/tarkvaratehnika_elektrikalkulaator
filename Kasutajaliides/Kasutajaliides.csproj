@@ -50,16 +50,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UserInterface.cs">
+    <Compile Include="Kasutajaliides.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UserInterface.Designer.cs">
-      <DependentUpon>UserInterface.cs</DependentUpon>
+    <Compile Include="Kasutajaliides.Designer.cs">
+      <DependentUpon>Kasutajaliides.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="UserInterface.resx">
-      <DependentUpon>UserInterface.cs</DependentUpon>
+    <EmbeddedResource Include="Kasutajaliides.resx">
+      <DependentUpon>Kasutajaliides.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

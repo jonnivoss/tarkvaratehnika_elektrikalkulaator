@@ -1,7 +1,7 @@
 ﻿
 namespace Kasutajaliides
 {
-    partial class UserInterface
+    partial class Kasutajaliides
     {
         /// <summary>
         /// Required designer variable.

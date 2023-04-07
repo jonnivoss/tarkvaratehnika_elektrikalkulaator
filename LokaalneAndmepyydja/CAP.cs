@@ -11,8 +11,8 @@ using System.Net;
 
 //https://dashboard.elering.ee/assets/api-doc.html#/balance-controller/getAllUsingGET
 
-using DatePriceT = System.Tuple<System.DateTime, float>;
-using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, float>>;
+using DatePriceT = System.Tuple<System.DateTime, double>;
+using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
 
 namespace Andmepyydja
 {
@@ -78,7 +78,7 @@ namespace Andmepyydja
                 {
                     continue;
                 }
-                float num = (float)Convert.ToDouble(rida[2]);
+                double num = Convert.ToDouble(rida[2]);
 
                 DateTime d;
                 try

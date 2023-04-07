@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, float>>;
+using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
 
 namespace AndmeSalvestaja
 {

@@ -1,7 +1,7 @@
 ﻿
 namespace Kasutajaliides
 {
-    partial class UserInterface
+    partial class Kasutajaliides
     {
         /// <summary>
         /// Required designer variable.
@@ -29,9 +29,15 @@ namespace Kasutajaliides
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint25 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(44956D, 250D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint26 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(44959D, 420D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint27 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(44960D, 50D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint28 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(44963D, 56D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint29 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(45028D, 421D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint30 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(45029D, 69D);
             this.chartElektrihind = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.cbKasutusmall = new System.Windows.Forms.ComboBox();
             this.lblKasutusmall = new System.Windows.Forms.Label();
@@ -43,26 +49,34 @@ namespace Kasutajaliides
             this.lblkW = new System.Windows.Forms.Label();
             this.lblHind = new System.Windows.Forms.Label();
             this.txtHind = new System.Windows.Forms.TextBox();
+            this.btnAvaCSV = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chartElektrihind)).BeginInit();
             this.SuspendLayout();
             // 
             // chartElektrihind
             // 
-            chartArea1.AxisX.MajorGrid.Enabled = false;
-            chartArea1.AxisY.MajorGrid.Enabled = false;
-            chartArea1.Name = "ChartArea1";
-            this.chartElektrihind.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chartElektrihind.Legends.Add(legend1);
-            this.chartElektrihind.Location = new System.Drawing.Point(346, 12);
+            chartArea5.AxisX.MajorGrid.Enabled = false;
+            chartArea5.AxisY.MajorGrid.Enabled = false;
+            chartArea5.Name = "ChartArea1";
+            this.chartElektrihind.ChartAreas.Add(chartArea5);
+            legend5.Name = "Legend1";
+            this.chartElektrihind.Legends.Add(legend5);
+            this.chartElektrihind.Location = new System.Drawing.Point(346, 11);
             this.chartElektrihind.Name = "chartElektrihind";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series1.Legend = "Legend1";
-            series1.Name = "Elektrihind";
-            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Time;
-            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            this.chartElektrihind.Series.Add(series1);
+            this.chartElektrihind.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series5.Legend = "Legend1";
+            series5.Name = "Anxiety level";
+            series5.Points.Add(dataPoint25);
+            series5.Points.Add(dataPoint26);
+            series5.Points.Add(dataPoint27);
+            series5.Points.Add(dataPoint28);
+            series5.Points.Add(dataPoint29);
+            series5.Points.Add(dataPoint30);
+            series5.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series5.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            this.chartElektrihind.Series.Add(series5);
             this.chartElektrihind.Size = new System.Drawing.Size(625, 420);
             this.chartElektrihind.TabIndex = 0;
             this.chartElektrihind.Text = "chartElektrihind";
@@ -73,10 +87,23 @@ namespace Kasutajaliides
             this.cbKasutusmall.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbKasutusmall.FormattingEnabled = true;
             this.cbKasutusmall.Items.AddRange(new object[] {
-            "Auto"});
+            "",
+            "Automaat",
+            "Manuaal",
+            "Pesumasin",
+            "Veekeetja",
+            "Tarmo Röster :)",
+            "Elektripliit",
+            "Kohvimasin",
+            "Where\'s my bible?",
+            "Librarian",
+            "HÖÖÖ",
+            "Bwoah",
+            "KÄH",
+            "Agent Kruus"});
             this.cbKasutusmall.Location = new System.Drawing.Point(16, 57);
             this.cbKasutusmall.Name = "cbKasutusmall";
-            this.cbKasutusmall.Size = new System.Drawing.Size(113, 28);
+            this.cbKasutusmall.Size = new System.Drawing.Size(152, 28);
             this.cbKasutusmall.TabIndex = 2;
             // 
             // lblKasutusmall
@@ -88,7 +115,6 @@ namespace Kasutajaliides
             this.lblKasutusmall.Size = new System.Drawing.Size(132, 20);
             this.lblKasutusmall.TabIndex = 3;
             this.lblKasutusmall.Text = "Kasutusmalli valik";
-            this.lblKasutusmall.Click += new System.EventHandler(this.lblKasutusmall_Click);
             // 
             // lblAeg
             // 
@@ -105,14 +131,14 @@ namespace Kasutajaliides
             this.txtAjakulu.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtAjakulu.Location = new System.Drawing.Point(16, 122);
             this.txtAjakulu.Name = "txtAjakulu";
-            this.txtAjakulu.Size = new System.Drawing.Size(110, 26);
+            this.txtAjakulu.Size = new System.Drawing.Size(152, 26);
             this.txtAjakulu.TabIndex = 5;
             // 
             // lblTund
             // 
             this.lblTund.AutoSize = true;
             this.lblTund.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTund.Location = new System.Drawing.Point(136, 125);
+            this.lblTund.Location = new System.Drawing.Point(183, 125);
             this.lblTund.Name = "lblTund";
             this.lblTund.Size = new System.Drawing.Size(44, 20);
             this.lblTund.TabIndex = 6;
@@ -127,21 +153,20 @@ namespace Kasutajaliides
             this.lblVoimsus.Size = new System.Drawing.Size(109, 20);
             this.lblVoimsus.TabIndex = 7;
             this.lblVoimsus.Text = "Võimsustarve:";
-            this.lblVoimsus.Click += new System.EventHandler(this.lblVoimsus_Click);
             // 
             // txtVoimsus
             // 
             this.txtVoimsus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtVoimsus.Location = new System.Drawing.Point(16, 194);
             this.txtVoimsus.Name = "txtVoimsus";
-            this.txtVoimsus.Size = new System.Drawing.Size(110, 26);
+            this.txtVoimsus.Size = new System.Drawing.Size(152, 26);
             this.txtVoimsus.TabIndex = 8;
             // 
             // lblkW
             // 
             this.lblkW.AutoSize = true;
             this.lblkW.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblkW.Location = new System.Drawing.Point(136, 201);
+            this.lblkW.Location = new System.Drawing.Point(183, 197);
             this.lblkW.Name = "lblkW";
             this.lblkW.Size = new System.Drawing.Size(32, 20);
             this.lblkW.TabIndex = 9;
@@ -163,14 +188,26 @@ namespace Kasutajaliides
             this.txtHind.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtHind.Location = new System.Drawing.Point(16, 269);
             this.txtHind.Name = "txtHind";
-            this.txtHind.Size = new System.Drawing.Size(110, 26);
+            this.txtHind.Size = new System.Drawing.Size(152, 26);
             this.txtHind.TabIndex = 11;
+            // 
+            // btnAvaCSV
+            // 
+            this.btnAvaCSV.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAvaCSV.Location = new System.Drawing.Point(20, 404);
+            this.btnAvaCSV.Name = "btnAvaCSV";
+            this.btnAvaCSV.Size = new System.Drawing.Size(124, 27);
+            this.btnAvaCSV.TabIndex = 12;
+            this.btnAvaCSV.Text = "Ava CŠV fail";
+            this.btnAvaCSV.UseVisualStyleBackColor = true;
+            this.btnAvaCSV.Click += new System.EventHandler(this.btnAvaCSV_Click);
             // 
             // UserInterface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(983, 453);
+            this.Controls.Add(this.btnAvaCSV);
             this.Controls.Add(this.txtHind);
             this.Controls.Add(this.lblHind);
             this.Controls.Add(this.lblkW);
@@ -182,10 +219,9 @@ namespace Kasutajaliides
             this.Controls.Add(this.lblKasutusmall);
             this.Controls.Add(this.cbKasutusmall);
             this.Controls.Add(this.chartElektrihind);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "UserInterface";
             this.Text = "Elektrihinna kalkulaator";
-            this.Load += new System.EventHandler(this.UserInterface_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chartElektrihind)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -205,6 +241,7 @@ namespace Kasutajaliides
         private System.Windows.Forms.Label lblkW;
         private System.Windows.Forms.Label lblHind;
         private System.Windows.Forms.TextBox txtHind;
+        private System.Windows.Forms.Button btnAvaCSV;
     }
 }
 

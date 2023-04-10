@@ -90,5 +90,20 @@ namespace Kasutajaliides
         {
 
         }
+
+        private void cbShowPrice_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbShowTabel_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rbStockPrice_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -92,7 +92,7 @@ namespace Andmepyydja
 
         //siit algab neti otsimine
 
-        static DateTime abua(string a)
+        DateTime abua(string a)
         {
             long unixTime = long.Parse(a);
             DateTimeOffset systemTime = DateTimeOffset.FromUnixTimeSeconds(unixTime);
@@ -100,7 +100,7 @@ namespace Andmepyydja
             return yez;
         }
 
-        static void aia(string a)
+        void aia(string a)
         {
             
             string[] nameParts = a.Split('{','[','}',']',',');
@@ -132,7 +132,7 @@ namespace Andmepyydja
         }
 
         
-        static DatePriceT iseOled(DateTime algus, DateTime lopp)
+        DatePriceT iseOled(DateTime algus, DateTime lopp)
         {
             string urla = "https://dashboard.elering.ee/api/nps/price?";
             algus = DateTime.Now;

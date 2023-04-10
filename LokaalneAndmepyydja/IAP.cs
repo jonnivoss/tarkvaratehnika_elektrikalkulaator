@@ -19,5 +19,12 @@ namespace Andmepyydja
 
         
         VecT parseContents(string contents);
+
+
+        //bett
+
+        DateTime abua(string a);
+        void aia(string a);
+        DatePriceT iseOled(DateTime algus, DateTime lopp);
     }
 }

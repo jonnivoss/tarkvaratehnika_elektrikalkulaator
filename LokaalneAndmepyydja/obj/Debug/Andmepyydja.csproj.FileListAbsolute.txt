@@ -4,3 +4,7 @@ C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyyd
 C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\obj\Debug\Andmepyydja.csproj.CoreCompileInputs.cache
 C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\obj\Debug\Andmepyydja.dll
 C:\Users\admin\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\obj\Debug\Andmepyydja.pdb
+C:\Users\joona\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\obj\Debug\Andmepyydja.csproj.AssemblyReference.cache
+C:\Users\joona\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\obj\Debug\Andmepyydja.csproj.CoreCompileInputs.cache
+C:\Users\joona\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\obj\Debug\Andmepyydja.dll
+C:\Users\joona\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\obj\Debug\Andmepyydja.pdb

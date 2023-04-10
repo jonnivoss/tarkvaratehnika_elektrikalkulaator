@@ -29,16 +29,16 @@ namespace Kasutajaliides
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint7 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(44956D, 250D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint8 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(44959D, 420D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint9 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(44960D, 50D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint10 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(44963D, 56D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint11 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(45028D, 421D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint12 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(45029D, 69D);
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(44956D, 250D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(44959D, 420D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint3 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(44960D, 50D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint4 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(44963D, 56D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint5 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(45028D, 421D);
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint6 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(45029D, 69D);
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chartElektrihind = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.cbKasutusmall = new System.Windows.Forms.ComboBox();
             this.lblKasutusmall = new System.Windows.Forms.Label();
@@ -60,7 +60,7 @@ namespace Kasutajaliides
             this.cbShowTabel = new System.Windows.Forms.CheckBox();
             this.rbStockPrice = new System.Windows.Forms.RadioButton();
             this.rbMonthlyCost = new System.Windows.Forms.RadioButton();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbMonthlyPrice = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.chartElektrihind)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -68,40 +68,40 @@ namespace Kasutajaliides
             // 
             // chartElektrihind
             // 
-            chartArea2.AxisX.MajorGrid.Enabled = false;
-            chartArea2.AxisY.MajorGrid.Enabled = false;
-            chartArea2.Name = "ChartArea1";
-            this.chartElektrihind.ChartAreas.Add(chartArea2);
-            legend2.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            legend2.IsTextAutoFit = false;
-            legend2.Name = "Legend1";
-            this.chartElektrihind.Legends.Add(legend2);
+            chartArea1.AxisX.MajorGrid.Enabled = false;
+            chartArea1.AxisY.MajorGrid.Enabled = false;
+            chartArea1.Name = "ChartArea1";
+            this.chartElektrihind.ChartAreas.Add(chartArea1);
+            legend1.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            legend1.IsTextAutoFit = false;
+            legend1.Name = "Legend1";
+            this.chartElektrihind.Legends.Add(legend1);
             this.chartElektrihind.Location = new System.Drawing.Point(289, 13);
             this.chartElektrihind.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chartElektrihind.Name = "chartElektrihind";
             this.chartElektrihind.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series3.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            series3.Legend = "Legend1";
-            series3.Name = "Elektrihind";
-            series3.Points.Add(dataPoint7);
-            series3.Points.Add(dataPoint8);
-            series3.Points.Add(dataPoint9);
-            series3.Points.Add(dataPoint10);
-            series3.Points.Add(dataPoint11);
-            series3.Points.Add(dataPoint12);
-            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
-            series3.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series4.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            series4.Legend = "Legend1";
-            series4.Name = "Tarbimine";
-            series4.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
-            series4.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            this.chartElektrihind.Series.Add(series3);
-            this.chartElektrihind.Series.Add(series4);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series1.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            series1.Legend = "Legend1";
+            series1.Name = "Elektrihind";
+            series1.Points.Add(dataPoint1);
+            series1.Points.Add(dataPoint2);
+            series1.Points.Add(dataPoint3);
+            series1.Points.Add(dataPoint4);
+            series1.Points.Add(dataPoint5);
+            series1.Points.Add(dataPoint6);
+            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series2.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            series2.Legend = "Legend1";
+            series2.Name = "Tarbimine";
+            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            this.chartElektrihind.Series.Add(series1);
+            this.chartElektrihind.Series.Add(series2);
             this.chartElektrihind.Size = new System.Drawing.Size(742, 485);
             this.chartElektrihind.TabIndex = 0;
             this.chartElektrihind.Text = "chartElektrihind";
@@ -345,18 +345,18 @@ namespace Kasutajaliides
             this.rbMonthlyCost.Text = "Kuutasu";
             this.rbMonthlyCost.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // tbMonthlyPrice
             // 
-            this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(95, 46);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(73, 21);
-            this.textBox1.TabIndex = 22;
+            this.tbMonthlyPrice.Enabled = false;
+            this.tbMonthlyPrice.Location = new System.Drawing.Point(95, 46);
+            this.tbMonthlyPrice.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.tbMonthlyPrice.Name = "tbMonthlyPrice";
+            this.tbMonthlyPrice.Size = new System.Drawing.Size(73, 21);
+            this.tbMonthlyPrice.TabIndex = 22;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.tbMonthlyPrice);
             this.groupBox1.Controls.Add(this.rbMonthlyCost);
             this.groupBox1.Controls.Add(this.rbStockPrice);
             this.groupBox1.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -430,7 +430,7 @@ namespace Kasutajaliides
         private System.Windows.Forms.CheckBox cbShowTabel;
         private System.Windows.Forms.RadioButton rbStockPrice;
         private System.Windows.Forms.RadioButton rbMonthlyCost;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbMonthlyPrice;
         private System.Windows.Forms.GroupBox groupBox1;
     }
 }

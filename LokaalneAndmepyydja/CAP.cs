@@ -124,7 +124,6 @@ namespace Andmepyydja
                 else
                 {
                     float floatValue = float.Parse(nameParts[i], CultureInfo.InvariantCulture.NumberFormat);
-
                     Console.WriteLine(floatValue);
                 }
             }

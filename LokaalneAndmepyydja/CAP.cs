@@ -90,9 +90,9 @@ namespace Andmepyydja
             return v;
         }
 
-        //brb il be black
 
-        static void abua(string a)
+
+        void abua(string a)
         {
             long unixTime = long.Parse(a);
             DateTimeOffset systemTime = DateTimeOffset.FromUnixTimeSeconds(unixTime);
@@ -100,7 +100,7 @@ namespace Andmepyydja
             Console.Write(systemTime + " ");
         }
 
-        static void aia(string a)
+        void aia(string a)
         {
 
             string[] nameParts = a.Split('{', '[', '}', ']', ',');

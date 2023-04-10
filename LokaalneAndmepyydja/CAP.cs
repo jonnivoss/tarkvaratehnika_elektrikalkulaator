@@ -97,9 +97,11 @@ namespace Andmepyydja
             return v;
         }
 
-        //brb il be black
+
 
         //siit algab neti otsimine
+
+
 
         DateTime abua(string a)
         {
@@ -109,41 +111,42 @@ namespace Andmepyydja
             return yez;
         }
 
-        void aia(string a)
+        VecT aia(string a)
         {
-
-            string[] nameParts = a.Split('{', '[', '}', ']', ',');
-
-            for (int i = 4; i < nameParts.Length; i++)
+            VecT nett;
+            string[] nameParts = a.Split('{','[','}',']',',').ToArray();
+            int j = 0;
+            for(int i = 4; i < nameParts.Length; i += 2)
             {
-                if (String.Equals(nameParts[i], "\"fi\":"))
+                int olenA = i - 1;
+                if (String.Equals(nameParts[i],"\"fi\":") || String.Equals(nameParts[olenA], "\"fi\":"))
                 {
                     break;
                 }
-                if (String.IsNullOrEmpty(nameParts[i]))
+                if(String.IsNullOrEmpty(nameParts[i]))
                 {
                     continue;
                 }
-                nameParts[i] = nameParts[i].Substring(nameParts[i].IndexOf(":") + 1);
-                if ((i % 2) == 1)
-                {
-                    DateTime aiabljasanahkateed = abua(nameParts[i]);
-                    Console.Write(aiabljasanahkateed + " ");
-                }
-                else
-                {
-                    float floatValue = float.Parse(nameParts[i], CultureInfo.InvariantCulture.NumberFormat);
-                    Console.WriteLine(floatValue);
-                }
-            }
+ 
+                string asd= nameParts[olenA].Substring(nameParts[olenA].IndexOf(":") + 1);
+                string hdd = nameParts[i].Substring(nameParts[i].IndexOf(":") + 1);
+  
+                DateTime aiabljasanahkateed = abua(asd);
+                Console.Write(aiabljasanahkateed + "\t");
 
+                float floatValue = float.Parse(hdd, CultureInfo.InvariantCulture.NumberFormat);
+
+                Console.WriteLine(floatValue+"\t");
+            }
+            return nett;
         }
 
-
-        DatePriceT iseOled(DateTime algus, DateTime lopp)
+        
+        VecT iseOled(DateTime algus, DateTime lopp)
         {
             string urla = "https://dashboard.elering.ee/api/nps/price?";
             algus = DateTime.Now;
+            VecT netiOma;
             Console.WriteLine(algus.ToString("yyyy-MM-ddTHH"));
             using (var httpClient = new HttpClient())
             {
@@ -156,11 +159,11 @@ namespace Andmepyydja
 
                 var responseStringTask = httpClient.GetStringAsync(url);
                 var responseString = responseStringTask.Result;
-                aia(responseString);
+                netiOma = aia(responseString);
             }
             Console.ReadKey();
-            DatePriceT a;
-            return a;
+
+            return netiOma;
         }
     }
 }

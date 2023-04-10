@@ -103,7 +103,26 @@ namespace Kasutajaliides
 
         private void rbStockPrice_CheckedChanged(object sender, EventArgs e)
         {
+            var state = rbStockPrice.Checked;
+            if (state)
+            {
+                tbMonthlyPrice.Enabled = false;
+            }
+            else
+            {
+                tbMonthlyPrice.Enabled = true;
+            }
+        }
 
+        private void tbMonthlyPrice_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            double parsedValue;
+            if (!double.TryParse(tbMonthlyPrice.Text + e.KeyChar, out parsedValue) && e.KeyChar != 8 && e.KeyChar != 46)
+            {
+                MessageBox.Show("Palun sisestage ainult numbreid!");
+                e.Handled = true;
+                return;
+            }
         }
     }
 }

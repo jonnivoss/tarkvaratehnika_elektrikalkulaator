@@ -1,0 +1,16 @@
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\UnitTestArvutaja\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\UnitTestArvutaja\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\UnitTestArvutaja\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\UnitTestArvutaja\bin\Debug\UnitTestArvutaja.dll
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\UnitTestArvutaja\bin\Debug\UnitTestArvutaja.pdb
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\UnitTestArvutaja\bin\Debug\Arvutaja.dll
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\UnitTestArvutaja\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\UnitTestArvutaja\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\UnitTestArvutaja\bin\Debug\Arvutaja.pdb
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\UnitTestArvutaja\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\UnitTestArvutaja\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\UnitTestArvutaja\obj\Debug\UnitTestArvutaja.csproj.AssemblyReference.cache
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\UnitTestArvutaja\obj\Debug\UnitTestArvutaja.csproj.CoreCompileInputs.cache
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\UnitTestArvutaja\obj\Debug\UnitTestArvutaja.csproj.CopyComplete
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\UnitTestArvutaja\obj\Debug\UnitTestArvutaja.dll
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\UnitTestArvutaja\obj\Debug\UnitTestArvutaja.pdb

@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Net.Http;
 using System.Net;
 
+
 //https://dashboard.elering.ee/assets/api-doc.html#/balance-controller/getAllUsingGET
 
 using DatePriceT = System.Tuple<System.DateTime, double>;
@@ -91,7 +92,7 @@ namespace Andmepyydja
                 }
                 catch (Exception)
                 {
-                    // Carry on, ;) (:
+                    // Carry on, ;)
                     continue;
                 }
                 var item = new DatePriceT(d, num);
@@ -101,63 +102,68 @@ namespace Andmepyydja
             return v;
         }
 
-        //brb il be black
+        //siit algab neti otsimine
 
-        static void abua(string a)
+        DateTime abua(string a)
         {
             long unixTime = long.Parse(a);
             DateTimeOffset systemTime = DateTimeOffset.FromUnixTimeSeconds(unixTime);
-
-            Console.Write(systemTime + " ");
+            DateTime yez = systemTime.UtcDateTime;
+            return yez;
         }
 
-        static void aia(string a)
+        void aia(string a)
         {
-
-            string[] nameParts = a.Split('{', '[', '}', ']', ',');
-
-            for (int i = 4; i < nameParts.Length; i++)
+            
+            string[] nameParts = a.Split('{','[','}',']',',');
+            
+            for(int i = 4; i < nameParts.Length; i ++)
             {
-                if (String.Equals(nameParts[i], "\"fi\":"))
+                if(String.Equals(nameParts[i],"\"fi\":"))
                 {
                     break;
                 }
-                if (String.IsNullOrEmpty(nameParts[i]))
+                if(String.IsNullOrEmpty(nameParts[i]))
                 {
                     continue;
                 }
-                nameParts[i] = nameParts[i].Substring(nameParts[i].IndexOf(":") + 1);
+                nameParts[i] = nameParts[i].Substring(nameParts[i].IndexOf(":")+1);
                 if ((i % 2) == 1)
                 {
-                    abua(nameParts[i]);
+                    DateTime aiabljasanahkateed = abua(nameParts[i]);
+                    Console.Write(aiabljasanahkateed + " ");
                 }
                 else
                 {
-                    Console.WriteLine(nameParts[i]);
+                    float floatValue = float.Parse(nameParts[i], CultureInfo.InvariantCulture.NumberFormat);
+                    Console.WriteLine(floatValue);
                 }
             }
 
         }
 
-        static async Task abine(string[] args)
+        
+        DatePriceT iseOled(DateTime algus, DateTime lopp)
         {
             string urla = "https://dashboard.elering.ee/api/nps/price?";
+            // Console.WriteLine("mine putsi \n");
 
             using (var httpClient = new HttpClient())
             {
-                string starTime = "2023-03-26T20";
-                string endTime = "2023-03-26T23";
-                string url = urla + "start=" + starTime + "%3A00%3A00.999Z&end=" + endTime + "%3A00%3A00.999Z";
+                string starTime = "2023-04-10T20";
+                string endTime = "2023-04-12T23";
+                string url = urla + "start=" + algus.ToString("yyyy-MM-ddTHH") + "%3A00%3A00.999Z&end=" + endTime + "%3A00%3A00.999Z";
 
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
 
-                var responseString = await httpClient.GetStringAsync(url);
+                var responseStringTask = httpClient.GetStringAsync(url);
+                var responseString = responseStringTask.Result;
                 aia(responseString);
-
             }
             Console.ReadKey();
-
+            DatePriceT a;
+            return a;
         }
     }
 }

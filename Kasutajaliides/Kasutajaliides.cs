@@ -80,5 +80,15 @@ namespace Kasutajaliides
                 return;
             }
         }
+
+        private void dateStartTime_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dateStopTime_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

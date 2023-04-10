@@ -115,7 +115,7 @@ namespace Andmepyydja
         {
             
             string[] nameParts = a.Split('{','[','}',']',',');
-            VecT nett = null;
+            VecT nett = new VecT();
             for (int i = 4; i < nameParts.Length; i += 2)
             {
                 int olenA = i - 1;
@@ -138,6 +138,7 @@ namespace Andmepyydja
 
                 Console.WriteLine(floatValue + "\t");
                 DatePriceT ime = Tuple.Create(aiabljasanahkateed,floatValue);
+                nett.Add(ime);
             }
             return nett;
         }
@@ -151,9 +152,9 @@ namespace Andmepyydja
             Console.WriteLine(algus.ToString("yyyy-MM-ddTHH"));
             using (var httpClient = new HttpClient())
             {
-                string starTime = "2023-04-10T20";
+
                 string endTime = "2023-04-12T23";
-                string url = urla + "start=" + algus.ToString("yyyy-MM-ddTHH") + "%3A00%3A00.999Z&end=" + endTime + "%3A00%3A00.999Z";
+                string url = urla + "start=" + algus.ToString("yyyy-MM-ddTHH") + "%3A00%3A00.999Z&end=" + lopp.ToString("yyyy-MM-ddTHH") + "%3A00%3A00.999Z";
 
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));

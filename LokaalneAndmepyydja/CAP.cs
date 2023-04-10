@@ -9,10 +9,11 @@ using System.Globalization;
 using System.Net.Http;
 using System.Net;
 
+
 //https://dashboard.elering.ee/assets/api-doc.html#/balance-controller/getAllUsingGET
 
-using DatePriceT = System.Tuple<System.DateTime, float>;
-using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, float>>;
+using DatePriceT = System.Tuple<System.DateTime, double>;
+using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
 
 namespace Andmepyydja
 {
@@ -40,18 +41,32 @@ namespace Andmepyydja
             {
                 return false;
             }
-            contents = File.ReadAllText(this.fname, Encoding.UTF8);
-
-            return (contents != "");
+            try
+            {
+                contents = File.ReadAllText(this.fname, Encoding.UTF8);
+                return (contents != "");
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public VecT parseContents(string contents)
         {
             VecT v = new VecT();
 
-            contents = contents.Substring(contents.IndexOf("Algus"));
-            var splitcontent = contents.Split('\n').ToList();
-            splitcontent.RemoveAt(0);
+            System.Collections.Generic.List<string> splitcontent;
+            try
+            {
+                contents = contents.Substring(contents.IndexOf("Algus"));
+                splitcontent = contents.Split('\n').ToList();
+                splitcontent.RemoveAt(0);
+            }
+            catch (Exception)
+            {
+                return v;
+            }
 
             foreach (string i in splitcontent)
             {
@@ -64,7 +79,7 @@ namespace Andmepyydja
                 {
                     continue;
                 }
-                float num = (float)Convert.ToDouble(rida[2]);
+                double num = Convert.ToDouble(rida[2]);
 
                 DateTime d;
                 try
@@ -83,23 +98,68 @@ namespace Andmepyydja
             return v;
         }
 
-        static async Task Main(string[] args)
+        //siit algab neti otsimine
+
+        DateTime abua(string a)
         {
+            long unixTime = long.Parse(a);
+            DateTimeOffset systemTime = DateTimeOffset.FromUnixTimeSeconds(unixTime);
+            DateTime yez = systemTime.UtcDateTime;
+            return yez;
+        }
+
+        void aia(string a)
+        {
+            
+            string[] nameParts = a.Split('{','[','}',']',',');
+            
+            for(int i = 4; i < nameParts.Length; i ++)
+            {
+                if(String.Equals(nameParts[i],"\"fi\":"))
+                {
+                    break;
+                }
+                if(String.IsNullOrEmpty(nameParts[i]))
+                {
+                    continue;
+                }
+                nameParts[i] = nameParts[i].Substring(nameParts[i].IndexOf(":")+1);
+                if ((i % 2) == 1)
+                {
+                    DateTime aiabljasanahkateed = abua(nameParts[i]);
+                    Console.Write(aiabljasanahkateed + " ");
+                }
+                else
+                {
+                    float floatValue = float.Parse(nameParts[i], CultureInfo.InvariantCulture.NumberFormat);
+                    Console.WriteLine(floatValue);
+                }
+            }
+
+        }
+
+        
+        DatePriceT iseOled(DateTime algus, DateTime lopp)
+        {
+            string urla = "https://dashboard.elering.ee/api/nps/price?";
+            // Console.WriteLine("mine putsi \n");
+
             using (var httpClient = new HttpClient())
             {
-                var url = "https://dashboard.elering.ee/api/balance?start=2020-06-30T10%3A59%3A59.999Z&end=2020-06-30T20%3A00%3A00.999Z";
+                string starTime = "2023-04-10T20";
+                string endTime = "2023-04-12T23";
+                string url = urla + "start=" + algus.ToString("yyyy-MM-ddTHH") + "%3A00%3A00.999Z&end=" + endTime + "%3A00%3A00.999Z";
 
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
 
-                var responseString = await httpClient.GetStringAsync(url);
-
-
-
-                Console.WriteLine(responseString);
+                var responseStringTask = httpClient.GetStringAsync(url);
+                var responseString = responseStringTask.Result;
+                aia(responseString);
             }
             Console.ReadKey();
-
+            DatePriceT a;
+            return a;
         }
     }
 }

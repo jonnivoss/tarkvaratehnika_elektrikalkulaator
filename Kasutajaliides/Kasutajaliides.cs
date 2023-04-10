@@ -19,7 +19,11 @@ namespace Kasutajaliides
         List<DateTime> time = new List<DateTime>();
         List<double> cost = new List<double>();
 
+        List<DateTime> timeRange = new List<DateTime>();
+        List<double> costRange = new List<double>();
+
         VecT data = new VecT();
+        VecT newData = new VecT();
         string fileContents;
 
         private Andmepyydja.CAP AP = new Andmepyydja.CAP();
@@ -30,6 +34,25 @@ namespace Kasutajaliides
         private void updateGraph()
         {
             // Uuenda graafikut
+            newData = AP.parseContents(fileContents);
+
+            timeRange.Clear();
+            costRange.Clear();
+
+            foreach(var item in newData) {
+                if(item.Item1 >= startTime && item.Item1 <= stopTime)
+                {
+                    timeRange.Add(item.Item1);
+                    costRange.Add(item.Item2);
+
+                    string line = item.Item1.ToString() + ": " + item.Item2.ToString();
+
+                    txtDebug.AppendText(line);
+                    txtDebug.AppendText(Environment.NewLine);
+                }
+            }
+            chartPrice.Series["Tarbimine"].Points.DataBindXY(timeRange, costRange);
+            chartPrice.Invalidate();
         }
 
 

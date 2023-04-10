@@ -116,27 +116,28 @@ namespace Andmepyydja
             
             string[] nameParts = a.Split('{','[','}',']',',');
             VecT nett = null;
-            for(int i = 4; i < nameParts.Length; i ++)
+            for (int i = 4; i < nameParts.Length; i += 2)
             {
-                if(String.Equals(nameParts[i],"\"fi\":"))
+                int olenA = i - 1;
+                if (String.Equals(nameParts[i], "\"fi\":") || String.Equals(nameParts[olenA], "\"fi\":"))
                 {
                     break;
                 }
-                if(String.IsNullOrEmpty(nameParts[i]))
+                if (String.IsNullOrEmpty(nameParts[i]))
                 {
                     continue;
                 }
-                nameParts[i] = nameParts[i].Substring(nameParts[i].IndexOf(":")+1);
-                if ((i % 2) == 1)
-                {
-                    DateTime aiabljasanahkateed = abua(nameParts[i]);
-                    Console.Write(aiabljasanahkateed + " ");
-                }
-                else
-                {
-                    float floatValue = float.Parse(nameParts[i], CultureInfo.InvariantCulture.NumberFormat);
-                    Console.WriteLine(floatValue);
-                }
+
+                string asd = nameParts[olenA].Substring(nameParts[olenA].IndexOf(":") + 1);
+                string hdd = nameParts[i].Substring(nameParts[i].IndexOf(":") + 1);
+
+                DateTime aiabljasanahkateed = abua(asd);
+                Console.Write(aiabljasanahkateed + "\t");
+
+                double floatValue = double.Parse(hdd, CultureInfo.InvariantCulture.NumberFormat);
+
+                Console.WriteLine(floatValue + "\t");
+                DatePriceT ime = Tuple.Create(aiabljasanahkateed,floatValue);
             }
             return nett;
         }

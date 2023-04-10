@@ -103,7 +103,7 @@ namespace Andmepyydja
 
 
 
-        DateTime abua(string a)
+        public DateTime abua(string a)
         {
             long unixTime = long.Parse(a);
             DateTimeOffset systemTime = DateTimeOffset.FromUnixTimeSeconds(unixTime);
@@ -111,11 +111,11 @@ namespace Andmepyydja
             return yez;
         }
 
-        void aia(string a)
+        public VecT aia(string a)
         {
             
             string[] nameParts = a.Split('{','[','}',']',',');
-            
+            VecT nett = null;
             for(int i = 4; i < nameParts.Length; i ++)
             {
                 if(String.Equals(nameParts[i],"\"fi\":"))
@@ -138,14 +138,15 @@ namespace Andmepyydja
                     Console.WriteLine(floatValue);
                 }
             }
-
+            return nett;
         }
 
         
-        DatePriceT iseOled(DateTime algus, DateTime lopp)
+        public VecT iseOled(DateTime algus, DateTime lopp)
         {
             string urla = "https://dashboard.elering.ee/api/nps/price?";
             algus = DateTime.Now;
+            VecT asd;
             Console.WriteLine(algus.ToString("yyyy-MM-ddTHH"));
             using (var httpClient = new HttpClient())
             {
@@ -158,11 +159,11 @@ namespace Andmepyydja
 
                 var responseStringTask = httpClient.GetStringAsync(url);
                 var responseString = responseStringTask.Result;
-                aia(responseString);
+                asd = aia(responseString);
             }
             Console.ReadKey();
-            DatePriceT a;
-            return a;
+            
+            return asd;
         }
     }
 }

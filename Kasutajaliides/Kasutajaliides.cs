@@ -23,6 +23,16 @@ namespace Kasutajaliides
         string fileContents;
 
         private Andmepyydja.CAP AP = new Andmepyydja.CAP();
+
+        DateTime startTime, stopTime;
+        bool showStock = true, isGraph = true;
+
+        private void updateGraph()
+        {
+            // Uuenda graafikut
+        }
+
+
         private void btnAvaCSV_Click(object sender, EventArgs e)
         {
             if (AP.chooseFile() && AP.readFile(ref fileContents))
@@ -42,8 +52,8 @@ namespace Kasutajaliides
                     txtDebug.AppendText(line);
                     txtDebug.AppendText(Environment.NewLine);
                 }
-                chartElektrihind.Series["Tarbimine"].Points.DataBindXY(time, cost);
-                chartElektrihind.Invalidate();
+                chartPrice.Series["Tarbimine"].Points.DataBindXY(time, cost);
+                chartPrice.Invalidate();
             }
 
             
@@ -56,7 +66,7 @@ namespace Kasutajaliides
 
         private void Kasutajaliides_Load(object sender, EventArgs e)
         {
-            chartElektrihind.Series["Elektrihind"].Points.DataBindXY(time, data);
+            chartPrice.Series["Elektrihind"].Points.DataBindXY(time, data);
         }
 
         private void txtAjakulu_KeyPress(object sender, KeyPressEventArgs e)
@@ -83,22 +93,53 @@ namespace Kasutajaliides
 
         private void dateStartTime_ValueChanged(object sender, EventArgs e)
         {
-
+            // Sea uus algusaeg
+            this.startTime = dateStartTime.Value;
+            updateGraph();
         }
 
         private void dateStopTime_ValueChanged(object sender, EventArgs e)
         {
-
+            // Sea uus lõppaeg
+            this.stopTime = dateStopTime.Value;
+            updateGraph();
         }
 
         private void cbShowPrice_CheckedChanged(object sender, EventArgs e)
         {
-
+            var state = cbShowPrice.Checked;
+            if (state)
+            {
+                // Kuva börsihinda
+                showStock = true;
+                updateGraph();
+            }
+            else
+            {
+                // Kuva fikshinda
+                showStock = false;
+                updateGraph();
+            }
         }
 
         private void cbShowTabel_CheckedChanged(object sender, EventArgs e)
         {
-
+            var state = cbShowTabel.Checked;
+            if (state)
+            {
+                // Kuva tabel
+                chartPrice.Visible = false;
+                tablePrice.Visible = true;
+                isGraph = false;
+            }
+            else
+            {
+                // Kuva graafik
+                tablePrice.Visible = false;
+                chartPrice.Visible = true;
+                isGraph = true;
+            }
+            updateGraph();
         }
 
         private void rbStockPrice_CheckedChanged(object sender, EventArgs e)

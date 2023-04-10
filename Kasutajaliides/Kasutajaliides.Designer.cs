@@ -39,7 +39,7 @@ namespace Kasutajaliides
             System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint5 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(45028D, 421D);
             System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint6 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(45029D, 69D);
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            this.chartElektrihind = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chartPrice = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.cbKasutusmall = new System.Windows.Forms.ComboBox();
             this.lblKasutusmall = new System.Windows.Forms.Label();
             this.lblAeg = new System.Windows.Forms.Label();
@@ -61,25 +61,29 @@ namespace Kasutajaliides
             this.rbStockPrice = new System.Windows.Forms.RadioButton();
             this.rbMonthlyCost = new System.Windows.Forms.RadioButton();
             this.tbMonthlyPrice = new System.Windows.Forms.TextBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            ((System.ComponentModel.ISupportInitialize)(this.chartElektrihind)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.groupPriceType = new System.Windows.Forms.GroupBox();
+            this.tablePrice = new System.Windows.Forms.DataGridView();
+            this.Aeg = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Hind = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.chartPrice)).BeginInit();
+            this.groupPriceType.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tablePrice)).BeginInit();
             this.SuspendLayout();
             // 
-            // chartElektrihind
+            // chartPrice
             // 
             chartArea1.AxisX.MajorGrid.Enabled = false;
             chartArea1.AxisY.MajorGrid.Enabled = false;
             chartArea1.Name = "ChartArea1";
-            this.chartElektrihind.ChartAreas.Add(chartArea1);
+            this.chartPrice.ChartAreas.Add(chartArea1);
             legend1.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             legend1.IsTextAutoFit = false;
             legend1.Name = "Legend1";
-            this.chartElektrihind.Legends.Add(legend1);
-            this.chartElektrihind.Location = new System.Drawing.Point(289, 13);
-            this.chartElektrihind.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.chartElektrihind.Name = "chartElektrihind";
-            this.chartElektrihind.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
+            this.chartPrice.Legends.Add(legend1);
+            this.chartPrice.Location = new System.Drawing.Point(289, 13);
+            this.chartPrice.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.chartPrice.Name = "chartPrice";
+            this.chartPrice.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
             series1.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -100,11 +104,11 @@ namespace Kasutajaliides
             series2.Name = "Tarbimine";
             series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
             series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            this.chartElektrihind.Series.Add(series1);
-            this.chartElektrihind.Series.Add(series2);
-            this.chartElektrihind.Size = new System.Drawing.Size(742, 485);
-            this.chartElektrihind.TabIndex = 0;
-            this.chartElektrihind.Text = "chartElektrihind";
+            this.chartPrice.Series.Add(series1);
+            this.chartPrice.Series.Add(series2);
+            this.chartPrice.Size = new System.Drawing.Size(742, 485);
+            this.chartPrice.TabIndex = 0;
+            this.chartPrice.Text = "chartElektrihind";
             // 
             // cbKasutusmall
             // 
@@ -355,27 +359,54 @@ namespace Kasutajaliides
             this.tbMonthlyPrice.TabIndex = 22;
             this.tbMonthlyPrice.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbMonthlyPrice_KeyPress);
             // 
-            // groupBox1
+            // groupPriceType
             // 
-            this.groupBox1.Controls.Add(this.tbMonthlyPrice);
-            this.groupBox1.Controls.Add(this.rbMonthlyCost);
-            this.groupBox1.Controls.Add(this.rbStockPrice);
-            this.groupBox1.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(289, 548);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.groupBox1.Size = new System.Drawing.Size(210, 79);
-            this.groupBox1.TabIndex = 23;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Hinnatüüp";
+            this.groupPriceType.Controls.Add(this.tbMonthlyPrice);
+            this.groupPriceType.Controls.Add(this.rbMonthlyCost);
+            this.groupPriceType.Controls.Add(this.rbStockPrice);
+            this.groupPriceType.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupPriceType.Location = new System.Drawing.Point(289, 548);
+            this.groupPriceType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.groupPriceType.Name = "groupPriceType";
+            this.groupPriceType.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.groupPriceType.Size = new System.Drawing.Size(210, 79);
+            this.groupPriceType.TabIndex = 23;
+            this.groupPriceType.TabStop = false;
+            this.groupPriceType.Text = "Hinnatüüp";
+            // 
+            // tablePrice
+            // 
+            this.tablePrice.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tablePrice.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Aeg,
+            this.Hind});
+            this.tablePrice.Location = new System.Drawing.Point(289, 13);
+            this.tablePrice.Name = "tablePrice";
+            this.tablePrice.RowHeadersWidth = 51;
+            this.tablePrice.RowTemplate.Height = 24;
+            this.tablePrice.Size = new System.Drawing.Size(742, 484);
+            this.tablePrice.TabIndex = 24;
+            // 
+            // Aeg
+            // 
+            this.Aeg.HeaderText = "Aeg";
+            this.Aeg.MinimumWidth = 6;
+            this.Aeg.Name = "Aeg";
+            this.Aeg.Width = 125;
+            // 
+            // Hind
+            // 
+            this.Hind.HeaderText = "Hind";
+            this.Hind.MinimumWidth = 6;
+            this.Hind.Name = "Hind";
+            this.Hind.Width = 125;
             // 
             // Kasutajaliides
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1042, 639);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupPriceType);
             this.Controls.Add(this.cbShowTabel);
             this.Controls.Add(this.cbShowPrice);
             this.Controls.Add(this.dateStopTime);
@@ -394,15 +425,17 @@ namespace Kasutajaliides
             this.Controls.Add(this.lblAeg);
             this.Controls.Add(this.lblKasutusmall);
             this.Controls.Add(this.cbKasutusmall);
-            this.Controls.Add(this.chartElektrihind);
+            this.Controls.Add(this.chartPrice);
+            this.Controls.Add(this.tablePrice);
             this.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.Name = "Kasutajaliides";
             this.Text = "Elektrihinna kalkulaator";
             this.Load += new System.EventHandler(this.Kasutajaliides_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.chartElektrihind)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartPrice)).EndInit();
+            this.groupPriceType.ResumeLayout(false);
+            this.groupPriceType.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tablePrice)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -410,7 +443,7 @@ namespace Kasutajaliides
 
         #endregion
 
-        private System.Windows.Forms.DataVisualization.Charting.Chart chartElektrihind;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartPrice;
         private System.Windows.Forms.ComboBox cbKasutusmall;
         private System.Windows.Forms.Label lblKasutusmall;
         private System.Windows.Forms.Label lblAeg;
@@ -432,7 +465,10 @@ namespace Kasutajaliides
         private System.Windows.Forms.RadioButton rbStockPrice;
         private System.Windows.Forms.RadioButton rbMonthlyCost;
         private System.Windows.Forms.TextBox tbMonthlyPrice;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupPriceType;
+        private System.Windows.Forms.DataGridView tablePrice;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Aeg;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Hind;
     }
 }
 

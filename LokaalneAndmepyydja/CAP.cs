@@ -132,16 +132,16 @@ namespace Andmepyydja
         }
 
         
-        static DatePriceT iseOled()
+        static DatePriceT iseOled(DateTime algus, DateTime lopp)
         {
             string urla = "https://dashboard.elering.ee/api/nps/price?";
-
-
+            algus = DateTime.Now;
+            Console.WriteLine(algus.ToString("yyyy-MM-ddTHH"));
             using (var httpClient = new HttpClient())
             {
                 string starTime = "2023-04-10T20";
                 string endTime = "2023-04-12T23";
-                string url = urla + "start=" + starTime + "%3A00%3A00.999Z&end=" + endTime + "%3A00%3A00.999Z";
+                string url = urla + "start=" + algus.ToString("yyyy-MM-ddTHH") + "%3A00%3A00.999Z&end=" + endTime + "%3A00%3A00.999Z";
 
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));

@@ -132,10 +132,10 @@ namespace Andmepyydja
         }
 
         
-        static void iseOled()
+        static DatePriceT iseOled()
         {
             string urla = "https://dashboard.elering.ee/api/nps/price?";
-            // Console.WriteLine("mine putsi \n");
+
 
             using (var httpClient = new HttpClient())
             {
@@ -151,6 +151,8 @@ namespace Andmepyydja
                 aia(responseString);
             }
             Console.ReadKey();
+            DatePriceT a;
+            return a;
         }
     }
 }

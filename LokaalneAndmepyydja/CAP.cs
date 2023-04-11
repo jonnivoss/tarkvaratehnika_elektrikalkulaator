@@ -143,7 +143,7 @@ namespace Andmepyydja
             return nett;
         }
 
-        
+        //max lopp aeg on järgmise päev 21:00
         public VecT iseOled(DateTime algus, DateTime lopp)
         {
             string urla = "https://dashboard.elering.ee/api/nps/price?";

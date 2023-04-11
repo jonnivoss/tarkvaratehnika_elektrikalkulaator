@@ -129,23 +129,24 @@ namespace Andmepyydja
                 var responseStringTask = httpClient.GetStringAsync(url);
                 var responseString = responseStringTask.Result;
 
-                string[] nameParts = responseString.Split('{', '[', '}', ']', ',');
+                //siin jagatakse üks suur api vastuse sõne sõnede jadaks
+                string[] vastuseSõned = responseString.Split('{', '[', '}', ']', ',');
                 
-                for (int i = 4; i < nameParts.Length; i += 2)
+                for (int i = 4; i < vastuseSõned.Length; i += 2)
                 {
                     int eli = i - 1;
-                    if (String.Equals(nameParts[i], "\"fi\":") || String.Equals(nameParts[eli], "\"fi\":"))
+                    if (String.Equals(vastuseSõned[i], "\"fi\":") || String.Equals(vastuseSõned[eli], "\"fi\":"))
                     {
                         break;
                     }
-                    if (String.IsNullOrEmpty(nameParts[i]))
+                    if (String.IsNullOrEmpty(vastuseSõned[i]))
                     {
                         continue;
                     }
 
                     //siin eraldatakse numbrid sõnadest
-                    string ajaString = nameParts[eli].Substring(nameParts[eli].IndexOf(":") + 1);
-                    string hinnaString = nameParts[i].Substring(nameParts[i].IndexOf(":") + 1);
+                    string ajaString = vastuseSõned[eli].Substring(vastuseSõned[eli].IndexOf(":") + 1);
+                    string hinnaString = vastuseSõned[i].Substring(vastuseSõned[i].IndexOf(":") + 1);
 
                     //siin muudetakse string numbriteks
                     DateTime aeg = UnixToDateTime(ajaString);

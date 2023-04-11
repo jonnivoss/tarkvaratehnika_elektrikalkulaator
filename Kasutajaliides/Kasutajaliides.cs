@@ -27,8 +27,13 @@ namespace Kasutajaliides
         List<DateTime> timeRange = new List<DateTime>();
         List<double> costRange = new List<double>();
 
+        List<DateTime> priceTime = new List<DateTime>();
+        List<double> price = new List<double>();
+
         VecT data = new VecT();
         string fileContents;
+
+        VecT priceData = new VecT();
 
         private Andmepyydja.CAP AP = new Andmepyydja.CAP();
         private AndmeSalvestaja.CAS AS = new AndmeSalvestaja.CAS("settings.json");
@@ -89,8 +94,8 @@ namespace Kasutajaliides
                 txtDebug.AppendText(line);
                 txtDebug.AppendText(Environment.NewLine);
             }
-            chartPrice.Series["Tarbimine"].Points.DataBindXY(time, cost);
-            chartPrice.Invalidate();
+            //chartPrice.Series["Tarbimine"].Points.DataBindXY(time, cost);
+            //chartPrice.Invalidate();
 
             dateStartTime.MinDate = time.First();
             dateStartTime.MaxDate = time.Last();
@@ -98,6 +103,18 @@ namespace Kasutajaliides
             dateStopTime.MaxDate = time.Last();
             dateStartTime.Value = time.First();
             dateStopTime.Value = time.Last();
+
+            priceTime.Clear();
+            price.Clear();
+
+            priceData = AP.HindAegInternet(time.First(), time.Last());
+            foreach (var item in priceData)
+            {
+                priceTime.Add(item.Item1);
+                price.Add(item.Item2);
+            }
+            chartPrice.Series["Elektrihind"].Points.DataBindY(price);
+            chartPrice.Invalidate();
         }
         
 

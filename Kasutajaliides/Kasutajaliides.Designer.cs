@@ -32,12 +32,6 @@ namespace Kasutajaliides
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(44956D, 250D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(44959D, 420D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint3 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(44960D, 50D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint4 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(44963D, 56D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint5 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(45028D, 421D);
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint6 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(45029D, 69D);
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chartPrice = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.cbKasutusmall = new System.Windows.Forms.ComboBox();
@@ -94,13 +88,8 @@ namespace Kasutajaliides
             series1.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             series1.Legend = "Legend1";
             series1.Name = "Elektrihind";
-            series1.Points.Add(dataPoint1);
-            series1.Points.Add(dataPoint2);
-            series1.Points.Add(dataPoint3);
-            series1.Points.Add(dataPoint4);
-            series1.Points.Add(dataPoint5);
-            series1.Points.Add(dataPoint6);
             series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series1.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
             series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             series2.ChartArea = "ChartArea1";
             series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;

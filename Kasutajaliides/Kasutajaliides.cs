@@ -27,6 +27,9 @@ namespace Kasutajaliides
         List<DateTime> timeRange = new List<DateTime>();
         List<double> costRange = new List<double>();
 
+        List<DateTime> priceTimeRange = new List<DateTime>();
+        List<double> priceCostRange = new List<double>();
+
         List<DateTime> priceTime = new List<DateTime>();
         List<double> price = new List<double>();
 
@@ -59,7 +62,17 @@ namespace Kasutajaliides
                     txtDebug.AppendText(Environment.NewLine);
                 }
             }
+            foreach(var item in priceData)
+            {
+                if (item.Item1 >= startTime && item.Item1 <= stopTime)
+                {
+                    priceTimeRange.Add(item.Item1);
+                    priceCostRange.Add(item.Item2);
+                }
+            }
+
             chartPrice.Series["Tarbimine"].Points.DataBindXY(timeRange, costRange);
+            chartPrice.Series["Elektrihind"].Points.DataBindXY(priceTimeRange, priceCostRange);
             chartPrice.Invalidate();
         }
 
@@ -208,6 +221,11 @@ namespace Kasutajaliides
         {
             // Salvestab sätted
             AS.saveFile();
+        }
+
+        private void btnElektriHind_Click(object sender, EventArgs e)
+        {
+            updateGraph();
         }
 
         private void rbStockPrice_CheckedChanged(object sender, EventArgs e)

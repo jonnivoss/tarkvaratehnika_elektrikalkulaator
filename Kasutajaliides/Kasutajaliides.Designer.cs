@@ -60,6 +60,7 @@ namespace Kasutajaliides
             this.Aeg = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Hind = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.btnElektriHind = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chartPrice)).BeginInit();
             this.groupPriceType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablePrice)).BeginInit();
@@ -396,11 +397,22 @@ namespace Kasutajaliides
             this.Hind.Name = "Hind";
             this.Hind.Width = 125;
             // 
+            // btnElektriHind
+            // 
+            this.btnElektriHind.Location = new System.Drawing.Point(761, 567);
+            this.btnElektriHind.Name = "btnElektriHind";
+            this.btnElektriHind.Size = new System.Drawing.Size(131, 22);
+            this.btnElektriHind.TabIndex = 25;
+            this.btnElektriHind.Text = "Kuva elektrihind";
+            this.btnElektriHind.UseVisualStyleBackColor = true;
+            this.btnElektriHind.Click += new System.EventHandler(this.btnElektriHind_Click);
+            // 
             // Kasutajaliides
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1042, 674);
+            this.Controls.Add(this.btnElektriHind);
             this.Controls.Add(this.groupPriceType);
             this.Controls.Add(this.cbShowTabel);
             this.Controls.Add(this.cbShowPrice);
@@ -466,6 +478,7 @@ namespace Kasutajaliides
         private System.Windows.Forms.DataGridViewTextBoxColumn Aeg;
         private System.Windows.Forms.DataGridViewTextBoxColumn Hind;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Button btnElektriHind;
     }
 }
 

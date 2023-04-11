@@ -122,9 +122,10 @@ namespace Andmepyydja
             {
                 string url = urla + "start=" + algus.ToString("yyyy-MM-ddTHH") + "%3A00%3A00.999Z&end=" + lopp.ToString("yyyy-MM-ddTHH") + "%3A00%3A00.999Z";
 
+                //siin saadab Apile requesti ja salvestab selle vastuse stringi
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
-
+                
                 var responseStringTask = httpClient.GetStringAsync(url);
                 var responseString = responseStringTask.Result;
 
@@ -132,8 +133,8 @@ namespace Andmepyydja
                 
                 for (int i = 4; i < nameParts.Length; i += 2)
                 {
-                    int olenA = i - 1;
-                    if (String.Equals(nameParts[i], "\"fi\":") || String.Equals(nameParts[olenA], "\"fi\":"))
+                    int eli = i - 1;
+                    if (String.Equals(nameParts[i], "\"fi\":") || String.Equals(nameParts[eli], "\"fi\":"))
                     {
                         break;
                     }
@@ -142,23 +143,19 @@ namespace Andmepyydja
                         continue;
                     }
 
-                    string asd = nameParts[olenA].Substring(nameParts[olenA].IndexOf(":") + 1);
-                    string hdd = nameParts[i].Substring(nameParts[i].IndexOf(":") + 1);
+                    //siin eraldatakse numbrid sõnadest
+                    string ajaString = nameParts[eli].Substring(nameParts[eli].IndexOf(":") + 1);
+                    string hinnaString = nameParts[i].Substring(nameParts[i].IndexOf(":") + 1);
 
-                    DateTime aiabljasanahkateed = UnixToDateTime(asd);
-                    //Console.Write(aiabljasanahkateed + "\t");
+                    //siin muudetakse string numbriteks
+                    DateTime aeg = UnixToDateTime(ajaString);
+                    double hind = double.Parse(hinnaString, CultureInfo.InvariantCulture.NumberFormat);
 
-                    double floatValue = double.Parse(hdd, CultureInfo.InvariantCulture.NumberFormat);
-
-                    //Console.WriteLine(floatValue + "\t");
-                    DatePriceT ime = Tuple.Create(aiabljasanahkateed, floatValue);
+                    //ühendab hinna ja aja ning lisab selle VecT-i
+                    DatePriceT ime = Tuple.Create(aeg, hind);
                     nett.Add(ime);
-                }
-
-                
+                }   
             }
-            
-            
             return nett;
         }
     }

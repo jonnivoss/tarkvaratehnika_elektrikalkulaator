@@ -23,7 +23,7 @@ namespace AndmeSalvestaja
     public class CAS : AndmeSalvestaja.IAS
     {
         private string path = "";
-        private Serializable data;
+        private Serializable data = new Serializable();
 
         public CAS(string savepath)
         {

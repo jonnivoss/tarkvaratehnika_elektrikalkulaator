@@ -178,6 +178,12 @@ namespace Kasutajaliides
             updateGraph();
         }
 
+        private void Kasutajaliides_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Salvestab sätted
+            AS.saveFile();
+        }
+
         private void rbStockPrice_CheckedChanged(object sender, EventArgs e)
         {
             var state = rbStockPrice.Checked;

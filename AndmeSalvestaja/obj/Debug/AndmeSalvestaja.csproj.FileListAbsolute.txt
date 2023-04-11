@@ -16,3 +16,6 @@ C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvesta
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\obj\Debug\AndmeSalvestaja.csproj.CoreCompileInputs.cache
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\obj\Debug\AndmeSalvestaja.dll
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\obj\Debug\AndmeSalvestaja.pdb
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\bin\Debug\Newtonsoft.Json.dll
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\bin\Debug\Newtonsoft.Json.xml
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\obj\Debug\AndmeSalvestaja.csproj.CopyComplete

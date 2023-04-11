@@ -65,6 +65,7 @@ namespace Kasutajaliides
             this.tablePrice = new System.Windows.Forms.DataGridView();
             this.Aeg = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Hind = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.chartPrice)).BeginInit();
             this.groupPriceType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablePrice)).BeginInit();
@@ -73,7 +74,11 @@ namespace Kasutajaliides
             // chartPrice
             // 
             chartArea1.AxisX.MajorGrid.Enabled = false;
+            chartArea1.AxisX.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Horizontal;
+            chartArea1.AxisX.Title = "Aeg";
             chartArea1.AxisY.MajorGrid.Enabled = false;
+            chartArea1.AxisY.Title = "kWh";
+            chartArea1.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
             chartArea1.Name = "ChartArea1";
             this.chartPrice.ChartAreas.Add(chartArea1);
             legend1.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -131,7 +136,7 @@ namespace Kasutajaliides
             this.cbKasutusmall.Location = new System.Drawing.Point(14, 66);
             this.cbKasutusmall.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbKasutusmall.Name = "cbKasutusmall";
-            this.cbKasutusmall.Size = new System.Drawing.Size(240, 33);
+            this.cbKasutusmall.Size = new System.Drawing.Size(240, 28);
             this.cbKasutusmall.TabIndex = 2;
             // 
             // lblKasutusmall
@@ -141,7 +146,7 @@ namespace Kasutajaliides
             this.lblKasutusmall.Location = new System.Drawing.Point(11, 38);
             this.lblKasutusmall.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblKasutusmall.Name = "lblKasutusmall";
-            this.lblKasutusmall.Size = new System.Drawing.Size(160, 25);
+            this.lblKasutusmall.Size = new System.Drawing.Size(130, 20);
             this.lblKasutusmall.TabIndex = 3;
             this.lblKasutusmall.Text = "Kasutusmalli valik";
             // 
@@ -152,7 +157,7 @@ namespace Kasutajaliides
             this.lblAeg.Location = new System.Drawing.Point(11, 113);
             this.lblAeg.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblAeg.Name = "lblAeg";
-            this.lblAeg.Size = new System.Drawing.Size(76, 25);
+            this.lblAeg.Size = new System.Drawing.Size(59, 20);
             this.lblAeg.TabIndex = 4;
             this.lblAeg.Text = "Ajakulu:";
             // 
@@ -162,7 +167,7 @@ namespace Kasutajaliides
             this.txtAjakulu.Location = new System.Drawing.Point(14, 141);
             this.txtAjakulu.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtAjakulu.Name = "txtAjakulu";
-            this.txtAjakulu.Size = new System.Drawing.Size(183, 30);
+            this.txtAjakulu.Size = new System.Drawing.Size(183, 26);
             this.txtAjakulu.TabIndex = 5;
             this.txtAjakulu.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAjakulu_KeyPress);
             // 
@@ -173,7 +178,7 @@ namespace Kasutajaliides
             this.lblTund.Location = new System.Drawing.Point(201, 143);
             this.lblTund.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTund.Name = "lblTund";
-            this.lblTund.Size = new System.Drawing.Size(53, 25);
+            this.lblTund.Size = new System.Drawing.Size(42, 20);
             this.lblTund.TabIndex = 6;
             this.lblTund.Text = "tundi";
             // 
@@ -184,7 +189,7 @@ namespace Kasutajaliides
             this.lblVoimsus.Location = new System.Drawing.Point(10, 196);
             this.lblVoimsus.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblVoimsus.Name = "lblVoimsus";
-            this.lblVoimsus.Size = new System.Drawing.Size(126, 25);
+            this.lblVoimsus.Size = new System.Drawing.Size(102, 20);
             this.lblVoimsus.TabIndex = 7;
             this.lblVoimsus.Text = "Võimsustarve:";
             // 
@@ -194,7 +199,7 @@ namespace Kasutajaliides
             this.txtVoimsus.Location = new System.Drawing.Point(14, 224);
             this.txtVoimsus.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtVoimsus.Name = "txtVoimsus";
-            this.txtVoimsus.Size = new System.Drawing.Size(183, 30);
+            this.txtVoimsus.Size = new System.Drawing.Size(183, 26);
             this.txtVoimsus.TabIndex = 8;
             this.txtVoimsus.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtVoimsus_KeyPress);
             // 
@@ -205,7 +210,7 @@ namespace Kasutajaliides
             this.lblkW.Location = new System.Drawing.Point(201, 226);
             this.lblkW.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblkW.Name = "lblkW";
-            this.lblkW.Size = new System.Drawing.Size(38, 25);
+            this.lblkW.Size = new System.Drawing.Size(30, 20);
             this.lblkW.TabIndex = 9;
             this.lblkW.Text = "kW";
             // 
@@ -216,7 +221,7 @@ namespace Kasutajaliides
             this.lblHind.Location = new System.Drawing.Point(10, 273);
             this.lblHind.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblHind.Name = "lblHind";
-            this.lblHind.Size = new System.Drawing.Size(52, 25);
+            this.lblHind.Size = new System.Drawing.Size(41, 20);
             this.lblHind.TabIndex = 10;
             this.lblHind.Text = "Hind:";
             // 
@@ -227,7 +232,7 @@ namespace Kasutajaliides
             this.txtHind.Location = new System.Drawing.Point(14, 301);
             this.txtHind.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtHind.Name = "txtHind";
-            this.txtHind.Size = new System.Drawing.Size(183, 30);
+            this.txtHind.Size = new System.Drawing.Size(183, 26);
             this.txtHind.TabIndex = 11;
             // 
             // btnAvaCSV
@@ -259,7 +264,7 @@ namespace Kasutajaliides
             this.label1.Location = new System.Drawing.Point(289, 506);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(60, 25);
+            this.label1.Size = new System.Drawing.Size(47, 20);
             this.label1.TabIndex = 14;
             this.label1.Text = "Algus:";
             // 
@@ -269,7 +274,7 @@ namespace Kasutajaliides
             this.dateStartTime.Location = new System.Drawing.Point(353, 506);
             this.dateStartTime.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.dateStartTime.Name = "dateStartTime";
-            this.dateStartTime.Size = new System.Drawing.Size(304, 32);
+            this.dateStartTime.Size = new System.Drawing.Size(304, 27);
             this.dateStartTime.TabIndex = 15;
             this.dateStartTime.ValueChanged += new System.EventHandler(this.dateStartTime_ValueChanged);
             // 
@@ -280,7 +285,7 @@ namespace Kasutajaliides
             this.label2.Location = new System.Drawing.Point(669, 506);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(54, 25);
+            this.label2.Size = new System.Drawing.Size(42, 20);
             this.label2.TabIndex = 16;
             this.label2.Text = "Lõpp:";
             // 
@@ -290,7 +295,7 @@ namespace Kasutajaliides
             this.dateStopTime.Location = new System.Drawing.Point(727, 506);
             this.dateStopTime.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.dateStopTime.Name = "dateStopTime";
-            this.dateStopTime.Size = new System.Drawing.Size(304, 32);
+            this.dateStopTime.Size = new System.Drawing.Size(304, 27);
             this.dateStopTime.TabIndex = 17;
             this.dateStopTime.ValueChanged += new System.EventHandler(this.dateStopTime_ValueChanged);
             // 
@@ -303,7 +308,7 @@ namespace Kasutajaliides
             this.cbShowPrice.Location = new System.Drawing.Point(11, 530);
             this.cbShowPrice.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbShowPrice.Name = "cbShowPrice";
-            this.cbShowPrice.Size = new System.Drawing.Size(166, 29);
+            this.cbShowPrice.Size = new System.Drawing.Size(135, 24);
             this.cbShowPrice.TabIndex = 18;
             this.cbShowPrice.Text = "Kuva elektrihind";
             this.cbShowPrice.UseVisualStyleBackColor = true;
@@ -316,7 +321,7 @@ namespace Kasutajaliides
             this.cbShowTabel.Location = new System.Drawing.Point(11, 565);
             this.cbShowTabel.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbShowTabel.Name = "cbShowTabel";
-            this.cbShowTabel.Size = new System.Drawing.Size(119, 29);
+            this.cbShowTabel.Size = new System.Drawing.Size(97, 24);
             this.cbShowTabel.TabIndex = 19;
             this.cbShowTabel.Text = "Kuva tabel";
             this.cbShowTabel.UseVisualStyleBackColor = true;
@@ -330,7 +335,7 @@ namespace Kasutajaliides
             this.rbStockPrice.Location = new System.Drawing.Point(10, 25);
             this.rbStockPrice.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.rbStockPrice.Name = "rbStockPrice";
-            this.rbStockPrice.Size = new System.Drawing.Size(110, 29);
+            this.rbStockPrice.Size = new System.Drawing.Size(90, 24);
             this.rbStockPrice.TabIndex = 20;
             this.rbStockPrice.TabStop = true;
             this.rbStockPrice.Text = "Börsihind";
@@ -344,7 +349,7 @@ namespace Kasutajaliides
             this.rbMonthlyCost.Location = new System.Drawing.Point(10, 60);
             this.rbMonthlyCost.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.rbMonthlyCost.Name = "rbMonthlyCost";
-            this.rbMonthlyCost.Size = new System.Drawing.Size(99, 29);
+            this.rbMonthlyCost.Size = new System.Drawing.Size(81, 24);
             this.rbMonthlyCost.TabIndex = 21;
             this.rbMonthlyCost.Text = "Kuutasu";
             this.rbMonthlyCost.UseVisualStyleBackColor = true;
@@ -356,7 +361,7 @@ namespace Kasutajaliides
             this.tbMonthlyPrice.Location = new System.Drawing.Point(126, 59);
             this.tbMonthlyPrice.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.tbMonthlyPrice.Name = "tbMonthlyPrice";
-            this.tbMonthlyPrice.Size = new System.Drawing.Size(214, 32);
+            this.tbMonthlyPrice.Size = new System.Drawing.Size(214, 27);
             this.tbMonthlyPrice.TabIndex = 22;
             this.tbMonthlyPrice.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbMonthlyPrice_KeyPress);
             // 
@@ -404,7 +409,7 @@ namespace Kasutajaliides
             // 
             // Kasutajaliides
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1042, 674);
             this.Controls.Add(this.groupPriceType);
@@ -471,6 +476,7 @@ namespace Kasutajaliides
         private System.Windows.Forms.DataGridView tablePrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn Aeg;
         private System.Windows.Forms.DataGridViewTextBoxColumn Hind;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 

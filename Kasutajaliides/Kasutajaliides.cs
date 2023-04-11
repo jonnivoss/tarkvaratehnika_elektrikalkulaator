@@ -21,19 +21,13 @@ namespace Kasutajaliides
             InitializeComponent();
         }
 
-        List<DateTime> time = new List<DateTime>();
-        List<double> cost = new List<double>();
-
         List<DateTime> timeRange = new List<DateTime>();
         List<double> costRange = new List<double>();
 
         List<DateTime> priceTimeRange = new List<DateTime>();
         List<double> priceCostRange = new List<double>();
 
-        List<DateTime> priceTime = new List<DateTime>();
-        List<double> price = new List<double>();
-
-        VecT data = new VecT();
+        VecT userData = new VecT();
         string fileContents;
 
         VecT priceData = new VecT();
@@ -50,7 +44,7 @@ namespace Kasutajaliides
             timeRange.Clear();
             costRange.Clear();
 
-            foreach(var item in data) {
+            foreach(var item in userData) {
                 if(item.Item1 >= startTime && item.Item1 <= stopTime)
                 {
                     timeRange.Add(item.Item1);
@@ -62,12 +56,21 @@ namespace Kasutajaliides
                     txtDebug.AppendText(Environment.NewLine);
                 }
             }
+
+            priceTimeRange.Clear();
+            priceCostRange.Clear();
+
             foreach(var item in priceData)
             {
                 if (item.Item1 >= startTime && item.Item1 <= stopTime)
                 {
                     priceTimeRange.Add(item.Item1);
                     priceCostRange.Add(item.Item2);
+
+                    string line = "i: " + item.Item1.ToString() + ": " + item.Item2.ToString();
+
+                    txtDebug.AppendText(line);
+                    txtDebug.AppendText(Environment.NewLine);
                 }
             }
 
@@ -92,49 +95,50 @@ namespace Kasutajaliides
                 MessageBox.Show("Lugemine ebaõnnestus!");
                 return;
             }
-            data = AP.parseContents(fileContents);
+            userData = AP.parseContents(fileContents);
 
-            time.Clear();
-            cost.Clear();
+            timeRange.Clear();
+            costRange.Clear();
 
-            foreach (var item in data)
+            foreach (var item in userData)
             {
-                time.Add(item.Item1);
-                cost.Add(item.Item2);
+                timeRange.Add(item.Item1);
+                costRange.Add(item.Item2);
 
                 string line = item.Item1.ToString() + ": " + item.Item2.ToString();
 
                 txtDebug.AppendText(line);
                 txtDebug.AppendText(Environment.NewLine);
             }
+
             //chartPrice.Series["Tarbimine"].Points.DataBindXY(time, cost);
             //chartPrice.Invalidate();
+            var timeRangeArr = timeRange.ToArray();
 
-            dateStartTime.MinDate = time.First();
-            dateStartTime.MaxDate = time.Last();
-            dateStopTime.MinDate = time.First();
-            dateStopTime.MaxDate = time.Last();
-            dateStartTime.Value = time.First();
-            dateStopTime.Value = time.Last();
+            dateStartTime.MinDate = timeRangeArr[0];
+            dateStartTime.MaxDate = timeRangeArr[timeRangeArr.Length - 1];
+            dateStartTime.Value = timeRangeArr[0];
 
-            priceTime.Clear();
-            price.Clear();
+            dateStopTime.MinDate = timeRangeArr[0];
+            dateStopTime.MaxDate = timeRangeArr[timeRangeArr.Length - 1];           
+            dateStopTime.Value = timeRangeArr[timeRangeArr.Length - 1];
 
-            priceData = AP.HindAegInternet(time.First(), time.Last());
+            priceTimeRange.Clear();
+            priceCostRange.Clear();
+
+            priceData = AP.HindAegInternet(timeRange.First(), timeRange.Last());
+            MessageBox.Show(priceData.Count.ToString());
             foreach (var item in priceData)
             {
-                priceTime.Add(item.Item1);
-                price.Add(item.Item2);
+                priceTimeRange.Add(item.Item1);
+                priceCostRange.Add(item.Item2);
             }
-            chartPrice.Series["Elektrihind"].Points.DataBindY(price);
-            chartPrice.Invalidate();
+            updateGraph();
         }
         
 
         private void Kasutajaliides_Load(object sender, EventArgs e)
         {
-            chartPrice.Series["Elektrihind"].Points.DataBindXY(time, data);
-
             // Proovib avada CSV
             if (!AS.loadFile())
             {

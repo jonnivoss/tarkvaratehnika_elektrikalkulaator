@@ -102,68 +102,76 @@ namespace Andmepyydja
             return v;
         }
 
+
+        public string getFile()
+        {
+            return this.fname;
+        }
+        public void setFile(string filename)
+        {
+            this.fname = filename;
+        }
+
         //siit algab neti otsimine
 
-        DateTime abua(string a)
+
+        //muuda unix standard time DateTimeiks
+        public DateTime UnixToDateTime(string a)
         {
+           
             long unixTime = long.Parse(a);
             DateTimeOffset systemTime = DateTimeOffset.FromUnixTimeSeconds(unixTime);
             DateTime yez = systemTime.UtcDateTime;
             return yez;
         }
 
-        void aia(string a)
-        {
-            
-            string[] nameParts = a.Split('{','[','}',']',',');
-            
-            for(int i = 4; i < nameParts.Length; i ++)
-            {
-                if(String.Equals(nameParts[i],"\"fi\":"))
-                {
-                    break;
-                }
-                if(String.IsNullOrEmpty(nameParts[i]))
-                {
-                    continue;
-                }
-                nameParts[i] = nameParts[i].Substring(nameParts[i].IndexOf(":")+1);
-                if ((i % 2) == 1)
-                {
-                    DateTime aiabljasanahkateed = abua(nameParts[i]);
-                    Console.Write(aiabljasanahkateed + " ");
-                }
-                else
-                {
-                    float floatValue = float.Parse(nameParts[i], CultureInfo.InvariantCulture.NumberFormat);
-                    Console.WriteLine(floatValue);
-                }
-            }
-
-        }
-
-        
-        DatePriceT iseOled(DateTime algus, DateTime lopp)
+        //max lopp aeg on järgmise päev 21:00
+        public VecT HindAegInternet(DateTime algus, DateTime lopp)
         {
             string urla = "https://dashboard.elering.ee/api/nps/price?";
-            // Console.WriteLine("mine putsi \n");
+            algus = DateTime.Now;
+            VecT nett = new VecT();
 
             using (var httpClient = new HttpClient())
             {
-                string starTime = "2023-04-10T20";
-                string endTime = "2023-04-12T23";
-                string url = urla + "start=" + algus.ToString("yyyy-MM-ddTHH") + "%3A00%3A00.999Z&end=" + endTime + "%3A00%3A00.999Z";
+                string url = urla + "start=" + algus.ToString("yyyy-MM-ddTHH") + "%3A00%3A00.999Z&end=" + lopp.ToString("yyyy-MM-ddTHH") + "%3A00%3A00.999Z";
 
+                //siin saadab Apile requesti ja salvestab selle vastuse stringi
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
-
+                
                 var responseStringTask = httpClient.GetStringAsync(url);
                 var responseString = responseStringTask.Result;
-                aia(responseString);
+
+                //siin jagatakse üks suur api vastuse sõne sõnede jadaks
+                string[] vastuseSõned = responseString.Split('{', '[', '}', ']', ',');
+                
+                for (int i = 4; i < vastuseSõned.Length; i += 2)
+                {
+                    int eli = i - 1;
+                    if (String.Equals(vastuseSõned[i], "\"fi\":") || String.Equals(vastuseSõned[eli], "\"fi\":"))
+                    {
+                        break;
+                    }
+                    if (String.IsNullOrEmpty(vastuseSõned[i]))
+                    {
+                        continue;
+                    }
+
+                    //siin eraldatakse numbrid sõnadest
+                    string ajaString = vastuseSõned[eli].Substring(vastuseSõned[eli].IndexOf(":") + 1);
+                    string hinnaString = vastuseSõned[i].Substring(vastuseSõned[i].IndexOf(":") + 1);
+
+                    //siin muudetakse string numbriteks
+                    DateTime aeg = UnixToDateTime(ajaString);
+                    double hind = double.Parse(hinnaString, CultureInfo.InvariantCulture.NumberFormat);
+
+                    //ühendab hinna ja aja ning lisab selle VecT-i
+                    DatePriceT ime = Tuple.Create(aeg, hind);
+                    nett.Add(ime);
+                }   
             }
-            Console.ReadKey();
-            DatePriceT a;
-            return a;
+            return nett;
         }
     }
 }

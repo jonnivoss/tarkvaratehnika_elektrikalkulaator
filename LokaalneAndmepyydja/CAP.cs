@@ -132,11 +132,11 @@ namespace Andmepyydja
                 string hdd = nameParts[i].Substring(nameParts[i].IndexOf(":") + 1);
 
                 DateTime aiabljasanahkateed = abua(asd);
-                Console.Write(aiabljasanahkateed + "\t");
+                //Console.Write(aiabljasanahkateed + "\t");
 
                 double floatValue = double.Parse(hdd, CultureInfo.InvariantCulture.NumberFormat);
 
-                Console.WriteLine(floatValue + "\t");
+                //Console.WriteLine(floatValue + "\t");
                 DatePriceT ime = Tuple.Create(aiabljasanahkateed,floatValue);
                 nett.Add(ime);
             }
@@ -149,7 +149,7 @@ namespace Andmepyydja
             string urla = "https://dashboard.elering.ee/api/nps/price?";
             algus = DateTime.Now;
             VecT asd;
-            Console.WriteLine(algus.ToString("yyyy-MM-ddTHH"));
+            
             using (var httpClient = new HttpClient())
             {
                 string url = urla + "start=" + algus.ToString("yyyy-MM-ddTHH") + "%3A00%3A00.999Z&end=" + lopp.ToString("yyyy-MM-ddTHH") + "%3A00%3A00.999Z";

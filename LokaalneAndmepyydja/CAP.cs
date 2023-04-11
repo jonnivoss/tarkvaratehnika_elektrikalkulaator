@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Net.Http;
 using System.Net;
 
+
 //https://dashboard.elering.ee/assets/api-doc.html#/balance-controller/getAllUsingGET
 
 using DatePriceT = System.Tuple<System.DateTime, double>;
@@ -83,7 +84,11 @@ namespace Andmepyydja
                 DateTime d;
                 try
                 {
-                    d = DateTime.ParseExact(rida[0], "dd.MM.yyyy hh:mm", CultureInfo.InvariantCulture);
+                    d = DateTime.ParseExact(
+                        rida[0],
+                        "dd.MM.yyyy HH:mm",
+                        CultureInfo.InvariantCulture
+                    );
                 }
                 catch (Exception)
                 {
@@ -98,6 +103,14 @@ namespace Andmepyydja
         }
 
 
+        public string getFile()
+        {
+            return this.fname;
+        }
+        public void setFile(string filename)
+        {
+            this.fname = filename;
+        }
 
         //siit algab neti otsimine
 
@@ -105,6 +118,7 @@ namespace Andmepyydja
         //muuda unix standard time DateTimeiks
         public DateTime UnixToDateTime(string a)
         {
+           
             long unixTime = long.Parse(a);
             DateTimeOffset systemTime = DateTimeOffset.FromUnixTimeSeconds(unixTime);
             DateTime yez = systemTime.UtcDateTime;

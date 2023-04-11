@@ -19,7 +19,8 @@ namespace Andmepyydja
 
         
         VecT parseContents(string contents);
-
+        string getFile();
+        void setFile(string filename);
 
         //bett
 

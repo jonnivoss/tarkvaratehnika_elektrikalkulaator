@@ -91,6 +91,13 @@ namespace Kasutajaliides
             }
             chartPrice.Series["Tarbimine"].Points.DataBindXY(time, cost);
             chartPrice.Invalidate();
+
+            dateStartTime.MinDate = time.First();
+            dateStartTime.MaxDate = time.Last();
+            dateStopTime.MinDate = time.First();
+            dateStopTime.MaxDate = time.Last();
+            dateStartTime.Value = time.First();
+            dateStopTime.Value = time.Last();
         }
         
 

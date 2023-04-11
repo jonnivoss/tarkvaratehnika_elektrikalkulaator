@@ -162,7 +162,7 @@ namespace Andmepyydja
                 aia(responseString);
             }
             Console.ReadKey();
-            DatePriceT a;
+            DatePriceT a = new DatePriceT(new DateTime(1, 1, 2023), 2.5);
             return a;
         }
     }

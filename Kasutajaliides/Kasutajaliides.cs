@@ -23,7 +23,6 @@ namespace Kasutajaliides
         List<double> costRange = new List<double>();
 
         VecT data = new VecT();
-        VecT newData = new VecT();
         string fileContents;
 
         private Andmepyydja.CAP AP = new Andmepyydja.CAP();
@@ -34,12 +33,10 @@ namespace Kasutajaliides
         private void updateGraph()
         {
             // Uuenda graafikut
-            newData = AP.parseContents(fileContents);
-
             timeRange.Clear();
             costRange.Clear();
 
-            foreach(var item in newData) {
+            foreach(var item in data) {
                 if(item.Item1 >= startTime && item.Item1 <= stopTime)
                 {
                     timeRange.Add(item.Item1);
@@ -90,6 +87,9 @@ namespace Kasutajaliides
         private void Kasutajaliides_Load(object sender, EventArgs e)
         {
             chartPrice.Series["Elektrihind"].Points.DataBindXY(time, data);
+
+            // Proovib avada CSV
+
         }
 
         private void txtAjakulu_KeyPress(object sender, KeyPressEventArgs e)

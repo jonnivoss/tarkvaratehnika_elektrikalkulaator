@@ -103,6 +103,7 @@ namespace Kasutajaliides
                 return;
             }
             AP.setFile(AS.getSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed));
+            openCSV();
         }
 
         private void txtAjakulu_KeyPress(object sender, KeyPressEventArgs e)

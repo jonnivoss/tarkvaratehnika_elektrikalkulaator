@@ -23,8 +23,8 @@ namespace Andmepyydja
 
         //bett
 
-        DateTime abua(string a);
-        VecT aia(string a);
+        DateTime unisxToDateTime(string a);
+
         VecT iseOled(DateTime algus, DateTime lopp);
     }
 }

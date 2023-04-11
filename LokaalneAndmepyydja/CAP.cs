@@ -102,8 +102,8 @@ namespace Andmepyydja
         //siit algab neti otsimine
 
 
-
-        public DateTime abua(string a)
+        //muuda unix standard time DateTimeiks
+        public DateTime unisxToDateTime(string a)
         {
             long unixTime = long.Parse(a);
             DateTimeOffset systemTime = DateTimeOffset.FromUnixTimeSeconds(unixTime);
@@ -111,45 +111,13 @@ namespace Andmepyydja
             return yez;
         }
 
-        public VecT aia(string a)
-        {
-            
-            string[] nameParts = a.Split('{','[','}',']',',');
-            VecT nett = new VecT();
-            for (int i = 4; i < nameParts.Length; i += 2)
-            {
-                int olenA = i - 1;
-                if (String.Equals(nameParts[i], "\"fi\":") || String.Equals(nameParts[olenA], "\"fi\":"))
-                {
-                    break;
-                }
-                if (String.IsNullOrEmpty(nameParts[i]))
-                {
-                    continue;
-                }
-
-                string asd = nameParts[olenA].Substring(nameParts[olenA].IndexOf(":") + 1);
-                string hdd = nameParts[i].Substring(nameParts[i].IndexOf(":") + 1);
-
-                DateTime aiabljasanahkateed = abua(asd);
-                //Console.Write(aiabljasanahkateed + "\t");
-
-                double floatValue = double.Parse(hdd, CultureInfo.InvariantCulture.NumberFormat);
-
-                //Console.WriteLine(floatValue + "\t");
-                DatePriceT ime = Tuple.Create(aiabljasanahkateed,floatValue);
-                nett.Add(ime);
-            }
-            return nett;
-        }
-
         //max lopp aeg on järgmise päev 21:00
         public VecT iseOled(DateTime algus, DateTime lopp)
         {
             string urla = "https://dashboard.elering.ee/api/nps/price?";
             algus = DateTime.Now;
-            VecT asd;
-            
+            VecT nett = new VecT();
+
             using (var httpClient = new HttpClient())
             {
                 string url = urla + "start=" + algus.ToString("yyyy-MM-ddTHH") + "%3A00%3A00.999Z&end=" + lopp.ToString("yyyy-MM-ddTHH") + "%3A00%3A00.999Z";
@@ -159,11 +127,39 @@ namespace Andmepyydja
 
                 var responseStringTask = httpClient.GetStringAsync(url);
                 var responseString = responseStringTask.Result;
-                asd = aia(responseString);
+
+                string[] nameParts = responseString.Split('{', '[', '}', ']', ',');
+                
+                for (int i = 4; i < nameParts.Length; i += 2)
+                {
+                    int olenA = i - 1;
+                    if (String.Equals(nameParts[i], "\"fi\":") || String.Equals(nameParts[olenA], "\"fi\":"))
+                    {
+                        break;
+                    }
+                    if (String.IsNullOrEmpty(nameParts[i]))
+                    {
+                        continue;
+                    }
+
+                    string asd = nameParts[olenA].Substring(nameParts[olenA].IndexOf(":") + 1);
+                    string hdd = nameParts[i].Substring(nameParts[i].IndexOf(":") + 1);
+
+                    DateTime aiabljasanahkateed = unisxToDateTime(asd);
+                    //Console.Write(aiabljasanahkateed + "\t");
+
+                    double floatValue = double.Parse(hdd, CultureInfo.InvariantCulture.NumberFormat);
+
+                    //Console.WriteLine(floatValue + "\t");
+                    DatePriceT ime = Tuple.Create(aiabljasanahkateed, floatValue);
+                    nett.Add(ime);
+                }
+
+                
             }
             
             
-            return asd;
+            return nett;
         }
     }
 }

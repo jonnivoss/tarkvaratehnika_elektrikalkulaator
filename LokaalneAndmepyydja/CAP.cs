@@ -152,8 +152,6 @@ namespace Andmepyydja
             Console.WriteLine(algus.ToString("yyyy-MM-ddTHH"));
             using (var httpClient = new HttpClient())
             {
-
-                string endTime = "2023-04-12T23";
                 string url = urla + "start=" + algus.ToString("yyyy-MM-ddTHH") + "%3A00%3A00.999Z&end=" + lopp.ToString("yyyy-MM-ddTHH") + "%3A00%3A00.999Z";
 
                 httpClient.DefaultRequestHeaders.Accept.Clear();

@@ -16,6 +16,11 @@ namespace Kasutajaliides
     
     public partial class Kasutajaliides : Form
     {
+        public Kasutajaliides()
+        {
+            InitializeComponent();
+        }
+
         List<DateTime> time = new List<DateTime>();
         List<double> cost = new List<double>();
 
@@ -26,6 +31,7 @@ namespace Kasutajaliides
         string fileContents;
 
         private Andmepyydja.CAP AP = new Andmepyydja.CAP();
+        private AndmeSalvestaja.CAS AS = new AndmeSalvestaja.CAS("settings.json");
 
         DateTime startTime, stopTime;
         bool showStock = true, isGraph = true;
@@ -55,41 +61,48 @@ namespace Kasutajaliides
 
         private void btnAvaCSV_Click(object sender, EventArgs e)
         {
-            if (AP.chooseFile() && AP.readFile(ref fileContents))
+            if (AP.chooseFile())
             {
-                data = AP.parseContents(fileContents);
-
-                time.Clear();
-                cost.Clear();
-
-                foreach (var item in data)
-                {
-                    time.Add(item.Item1);
-                    cost.Add(item.Item2);
-
-                    string line = item.Item1.ToString() + ": " + item.Item2.ToString();
-
-                    txtDebug.AppendText(line);
-                    txtDebug.AppendText(Environment.NewLine);
-                }
-                chartPrice.Series["Tarbimine"].Points.DataBindXY(time, cost);
-                chartPrice.Invalidate();
+                AS.changeSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed, AP.getFile());
+                this.openCSV();
             }
-
-            
         }
-        public Kasutajaliides() 
+        private void openCSV()
         {
-            InitializeComponent();
-            
+            if (!AP.readFile(ref fileContents))
+            {
+                MessageBox.Show("Lugemine ebaõnnestus!");
+            }
+            data = AP.parseContents(fileContents);
+
+            time.Clear();
+            cost.Clear();
+
+            foreach (var item in data)
+            {
+                time.Add(item.Item1);
+                cost.Add(item.Item2);
+
+                string line = item.Item1.ToString() + ": " + item.Item2.ToString();
+
+                txtDebug.AppendText(line);
+                txtDebug.AppendText(Environment.NewLine);
+            }
+            chartPrice.Series["Tarbimine"].Points.DataBindXY(time, cost);
+            chartPrice.Invalidate();
         }
+        
 
         private void Kasutajaliides_Load(object sender, EventArgs e)
         {
             chartPrice.Series["Elektrihind"].Points.DataBindXY(time, data);
 
             // Proovib avada CSV
-
+            if (!AS.loadFile())
+            {
+                return;
+            }
+            AP.setFile(AS.getSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed));
         }
 
         private void txtAjakulu_KeyPress(object sender, KeyPressEventArgs e)

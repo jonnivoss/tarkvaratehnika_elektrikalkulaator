@@ -102,6 +102,16 @@ namespace Andmepyydja
             return v;
         }
 
+
+        public string getFile()
+        {
+            return this.fname;
+        }
+        public void setFile(string filename)
+        {
+            this.fname = filename;
+        }
+
         //siit algab neti otsimine
 
         DateTime abua(string a)

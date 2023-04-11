@@ -23,8 +23,8 @@ namespace Andmepyydja
 
         //bett
 
-        DateTime unisxToDateTime(string a);
+        DateTime UnixToDateTime(string a);
 
-        VecT iseOled(DateTime algus, DateTime lopp);
+        VecT HindAegInternet(DateTime algus, DateTime lopp);
     }
 }

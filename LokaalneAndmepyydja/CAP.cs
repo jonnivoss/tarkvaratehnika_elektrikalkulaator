@@ -103,7 +103,7 @@ namespace Andmepyydja
 
 
         //muuda unix standard time DateTimeiks
-        public DateTime unisxToDateTime(string a)
+        public DateTime UnixToDateTime(string a)
         {
             long unixTime = long.Parse(a);
             DateTimeOffset systemTime = DateTimeOffset.FromUnixTimeSeconds(unixTime);
@@ -112,7 +112,7 @@ namespace Andmepyydja
         }
 
         //max lopp aeg on järgmise päev 21:00
-        public VecT iseOled(DateTime algus, DateTime lopp)
+        public VecT HindAegInternet(DateTime algus, DateTime lopp)
         {
             string urla = "https://dashboard.elering.ee/api/nps/price?";
             algus = DateTime.Now;
@@ -145,7 +145,7 @@ namespace Andmepyydja
                     string asd = nameParts[olenA].Substring(nameParts[olenA].IndexOf(":") + 1);
                     string hdd = nameParts[i].Substring(nameParts[i].IndexOf(":") + 1);
 
-                    DateTime aiabljasanahkateed = unisxToDateTime(asd);
+                    DateTime aiabljasanahkateed = UnixToDateTime(asd);
                     //Console.Write(aiabljasanahkateed + "\t");
 
                     double floatValue = double.Parse(hdd, CultureInfo.InvariantCulture.NumberFormat);

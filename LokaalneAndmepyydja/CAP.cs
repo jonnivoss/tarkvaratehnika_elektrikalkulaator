@@ -161,7 +161,7 @@ namespace Andmepyydja
                 var responseString = responseStringTask.Result;
                 asd = aia(responseString);
             }
-            Console.ReadKey();
+            
             
             return asd;
         }

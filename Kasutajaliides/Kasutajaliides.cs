@@ -72,6 +72,7 @@ namespace Kasutajaliides
             if (!AP.readFile(ref fileContents))
             {
                 MessageBox.Show("Lugemine ebaõnnestus!");
+                return;
             }
             data = AP.parseContents(fileContents);
 

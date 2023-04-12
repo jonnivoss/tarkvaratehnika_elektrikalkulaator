@@ -58,6 +58,12 @@ namespace Kasutajaliides
                 }
             }
 
+            if (timeRange.Count > 0)
+            {
+                chartPrice.Series["Tarbimine"].Points.DataBindXY(timeRange, costRange);
+            }
+
+
             priceTimeRange.Clear();
             priceCostRange.Clear();
             tablePrice.Rows.Clear();
@@ -76,8 +82,6 @@ namespace Kasutajaliides
                     txtDebug.AppendText(Environment.NewLine);*/
                 }
             }
-
-            chartPrice.Series["Tarbimine"].Points.DataBindXY(timeRange, costRange);
             chartPrice.Series["Elektrihind"].Points.DataBindXY(priceTimeRange, priceCostRange);
             chartPrice.Invalidate();
             tablePrice.Invalidate();
@@ -97,48 +101,63 @@ namespace Kasutajaliides
             if (!AP.readFile(ref fileContents))
             {
                 MessageBox.Show("Lugemine ebaõnnestus!");
-                return;
             }
-            userData = AP.parseContents(fileContents);
-
-            timeRange.Clear();
-            costRange.Clear();
-
-            foreach (var item in userData)
+            else
             {
-                timeRange.Add(item.Item1);
-                costRange.Add(item.Item2);
+                userData = AP.parseContents(fileContents);
 
-                /*string line = item.Item1.ToString() + ": " + item.Item2.ToString();
+                timeRange.Clear();
+                costRange.Clear();
 
-                txtDebug.AppendText(line);
-                txtDebug.AppendText(Environment.NewLine);*/
+                foreach (var item in userData)
+                {
+                    timeRange.Add(item.Item1);
+                    costRange.Add(item.Item2);
+
+                    /*string line = item.Item1.ToString() + ": " + item.Item2.ToString();
+
+                    txtDebug.AppendText(line);
+                    txtDebug.AppendText(Environment.NewLine);*/
+                }
+
+                var timeRangeArr = timeRange.ToArray();
+
+                dateStartTime.MinDate = timeRangeArr[0];
+                dateStartTime.MaxDate = timeRangeArr[timeRangeArr.Length - 1];
+                dateStartTime.Value = timeRangeArr[0];
+
+                dateStopTime.MinDate = timeRangeArr[0];
+                dateStopTime.MaxDate = timeRangeArr[timeRangeArr.Length - 1];
+                dateStopTime.Value = timeRangeArr[timeRangeArr.Length - 1];
             }
-
-            //chartPrice.Series["Tarbimine"].Points.DataBindXY(time, cost);
-            //chartPrice.Invalidate();
-            var timeRangeArr = timeRange.ToArray();
-
-            dateStartTime.MinDate = timeRangeArr[0];
-            dateStartTime.MaxDate = timeRangeArr[timeRangeArr.Length - 1];
-            dateStartTime.Value = timeRangeArr[0];
-
-            dateStopTime.MinDate = timeRangeArr[0];
-            dateStopTime.MaxDate = timeRangeArr[timeRangeArr.Length - 1];           
-            dateStopTime.Value = timeRangeArr[timeRangeArr.Length - 1];
 
             if ((this.startTime == default(DateTime)) || (this.stopTime == default(DateTime)))
             {
                 //txtDebug.AppendText("Jõudsin nullini");
                 //txtDebug.AppendText(Environment.NewLine);
-                this.startTime = timeRangeArr[0];
-                this.stopTime  = timeRangeArr[timeRangeArr.Length - 1];
+                this.startTime = dateStartTime.Value;
+                this.stopTime  = dateStopTime.Value;
             }
 
             priceTimeRange.Clear();
             priceCostRange.Clear();
 
-            priceData = AP.HindAegInternet(timeRange.First(), timeRange.Last());
+            DateTime fDay, lDay;
+            if (timeRange.Count == 0)
+            {
+                fDay = DateTime.Now;
+                fDay.AddDays(-2);
+                lDay = DateTime.Now;
+                lDay.AddDays(2);
+                txtDebug.AppendText("abua");
+            }
+            else
+            {
+                fDay = timeRange.First().Date + new TimeSpan(0, 0, 0);
+                lDay = timeRange.Last().Date  + new TimeSpan(23, 59, 59);
+            }
+
+            priceData = AP.HindAegInternet(fDay, lDay);
             //MessageBox.Show(priceData.Count.ToString());
             foreach (var item in priceData)
             {

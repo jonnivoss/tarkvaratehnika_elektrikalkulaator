@@ -129,7 +129,6 @@ namespace Andmepyydja
         public VecT HindAegInternet(DateTime algus, DateTime lopp)
         {
             string urla = "https://dashboard.elering.ee/api/nps/price?";
-            algus = DateTime.Now;
             VecT nett = new VecT();
 
             using (var httpClient = new HttpClient())

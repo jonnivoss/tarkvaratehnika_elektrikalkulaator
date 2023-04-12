@@ -135,8 +135,9 @@ namespace Kasutajaliides
             {
                 //txtDebug.AppendText("Jõudsin nullini");
                 //txtDebug.AppendText(Environment.NewLine);
-                this.startTime = dateStartTime.Value;
-                this.stopTime  = dateStopTime.Value;
+                this.startTime = dateStartTime.Value + new TimeSpan(0, 0, 0);
+                this.stopTime  = dateStopTime.Value + new TimeSpan(23, 59, 59);
+                txtDebug.AppendText("jeba\n\n");
             }
 
             priceTimeRange.Clear();
@@ -145,11 +146,9 @@ namespace Kasutajaliides
             DateTime fDay, lDay;
             if (timeRange.Count == 0)
             {
-                fDay = DateTime.Now;
-                fDay.AddDays(-2);
-                lDay = DateTime.Now;
-                lDay.AddDays(2);
-                txtDebug.AppendText("abua");
+                this.startTime = DateTime.Now.Date + new TimeSpan(0, 0, 0);
+                this.stopTime = DateTime.Now.Date + new TimeSpan(23, 59, 59);
+                txtDebug.AppendText("  kaas   ");
             }
             else
             {

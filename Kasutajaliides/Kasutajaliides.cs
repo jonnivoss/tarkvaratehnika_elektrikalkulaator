@@ -51,10 +51,10 @@ namespace Kasutajaliides
                     timeRange.Add(item.Item1);
                     costRange.Add(item.Item2);
 
-                    string line = item.Item1.ToString() + ": " + item.Item2.ToString();
+                    /*string line = item.Item1.ToString() + ": " + item.Item2.ToString();
 
                     txtDebug.AppendText(line);
-                    txtDebug.AppendText(Environment.NewLine);
+                    txtDebug.AppendText(Environment.NewLine);*/
                 }
             }
 
@@ -70,10 +70,10 @@ namespace Kasutajaliides
                     priceCostRange.Add(item.Item2);
                     tablePrice.Rows.Add(item.Item1, item.Item2);
 
-                    string line = "i: " + item.Item1.ToString() + ": " + item.Item2.ToString();
+                    /*string line = "i: " + item.Item1.ToString() + ": " + item.Item2.ToString();
 
                     txtDebug.AppendText(line);
-                    txtDebug.AppendText(Environment.NewLine);
+                    txtDebug.AppendText(Environment.NewLine);*/
                 }
             }
 
@@ -109,10 +109,10 @@ namespace Kasutajaliides
                 timeRange.Add(item.Item1);
                 costRange.Add(item.Item2);
 
-                string line = item.Item1.ToString() + ": " + item.Item2.ToString();
+                /*string line = item.Item1.ToString() + ": " + item.Item2.ToString();
 
                 txtDebug.AppendText(line);
-                txtDebug.AppendText(Environment.NewLine);
+                txtDebug.AppendText(Environment.NewLine);*/
             }
 
             //chartPrice.Series["Tarbimine"].Points.DataBindXY(time, cost);
@@ -123,23 +123,33 @@ namespace Kasutajaliides
             dateStartTime.MaxDate = timeRangeArr[timeRangeArr.Length - 1];
             dateStartTime.Value = timeRangeArr[0];
 
-            dateStopTime.MinDate = dateStartTime.Value;
+            dateStopTime.MinDate = timeRangeArr[0];
             dateStopTime.MaxDate = timeRangeArr[timeRangeArr.Length - 1];           
             dateStopTime.Value = timeRangeArr[timeRangeArr.Length - 1];
+
+            if ((this.startTime == default(DateTime)) || (this.stopTime == default(DateTime)))
+            {
+                //txtDebug.AppendText("Jõudsin nullini");
+                //txtDebug.AppendText(Environment.NewLine);
+                this.startTime = timeRangeArr[0];
+                this.stopTime  = timeRangeArr[timeRangeArr.Length - 1];
+            }
 
             priceTimeRange.Clear();
             priceCostRange.Clear();
 
             priceData = AP.HindAegInternet(timeRange.First(), timeRange.Last());
-            MessageBox.Show(priceData.Count.ToString());
+            //MessageBox.Show(priceData.Count.ToString());
             foreach (var item in priceData)
             {
                 priceTimeRange.Add(item.Item1);
                 priceCostRange.Add(item.Item2);
                 tablePrice.Rows.Add(item.Item1, item.Item2);
             }
+
+            txtDebug.AppendText("Jõudsin graafini");
+            txtDebug.AppendText(Environment.NewLine);
             updateGraph();
-            
         }
         
 
@@ -178,8 +188,11 @@ namespace Kasutajaliides
 
         private void dateStartTime_ValueChanged(object sender, EventArgs e)
         {
+            txtDebug.AppendText("; date: " + sender.ToString());
+            txtDebug.AppendText(Environment.NewLine);
+            
             // Sea uus algusaeg
-            if(dateStartTime.Value < dateStopTime.Value)
+            if (dateStartTime.Value <= dateStopTime.Value)
             {
                 this.startTime = dateStartTime.Value;
                 updateGraph();
@@ -189,11 +202,21 @@ namespace Kasutajaliides
                 MessageBox.Show("Alguskuupäev peab olema väiksem kui lõppkuupäev!");
             }
         }
+        private void dateStartTime_DropDown(object sender, EventArgs e)
+        {
+            dateStartTime.ValueChanged += dateStartTime_ValueChanged;
+        }
+        private void dateStartTime_CloseUp(object sender, EventArgs e)
+        {
+            dateStartTime.ValueChanged -= dateStartTime_ValueChanged;
+        }
 
         private void dateStopTime_ValueChanged(object sender, EventArgs e)
         {
+            txtDebug.AppendText("date2: " + sender.ToString());
+            txtDebug.AppendText(Environment.NewLine);
             // Sea uus lõppaeg
-            if (dateStopTime.Value > dateStartTime.Value)
+            if (dateStopTime.Value >= dateStartTime.Value)
             {
                 this.stopTime = dateStopTime.Value;
                 updateGraph();
@@ -202,7 +225,14 @@ namespace Kasutajaliides
             {
                 MessageBox.Show("Lõppkuupäev peab olema suurem kui alguskuupäev");
             }
-            
+        }
+        private void dateStopTime_DropDown(object sender, EventArgs e)
+        {
+            dateStopTime.ValueChanged += dateStopTime_ValueChanged;
+        }
+        private void dateStopTime_CloseUp(object sender, EventArgs e)
+        {
+            dateStopTime.ValueChanged -= dateStopTime_ValueChanged;
         }
 
         private void cbShowPrice_CheckedChanged(object sender, EventArgs e)

@@ -45,6 +45,8 @@ namespace Kasutajaliides
             costRange.Clear();
             // Ära luba lõppkuupäeva alguskuupäevast väiksemaks panna
             dateStopTime.MinDate = dateStartTime.Value;
+            // Ära luba alguskuupäeva lõppkuupäevast suuremaks panna
+            dateStartTime.MaxDate = dateStopTime.Value;
             foreach (var item in userData) {
                 if(item.Item1 >= startTime && item.Item1 <= stopTime)
                 {
@@ -179,30 +181,16 @@ namespace Kasutajaliides
         private void dateStartTime_ValueChanged(object sender, EventArgs e)
         {
             // Sea uus algusaeg
-            if(dateStartTime.Value < dateStopTime.Value)
-            {
-                this.startTime = dateStartTime.Value;
-                updateGraph();
-            }
-            else
-            {
-                MessageBox.Show("Alguskuupäev peab olema väiksem kui lõppkuupäev!");
-            }
+            this.startTime = dateStartTime.Value;
+            updateGraph();
         }
 
         private void dateStopTime_ValueChanged(object sender, EventArgs e)
         {
             // Sea uus lõppaeg
-            if (dateStopTime.Value > dateStartTime.Value)
-            {
-                this.stopTime = dateStopTime.Value;
-                updateGraph();
-            }
-            else
-            {
-                MessageBox.Show("Lõppkuupäev peab olema suurem kui alguskuupäev");
-            }
-            
+            this.stopTime = dateStopTime.Value;
+            updateGraph();
+
         }
 
         private void cbShowPrice_CheckedChanged(object sender, EventArgs e)

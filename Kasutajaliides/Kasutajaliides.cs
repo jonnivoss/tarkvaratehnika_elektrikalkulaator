@@ -59,6 +59,7 @@ namespace Kasutajaliides
 
             priceTimeRange.Clear();
             priceCostRange.Clear();
+            tablePrice.Rows.Clear();
 
             foreach(var item in priceData)
             {
@@ -66,6 +67,7 @@ namespace Kasutajaliides
                 {
                     priceTimeRange.Add(item.Item1);
                     priceCostRange.Add(item.Item2);
+                    tablePrice.Rows.Add(item.Item1, item.Item2);
 
                     string line = "i: " + item.Item1.ToString() + ": " + item.Item2.ToString();
 
@@ -77,6 +79,7 @@ namespace Kasutajaliides
             chartPrice.Series["Tarbimine"].Points.DataBindXY(timeRange, costRange);
             chartPrice.Series["Elektrihind"].Points.DataBindXY(priceTimeRange, priceCostRange);
             chartPrice.Invalidate();
+            tablePrice.Invalidate();
         }
 
 
@@ -132,8 +135,10 @@ namespace Kasutajaliides
             {
                 priceTimeRange.Add(item.Item1);
                 priceCostRange.Add(item.Item2);
+                tablePrice.Rows.Add(item.Item1, item.Item2);
             }
             updateGraph();
+            
         }
         
 
@@ -173,15 +178,30 @@ namespace Kasutajaliides
         private void dateStartTime_ValueChanged(object sender, EventArgs e)
         {
             // Sea uus algusaeg
-            this.startTime = dateStartTime.Value;
-            updateGraph();
+            if(dateStartTime.Value < dateStopTime.Value)
+            {
+                this.startTime = dateStartTime.Value;
+                updateGraph();
+            }
+            else
+            {
+                MessageBox.Show("Alguskuupäev peab olema väiksem kui lõppkuupäev!");
+            }
         }
 
         private void dateStopTime_ValueChanged(object sender, EventArgs e)
         {
             // Sea uus lõppaeg
-            this.stopTime = dateStopTime.Value;
-            updateGraph();
+            if (dateStopTime.Value > dateStartTime.Value)
+            {
+                this.stopTime = dateStopTime.Value;
+                updateGraph();
+            }
+            else
+            {
+                MessageBox.Show("Lõppkuupäev peab olema suurem kui alguskuupäev");
+            }
+            
         }
 
         private void cbShowPrice_CheckedChanged(object sender, EventArgs e)

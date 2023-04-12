@@ -378,6 +378,7 @@ namespace Kasutajaliides
             this.Hind});
             this.tablePrice.Location = new System.Drawing.Point(289, 13);
             this.tablePrice.Name = "tablePrice";
+            this.tablePrice.ReadOnly = true;
             this.tablePrice.RowHeadersWidth = 51;
             this.tablePrice.RowTemplate.Height = 24;
             this.tablePrice.Size = new System.Drawing.Size(742, 484);
@@ -388,6 +389,7 @@ namespace Kasutajaliides
             this.Aeg.HeaderText = "Aeg";
             this.Aeg.MinimumWidth = 6;
             this.Aeg.Name = "Aeg";
+            this.Aeg.ReadOnly = true;
             this.Aeg.Width = 125;
             // 
             // Hind
@@ -395,6 +397,7 @@ namespace Kasutajaliides
             this.Hind.HeaderText = "Hind";
             this.Hind.MinimumWidth = 6;
             this.Hind.Name = "Hind";
+            this.Hind.ReadOnly = true;
             this.Hind.Width = 125;
             // 
             // btnElektriHind

@@ -157,8 +157,8 @@ namespace Kasutajaliides
                 lDay = timeRange.Last().Date  + new TimeSpan(23, 59, 59);
             }
 
-            priceData = AP.HindAegInternet(fDay, lDay);
-            //MessageBox.Show(priceData.Count.ToString());
+            priceData = AP.HindAegInternet(this.startTime, this.stopTime);
+            MessageBox.Show(priceData.Count.ToString());
             foreach (var item in priceData)
             {
                 priceTimeRange.Add(item.Item1);
@@ -169,6 +169,18 @@ namespace Kasutajaliides
             txtDebug.AppendText("Jõudsin graafini");
             txtDebug.AppendText(Environment.NewLine);
             updateGraph();
+        }
+
+        private void callAPI() {
+            priceData = AP.HindAegInternet(startTime, stopTime);
+            MessageBox.Show(priceData.Count.ToString());
+            foreach (var item in priceData)
+            {
+                priceTimeRange.Add(item.Item1);
+                priceCostRange.Add(item.Item2);
+                tablePrice.Rows.Add(item.Item1, item.Item2);
+            }
+            txtDebug.AppendText("kutsun api\n");
         }
         
 
@@ -223,6 +235,7 @@ namespace Kasutajaliides
                 dateStopTime.Value = d.Date + new TimeSpan(23, 59, 59);
                 this.stopTime = dateStopTime.Value;
             }
+            callAPI();
             updateGraph();
         }
         private void dateStartTime_DropDown(object sender, EventArgs e)
@@ -251,6 +264,7 @@ namespace Kasutajaliides
                 dateStartTime.Value = d.Date + new TimeSpan(0, 0, 0);
                 this.startTime = dateStartTime.Value;
             }
+            callAPI();
             updateGraph();
         }
         private void dateStopTime_DropDown(object sender, EventArgs e)

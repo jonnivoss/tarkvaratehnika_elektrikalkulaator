@@ -43,8 +43,9 @@ namespace Kasutajaliides
             // Uuenda graafikut
             timeRange.Clear();
             costRange.Clear();
-
-            foreach(var item in userData) {
+            // Ära luba lõppkuupäeva alguskuupäevast väiksemaks panna
+            dateStopTime.MinDate = dateStartTime.Value;
+            foreach (var item in userData) {
                 if(item.Item1 >= startTime && item.Item1 <= stopTime)
                 {
                     timeRange.Add(item.Item1);
@@ -122,7 +123,7 @@ namespace Kasutajaliides
             dateStartTime.MaxDate = timeRangeArr[timeRangeArr.Length - 1];
             dateStartTime.Value = timeRangeArr[0];
 
-            dateStopTime.MinDate = timeRangeArr[0];
+            dateStopTime.MinDate = dateStartTime.Value;
             dateStopTime.MaxDate = timeRangeArr[timeRangeArr.Length - 1];           
             dateStopTime.Value = timeRangeArr[timeRangeArr.Length - 1];
 

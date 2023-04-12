@@ -190,17 +190,19 @@ namespace Kasutajaliides
         {
             txtDebug.AppendText("; date: " + sender.ToString());
             txtDebug.AppendText(Environment.NewLine);
-            
+
+            var d = dateStartTime.Value.Date + new TimeSpan(0, 0, 0);
+
             // Sea uus algusaeg
             if (dateStartTime.Value <= dateStopTime.Value)
             {
-                this.startTime = dateStartTime.Value;
+                this.startTime = d;
             }
             else
             {
-                this.startTime = dateStartTime.Value;
-                dateStopTime.Value = this.startTime;
-                this.stopTime = this.startTime;
+                this.startTime = d;
+                dateStopTime.Value = d.Date + new TimeSpan(23, 59, 59);
+                this.stopTime = dateStopTime.Value;
             }
             updateGraph();
         }
@@ -218,15 +220,17 @@ namespace Kasutajaliides
             txtDebug.AppendText("date2: " + sender.ToString());
             txtDebug.AppendText(Environment.NewLine);
             // Sea uus lõppaeg
+            var d = dateStopTime.Value.Date + new TimeSpan(23, 59, 59);
+
             if (dateStopTime.Value >= dateStartTime.Value)
             {
-                this.stopTime = dateStopTime.Value;
+                this.stopTime = d;
             }
             else
             {
-                this.stopTime = dateStopTime.Value;
-                dateStartTime.Value = this.stopTime;
-                this.startTime = this.stopTime;
+                this.stopTime = d;
+                dateStartTime.Value = d.Date + new TimeSpan(0, 0, 0);
+                this.startTime = dateStartTime.Value;
             }
             updateGraph();
         }

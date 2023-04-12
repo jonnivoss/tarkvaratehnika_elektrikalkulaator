@@ -131,7 +131,7 @@ namespace Kasutajaliides
             priceCostRange.Clear();
 
             priceData = AP.HindAegInternet(timeRange.First(), timeRange.Last());
-            MessageBox.Show(priceData.Count.ToString());
+            //MessageBox.Show(priceData.Count.ToString());
             foreach (var item in priceData)
             {
                 priceTimeRange.Add(item.Item1);

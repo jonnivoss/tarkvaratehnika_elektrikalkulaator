@@ -10,3 +10,9 @@ C:\Users\joona\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyyd
 C:\Users\joona\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\obj\Debug\Andmepyydja.pdb
 C:\Users\joona\source\repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\bin\Debug\Andmepyydja.dll
 C:\Users\joona\source\repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\bin\Debug\Andmepyydja.pdb
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER\LokaalneAndmepyydja\bin\Debug\Andmepyydja.dll
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER\LokaalneAndmepyydja\bin\Debug\Andmepyydja.pdb
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER\LokaalneAndmepyydja\obj\Debug\Andmepyydja.csproj.AssemblyReference.cache
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER\LokaalneAndmepyydja\obj\Debug\Andmepyydja.csproj.CoreCompileInputs.cache
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER\LokaalneAndmepyydja\obj\Debug\Andmepyydja.dll
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER\LokaalneAndmepyydja\obj\Debug\Andmepyydja.pdb

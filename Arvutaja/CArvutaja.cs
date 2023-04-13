@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, float>>;
+using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
 
 namespace Arvutaja
 {
@@ -33,7 +33,11 @@ namespace Arvutaja
 
             return 0;
         }
-        public int integreerija(VecT andmed, System.DateTime alumine, System.DateTime ylemine, ref float integraal)
+
+        // KAHE FUNKTSIOONI KORRUTISE INTEGRAATOR
+        // andmed1: esimene funktsioon
+        // andmed2: teine funktsioon
+        public int integreerija(VecT andmed1, VecT andmed2, System.DateTime alumine, System.DateTime ylemine, ref double integraal)
         {
             if (alumine > ylemine)
             {
@@ -41,12 +45,14 @@ namespace Arvutaja
                 return 3;
             }
             // alumisele ja ülemisele rajale vastavate indekside määramine
-            int alumineIndeks = andmed.FindIndex(Tuple => Tuple.Item1 == alumine);
-            int ylemineIndeks = andmed.FindIndex(Tuple => Tuple.Item1 == ylemine);
-            if (alumineIndeks >= 0 && ylemineIndeks >= 0)
+            int alumineIndeks = andmed1.FindIndex(Tuple => Tuple.Item1 == alumine);
+            int ylemineIndeks = andmed1.FindIndex(Tuple => Tuple.Item1 == ylemine);
+            int alumineIndeks2 = andmed2.FindIndex(Tuple => Tuple.Item1 == alumine);
+            int ylemineIndeks2 = andmed2.FindIndex(Tuple => Tuple.Item1 == ylemine);
+            if (alumineIndeks >= 0 && ylemineIndeks >= 0 && alumineIndeks2 >= 0 && ylemineIndeks2 >= 0)
             {
-                alumineRaja = andmed[alumineIndeks].Item1;
-                ylemineRaja = andmed[ylemineIndeks].Item1;
+                alumineRaja = andmed1[alumineIndeks].Item1;
+                ylemineRaja = andmed1[ylemineIndeks].Item1;
             }
             else
             {
@@ -56,16 +62,17 @@ namespace Arvutaja
             // INTEGREERIMINE
             // NB! Eeldatud on, et ajasamm dt = 1h
             int indeks = alumineIndeks;
-            System.DateTime raja = andmed[indeks].Item1;
-            integraal = 0.0f; // NB! viidana antud muutuja, omandab pärast integraaali väärtuse
+            System.DateTime raja = andmed1[indeks].Item1;
+            integraal = 0.0; // NB! viidana antud muutuja, omandab pärast integraaali väärtuse
             if (alumine == ylemine)
             {
                 // rajad on võrdsed, integraal on null
-                return 2;
+                integraal = 0.0;
+                return 0;
             }
             while (indeks <= ylemineIndeks)
             {
-                integraal += andmed[indeks].Item2;
+                integraal += andmed1[indeks].Item2* andmed2[indeks].Item2;
                 indeks++;
             }
             return 0;

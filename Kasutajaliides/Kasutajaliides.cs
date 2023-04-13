@@ -185,6 +185,7 @@ namespace Kasutajaliides
 
         private void Kasutajaliides_Load(object sender, EventArgs e)
         {
+            chartPrice.MouseWheel += chartPrice_zooming;
             // Proovib avada CSV
             if (!AS.loadFile())
             {
@@ -345,6 +346,49 @@ namespace Kasutajaliides
                 e.Handled = true;
                 return;
             }
+        }
+
+        void chartPrice_zooming(object sender, MouseEventArgs e)
+        {
+            if (dateStartTime.Value.Day < dateStopTime.Value.Day)
+            {
+                var deltaDate = dateStopTime.Value - dateStartTime.Value;
+                var distanceFromMin = dateStartTime.Value - dateStartTime.MinDate;
+                var distanceFromMax = dateStopTime.MaxDate - dateStopTime.Value;
+                double xCoordPercent = (e.Location.X - 88) / 464.0; // jagades graafiku laiusega saame pointeri normaliseeritud asukoha graafikul vahemikus [0;1]
+                //MessageBox.Show(xCoordPercent.ToString
+                int leftStep = 1, rightStep = 1, totalStep = 1; // sammud graafiku otste nihutamiseks (tundides)
+                if (deltaDate.TotalDays < 2) totalStep = 12;
+                else totalStep = 24;
+                leftStep = Convert.ToInt16(xCoordPercent * totalStep);
+                rightStep = totalStep - leftStep;
+
+                if (xCoordPercent <= 1 && xCoordPercent >= 0)
+                {
+                    if (e.Delta > 0 && (dateStartTime.Value < dateStopTime.Value) && deltaDate.TotalDays >= 2)
+                    {
+                        dateStartTime.Value = dateStartTime.Value.AddHours(leftStep);
+                        dateStopTime.Value = dateStopTime.Value.AddHours(-rightStep);
+                        startTime = dateStartTime.Value;
+                        stopTime = dateStopTime.Value;
+                    }
+                    else if (e.Delta < 0)
+                    {
+                        if (distanceFromMin.TotalDays >= 1)
+                        {
+                            dateStartTime.Value = dateStartTime.Value.AddHours(-leftStep);
+                            startTime = dateStartTime.Value;
+                        }
+                        if (distanceFromMax.TotalDays >= 1)
+                        {
+                            dateStopTime.Value = dateStopTime.Value.AddHours(rightStep);
+                            stopTime = dateStopTime.Value;
+                        }
+                         
+                    }
+                }
+            }
+                updateGraph();
         }
     }
 }

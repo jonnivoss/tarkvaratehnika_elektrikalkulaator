@@ -34,6 +34,7 @@ namespace Kasutajaliides
 
         private Andmepyydja.CAP AP = new Andmepyydja.CAP();
         private AndmeSalvestaja.CAS AS = new AndmeSalvestaja.CAS("settings.json");
+        private Arvutaja.CArvutaja AR = new Arvutaja.CArvutaja();
 
         DateTime startTime, stopTime;
         bool showStock = true, isGraph = true;
@@ -55,6 +56,24 @@ namespace Kasutajaliides
 
                     txtDebug.AppendText(line);
                     txtDebug.AppendText(Environment.NewLine);*/
+                }
+            }
+
+            if (rbStockPrice.Checked)
+            {
+                double integraal = 0;
+                int olek = AR.integreerija(userData, priceData, startTime, stopTime, ref integraal);
+                switch (olek)
+                {
+                    case 0:
+                        txtHind.Text = (integraal/1000).ToString() + " €";
+                        break;
+                    case 1:
+                        txtHind.Text = "Viga 1";
+                        break;
+                    case 2:
+                        txtHind.Text = "Viga 2";
+                        break;
                 }
             }
 
@@ -186,6 +205,7 @@ namespace Kasutajaliides
         private void Kasutajaliides_Load(object sender, EventArgs e)
         {
             chartPrice.MouseWheel += chartPrice_zooming;
+            txtHind.Text = "-";
             // Proovib avada CSV
             if (!AS.loadFile())
             {
@@ -379,12 +399,21 @@ namespace Kasutajaliides
                             dateStartTime.Value = dateStartTime.Value.AddHours(-leftStep);
                             startTime = dateStartTime.Value;
                         }
+                        else
+                        {
+                            dateStartTime.Value = dateStartTime.MinDate;
+                            startTime = dateStartTime.Value;
+                        }
                         if (distanceFromMax.TotalDays >= 1)
                         {
                             dateStopTime.Value = dateStopTime.Value.AddHours(rightStep);
                             stopTime = dateStopTime.Value;
                         }
-                         
+                        else
+                        {
+                            dateStopTime.Value = dateStopTime.MaxDate;
+                            stopTime = dateStopTime.Value;
+                        }
                     }
                 }
             }

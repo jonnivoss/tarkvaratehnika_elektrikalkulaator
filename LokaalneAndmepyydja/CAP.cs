@@ -122,14 +122,15 @@ namespace Andmepyydja
             long unixTime = long.Parse(a);
             DateTimeOffset systemTime = DateTimeOffset.FromUnixTimeSeconds(unixTime);
             DateTime yez = systemTime.UtcDateTime;
-            return yez;
+            return yez.AddHours(2);
         }
 
-        //max lopp aeg on järgmise päev 21:00
-        public VecT HindAegInternet(DateTime algus, DateTime lopp)
+        //siin 
+        public VecT HindAegInternet(DateTime algus1, DateTime lopp)
         {
             string urla = "https://dashboard.elering.ee/api/nps/price?";
             VecT nett = new VecT();
+            DateTime algus = algus1.AddHours(-2);
 
             using (var httpClient = new HttpClient())
             {

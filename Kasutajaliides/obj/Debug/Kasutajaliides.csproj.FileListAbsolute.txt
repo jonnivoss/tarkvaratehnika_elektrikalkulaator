@@ -42,7 +42,6 @@ C:\Users\joona\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bi
 C:\Users\joona\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\Andmepyydja.pdb
 C:\Users\joona\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\Newtonsoft.Json.xml
 C:\Users\joona\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.csproj.AssemblyReference.cache
-C:\Users\joona\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.UserInterface.resources
 C:\Users\joona\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.Properties.Resources.resources
 C:\Users\joona\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.csproj.GenerateResource.cache
 C:\Users\joona\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.csproj.CoreCompileInputs.cache
@@ -74,3 +73,4 @@ C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER\Kasuta
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER\Kasutajaliides\obj\Debug\Kasutajaliides.csproj.CopyComplete
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER\Kasutajaliides\obj\Debug\Kasutajaliides.exe
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER\Kasutajaliides\obj\Debug\Kasutajaliides.pdb
+C:\Users\joona\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Debug\Kasutajaliides.Kasutajaliides.resources

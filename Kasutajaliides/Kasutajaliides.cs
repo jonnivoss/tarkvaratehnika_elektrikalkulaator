@@ -60,26 +60,7 @@ namespace Kasutajaliides
 
             if (timeRange.Count > 0)
             {
-                // Graafikul kuvatavate aja intervallide seadmine
-                if (timeRange.Count <= 26)
-                {
-                    chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "HH:mm";
-                    chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 2;
-                } else if (timeRange.Count <= 50) {
-                    chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Hours;
-                    chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "dd:MM HH:mm";
-                    chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 4;
-                } else if (timeRange.Count <= 74)
-                {
-                    chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Hours;
-                    chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "dd:MM HH:mm";
-                    chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 12;
-                } else
-                {
-                    chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Days;
-                    chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "dd:MM:yy";
-                    chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 0;
-                }
+                changeInterval(timeRange.Count);
                 chartPrice.Series["Tarbimine"].Points.DataBindXY(timeRange, costRange);
             }
 
@@ -107,6 +88,33 @@ namespace Kasutajaliides
             tablePrice.Invalidate();
         }
 
+        private void changeInterval(int count)
+        {
+            if (count <= 26)
+            {
+                chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Hours;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "HH:mm";
+                chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 2;
+            }
+            else if (count <= 50)
+            {
+                chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Hours;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "dd/MM HH:mm";
+                chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 4;
+            }
+            else if (count <= 74)
+            {
+                chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Hours;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "dd/MM HH:mm";
+                chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 12;
+            }
+            else
+            {
+                chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Days;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "dd/MM/yy";
+                chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 0;
+            }
+        }
 
         private void btnAvaCSV_Click(object sender, EventArgs e)
         {
@@ -168,6 +176,8 @@ namespace Kasutajaliides
             {
                 this.startTime = DateTime.Now.Date + new TimeSpan(0, 0, 0);
                 this.stopTime = DateTime.Now.Date + new TimeSpan(23, 59, 59);
+                // Ajaintervalli määramine kuvamisel
+                changeInterval(timeRange.Count);
                 txtDebug.AppendText("  kaas   ");
             }
 
@@ -186,10 +196,11 @@ namespace Kasutajaliides
                 tablePrice.Rows.Add(item.Item1, item.Item2);
             }
 
-            if (priceTimeRange.Count <= 50)
+            changeInterval(priceData.Count);
+            /*if (priceTimeRange.Count <= 50)
             {
                 chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "HH:mm";
-            }
+            }*/
             txtDebug.AppendText("kutsun api\n");
         }
         

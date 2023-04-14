@@ -34,6 +34,7 @@ namespace Kasutajaliides
 
         private Andmepyydja.CAP AP = new Andmepyydja.CAP();
         private AndmeSalvestaja.CAS AS = new AndmeSalvestaja.CAS("settings.json");
+        private Arvutaja.CArvutaja arvutaja = new Arvutaja.CArvutaja();
 
         DateTime startTime, stopTime;
         bool showStock = true, isGraph = true;
@@ -192,11 +193,48 @@ namespace Kasutajaliides
                 // Do some crazy price calculation
                 if (rbStockPrice.Checked)
                 {
-                    price = time * power * 0.15;
+                    // Sööstab arvutajasse, leiab valitud ajavahemikust optimaalseima ajapikkuse
+                    var beg = this.startTime;
+                    var end = beg.Date + TimeSpan.FromHours(time);
+
+                    double bestIntegral = double.PositiveInfinity;
+                    var bestDate = beg;
+
+                    for (; end <= this.stopTime; )
+                    {
+                        VecT useData = new VecT();
+                        // Generate usedata
+                        for (var date = beg; date <= end; date.AddHours(1))
+                        {
+                            var hrs = (end - date).TotalHours;
+                            if (hrs >= 1.0)
+                            {
+                                hrs = 1.0;
+                            }
+                            useData.Add(Tuple.Create(date, power * hrs));
+                        }
+
+                        // Integreerib
+                        double integral = 0.0;
+                        if (arvutaja.integreerija(this.priceData, useData, beg, end, ref integral) == 0)
+                        {
+                            // cancer, get kankelled
+                            if (integral < bestIntegral)
+                            {
+                                bestIntegral = integral;
+                                bestDate = beg;
+                            }
+                        }
+
+                        beg.AddHours(1);
+                        end.AddHours(1);
+                    }
+
+                    price = bestIntegral;
+                    MessageBox.Show("Tarbimist alustada " + bestDate.ToString("HH:mm"));
                 }
                 else
                 {
-                    // Sööstab arvutajasse
                     var mwh = Double.Parse(tbMonthlyPrice.Text);
                     price = time * power * mwh / 1000.0;
                 }

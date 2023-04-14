@@ -185,12 +185,19 @@ namespace Kasutajaliides
 
         private void Kasutajaliides_Load(object sender, EventArgs e)
         {
+            // Lisab tüüp-kasutusmallid
             chartPrice.MouseWheel += chartPrice_zooming;
             // Proovib avada CSV
-            if (!AS.loadFile())
+            AS.loadFile();
+
+            var items = AS.getUseCases();
+            cbKasutusmall.Items.Clear();
+            foreach (var i in items)
             {
-                return;
+                cbKasutusmall.Items.Add(i.Item1);
             }
+
+
             AP.setFile(AS.getSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed));
             openCSV();
         }

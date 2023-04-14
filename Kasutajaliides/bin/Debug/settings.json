@@ -3,5 +3,155 @@
     "tarbijaAndmed": "C:\\Users\\Enceladus\\Downloads\\tarbimine_eestiEnergia.csv",
     "suurendusLubatud": "0"
   },
-  "marketData": []
+  "marketData": [],
+  "useCases": [
+    {
+      "Item1": "",
+      "Item2": 0.0
+    },
+    {
+      "Item1": "Röster",
+      "Item2": 800.0
+    },
+    {
+      "Item1": "Tolmuimeja",
+      "Item2": 2000.0
+    },
+    {
+      "Item1": "Televiisor",
+      "Item2": 90.0
+    },
+    {
+      "Item1": "Pesumasin",
+      "Item2": 900.0
+    },
+    {
+      "Item1": "Veekeetja",
+      "Item2": 3000.0
+    },
+    {
+      "Item1": "Elektripliit",
+      "Item2": 3000.0
+    },
+    {
+      "Item1": "Köögikombain",
+      "Item2": 300.0
+    },
+    {
+      "Item1": "Kohvimasin",
+      "Item2": 1500.0
+    },
+    {
+      "Item1": "Raadio",
+      "Item2": 50.0
+    },
+    {
+      "Item1": "Munakeetja",
+      "Item2": 350.0
+    },
+    {
+      "Item1": "Föön",
+      "Item2": 2000.0
+    },
+    {
+      "Item1": "",
+      "Item2": 0.0
+    },
+    {
+      "Item1": "Röster",
+      "Item2": 800.0
+    },
+    {
+      "Item1": "Tolmuimeja",
+      "Item2": 2000.0
+    },
+    {
+      "Item1": "Televiisor",
+      "Item2": 90.0
+    },
+    {
+      "Item1": "Pesumasin",
+      "Item2": 900.0
+    },
+    {
+      "Item1": "Veekeetja",
+      "Item2": 3000.0
+    },
+    {
+      "Item1": "Elektripliit",
+      "Item2": 3000.0
+    },
+    {
+      "Item1": "Köögikombain",
+      "Item2": 300.0
+    },
+    {
+      "Item1": "Kohvimasin",
+      "Item2": 1500.0
+    },
+    {
+      "Item1": "Raadio",
+      "Item2": 50.0
+    },
+    {
+      "Item1": "Munakeetja",
+      "Item2": 350.0
+    },
+    {
+      "Item1": "Föön",
+      "Item2": 2000.0
+    },
+    {
+      "Item1": "",
+      "Item2": 0.0
+    },
+    {
+      "Item1": "Röster",
+      "Item2": 800.0
+    },
+    {
+      "Item1": "Tolmuimeja",
+      "Item2": 2000.0
+    },
+    {
+      "Item1": "Televiisor",
+      "Item2": 90.0
+    },
+    {
+      "Item1": "Pesumasin",
+      "Item2": 900.0
+    },
+    {
+      "Item1": "Veekeetja",
+      "Item2": 3000.0
+    },
+    {
+      "Item1": "Elektripliit",
+      "Item2": 3000.0
+    },
+    {
+      "Item1": "Köögikombain",
+      "Item2": 300.0
+    },
+    {
+      "Item1": "Kohvimasin",
+      "Item2": 1500.0
+    },
+    {
+      "Item1": "Raadio",
+      "Item2": 50.0
+    },
+    {
+      "Item1": "Munakeetja",
+      "Item2": 350.0
+    },
+    {
+      "Item1": "Föön",
+      "Item2": 2000.0
+    },
+    {
+      "Item1": "Villager",
+      "Item2": 150.0
+    }
+  ]
 }

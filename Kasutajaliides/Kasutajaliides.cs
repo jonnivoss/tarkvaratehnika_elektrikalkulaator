@@ -194,7 +194,7 @@ namespace Kasutajaliides
                 if (rbStockPrice.Checked)
                 {
                     // Sööstab arvutajasse, leiab valitud ajavahemikust optimaalseima ajapikkuse
-                    var beg = this.startTime;
+                    /*var beg = this.startTime;
                     var end = beg.Date + TimeSpan.FromHours(time);
 
                     double bestIntegral = double.PositiveInfinity;
@@ -231,7 +231,7 @@ namespace Kasutajaliides
                     }
 
                     price = bestIntegral;
-                    MessageBox.Show("Tarbimist alustada " + bestDate.ToString("HH:mm"));
+                    MessageBox.Show("Tarbimist alustada " + bestDate.ToString("HH:mm"));*/
                 }
                 else
                 {

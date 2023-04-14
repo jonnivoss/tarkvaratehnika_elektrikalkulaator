@@ -190,7 +190,16 @@ namespace Kasutajaliides
                 time  = Double.Parse(txtAjakulu.Text);
                 power = Double.Parse(txtVoimsus.Text);
                 // Do some crazy price calculation
-                price = time * power * 0.15;
+                if (rbStockPrice.Checked)
+                {
+                    price = time * power * 0.15;
+                }
+                else
+                {
+                    // Sööstab arvutajasse
+                    var mwh = Double.Parse(tbMonthlyPrice.Text);
+                    price = time * power * mwh / 1000.0;
+                }
 
                 txtHind.Text = Math.Round(price, 2).ToString();
             }
@@ -390,7 +399,7 @@ namespace Kasutajaliides
 
         private void tbMonthlyPrice_TextChanged(object sender, EventArgs e)
         {
-            if (rbStockPrice.Checked)
+            if (rbMonthlyCost.Checked)
             {
                 calcPrice();
             }

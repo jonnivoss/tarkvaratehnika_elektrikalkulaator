@@ -79,6 +79,7 @@ namespace Kasutajaliides
 
             if (timeRange.Count > 0)
             {
+                changeInterval(timeRange.Count);
                 chartPrice.Series["Tarbimine"].Points.DataBindXY(timeRange, costRange);
             }
 
@@ -106,6 +107,33 @@ namespace Kasutajaliides
             tablePrice.Invalidate();
         }
 
+        private void changeInterval(int count)
+        {
+            if (count <= 26) //kui andmeid on ühe päeva jagu
+            {
+                chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Hours;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "HH:mm";
+                chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 2; // silt iga kahe tunni tagant
+            }
+            else if (count <= 50) // kui andmeid on kahe päeva jagu
+            {
+                chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Hours;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "dd/MM HH:mm";
+                chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 4; // silt iga nelja tunni tagant
+            }
+            else if (count <= 74) // kui andmeid on kolme päeva jagu
+            {
+                chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Hours;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "dd/MM HH:mm";
+                chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 12; // silt iga 12 tunni tagant
+            }
+            else // kui andmeid on 4+ päeva jagu
+            {
+                chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Days;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "dd/MM/yy";
+                chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 0; // sildi intervall määratakse automaatselt 
+            }
+        }
 
         private void btnAvaCSV_Click(object sender, EventArgs e)
         {
@@ -162,30 +190,18 @@ namespace Kasutajaliides
             priceTimeRange.Clear();
             priceCostRange.Clear();
 
-            DateTime fDay, lDay;
+
             if (timeRange.Count == 0)
             {
                 this.startTime = DateTime.Now.Date + new TimeSpan(0, 0, 0);
                 this.stopTime = DateTime.Now.Date + new TimeSpan(23, 59, 59);
+                // Ajaintervalli määramine kuvamisel
+                changeInterval(timeRange.Count);
                 txtDebug.AppendText("  kaas   ");
             }
-            else
-            {
-                fDay = timeRange.First().Date + new TimeSpan(0, 0, 0);
-                lDay = timeRange.Last().Date  + new TimeSpan(23, 59, 59);
-            }
 
-            priceData = AP.HindAegInternet(this.startTime, this.stopTime);
-            MessageBox.Show(priceData.Count.ToString());
-            foreach (var item in priceData)
-            {
-                priceTimeRange.Add(item.Item1);
-                priceCostRange.Add(item.Item2);
-                tablePrice.Rows.Add(item.Item1, item.Item2);
-            }
 
-            txtDebug.AppendText("Jõudsin graafini");
-            txtDebug.AppendText(Environment.NewLine);
+            callAPI();
             updateGraph();
         }
 
@@ -198,6 +214,12 @@ namespace Kasutajaliides
                 priceCostRange.Add(item.Item2);
                 tablePrice.Rows.Add(item.Item1, item.Item2);
             }
+
+            changeInterval(priceData.Count);
+            /*if (priceTimeRange.Count <= 50)
+            {
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "HH:mm";
+            }*/
             txtDebug.AppendText("kutsun api\n");
         }
         

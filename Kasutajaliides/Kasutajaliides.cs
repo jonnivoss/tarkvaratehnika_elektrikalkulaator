@@ -194,7 +194,7 @@ namespace Kasutajaliides
             cbKasutusmall.Items.Clear();
             foreach (var i in items)
             {
-                cbKasutusmall.Items.Add(i.Item1);
+                cbKasutusmall.Items.Add(i.Key);
             }
 
 
@@ -342,6 +342,13 @@ namespace Kasutajaliides
             {
                 tbMonthlyPrice.Enabled = true;
             }
+        }
+
+        private void cbKasutusmall_SelectedValueChanged(object sender, EventArgs e)
+        {
+            var item = AS.getUseCases()[cbKasutusmall.SelectedItem.ToString()];
+            txtVoimsus.Text = (item.Item1 / 1000.0).ToString();
+            txtAjakulu.Text = (item.Item2 / 60.0).ToString();
         }
 
         private void tbMonthlyPrice_KeyPress(object sender, KeyPressEventArgs e)

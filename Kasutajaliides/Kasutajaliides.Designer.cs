@@ -29,10 +29,10 @@ namespace Kasutajaliides
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chartPrice = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.cbKasutusmall = new System.Windows.Forms.ComboBox();
             this.lblKasutusmall = new System.Windows.Forms.Label();
@@ -68,39 +68,39 @@ namespace Kasutajaliides
             // 
             // chartPrice
             // 
-            chartArea2.AxisX.MajorGrid.Enabled = false;
-            chartArea2.AxisX.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Horizontal;
-            chartArea2.AxisX.Title = "Aeg";
-            chartArea2.AxisY.MajorGrid.Enabled = false;
-            chartArea2.AxisY.Title = "kWh";
-            chartArea2.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
-            chartArea2.Name = "ChartArea1";
-            this.chartPrice.ChartAreas.Add(chartArea2);
-            legend2.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            legend2.IsTextAutoFit = false;
-            legend2.Name = "Legend1";
-            this.chartPrice.Legends.Add(legend2);
+            chartArea5.AxisX.MajorGrid.Enabled = false;
+            chartArea5.AxisX.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Horizontal;
+            chartArea5.AxisX.Title = "Aeg";
+            chartArea5.AxisY.MajorGrid.Enabled = false;
+            chartArea5.AxisY.Title = "kWh";
+            chartArea5.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
+            chartArea5.Name = "ChartArea1";
+            this.chartPrice.ChartAreas.Add(chartArea5);
+            legend5.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            legend5.IsTextAutoFit = false;
+            legend5.Name = "Legend1";
+            this.chartPrice.Legends.Add(legend5);
             this.chartPrice.Location = new System.Drawing.Point(289, 13);
             this.chartPrice.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chartPrice.Name = "chartPrice";
             this.chartPrice.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series3.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            series3.Legend = "Legend1";
-            series3.Name = "Elektrihind";
-            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
-            series3.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
-            series3.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series4.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            series4.Legend = "Legend1";
-            series4.Name = "Tarbimine";
-            series4.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
-            series4.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            this.chartPrice.Series.Add(series3);
-            this.chartPrice.Series.Add(series4);
+            series9.ChartArea = "ChartArea1";
+            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series9.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            series9.Legend = "Legend1";
+            series9.Name = "Elektrihind";
+            series9.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series9.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
+            series9.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            series10.ChartArea = "ChartArea1";
+            series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series10.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            series10.Legend = "Legend1";
+            series10.Name = "Tarbimine";
+            series10.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series10.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            this.chartPrice.Series.Add(series9);
+            this.chartPrice.Series.Add(series10);
             this.chartPrice.Size = new System.Drawing.Size(742, 485);
             this.chartPrice.TabIndex = 0;
             this.chartPrice.Text = "chartElektrihind";
@@ -115,6 +115,7 @@ namespace Kasutajaliides
             this.cbKasutusmall.Name = "cbKasutusmall";
             this.cbKasutusmall.Size = new System.Drawing.Size(240, 33);
             this.cbKasutusmall.TabIndex = 2;
+            this.cbKasutusmall.SelectedValueChanged += new System.EventHandler(this.cbKasutusmall_SelectedValueChanged);
             // 
             // lblKasutusmall
             // 

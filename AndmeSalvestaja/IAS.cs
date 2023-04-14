@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
-using VecUCT = System.Collections.Generic.List<System.Tuple<string, double>>;
+using VecUCT = System.Collections.Generic.Dictionary<string, System.Tuple<double, double>>;
 
 namespace AndmeSalvestaja
 {

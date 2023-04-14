@@ -7,7 +7,7 @@ using System.IO;
 using Newtonsoft.Json;
 
 using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
-using VecUCT = System.Collections.Generic.List<System.Tuple<string, double>>;
+using VecUCT = System.Collections.Generic.Dictionary<string, System.Tuple<double, double>>;
 
 namespace AndmeSalvestaja
 {
@@ -21,18 +21,18 @@ namespace AndmeSalvestaja
         public VecT marketData = new VecT { };
         public VecUCT useCases = new VecUCT
         {
-            Tuple.Create("",             0.0),
-            Tuple.Create("Röster",       800.0),
-            Tuple.Create("Tolmuimeja",   2000.0),
-            Tuple.Create("Televiisor",   90.0),
-            Tuple.Create("Pesumasin",    900.0),
-            Tuple.Create("Veekeetja",    3000.0),
-            Tuple.Create("Elektripliit", 3000.0),
-            Tuple.Create("Köögikombain", 300.0),
-            Tuple.Create("Kohvimasin",   1500.0),
-            Tuple.Create("Raadio",       50.0),
-            Tuple.Create("Munakeetja",   350.0),
-            Tuple.Create("Föön",         2000.0)
+            { "",             Tuple.Create(0.0, 0.0) },
+            { "Röster",       Tuple.Create(800.0, 1.0) },
+            { "Tolmuimeja",   Tuple.Create(2000.0, 30.0) },
+            { "Televiisor",   Tuple.Create(90.0, 120.0) },
+            { "Pesumasin",    Tuple.Create(900.0, 180.0) },
+            { "Veekeetja",    Tuple.Create(3000.0, 10.0) },
+            { "Elektripliit", Tuple.Create(3000.0, 60.0) },
+            { "Köögikombain", Tuple.Create(300.0, 15.0) },
+            { "Kohvimasin",   Tuple.Create(1500.0, 5.0) },
+            { "Raadio",       Tuple.Create(50.0, 120.0) },
+            { "Munakeetja",   Tuple.Create(1000.0, 6.0)  },
+            { "Föön",         Tuple.Create(2000.0, 10.0) }
         };
     }
 

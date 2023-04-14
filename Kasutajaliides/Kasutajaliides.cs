@@ -181,6 +181,24 @@ namespace Kasutajaliides
             }
             txtDebug.AppendText("kutsun api\n");
         }
+
+        private void calcPrice()
+        {
+            double time, power, price;
+            try
+            {
+                time  = Double.Parse(txtAjakulu.Text);
+                power = Double.Parse(txtVoimsus.Text);
+                // Do some crazy price calculation
+                price = time * power * 0.15;
+
+                txtHind.Text = Math.Round(price, 2).ToString();
+            }
+            catch (Exception)
+            {
+                return;
+            }
+        }
         
 
         private void Kasutajaliides_Load(object sender, EventArgs e)
@@ -207,7 +225,7 @@ namespace Kasutajaliides
             double parsedValue;
             if (!double.TryParse(txtAjakulu.Text + e.KeyChar, out parsedValue) && e.KeyChar !=8 && e.KeyChar != 46)
             {
-                MessageBox.Show("Palun sisestage ainult numbreid!");
+                MessageBox.Show("Palun sisestage ainult numbreid!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Handled = true;
                 return;
             }
@@ -218,7 +236,7 @@ namespace Kasutajaliides
             double parsedValue;
             if (!double.TryParse(txtVoimsus.Text + e.KeyChar, out parsedValue) && e.KeyChar != 8 && e.KeyChar != 46)
             {
-                MessageBox.Show("Palun sisestage ainult numbreid!");
+                MessageBox.Show("Palun sisestage ainult numbreid!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Handled = true;
                 return;
             }
@@ -351,9 +369,30 @@ namespace Kasutajaliides
                 var item = AS.getUseCases()[cbKasutusmall.SelectedItem.ToString()];
                 txtVoimsus.Text = Math.Round(item.Item1 / 1000.0, 3).ToString();
                 txtAjakulu.Text = Math.Round(item.Item2 / 60.0, 3).ToString();
+
+                // Calculate price
+                calcPrice();
             }
             catch (Exception)
             {
+            }
+        }
+
+        private void txtAjakulu_TextChanged(object sender, EventArgs e)
+        {
+            calcPrice();
+        }
+
+        private void txtVoimsus_TextChanged(object sender, EventArgs e)
+        {
+            calcPrice();
+        }
+
+        private void tbMonthlyPrice_TextChanged(object sender, EventArgs e)
+        {
+            if (rbStockPrice.Checked)
+            {
+                calcPrice();
             }
         }
 
@@ -362,7 +401,7 @@ namespace Kasutajaliides
             double parsedValue;
             if (!double.TryParse(tbMonthlyPrice.Text + e.KeyChar, out parsedValue) && e.KeyChar != 8 && e.KeyChar != 46)
             {
-                MessageBox.Show("Palun sisestage ainult numbreid!");
+                MessageBox.Show("Palun sisestage ainult numbreid!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Handled = true;
                 return;
             }

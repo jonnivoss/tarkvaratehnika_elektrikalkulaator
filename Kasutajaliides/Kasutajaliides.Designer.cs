@@ -29,10 +29,10 @@ namespace Kasutajaliides
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chartPrice = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.cbKasutusmall = new System.Windows.Forms.ComboBox();
             this.lblKasutusmall = new System.Windows.Forms.Label();
@@ -61,6 +61,7 @@ namespace Kasutajaliides
             this.Hind = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.btnElektriHind = new System.Windows.Forms.Button();
+            this.lblEur = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chartPrice)).BeginInit();
             this.groupPriceType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablePrice)).BeginInit();
@@ -68,39 +69,39 @@ namespace Kasutajaliides
             // 
             // chartPrice
             // 
-            chartArea5.AxisX.MajorGrid.Enabled = false;
-            chartArea5.AxisX.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Horizontal;
-            chartArea5.AxisX.Title = "Aeg";
-            chartArea5.AxisY.MajorGrid.Enabled = false;
-            chartArea5.AxisY.Title = "kWh";
-            chartArea5.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
-            chartArea5.Name = "ChartArea1";
-            this.chartPrice.ChartAreas.Add(chartArea5);
-            legend5.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            legend5.IsTextAutoFit = false;
-            legend5.Name = "Legend1";
-            this.chartPrice.Legends.Add(legend5);
+            chartArea1.AxisX.MajorGrid.Enabled = false;
+            chartArea1.AxisX.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Horizontal;
+            chartArea1.AxisX.Title = "Aeg";
+            chartArea1.AxisY.MajorGrid.Enabled = false;
+            chartArea1.AxisY.Title = "kWh";
+            chartArea1.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
+            chartArea1.Name = "ChartArea1";
+            this.chartPrice.ChartAreas.Add(chartArea1);
+            legend1.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            legend1.IsTextAutoFit = false;
+            legend1.Name = "Legend1";
+            this.chartPrice.Legends.Add(legend1);
             this.chartPrice.Location = new System.Drawing.Point(289, 13);
             this.chartPrice.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chartPrice.Name = "chartPrice";
             this.chartPrice.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
-            series9.ChartArea = "ChartArea1";
-            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series9.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            series9.Legend = "Legend1";
-            series9.Name = "Elektrihind";
-            series9.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
-            series9.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
-            series9.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            series10.ChartArea = "ChartArea1";
-            series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series10.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            series10.Legend = "Legend1";
-            series10.Name = "Tarbimine";
-            series10.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
-            series10.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            this.chartPrice.Series.Add(series9);
-            this.chartPrice.Series.Add(series10);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series1.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            series1.Legend = "Legend1";
+            series1.Name = "Elektrihind";
+            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series1.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
+            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series2.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            series2.Legend = "Legend1";
+            series2.Name = "Tarbimine";
+            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            this.chartPrice.Series.Add(series1);
+            this.chartPrice.Series.Add(series2);
             this.chartPrice.Size = new System.Drawing.Size(742, 485);
             this.chartPrice.TabIndex = 0;
             this.chartPrice.Text = "chartElektrihind";
@@ -147,6 +148,7 @@ namespace Kasutajaliides
             this.txtAjakulu.Name = "txtAjakulu";
             this.txtAjakulu.Size = new System.Drawing.Size(183, 30);
             this.txtAjakulu.TabIndex = 5;
+            this.txtAjakulu.TextChanged += new System.EventHandler(this.txtAjakulu_TextChanged);
             this.txtAjakulu.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAjakulu_KeyPress);
             // 
             // lblTund
@@ -179,6 +181,7 @@ namespace Kasutajaliides
             this.txtVoimsus.Name = "txtVoimsus";
             this.txtVoimsus.Size = new System.Drawing.Size(183, 30);
             this.txtVoimsus.TabIndex = 8;
+            this.txtVoimsus.TextChanged += new System.EventHandler(this.txtVoimsus_TextChanged);
             this.txtVoimsus.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtVoimsus_KeyPress);
             // 
             // lblkW
@@ -341,12 +344,14 @@ namespace Kasutajaliides
             this.tbMonthlyPrice.Location = new System.Drawing.Point(126, 59);
             this.tbMonthlyPrice.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.tbMonthlyPrice.Name = "tbMonthlyPrice";
-            this.tbMonthlyPrice.Size = new System.Drawing.Size(214, 32);
+            this.tbMonthlyPrice.Size = new System.Drawing.Size(163, 32);
             this.tbMonthlyPrice.TabIndex = 22;
+            this.tbMonthlyPrice.TextChanged += new System.EventHandler(this.tbMonthlyPrice_TextChanged);
             this.tbMonthlyPrice.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbMonthlyPrice_KeyPress);
             // 
             // groupPriceType
             // 
+            this.groupPriceType.Controls.Add(this.lblEur);
             this.groupPriceType.Controls.Add(this.tbMonthlyPrice);
             this.groupPriceType.Controls.Add(this.rbMonthlyCost);
             this.groupPriceType.Controls.Add(this.rbStockPrice);
@@ -355,7 +360,7 @@ namespace Kasutajaliides
             this.groupPriceType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.groupPriceType.Name = "groupPriceType";
             this.groupPriceType.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.groupPriceType.Size = new System.Drawing.Size(354, 105);
+            this.groupPriceType.Size = new System.Drawing.Size(368, 105);
             this.groupPriceType.TabIndex = 23;
             this.groupPriceType.TabStop = false;
             this.groupPriceType.Text = "Hinnatüüp";
@@ -399,6 +404,17 @@ namespace Kasutajaliides
             this.btnElektriHind.Text = "Kuva elektrihind";
             this.btnElektriHind.UseVisualStyleBackColor = true;
             this.btnElektriHind.Click += new System.EventHandler(this.btnElektriHind_Click);
+            // 
+            // lblEur
+            // 
+            this.lblEur.AutoSize = true;
+            this.lblEur.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEur.Location = new System.Drawing.Point(293, 62);
+            this.lblEur.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblEur.Name = "lblEur";
+            this.lblEur.Size = new System.Drawing.Size(71, 25);
+            this.lblEur.TabIndex = 26;
+            this.lblEur.Text = "€/MWh";
             // 
             // Kasutajaliides
             // 
@@ -472,6 +488,7 @@ namespace Kasutajaliides
         private System.Windows.Forms.DataGridViewTextBoxColumn Hind;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Button btnElektriHind;
+        private System.Windows.Forms.Label lblEur;
     }
 }
 

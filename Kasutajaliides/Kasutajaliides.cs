@@ -90,29 +90,29 @@ namespace Kasutajaliides
 
         private void changeInterval(int count)
         {
-            if (count <= 26)
+            if (count <= 26) //kui andmeid on ühe päeva jagu
             {
                 chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Hours;
                 chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "HH:mm";
-                chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 2;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 2; // silt iga kahe tunni tagant
             }
-            else if (count <= 50)
+            else if (count <= 50) // kui andmeid on kahe päeva jagu
             {
                 chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Hours;
                 chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "dd/MM HH:mm";
-                chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 4;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 4; // silt iga nelja tunni tagant
             }
-            else if (count <= 74)
+            else if (count <= 74) // kui andmeid on kolme päeva jagu
             {
                 chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Hours;
                 chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "dd/MM HH:mm";
-                chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 12;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 12; // silt iga 12 tunni tagant
             }
-            else
+            else // kui andmeid on 4+ päeva jagu
             {
                 chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Days;
                 chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "dd/MM/yy";
-                chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 0;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 0; // sildi intervall määratakse automaatselt 
             }
         }
 

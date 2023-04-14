@@ -346,9 +346,16 @@ namespace Kasutajaliides
 
         private void cbKasutusmall_SelectedValueChanged(object sender, EventArgs e)
         {
-            var item = AS.getUseCases()[cbKasutusmall.SelectedItem.ToString()];
-            txtVoimsus.Text = (item.Item1 / 1000.0).ToString();
-            txtAjakulu.Text = (item.Item2 / 60.0).ToString();
+            try
+            {
+                var item = AS.getUseCases()[cbKasutusmall.SelectedItem.ToString()];
+                txtVoimsus.Text = (item.Item1 / 1000.0).ToString();
+                txtAjakulu.Text = (item.Item2 / 60.0).ToString();
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         private void tbMonthlyPrice_KeyPress(object sender, KeyPressEventArgs e)

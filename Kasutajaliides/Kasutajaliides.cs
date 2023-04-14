@@ -349,12 +349,11 @@ namespace Kasutajaliides
             try
             {
                 var item = AS.getUseCases()[cbKasutusmall.SelectedItem.ToString()];
-                txtVoimsus.Text = (item.Item1 / 1000.0).ToString();
-                txtAjakulu.Text = (item.Item2 / 60.0).ToString();
+                txtVoimsus.Text = Math.Round(item.Item1 / 1000.0, 3).ToString();
+                txtAjakulu.Text = Math.Round(item.Item2 / 60.0, 3).ToString();
             }
             catch (Exception)
             {
-
             }
         }
 

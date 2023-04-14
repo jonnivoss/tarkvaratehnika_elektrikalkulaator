@@ -61,6 +61,7 @@ namespace Kasutajaliides
             this.Hind = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.btnElektriHind = new System.Windows.Forms.Button();
+            this.lblRate = new System.Windows.Forms.Label();
             this.lblEur = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chartPrice)).BeginInit();
             this.groupPriceType.SuspendLayout();
@@ -351,7 +352,7 @@ namespace Kasutajaliides
             // 
             // groupPriceType
             // 
-            this.groupPriceType.Controls.Add(this.lblEur);
+            this.groupPriceType.Controls.Add(this.lblRate);
             this.groupPriceType.Controls.Add(this.tbMonthlyPrice);
             this.groupPriceType.Controls.Add(this.rbMonthlyCost);
             this.groupPriceType.Controls.Add(this.rbStockPrice);
@@ -405,22 +406,34 @@ namespace Kasutajaliides
             this.btnElektriHind.UseVisualStyleBackColor = true;
             this.btnElektriHind.Click += new System.EventHandler(this.btnElektriHind_Click);
             // 
+            // lblRate
+            // 
+            this.lblRate.AutoSize = true;
+            this.lblRate.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRate.Location = new System.Drawing.Point(293, 62);
+            this.lblRate.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblRate.Name = "lblRate";
+            this.lblRate.Size = new System.Drawing.Size(71, 25);
+            this.lblRate.TabIndex = 26;
+            this.lblRate.Text = "€/MWh";
+            // 
             // lblEur
             // 
             this.lblEur.AutoSize = true;
             this.lblEur.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEur.Location = new System.Drawing.Point(293, 62);
+            this.lblEur.Location = new System.Drawing.Point(201, 303);
             this.lblEur.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblEur.Name = "lblEur";
-            this.lblEur.Size = new System.Drawing.Size(71, 25);
-            this.lblEur.TabIndex = 26;
-            this.lblEur.Text = "€/MWh";
+            this.lblEur.Size = new System.Drawing.Size(23, 25);
+            this.lblEur.TabIndex = 27;
+            this.lblEur.Text = "€";
             // 
             // Kasutajaliides
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1042, 674);
+            this.Controls.Add(this.lblEur);
             this.Controls.Add(this.btnElektriHind);
             this.Controls.Add(this.groupPriceType);
             this.Controls.Add(this.cbShowTabel);
@@ -488,6 +501,7 @@ namespace Kasutajaliides
         private System.Windows.Forms.DataGridViewTextBoxColumn Hind;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Button btnElektriHind;
+        private System.Windows.Forms.Label lblRate;
         private System.Windows.Forms.Label lblEur;
     }
 }

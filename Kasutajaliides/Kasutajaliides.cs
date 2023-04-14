@@ -143,18 +143,14 @@ namespace Kasutajaliides
             priceTimeRange.Clear();
             priceCostRange.Clear();
 
-            DateTime fDay, lDay;
+
             if (timeRange.Count == 0)
             {
                 this.startTime = DateTime.Now.Date + new TimeSpan(0, 0, 0);
                 this.stopTime = DateTime.Now.Date + new TimeSpan(23, 59, 59);
                 txtDebug.AppendText("  kaas   ");
             }
-            else
-            {
-                fDay = timeRange.First().Date + new TimeSpan(0, 0, 0);
-                lDay = timeRange.Last().Date  + new TimeSpan(23, 59, 59);
-            }
+
 
             priceData = AP.HindAegInternet(this.startTime, this.stopTime);
             MessageBox.Show(priceData.Count.ToString());

@@ -152,17 +152,7 @@ namespace Kasutajaliides
             }
 
 
-            priceData = AP.HindAegInternet(this.startTime, this.stopTime);
-            MessageBox.Show(priceData.Count.ToString());
-            foreach (var item in priceData)
-            {
-                priceTimeRange.Add(item.Item1);
-                priceCostRange.Add(item.Item2);
-                tablePrice.Rows.Add(item.Item1, item.Item2);
-            }
-
-            txtDebug.AppendText("Jõudsin graafini");
-            txtDebug.AppendText(Environment.NewLine);
+            callAPI();
             updateGraph();
         }
 

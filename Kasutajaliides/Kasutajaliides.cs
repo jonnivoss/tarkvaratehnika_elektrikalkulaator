@@ -194,7 +194,7 @@ namespace Kasutajaliides
                 if (rbStockPrice.Checked)
                 {
                     // Sööstab arvutajasse, leiab valitud ajavahemikust optimaalseima ajapikkuse
-                    /*var beg = this.startTime;
+                    var beg = this.startTime;
                     var end = beg.Date + TimeSpan.FromHours(time);
 
                     double bestIntegral = double.PositiveInfinity;
@@ -204,7 +204,7 @@ namespace Kasutajaliides
                     {
                         VecT useData = new VecT();
                         // Generate usedata
-                        for (var date = beg; date <= end; date.AddHours(1))
+                        for (var date = beg; date <= end; date = date.AddHours(1))
                         {
                             var hrs = (end - date).TotalHours;
                             if (hrs >= 1.0)
@@ -216,9 +216,8 @@ namespace Kasutajaliides
 
                         // Integreerib
                         double integral = 0.0;
-                        if (arvutaja.integreerija(this.priceData, useData, beg, end, ref integral) == 0)
+                        if (arvutaja.integreerija(useData, this.priceData, beg, end, ref integral) == 0)
                         {
-                            // cancer, get kankelled
                             if (integral < bestIntegral)
                             {
                                 bestIntegral = integral;
@@ -226,12 +225,12 @@ namespace Kasutajaliides
                             }
                         }
 
-                        beg.AddHours(1);
-                        end.AddHours(1);
+                        beg = beg.AddHours(1);
+                        end = end.AddHours(1);
                     }
 
-                    price = bestIntegral;
-                    MessageBox.Show("Tarbimist alustada " + bestDate.ToString("HH:mm"));*/
+                    price = bestIntegral / 1000.0;
+                    MessageBox.Show("Tarbimist alustada " + bestDate.ToString("HH:mm"));
                 }
                 else
                 {

@@ -194,8 +194,10 @@ namespace Kasutajaliides
                 if (rbStockPrice.Checked)
                 {
                     // Sööstab arvutajasse, leiab valitud ajavahemikust optimaalseima ajapikkuse
+                    Console.WriteLine("Time: " + time.ToString());
                     var beg = this.startTime;
                     var end = beg.Date + TimeSpan.FromHours(time);
+                    Console.WriteLine("Begin: " + beg.ToString() + "; end: " + end.ToString());
 
                     double bestIntegral = double.PositiveInfinity;
                     var bestDate = beg;
@@ -204,7 +206,7 @@ namespace Kasutajaliides
                     {
                         VecT useData = new VecT();
                         // Generate usedata
-                        for (var date = beg; date <= end; date = date.AddHours(1))
+                        for (DateTime date = beg, tempend = (beg + TimeSpan.FromHours(time)); date <= tempend; date = date.AddHours(1))
                         {
                             var hrs = (end - date).TotalHours;
                             if (hrs > 1.0)
@@ -218,8 +220,7 @@ namespace Kasutajaliides
                         double integral = 0.0;
                         if (arvutaja.integreerija(useData, this.priceData, beg, end, ref integral) == 0)
                         {
-                            txtDebug.AppendText("beg: " + beg.ToString() + "; end: " + end.ToString() + "; data: " + useData.ToString());
-                            txtDebug.AppendText(Environment.NewLine);
+                            Console.WriteLine("beg: " + beg.ToString() + "; end: " + end.ToString() + "; data: " + useData.ToString());
                             if (integral < bestIntegral)
                             {
                                 bestIntegral = integral;
@@ -232,7 +233,7 @@ namespace Kasutajaliides
                     }
 
                     price = bestIntegral / 1000.0;
-                    MessageBox.Show("Tarbimist alustada " + bestDate.ToString("HH:mm"));
+                    Console.WriteLine("Tarbimist alustada " + bestDate.ToString("HH:mm"));
                 }
                 else
                 {

@@ -207,7 +207,7 @@ namespace Kasutajaliides
                         for (var date = beg; date <= end; date = date.AddHours(1))
                         {
                             var hrs = (end - date).TotalHours;
-                            if (hrs >= 1.0)
+                            if (hrs > 1.0)
                             {
                                 hrs = 1.0;
                             }
@@ -218,6 +218,8 @@ namespace Kasutajaliides
                         double integral = 0.0;
                         if (arvutaja.integreerija(useData, this.priceData, beg, end, ref integral) == 0)
                         {
+                            txtDebug.AppendText("beg: " + beg.ToString() + "; end: " + end.ToString() + "; data: " + useData.ToString());
+                            txtDebug.AppendText(Environment.NewLine);
                             if (integral < bestIntegral)
                             {
                                 bestIntegral = integral;

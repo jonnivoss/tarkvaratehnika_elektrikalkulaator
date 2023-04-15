@@ -196,7 +196,7 @@ namespace Kasutajaliides
                     // Sööstab arvutajasse, leiab valitud ajavahemikust optimaalseima ajapikkuse
                     Console.WriteLine("Time: " + time.ToString());
                     var beg = this.startTime;
-                    var end = beg.Date + TimeSpan.FromHours(time);
+                    var end = beg.Date + TimeSpan.FromHours(Math.Ceiling(time));
                     Console.WriteLine("Begin: " + beg.ToString() + "; end: " + end.ToString());
 
                     double bestIntegral = double.PositiveInfinity;
@@ -206,21 +206,22 @@ namespace Kasutajaliides
                     {
                         VecT useData = new VecT();
                         // Generate usedata
-                        for (DateTime date = beg, tempend = (beg + TimeSpan.FromHours(time)); date <= tempend; date = date.AddHours(1))
+                        for (DateTime date = beg, tempend = (beg + TimeSpan.FromHours(time)); date < tempend; date = date.AddHours(1))
                         {
-                            var hrs = (end - date).TotalHours;
+                            var hrs = (tempend - date).TotalHours;
                             if (hrs > 1.0)
                             {
                                 hrs = 1.0;
                             }
+                            Console.WriteLine("asd: " + date.ToString() + "; " + (power * hrs).ToString());
                             useData.Add(Tuple.Create(date, power * hrs));
                         }
 
                         // Integreerib
                         double integral = 0.0;
-                        if (arvutaja.integreerija(useData, this.priceData, beg, end, ref integral) == 0)
+                        if (arvutaja.integreerija(useData, this.priceData, useData.First().Item1, useData.Last().Item1, ref integral) == 0)
                         {
-                            Console.WriteLine("beg: " + beg.ToString() + "; end: " + end.ToString() + "; data: " + useData.ToString());
+                            Console.WriteLine("beg: " + beg.ToString() + "; end: " + end.ToString() + "; int: " + integral.ToString());
                             if (integral < bestIntegral)
                             {
                                 bestIntegral = integral;

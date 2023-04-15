@@ -72,7 +72,7 @@ namespace Arvutaja
             }
             while (indeks <= ylemineIndeks)
             {
-                integraal += andmed1[indeks].Item2* andmed2[indeks].Item2;
+                integraal += andmed1[indeks].Item2 * andmed2[indeks].Item2;
                 indeks++;
             }
             return 0;

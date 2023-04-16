@@ -222,6 +222,12 @@ namespace Kasutajaliides
                         if (arvutaja.integreerija(useData, this.priceData, useData.First().Item1, useData.Last().Item1, ref integral) == 0)
                         {
                             Console.WriteLine("beg: " + beg.ToString() + "; end: " + end.ToString() + "; int: " + integral.ToString());
+                            Console.Write("!!!All DATA");
+                            for (int d = this.priceData.FindIndex(Tuple => Tuple.Item1 == useData.First().Item1), l = this.priceData.FindIndex(Tuple => Tuple.Item1 == useData.Last().Item1) + 1; d <= l; ++d)
+                            {
+                                var item = this.priceData[d];
+                                Console.WriteLine("dat: " + item.Item1.ToString() + ": " + item.Item2.ToString());
+                            }
                             if (integral < bestIntegral)
                             {
                                 bestIntegral = integral;
@@ -234,7 +240,7 @@ namespace Kasutajaliides
                     }
 
                     price = bestIntegral / 1000.0;
-                    Console.WriteLine("Tarbimist alustada " + bestDate.ToString("HH:mm"));
+                    Console.WriteLine("Tarbimist alustada " + bestDate.ToString("dd.MM.yyyy HH:mm"));
                 }
                 else
                 {

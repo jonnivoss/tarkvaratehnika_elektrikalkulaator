@@ -98,7 +98,7 @@ namespace Arvutaja
             // NB! Eeldatud on, et ajasamm dt = 1h
             int indeks1 = alumineIndeks, indeks2 = alumineIndeks2;
             integraal = 0.0; // NB! viidana antud muutuja, omandab pärast integraaali väärtuse
-            while (indeks1 <= ylemineIndeks)
+            while ((indeks1 <= ylemineIndeks) && (indeks2 <= ylemineIndeks2))
             {
                 integraal += andmed1[indeks1].Item2 * andmed2[indeks2].Item2;
                 indeks1++;

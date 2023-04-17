@@ -61,6 +61,8 @@ namespace Kasutajaliides
             this.Hind = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.btnElektriHind = new System.Windows.Forms.Button();
+            this.lblRate = new System.Windows.Forms.Label();
+            this.lblEur = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chartPrice)).BeginInit();
             this.groupPriceType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablePrice)).BeginInit();
@@ -110,24 +112,12 @@ namespace Kasutajaliides
             this.cbKasutusmall.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbKasutusmall.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbKasutusmall.FormattingEnabled = true;
-            this.cbKasutusmall.Items.AddRange(new object[] {
-            "",
-            "Automaat",
-            "Manuaal",
-            "Pesumasin",
-            "Veekeetja",
-            "Elektripliit",
-            "Kohvimasin",
-            "Where\'s my bible?",
-            "Librarian",
-            "HÖÖÖ",
-            "Bwoah",
-            "KÄH"});
             this.cbKasutusmall.Location = new System.Drawing.Point(14, 66);
             this.cbKasutusmall.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbKasutusmall.Name = "cbKasutusmall";
             this.cbKasutusmall.Size = new System.Drawing.Size(240, 28);
             this.cbKasutusmall.TabIndex = 2;
+            this.cbKasutusmall.SelectedValueChanged += new System.EventHandler(this.cbKasutusmall_SelectedValueChanged);
             // 
             // lblKasutusmall
             // 
@@ -159,6 +149,7 @@ namespace Kasutajaliides
             this.txtAjakulu.Name = "txtAjakulu";
             this.txtAjakulu.Size = new System.Drawing.Size(183, 26);
             this.txtAjakulu.TabIndex = 5;
+            this.txtAjakulu.TextChanged += new System.EventHandler(this.txtAjakulu_TextChanged);
             this.txtAjakulu.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAjakulu_KeyPress);
             // 
             // lblTund
@@ -191,6 +182,7 @@ namespace Kasutajaliides
             this.txtVoimsus.Name = "txtVoimsus";
             this.txtVoimsus.Size = new System.Drawing.Size(183, 26);
             this.txtVoimsus.TabIndex = 8;
+            this.txtVoimsus.TextChanged += new System.EventHandler(this.txtVoimsus_TextChanged);
             this.txtVoimsus.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtVoimsus_KeyPress);
             // 
             // lblkW
@@ -355,10 +347,12 @@ namespace Kasutajaliides
             this.tbMonthlyPrice.Name = "tbMonthlyPrice";
             this.tbMonthlyPrice.Size = new System.Drawing.Size(214, 27);
             this.tbMonthlyPrice.TabIndex = 22;
+            this.tbMonthlyPrice.TextChanged += new System.EventHandler(this.tbMonthlyPrice_TextChanged);
             this.tbMonthlyPrice.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbMonthlyPrice_KeyPress);
             // 
             // groupPriceType
             // 
+            this.groupPriceType.Controls.Add(this.lblRate);
             this.groupPriceType.Controls.Add(this.tbMonthlyPrice);
             this.groupPriceType.Controls.Add(this.rbMonthlyCost);
             this.groupPriceType.Controls.Add(this.rbStockPrice);
@@ -367,7 +361,7 @@ namespace Kasutajaliides
             this.groupPriceType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.groupPriceType.Name = "groupPriceType";
             this.groupPriceType.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.groupPriceType.Size = new System.Drawing.Size(354, 105);
+            this.groupPriceType.Size = new System.Drawing.Size(368, 105);
             this.groupPriceType.TabIndex = 23;
             this.groupPriceType.TabStop = false;
             this.groupPriceType.Text = "Hinnatüüp";
@@ -412,11 +406,34 @@ namespace Kasutajaliides
             this.btnElektriHind.UseVisualStyleBackColor = true;
             this.btnElektriHind.Click += new System.EventHandler(this.btnElektriHind_Click);
             // 
+            // lblRate
+            // 
+            this.lblRate.AutoSize = true;
+            this.lblRate.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRate.Location = new System.Drawing.Point(293, 62);
+            this.lblRate.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblRate.Name = "lblRate";
+            this.lblRate.Size = new System.Drawing.Size(71, 25);
+            this.lblRate.TabIndex = 26;
+            this.lblRate.Text = "€/MWh";
+            // 
+            // lblEur
+            // 
+            this.lblEur.AutoSize = true;
+            this.lblEur.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEur.Location = new System.Drawing.Point(201, 303);
+            this.lblEur.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblEur.Name = "lblEur";
+            this.lblEur.Size = new System.Drawing.Size(23, 25);
+            this.lblEur.TabIndex = 27;
+            this.lblEur.Text = "€";
+            // 
             // Kasutajaliides
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1042, 674);
+            this.Controls.Add(this.lblEur);
             this.Controls.Add(this.btnElektriHind);
             this.Controls.Add(this.groupPriceType);
             this.Controls.Add(this.cbShowTabel);
@@ -484,6 +501,8 @@ namespace Kasutajaliides
         private System.Windows.Forms.DataGridViewTextBoxColumn Hind;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Button btnElektriHind;
+        private System.Windows.Forms.Label lblRate;
+        private System.Windows.Forms.Label lblEur;
     }
 }
 

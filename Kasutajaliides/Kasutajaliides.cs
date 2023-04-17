@@ -222,17 +222,97 @@ namespace Kasutajaliides
             }*/
             txtDebug.AppendText("kutsun api\n");
         }
+
+        private void calcPrice()
+        {
+            double time, power, price;
+            try
+            {
+                time  = Double.Parse(txtAjakulu.Text);
+                power = Double.Parse(txtVoimsus.Text);
+                // Do some crazy price calculation
+                if (rbStockPrice.Checked)
+                {
+                    // Sööstab arvutajasse, leiab valitud ajavahemikust optimaalseima ajapikkuse
+                    Console.WriteLine("Time: " + time.ToString());
+                    var beg = this.startTime;
+                    var end = beg.Date + TimeSpan.FromHours(Math.Ceiling(time));
+                    Console.WriteLine("Begin: " + beg.ToString() + "; end: " + end.ToString());
+
+                    double bestIntegral = double.PositiveInfinity;
+                    var bestDate = beg;
+
+                    for (; end <= this.stopTime; )
+                    {
+                        VecT useData = new VecT();
+                        // Generate usedata
+                        for (DateTime date = beg, tempend = (beg + TimeSpan.FromHours(time)); date < tempend; date = date.AddHours(1))
+                        {
+                            var hrs = (tempend - date).TotalHours;
+                            if (hrs > 1.0)
+                            {
+                                hrs = 1.0;
+                            }
+                            Console.WriteLine("asd: " + date.ToString() + "; " + (power * hrs).ToString());
+                            useData.Add(Tuple.Create(date, power * hrs));
+                        }
+
+                        // Integreerib
+                        double integral = 0.0;
+                        if (AR.integreerija(useData, this.priceData, useData.First().Item1, useData.Last().Item1, ref integral) == 0)
+                        {
+                            /*Console.WriteLine("beg: " + beg.ToString() + "; end: " + end.ToString() + "; int: " + integral.ToString());
+                            Console.Write("!!!All DATA");
+                            for (int d = this.priceData.FindIndex(Tuple => Tuple.Item1 == useData.First().Item1), l = this.priceData.FindIndex(Tuple => Tuple.Item1 == useData.Last().Item1) + 1; d <= l; ++d)
+                            {
+                                var item = this.priceData[d];
+                                Console.WriteLine("dat: " + item.Item1.ToString() + ": " + item.Item2.ToString());
+                            }*/
+                            if (integral < bestIntegral)
+                            {
+                                bestIntegral = integral;
+                                bestDate = beg;
+                            }
+                        }
+
+                        beg = beg.AddHours(1);
+                        end = end.AddHours(1);
+                    }
+
+                    price = bestIntegral / 1000.0;
+                    MessageBox.Show("Tarbimist alustada " + bestDate.ToString("dd.MM.yyyy HH:mm"));
+                }
+                else
+                {
+                    var mwh = Double.Parse(tbMonthlyPrice.Text);
+                    price = time * power * mwh / 1000.0;
+                }
+
+                txtHind.Text = Math.Round(price, 2).ToString();
+            }
+            catch (Exception)
+            {
+                return;
+            }
+        }
         
 
         private void Kasutajaliides_Load(object sender, EventArgs e)
         {
+            // Lisab tüüp-kasutusmallid
             chartPrice.MouseWheel += chartPrice_zooming;
             txtHind.Text = "-";
             // Proovib avada CSV
-            if (!AS.loadFile())
+            AS.loadFile();
+
+            var items = AS.getUseCases();
+            cbKasutusmall.Items.Clear();
+            foreach (var i in items)
             {
-                return;
+                cbKasutusmall.Items.Add(i.Key);
             }
+
+
             AP.setFile(AS.getSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed));
             openCSV();
         }
@@ -242,7 +322,7 @@ namespace Kasutajaliides
             double parsedValue;
             if (!double.TryParse(txtAjakulu.Text + e.KeyChar, out parsedValue) && e.KeyChar !=8 && e.KeyChar != 46)
             {
-                MessageBox.Show("Palun sisestage ainult numbreid!");
+                MessageBox.Show("Palun sisestage ainult numbreid!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Handled = true;
                 return;
             }
@@ -253,7 +333,7 @@ namespace Kasutajaliides
             double parsedValue;
             if (!double.TryParse(txtVoimsus.Text + e.KeyChar, out parsedValue) && e.KeyChar != 8 && e.KeyChar != 46)
             {
-                MessageBox.Show("Palun sisestage ainult numbreid!");
+                MessageBox.Show("Palun sisestage ainult numbreid!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Handled = true;
                 return;
             }
@@ -379,12 +459,46 @@ namespace Kasutajaliides
             }
         }
 
+        private void cbKasutusmall_SelectedValueChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                var item = AS.getUseCases()[cbKasutusmall.SelectedItem.ToString()];
+                txtVoimsus.Text = Math.Round(item.Item1 / 1000.0, 3).ToString();
+                txtAjakulu.Text = Math.Round(item.Item2 / 60.0, 3).ToString();
+
+                // Calculate price
+                calcPrice();
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void txtAjakulu_TextChanged(object sender, EventArgs e)
+        {
+            calcPrice();
+        }
+
+        private void txtVoimsus_TextChanged(object sender, EventArgs e)
+        {
+            calcPrice();
+        }
+
+        private void tbMonthlyPrice_TextChanged(object sender, EventArgs e)
+        {
+            if (rbMonthlyCost.Checked)
+            {
+                calcPrice();
+            }
+        }
+
         private void tbMonthlyPrice_KeyPress(object sender, KeyPressEventArgs e)
         {
             double parsedValue;
             if (!double.TryParse(tbMonthlyPrice.Text + e.KeyChar, out parsedValue) && e.KeyChar != 8 && e.KeyChar != 46)
             {
-                MessageBox.Show("Palun sisestage ainult numbreid!");
+                MessageBox.Show("Palun sisestage ainult numbreid!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Handled = true;
                 return;
             }

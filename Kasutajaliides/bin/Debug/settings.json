@@ -1,7 +1,57 @@
 {
   "setMap": {
-    "tarbijaAndmed": "C:\\Users\\aneem\\Downloads\\tarbimine_eestiEnergia.csv",
+    "tarbijaAndmed": "C:\\Users\\admin\\Documents\\TTU\\Tarkvaratehnika\\Projekt\\tarbimine_eestiEnergia.csv",
     "suurendusLubatud": "0"
   },
-  "marketData": []
+  "marketData": [],
+  "useCases": {
+    "": {
+      "Item1": 0.0,
+      "Item2": 0.0
+    },
+    "Röster": {
+      "Item1": 800.0,
+      "Item2": 1.0
+    },
+    "Tolmuimeja": {
+      "Item1": 2000.0,
+      "Item2": 30.0
+    },
+    "Televiisor": {
+      "Item1": 90.0,
+      "Item2": 120.0
+    },
+    "Pesumasin": {
+      "Item1": 900.0,
+      "Item2": 180.0
+    },
+    "Veekeetja": {
+      "Item1": 3000.0,
+      "Item2": 10.0
+    },
+    "Elektripliit": {
+      "Item1": 3000.0,
+      "Item2": 60.0
+    },
+    "Köögikombain": {
+      "Item1": 300.0,
+      "Item2": 15.0
+    },
+    "Kohvimasin": {
+      "Item1": 1500.0,
+      "Item2": 5.0
+    },
+    "Raadio": {
+      "Item1": 50.0,
+      "Item2": 120.0
+    },
+    "Munakeetja": {
+      "Item1": 1000.0,
+      "Item2": 6.0
+    },
+    "Föön": {
+      "Item1": 2000.0,
+      "Item2": 10.0
+    }
+  }
 }

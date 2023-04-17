@@ -7,6 +7,7 @@ using System.IO;
 using Newtonsoft.Json;
 
 using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
+using VecUCT = System.Collections.Generic.Dictionary<string, System.Tuple<double, double>>;
 
 namespace AndmeSalvestaja
 {
@@ -18,6 +19,21 @@ namespace AndmeSalvestaja
             { ASSetting.suurendusLubatud, "0" }
         };
         public VecT marketData = new VecT { };
+        public VecUCT useCases = new VecUCT
+        {
+            { "",             Tuple.Create(0.0, 0.0) },
+            { "Röster",       Tuple.Create(800.0, 1.0) },
+            { "Tolmuimeja",   Tuple.Create(2000.0, 30.0) },
+            { "Televiisor",   Tuple.Create(90.0, 120.0) },
+            { "Pesumasin",    Tuple.Create(900.0, 180.0) },
+            { "Veekeetja",    Tuple.Create(3000.0, 10.0) },
+            { "Elektripliit", Tuple.Create(3000.0, 60.0) },
+            { "Köögikombain", Tuple.Create(300.0, 15.0) },
+            { "Kohvimasin",   Tuple.Create(1500.0, 5.0) },
+            { "Raadio",       Tuple.Create(50.0, 120.0) },
+            { "Munakeetja",   Tuple.Create(1000.0, 6.0)  },
+            { "Föön",         Tuple.Create(2000.0, 10.0) }
+        };
     }
 
     public class CAS : AndmeSalvestaja.IAS
@@ -98,6 +114,11 @@ namespace AndmeSalvestaja
         public VecT getMarketData()
         {
             return this.data.marketData;
+        }
+
+        public VecUCT getUseCases()
+        {
+            return this.data.useCases;
         }
     }
 }

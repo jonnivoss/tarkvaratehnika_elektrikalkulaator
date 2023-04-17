@@ -21,6 +21,9 @@ namespace Kasutajaliides
             InitializeComponent();
         }
 
+        Font Normal = new Font("Impact", 12);
+        Font Bigger = new Font("Impact", 16);
+
         List<DateTime> timeRange = new List<DateTime>();
         List<double> costRange = new List<double>();
 
@@ -38,6 +41,7 @@ namespace Kasutajaliides
 
         DateTime startTime, stopTime;
         bool showStock = true, isGraph = true;
+        bool state = true;
 
         private void updateGraph()
         {
@@ -94,8 +98,8 @@ namespace Kasutajaliides
                 if (item.Item1 >= startTime && item.Item1 <= stopTime)
                 {
                     priceTimeRange.Add(item.Item1);
-                    priceCostRange.Add(item.Item2);
-                    tablePrice.Rows.Add(item.Item1, item.Item2);
+                    priceCostRange.Add(item.Item2 / 10.0);
+                    tablePrice.Rows.Add(item.Item1, item.Item2 / 10.0);
 
                     /*string line = "i: " + item.Item1.ToString() + ": " + item.Item2.ToString();
 
@@ -104,6 +108,7 @@ namespace Kasutajaliides
                 }
             }
             chartPrice.Series["Elektrihind"].Points.DataBindXY(priceTimeRange, priceCostRange);
+            chartPrice.Series["Elektrihind"].Enabled = showStock;
             chartPrice.Invalidate();
             tablePrice.Invalidate();
         }
@@ -184,7 +189,7 @@ namespace Kasutajaliides
                 //txtDebug.AppendText("Jõudsin nullini");
                 //txtDebug.AppendText(Environment.NewLine);
                 this.startTime = dateStartTime.Value + new TimeSpan(0, 0, 0);
-                this.stopTime = dateStopTime.Value + new TimeSpan(23, 59, 59);
+                this.stopTime  = dateStopTime.Value + new TimeSpan(23, 59, 59);
                 txtDebug.AppendText("jeba\n\n");
             }
 
@@ -492,6 +497,79 @@ namespace Kasutajaliides
             if (rbMonthlyCost.Checked)
             {
                 calcPrice();
+            }
+        }
+        private void btnNormalSize_Click(object sender, EventArgs e)
+        {
+            if (state)
+            {
+                lblKasutusmall.Font = Bigger;
+                lblAeg.Font = Bigger;
+                lblTund.Font = Bigger;
+                lblHind.Font = Bigger;
+                lblVoimsus.Font = Bigger;
+                lblkW.Font = Bigger;
+                cbShowPrice.Font = Bigger;
+                cbShowTabel.Font = Bigger;
+                rbMonthlyCost.Font = Bigger;
+                rbStockPrice.Font = Bigger;
+                groupPriceType.Font = new Font("Impact", 12);
+                lblBeginning.Font = Bigger;
+                lblEnd.Font = Bigger;
+                cbKasutusmall.Font = Bigger;
+                txtAjakulu.Font = Bigger;
+                txtVoimsus.Font = Bigger;
+                txtHind.Font = Bigger;
+                btnAvaCSV.Font = Bigger;
+                dateStartTime.Font = Bigger;
+                dateStopTime.Font = Bigger;
+                btnChangeSize.Font = Bigger;
+                btnChangeSize.Text = "-";
+                chartPrice.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font("Comic Sans MS", 12);
+                chartPrice.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font("Comic Sans MS", 12);
+                chartPrice.ChartAreas["ChartArea1"].AxisY2.TitleFont = new Font("Comic Sans MS", 12);
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Font = new Font("Comic Sans MS", 10);
+                chartPrice.ChartAreas["ChartArea1"].AxisY.LabelStyle.Font = new Font("Comic Sans MS", 10);
+                chartPrice.ChartAreas["ChartArea1"].AxisY2.LabelStyle.Font = new Font("Comic Sans MS", 10);
+                chartPrice.Legends["Legend1"].Font = new Font("Comic Sans MS", 10);
+                tablePrice.ColumnHeadersDefaultCellStyle.Font = Bigger;
+                tablePrice.RowsDefaultCellStyle.Font = Bigger;
+                state = false;
+            }
+            else
+            {
+                lblKasutusmall.Font = Normal;
+                lblAeg.Font = Normal;
+                lblTund.Font = Normal;
+                lblHind.Font = Normal;
+                lblVoimsus.Font = Normal;
+                lblkW.Font = Normal;
+                cbShowPrice.Font = Normal;
+                cbShowTabel.Font = Normal;
+                rbMonthlyCost.Font = Normal;
+                rbStockPrice.Font = Normal;
+                groupPriceType.Font = new Font("Impact", 9);
+                lblBeginning.Font = Normal;
+                lblEnd.Font = Normal;
+                cbKasutusmall.Font = Normal;
+                txtAjakulu.Font = Normal;
+                txtVoimsus.Font = Normal;
+                txtHind.Font = Normal;
+                btnAvaCSV.Font = Normal;
+                dateStartTime.Font = Normal;
+                dateStopTime.Font = Normal;
+                btnChangeSize.Font = Normal;
+                btnChangeSize.Text = "+";
+                chartPrice.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font("Comic Sans MS", 10);
+                chartPrice.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font("Comic Sans MS", 10);
+                chartPrice.ChartAreas["ChartArea1"].AxisY2.TitleFont = new Font("Comic Sans MS", 10);
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Font = new Font("Comic Sans MS", 8.25f);
+                chartPrice.ChartAreas["ChartArea1"].AxisY.LabelStyle.Font = new Font("Comic Sans MS", 8.25f);
+                chartPrice.ChartAreas["ChartArea1"].AxisY2.LabelStyle.Font = new Font("Comic Sans MS", 8.25f);
+                chartPrice.Legends["Legend1"].Font = new Font("Comic Sans MS", 8.25f);
+                tablePrice.ColumnHeadersDefaultCellStyle.Font = Normal;
+                tablePrice.RowsDefaultCellStyle.Font = Normal;
+                state = true;
             }
         }
 

@@ -291,8 +291,8 @@ namespace Kasutajaliides
                 }
                 else
                 {
-                    var mwh = Double.Parse(tbMonthlyPrice.Text);
-                    price = time * power * mwh / 1000.0;
+                    var skwh = Double.Parse(tbMonthlyPrice.Text);
+                    price = time * power * skwh / 100.0;
                 }
 
                 txtHind.Text = Math.Round(price, 2).ToString();

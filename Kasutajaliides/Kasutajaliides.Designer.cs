@@ -65,6 +65,7 @@ namespace Kasutajaliides
             this.btnChangeSize = new System.Windows.Forms.Button();
             this.lblBeginning = new System.Windows.Forms.Label();
             this.lblEnd = new System.Windows.Forms.Label();
+            this.lblAndresEek = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chartPrice)).BeginInit();
             this.groupPriceType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablePrice)).BeginInit();
@@ -452,11 +453,23 @@ namespace Kasutajaliides
             this.lblEnd.TabIndex = 16;
             this.lblEnd.Text = "Lõpp:";
             // 
+            // lblAndresEek
+            // 
+            this.lblAndresEek.AutoSize = true;
+            this.lblAndresEek.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAndresEek.Location = new System.Drawing.Point(201, 303);
+            this.lblAndresEek.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblAndresEek.Name = "lblAndresEek";
+            this.lblAndresEek.Size = new System.Drawing.Size(23, 25);
+            this.lblAndresEek.TabIndex = 27;
+            this.lblAndresEek.Text = "€";
+            // 
             // Kasutajaliides
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1067, 674);
+            this.Controls.Add(this.lblAndresEek);
             this.Controls.Add(this.lblEnd);
             this.Controls.Add(this.lblBeginning);
             this.Controls.Add(this.btnChangeSize);
@@ -530,5 +543,6 @@ namespace Kasutajaliides
         private System.Windows.Forms.Button btnChangeSize;
         private System.Windows.Forms.Label lblBeginning;
         private System.Windows.Forms.Label lblEnd;
+        private System.Windows.Forms.Label lblAndresEek;
     }
 }

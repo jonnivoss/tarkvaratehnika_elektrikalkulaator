@@ -80,7 +80,7 @@ namespace Kasutajaliides
             chartArea1.AxisY2.TitleFont = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             chartArea1.Name = "ChartArea1";
             this.chartPrice.ChartAreas.Add(chartArea1);
-            legend1.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            legend1.Font = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             legend1.IsTextAutoFit = false;
             legend1.Name = "Legend1";
             this.chartPrice.Legends.Add(legend1);
@@ -235,7 +235,7 @@ namespace Kasutajaliides
             this.btnAvaCSV.Location = new System.Drawing.Point(16, 466);
             this.btnAvaCSV.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btnAvaCSV.Name = "btnAvaCSV";
-            this.btnAvaCSV.Size = new System.Drawing.Size(104, 31);
+            this.btnAvaCSV.Size = new System.Drawing.Size(125, 32);
             this.btnAvaCSV.TabIndex = 12;
             this.btnAvaCSV.Text = "Ava CŠV fail";
             this.btnAvaCSV.UseVisualStyleBackColor = true;

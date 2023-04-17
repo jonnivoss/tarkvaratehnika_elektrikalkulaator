@@ -413,6 +413,7 @@ namespace Kasutajaliides
                 chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Font = new Font("Comic Sans MS", 10);
                 chartPrice.ChartAreas["ChartArea1"].AxisY.LabelStyle.Font = new Font("Comic Sans MS", 10);
                 chartPrice.ChartAreas["ChartArea1"].AxisY2.LabelStyle.Font = new Font("Comic Sans MS", 10);
+                chartPrice.Legends["Legend1"].Font = new Font("Comic Sans MS", 10);
                 state = false;
             }
             else
@@ -438,6 +439,13 @@ namespace Kasutajaliides
                 dateStartTime.Font = Normal;
                 dateStopTime.Font = Normal;
                 btnChangeSize.Font = Normal;
+                btnChangeSize.Text = "Suurenda";
+                chartPrice.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font("Comic Sans MS", 10);
+                chartPrice.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font("Comic Sans MS", 10);
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Font = new Font("Comic Sans MS", 8.25f);
+                chartPrice.ChartAreas["ChartArea1"].AxisY.LabelStyle.Font = new Font("Comic Sans MS", 8.25f);
+                chartPrice.ChartAreas["ChartArea1"].AxisY2.LabelStyle.Font = new Font("Comic Sans MS", 8.25f);
+                chartPrice.Legends["Legend1"].Font = new Font("Comic Sans MS", 8.25f);
                 state = true;
             }
         }

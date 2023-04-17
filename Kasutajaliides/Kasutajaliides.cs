@@ -21,6 +21,9 @@ namespace Kasutajaliides
             InitializeComponent();
         }
 
+        Font Normal = new Font("Impact", 12);
+        Font Bigger = new Font("Impact", 16);
+
         List<DateTime> timeRange = new List<DateTime>();
         List<double> costRange = new List<double>();
 
@@ -38,6 +41,7 @@ namespace Kasutajaliides
 
         DateTime startTime, stopTime;
         bool showStock = true, isGraph = true;
+        bool state = true;
 
         private void updateGraph()
         {

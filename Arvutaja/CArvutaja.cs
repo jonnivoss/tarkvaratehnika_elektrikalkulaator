@@ -23,17 +23,6 @@ namespace Arvutaja
 
         // #### MEETODID ####
 
-        public int lokaalsedAndmed(VecT andmed)
-        {
-
-            return 0;
-        }
-        public int internetiAndmed(VecT andmed)
-        {
-
-            return 0;
-        }
-
         // KAHE FUNKTSIOONI KORRUTISE INTEGRAATOR
         // andmed1: esimene funktsioon
         // andmed2: teine funktsioon
@@ -42,7 +31,7 @@ namespace Arvutaja
             if (alumine > ylemine)
             {
                 // VIGA! RAJAD ON SUURUSE POOLEST VAHETUSES!
-                return 3;
+                return 2;
             }
             // alumisele ja ülemisele rajale vastavate indekside määramine
             int alumineIndeks = andmed1.FindIndex(Tuple => Tuple.Item1 == alumine);

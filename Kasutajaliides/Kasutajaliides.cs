@@ -34,7 +34,7 @@ namespace Kasutajaliides
 
         private Andmepyydja.CAP AP = new Andmepyydja.CAP();
         private AndmeSalvestaja.CAS AS = new AndmeSalvestaja.CAS("settings.json");
-        private Arvutaja.CArvutaja arvutaja = new Arvutaja.CArvutaja();
+        private Arvutaja.CArvutaja AR = new Arvutaja.CArvutaja();
 
         DateTime startTime, stopTime;
         bool showStock = true, isGraph = true;
@@ -59,8 +59,27 @@ namespace Kasutajaliides
                 }
             }
 
+            if (rbStockPrice.Checked)
+            {
+                double integraal = 0;
+                int olek = AR.integreerija(userData, priceData, startTime, stopTime, ref integraal);
+                switch (olek)
+                {
+                    case 0:
+                        txtHind.Text = (integraal/1000).ToString() + " €";
+                        break;
+                    case 1:
+                        txtHind.Text = "Viga 1";
+                        break;
+                    case 2:
+                        txtHind.Text = "Viga 2";
+                        break;
+                }
+            }
+
             if (timeRange.Count > 0)
             {
+                changeInterval(timeRange.Count);
                 chartPrice.Series["Tarbimine"].Points.DataBindXY(timeRange, costRange);
             }
 
@@ -88,6 +107,33 @@ namespace Kasutajaliides
             tablePrice.Invalidate();
         }
 
+        private void changeInterval(int count)
+        {
+            if (count <= 26) //kui andmeid on ühe päeva jagu
+            {
+                chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Hours;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "HH:mm";
+                chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 2; // silt iga kahe tunni tagant
+            }
+            else if (count <= 50) // kui andmeid on kahe päeva jagu
+            {
+                chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Hours;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "dd/MM HH:mm";
+                chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 4; // silt iga nelja tunni tagant
+            }
+            else if (count <= 74) // kui andmeid on kolme päeva jagu
+            {
+                chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Hours;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "dd/MM HH:mm";
+                chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 12; // silt iga 12 tunni tagant
+            }
+            else // kui andmeid on 4+ päeva jagu
+            {
+                chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Days;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "dd/MM/yy";
+                chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 0; // sildi intervall määratakse automaatselt 
+            }
+        }
 
         private void btnAvaCSV_Click(object sender, EventArgs e)
         {
@@ -144,30 +190,18 @@ namespace Kasutajaliides
             priceTimeRange.Clear();
             priceCostRange.Clear();
 
-            DateTime fDay, lDay;
+
             if (timeRange.Count == 0)
             {
                 this.startTime = DateTime.Now.Date + new TimeSpan(0, 0, 0);
                 this.stopTime = DateTime.Now.Date + new TimeSpan(23, 59, 59);
+                // Ajaintervalli määramine kuvamisel
+                changeInterval(timeRange.Count);
                 txtDebug.AppendText("  kaas   ");
             }
-            else
-            {
-                fDay = timeRange.First().Date + new TimeSpan(0, 0, 0);
-                lDay = timeRange.Last().Date  + new TimeSpan(23, 59, 59);
-            }
 
-            priceData = AP.HindAegInternet(this.startTime, this.stopTime);
-            MessageBox.Show(priceData.Count.ToString());
-            foreach (var item in priceData)
-            {
-                priceTimeRange.Add(item.Item1);
-                priceCostRange.Add(item.Item2);
-                tablePrice.Rows.Add(item.Item1, item.Item2);
-            }
 
-            txtDebug.AppendText("Jõudsin graafini");
-            txtDebug.AppendText(Environment.NewLine);
+            callAPI();
             updateGraph();
         }
 
@@ -180,6 +214,12 @@ namespace Kasutajaliides
                 priceCostRange.Add(item.Item2);
                 tablePrice.Rows.Add(item.Item1, item.Item2);
             }
+
+            changeInterval(priceData.Count);
+            /*if (priceTimeRange.Count <= 50)
+            {
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "HH:mm";
+            }*/
             txtDebug.AppendText("kutsun api\n");
         }
 
@@ -219,7 +259,7 @@ namespace Kasutajaliides
 
                         // Integreerib
                         double integral = 0.0;
-                        if (arvutaja.integreerija(useData, this.priceData, useData.First().Item1, useData.Last().Item1, ref integral) == 0)
+                        if (AR.integreerija(useData, this.priceData, useData.First().Item1, useData.Last().Item1, ref integral) == 0)
                         {
                             /*Console.WriteLine("beg: " + beg.ToString() + "; end: " + end.ToString() + "; int: " + integral.ToString());
                             Console.Write("!!!All DATA");
@@ -261,6 +301,7 @@ namespace Kasutajaliides
         {
             // Lisab tüüp-kasutusmallid
             chartPrice.MouseWheel += chartPrice_zooming;
+            txtHind.Text = "-";
             // Proovib avada CSV
             AS.loadFile();
 
@@ -494,12 +535,21 @@ namespace Kasutajaliides
                             dateStartTime.Value = dateStartTime.Value.AddHours(-leftStep);
                             startTime = dateStartTime.Value;
                         }
+                        else
+                        {
+                            dateStartTime.Value = dateStartTime.MinDate;
+                            startTime = dateStartTime.Value;
+                        }
                         if (distanceFromMax.TotalDays >= 1)
                         {
                             dateStopTime.Value = dateStopTime.Value.AddHours(rightStep);
                             stopTime = dateStopTime.Value;
                         }
-                         
+                        else
+                        {
+                            dateStopTime.Value = dateStopTime.MaxDate;
+                            stopTime = dateStopTime.Value;
+                        }
                     }
                 }
             }

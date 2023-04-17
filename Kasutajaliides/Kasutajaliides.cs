@@ -13,7 +13,7 @@ using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, doubl
 
 namespace Kasutajaliides
 {
-    
+
     public partial class Kasutajaliides : Form
     {
         public Kasutajaliides()
@@ -21,9 +21,6 @@ namespace Kasutajaliides
             InitializeComponent();
         }
 
-        Font Normal = new Font("Impact", 12);
-        Font Bigger = new Font("Impact", 16);
- 
         List<DateTime> timeRange = new List<DateTime>();
         List<double> costRange = new List<double>();
 
@@ -41,7 +38,7 @@ namespace Kasutajaliides
 
         DateTime startTime, stopTime;
         bool showStock = true, isGraph = true;
-        bool state = true;
+
         private void updateGraph()
         {
             // Uuenda graafikut
@@ -49,8 +46,9 @@ namespace Kasutajaliides
             costRange.Clear();
             // Ära luba lõppkuupäeva alguskuupäevast väiksemaks panna
             //dateStopTime.MinDate = dateStartTime.Value;
-            foreach (var item in userData) {
-                if(item.Item1 >= startTime && item.Item1 <= stopTime)
+            foreach (var item in userData)
+            {
+                if (item.Item1 >= startTime && item.Item1 <= stopTime)
                 {
                     timeRange.Add(item.Item1);
                     costRange.Add(item.Item2);
@@ -69,7 +67,7 @@ namespace Kasutajaliides
                 switch (olek)
                 {
                     case 0:
-                        txtHind.Text = (integraal/1000).ToString() + " €";
+                        txtHind.Text = (integraal / 1000).ToString() + " €";
                         break;
                     case 1:
                         txtHind.Text = "Viga 1";
@@ -91,13 +89,13 @@ namespace Kasutajaliides
             priceCostRange.Clear();
             tablePrice.Rows.Clear();
 
-            foreach(var item in priceData)
+            foreach (var item in priceData)
             {
                 if (item.Item1 >= startTime && item.Item1 <= stopTime)
                 {
                     priceTimeRange.Add(item.Item1);
-                    priceCostRange.Add(item.Item2 / 10.0);
-                    tablePrice.Rows.Add(item.Item1, item.Item2 / 10.0);
+                    priceCostRange.Add(item.Item2);
+                    tablePrice.Rows.Add(item.Item1, item.Item2);
 
                     /*string line = "i: " + item.Item1.ToString() + ": " + item.Item2.ToString();
 
@@ -186,7 +184,7 @@ namespace Kasutajaliides
                 //txtDebug.AppendText("Jõudsin nullini");
                 //txtDebug.AppendText(Environment.NewLine);
                 this.startTime = dateStartTime.Value + new TimeSpan(0, 0, 0);
-                this.stopTime  = dateStopTime.Value + new TimeSpan(23, 59, 59);
+                this.stopTime = dateStopTime.Value + new TimeSpan(23, 59, 59);
                 txtDebug.AppendText("jeba\n\n");
             }
 
@@ -208,7 +206,8 @@ namespace Kasutajaliides
             updateGraph();
         }
 
-        private void callAPI() {
+        private void callAPI()
+        {
             priceData = AP.HindAegInternet(startTime, stopTime);
             MessageBox.Show(priceData.Count.ToString());
             foreach (var item in priceData)
@@ -225,17 +224,97 @@ namespace Kasutajaliides
             }*/
             txtDebug.AppendText("kutsun api\n");
         }
-        
 
-        private void Kasutajaliides_Load(object sender, EventArgs e)
+        private void calcPrice()
         {
-            chartPrice.MouseWheel += chartPrice_zooming;
-            txtHind.Text = "-";
-            // Proovib avada CSV
-            if (!AS.loadFile())
+            double time, power, price;
+            try
+            {
+                time = Double.Parse(txtAjakulu.Text);
+                power = Double.Parse(txtVoimsus.Text);
+                // Do some crazy price calculation
+                if (rbStockPrice.Checked)
+                {
+                    // Sööstab arvutajasse, leiab valitud ajavahemikust optimaalseima ajapikkuse
+                    Console.WriteLine("Time: " + time.ToString());
+                    var beg = this.startTime;
+                    var end = beg.Date + TimeSpan.FromHours(Math.Ceiling(time));
+                    Console.WriteLine("Begin: " + beg.ToString() + "; end: " + end.ToString());
+
+                    double bestIntegral = double.PositiveInfinity;
+                    var bestDate = beg;
+
+                    for (; end <= this.stopTime;)
+                    {
+                        VecT useData = new VecT();
+                        // Generate usedata
+                        for (DateTime date = beg, tempend = (beg + TimeSpan.FromHours(time)); date < tempend; date = date.AddHours(1))
+                        {
+                            var hrs = (tempend - date).TotalHours;
+                            if (hrs > 1.0)
+                            {
+                                hrs = 1.0;
+                            }
+                            Console.WriteLine("asd: " + date.ToString() + "; " + (power * hrs).ToString());
+                            useData.Add(Tuple.Create(date, power * hrs));
+                        }
+
+                        // Integreerib
+                        double integral = 0.0;
+                        if (AR.integreerija(useData, this.priceData, useData.First().Item1, useData.Last().Item1, ref integral) == 0)
+                        {
+                            /*Console.WriteLine("beg: " + beg.ToString() + "; end: " + end.ToString() + "; int: " + integral.ToString());
+                            Console.Write("!!!All DATA");
+                            for (int d = this.priceData.FindIndex(Tuple => Tuple.Item1 == useData.First().Item1), l = this.priceData.FindIndex(Tuple => Tuple.Item1 == useData.Last().Item1) + 1; d <= l; ++d)
+                            {
+                                var item = this.priceData[d];
+                                Console.WriteLine("dat: " + item.Item1.ToString() + ": " + item.Item2.ToString());
+                            }*/
+                            if (integral < bestIntegral)
+                            {
+                                bestIntegral = integral;
+                                bestDate = beg;
+                            }
+                        }
+
+                        beg = beg.AddHours(1);
+                        end = end.AddHours(1);
+                    }
+
+                    price = bestIntegral / 1000.0;
+                    MessageBox.Show("Tarbimist alustada " + bestDate.ToString("dd.MM.yyyy HH:mm"));
+                }
+                else
+                {
+                    var mwh = Double.Parse(tbMonthlyPrice.Text);
+                    price = time * power * mwh / 1000.0;
+                }
+
+                txtHind.Text = Math.Round(price, 2).ToString();
+            }
+            catch (Exception)
             {
                 return;
             }
+        }
+
+
+        private void Kasutajaliides_Load(object sender, EventArgs e)
+        {
+            // Lisab tüüp-kasutusmallid
+            chartPrice.MouseWheel += chartPrice_zooming;
+            txtHind.Text = "-";
+            // Proovib avada CSV
+            AS.loadFile();
+
+            var items = AS.getUseCases();
+            cbKasutusmall.Items.Clear();
+            foreach (var i in items)
+            {
+                cbKasutusmall.Items.Add(i.Key);
+            }
+
+
             AP.setFile(AS.getSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed));
             openCSV();
         }
@@ -243,9 +322,9 @@ namespace Kasutajaliides
         private void txtAjakulu_KeyPress(object sender, KeyPressEventArgs e)
         {
             double parsedValue;
-            if (!double.TryParse(txtAjakulu.Text + e.KeyChar, out parsedValue) && e.KeyChar !=8 && e.KeyChar != 46)
+            if (!double.TryParse(txtAjakulu.Text + e.KeyChar, out parsedValue) && e.KeyChar != 8 && e.KeyChar != 46)
             {
-                MessageBox.Show("Palun sisestage ainult numbreid!");
+                MessageBox.Show("Palun sisestage ainult numbreid!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Handled = true;
                 return;
             }
@@ -256,7 +335,7 @@ namespace Kasutajaliides
             double parsedValue;
             if (!double.TryParse(txtVoimsus.Text + e.KeyChar, out parsedValue) && e.KeyChar != 8 && e.KeyChar != 46)
             {
-                MessageBox.Show("Palun sisestage ainult numbreid!");
+                MessageBox.Show("Palun sisestage ainult numbreid!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Handled = true;
                 return;
             }
@@ -382,75 +461,37 @@ namespace Kasutajaliides
             }
         }
 
-        private void btnNormalSize_Click(object sender, EventArgs e)
+        private void cbKasutusmall_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (state)
+            try
             {
-                lblKasutusmall.Font = Bigger;
-                lblAeg.Font = Bigger;
-                lblTund.Font = Bigger;
-                lblHind.Font = Bigger;
-                lblVoimsus.Font = Bigger;
-                lblkW.Font = Bigger;
-                cbShowPrice.Font = Bigger;
-                cbShowTabel.Font = Bigger;
-                rbMonthlyCost.Font = Bigger;
-                rbStockPrice.Font = Bigger;
-                groupPriceType.Font = new Font("Impact", 12);
-                lblBeginning.Font = Bigger;
-                lblEnd.Font = Bigger;
-                cbKasutusmall.Font = Bigger;
-                txtAjakulu.Font = Bigger;
-                txtVoimsus.Font = Bigger;
-                txtHind.Font = Bigger;
-                btnAvaCSV.Font = Bigger;
-                dateStartTime.Font = Bigger;
-                dateStopTime.Font = Bigger;
-                btnChangeSize.Font = Bigger;
-                btnChangeSize.Text = "-";
-                chartPrice.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font("Comic Sans MS", 12);
-                chartPrice.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font("Comic Sans MS", 12);
-                chartPrice.ChartAreas["ChartArea1"].AxisY2.TitleFont = new Font("Comic Sans MS", 12);
-                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Font = new Font("Comic Sans MS", 10);
-                chartPrice.ChartAreas["ChartArea1"].AxisY.LabelStyle.Font = new Font("Comic Sans MS", 10);
-                chartPrice.ChartAreas["ChartArea1"].AxisY2.LabelStyle.Font = new Font("Comic Sans MS", 10);
-                chartPrice.Legends["Legend1"].Font = new Font("Comic Sans MS", 10);
-                tablePrice.Font = Bigger;
-                state = false;
+                var item = AS.getUseCases()[cbKasutusmall.SelectedItem.ToString()];
+                txtVoimsus.Text = Math.Round(item.Item1 / 1000.0, 3).ToString();
+                txtAjakulu.Text = Math.Round(item.Item2 / 60.0, 3).ToString();
+
+                // Calculate price
+                calcPrice();
             }
-            else
+            catch (Exception)
             {
-                lblKasutusmall.Font = Normal;
-                lblAeg.Font = Normal;
-                lblTund.Font = Normal;
-                lblHind.Font = Normal;
-                lblVoimsus.Font = Normal;
-                lblkW.Font = Normal;
-                cbShowPrice.Font = Normal;
-                cbShowTabel.Font = Normal;
-                rbMonthlyCost.Font = Normal;
-                rbStockPrice.Font = Normal;
-                groupPriceType.Font = new Font("Impact", 9);
-                lblBeginning.Font = Normal;
-                lblEnd.Font = Normal;
-                cbKasutusmall.Font = Normal;
-                txtAjakulu.Font = Normal;
-                txtVoimsus.Font = Normal;
-                txtHind.Font = Normal;
-                btnAvaCSV.Font = Normal;
-                dateStartTime.Font = Normal;
-                dateStopTime.Font = Normal;
-                btnChangeSize.Font = Normal;
-                btnChangeSize.Text = "+";
-                chartPrice.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font("Comic Sans MS", 10);
-                chartPrice.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font("Comic Sans MS", 10);
-                chartPrice.ChartAreas["ChartArea1"].AxisY2.TitleFont = new Font("Comic Sans MS", 10);
-                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Font = new Font("Comic Sans MS", 8.25f);
-                chartPrice.ChartAreas["ChartArea1"].AxisY.LabelStyle.Font = new Font("Comic Sans MS", 8.25f);
-                chartPrice.ChartAreas["ChartArea1"].AxisY2.LabelStyle.Font = new Font("Comic Sans MS", 8.25f);
-                chartPrice.Legends["Legend1"].Font = new Font("Comic Sans MS", 8.25f);
-                tablePrice.Font = Normal;
-                state = true;
+            }
+        }
+
+        private void txtAjakulu_TextChanged(object sender, EventArgs e)
+        {
+            calcPrice();
+        }
+
+        private void txtVoimsus_TextChanged(object sender, EventArgs e)
+        {
+            calcPrice();
+        }
+
+        private void tbMonthlyPrice_TextChanged(object sender, EventArgs e)
+        {
+            if (rbMonthlyCost.Checked)
+            {
+                calcPrice();
             }
         }
 
@@ -459,7 +500,7 @@ namespace Kasutajaliides
             double parsedValue;
             if (!double.TryParse(tbMonthlyPrice.Text + e.KeyChar, out parsedValue) && e.KeyChar != 8 && e.KeyChar != 46)
             {
-                MessageBox.Show("Palun sisestage ainult numbreid!");
+                MessageBox.Show("Palun sisestage ainult numbreid!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Handled = true;
                 return;
             }
@@ -514,7 +555,7 @@ namespace Kasutajaliides
                     }
                 }
             }
-                updateGraph();
+            updateGraph();
         }
     }
 }

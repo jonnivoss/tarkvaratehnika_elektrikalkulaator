@@ -29,10 +29,10 @@ namespace Kasutajaliides
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chartPrice = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.cbKasutusmall = new System.Windows.Forms.ComboBox();
             this.lblKasutusmall = new System.Windows.Forms.Label();
@@ -46,9 +46,9 @@ namespace Kasutajaliides
             this.txtHind = new System.Windows.Forms.TextBox();
             this.btnAvaCSV = new System.Windows.Forms.Button();
             this.txtDebug = new System.Windows.Forms.TextBox();
-            this.lblBeginning = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.dateStartTime = new System.Windows.Forms.DateTimePicker();
-            this.lblEnd = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.dateStopTime = new System.Windows.Forms.DateTimePicker();
             this.cbShowPrice = new System.Windows.Forms.CheckBox();
             this.cbShowTabel = new System.Windows.Forms.CheckBox();
@@ -56,10 +56,11 @@ namespace Kasutajaliides
             this.rbMonthlyCost = new System.Windows.Forms.RadioButton();
             this.tbMonthlyPrice = new System.Windows.Forms.TextBox();
             this.groupPriceType = new System.Windows.Forms.GroupBox();
+            this.lblRate = new System.Windows.Forms.Label();
             this.tablePrice = new System.Windows.Forms.DataGridView();
             this.Aeg = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Hind = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnChangeSize = new System.Windows.Forms.Button();
+            this.lblEur = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chartPrice)).BeginInit();
             this.groupPriceType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablePrice)).BeginInit();
@@ -67,45 +68,39 @@ namespace Kasutajaliides
             // 
             // chartPrice
             // 
-            chartArea1.AxisX.MajorGrid.Enabled = false;
-            chartArea1.AxisX.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Horizontal;
-            chartArea1.AxisX.Title = "Aeg";
-            chartArea1.AxisX.TitleFont = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea1.AxisX2.TitleFont = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea1.AxisY.MajorGrid.Enabled = false;
-            chartArea1.AxisY.Title = "kWh";
-            chartArea1.AxisY.TitleFont = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea1.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
-            chartArea1.AxisY2.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Rotated270;
-            chartArea1.AxisY2.Title = "s/kWh";
-            chartArea1.AxisY2.TitleFont = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea1.Name = "ChartArea1";
-            this.chartPrice.ChartAreas.Add(chartArea1);
-            legend1.Font = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            legend1.IsTextAutoFit = false;
-            legend1.Name = "Legend1";
-            this.chartPrice.Legends.Add(legend1);
+            chartArea2.AxisX.MajorGrid.Enabled = false;
+            chartArea2.AxisX.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Horizontal;
+            chartArea2.AxisX.Title = "Aeg";
+            chartArea2.AxisY.MajorGrid.Enabled = false;
+            chartArea2.AxisY.Title = "kWh";
+            chartArea2.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
+            chartArea2.Name = "ChartArea1";
+            this.chartPrice.ChartAreas.Add(chartArea2);
+            legend2.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            legend2.IsTextAutoFit = false;
+            legend2.Name = "Legend1";
+            this.chartPrice.Legends.Add(legend2);
             this.chartPrice.Location = new System.Drawing.Point(289, 13);
             this.chartPrice.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chartPrice.Name = "chartPrice";
             this.chartPrice.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series1.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            series1.Legend = "Legend1";
-            series1.Name = "Elektrihind";
-            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
-            series1.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
-            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series2.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            series2.Legend = "Legend1";
-            series2.Name = "Tarbimine";
-            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
-            series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            this.chartPrice.Series.Add(series1);
-            this.chartPrice.Series.Add(series2);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series3.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            series3.Legend = "Legend1";
+            series3.Name = "Elektrihind";
+            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series3.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
+            series3.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series4.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            series4.Legend = "Legend1";
+            series4.Name = "Tarbimine";
+            series4.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series4.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            this.chartPrice.Series.Add(series3);
+            this.chartPrice.Series.Add(series4);
             this.chartPrice.Size = new System.Drawing.Size(742, 485);
             this.chartPrice.TabIndex = 0;
             this.chartPrice.Text = "chartElektrihind";
@@ -115,24 +110,12 @@ namespace Kasutajaliides
             this.cbKasutusmall.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbKasutusmall.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbKasutusmall.FormattingEnabled = true;
-            this.cbKasutusmall.Items.AddRange(new object[] {
-            "",
-            "Automaat",
-            "Manuaal",
-            "Pesumasin",
-            "Veekeetja",
-            "Elektripliit",
-            "Kohvimasin",
-            "Where\'s my bible?",
-            "Librarian",
-            "HÖÖÖ",
-            "Bwoah",
-            "KÄH"});
             this.cbKasutusmall.Location = new System.Drawing.Point(14, 66);
             this.cbKasutusmall.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbKasutusmall.Name = "cbKasutusmall";
             this.cbKasutusmall.Size = new System.Drawing.Size(240, 33);
             this.cbKasutusmall.TabIndex = 2;
+            this.cbKasutusmall.SelectedValueChanged += new System.EventHandler(this.cbKasutusmall_SelectedValueChanged);
             // 
             // lblKasutusmall
             // 
@@ -164,6 +147,7 @@ namespace Kasutajaliides
             this.txtAjakulu.Name = "txtAjakulu";
             this.txtAjakulu.Size = new System.Drawing.Size(183, 30);
             this.txtAjakulu.TabIndex = 5;
+            this.txtAjakulu.TextChanged += new System.EventHandler(this.txtAjakulu_TextChanged);
             this.txtAjakulu.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAjakulu_KeyPress);
             // 
             // lblTund
@@ -196,6 +180,7 @@ namespace Kasutajaliides
             this.txtVoimsus.Name = "txtVoimsus";
             this.txtVoimsus.Size = new System.Drawing.Size(183, 30);
             this.txtVoimsus.TabIndex = 8;
+            this.txtVoimsus.TextChanged += new System.EventHandler(this.txtVoimsus_TextChanged);
             this.txtVoimsus.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtVoimsus_KeyPress);
             // 
             // lblkW
@@ -236,7 +221,7 @@ namespace Kasutajaliides
             this.btnAvaCSV.Location = new System.Drawing.Point(16, 466);
             this.btnAvaCSV.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btnAvaCSV.Name = "btnAvaCSV";
-            this.btnAvaCSV.Size = new System.Drawing.Size(125, 32);
+            this.btnAvaCSV.Size = new System.Drawing.Size(104, 31);
             this.btnAvaCSV.TabIndex = 12;
             this.btnAvaCSV.Text = "Ava CŠV fail";
             this.btnAvaCSV.UseVisualStyleBackColor = true;
@@ -252,21 +237,21 @@ namespace Kasutajaliides
             this.txtDebug.Size = new System.Drawing.Size(283, 114);
             this.txtDebug.TabIndex = 13;
             // 
-            // lblBeginning
+            // label1
             // 
-            this.lblBeginning.AutoSize = true;
-            this.lblBeginning.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBeginning.Location = new System.Drawing.Point(273, 506);
-            this.lblBeginning.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblBeginning.Name = "lblBeginning";
-            this.lblBeginning.Size = new System.Drawing.Size(60, 25);
-            this.lblBeginning.TabIndex = 14;
-            this.lblBeginning.Text = "Algus:";
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(289, 506);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(60, 25);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "Algus:";
             // 
             // dateStartTime
             // 
             this.dateStartTime.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.dateStartTime.Location = new System.Drawing.Point(339, 506);
+            this.dateStartTime.Location = new System.Drawing.Point(353, 506);
             this.dateStartTime.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.dateStartTime.Name = "dateStartTime";
             this.dateStartTime.Size = new System.Drawing.Size(304, 32);
@@ -274,24 +259,24 @@ namespace Kasutajaliides
             this.dateStartTime.CloseUp += new System.EventHandler(this.dateStartTime_CloseUp);
             this.dateStartTime.DropDown += new System.EventHandler(this.dateStartTime_DropDown);
             // 
-            // lblEnd
+            // label2
             // 
-            this.lblEnd.AutoSize = true;
-            this.lblEnd.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEnd.Location = new System.Drawing.Point(647, 506);
-            this.lblEnd.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblEnd.Name = "lblEnd";
-            this.lblEnd.Size = new System.Drawing.Size(54, 25);
-            this.lblEnd.TabIndex = 16;
-            this.lblEnd.Text = "Lõpp:";
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(669, 506);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(54, 25);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "Lõpp:";
             // 
             // dateStopTime
             // 
             this.dateStopTime.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.dateStopTime.Location = new System.Drawing.Point(707, 506);
+            this.dateStopTime.Location = new System.Drawing.Point(727, 506);
             this.dateStopTime.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.dateStopTime.Name = "dateStopTime";
-            this.dateStopTime.Size = new System.Drawing.Size(324, 32);
+            this.dateStopTime.Size = new System.Drawing.Size(304, 32);
             this.dateStopTime.TabIndex = 17;
             this.dateStopTime.CloseUp += new System.EventHandler(this.dateStopTime_CloseUp);
             this.dateStopTime.DropDown += new System.EventHandler(this.dateStopTime_DropDown);
@@ -358,12 +343,14 @@ namespace Kasutajaliides
             this.tbMonthlyPrice.Location = new System.Drawing.Point(126, 59);
             this.tbMonthlyPrice.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.tbMonthlyPrice.Name = "tbMonthlyPrice";
-            this.tbMonthlyPrice.Size = new System.Drawing.Size(214, 32);
+            this.tbMonthlyPrice.Size = new System.Drawing.Size(169, 32);
             this.tbMonthlyPrice.TabIndex = 22;
+            this.tbMonthlyPrice.TextChanged += new System.EventHandler(this.tbMonthlyPrice_TextChanged);
             this.tbMonthlyPrice.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbMonthlyPrice_KeyPress);
             // 
             // groupPriceType
             // 
+            this.groupPriceType.Controls.Add(this.lblRate);
             this.groupPriceType.Controls.Add(this.tbMonthlyPrice);
             this.groupPriceType.Controls.Add(this.rbMonthlyCost);
             this.groupPriceType.Controls.Add(this.rbStockPrice);
@@ -372,15 +359,24 @@ namespace Kasutajaliides
             this.groupPriceType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.groupPriceType.Name = "groupPriceType";
             this.groupPriceType.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.groupPriceType.Size = new System.Drawing.Size(354, 105);
+            this.groupPriceType.Size = new System.Drawing.Size(368, 105);
             this.groupPriceType.TabIndex = 23;
             this.groupPriceType.TabStop = false;
             this.groupPriceType.Text = "Hinnatüüp";
             // 
+            // lblRate
+            // 
+            this.lblRate.AutoSize = true;
+            this.lblRate.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRate.Location = new System.Drawing.Point(299, 62);
+            this.lblRate.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblRate.Name = "lblRate";
+            this.lblRate.Size = new System.Drawing.Size(65, 25);
+            this.lblRate.TabIndex = 26;
+            this.lblRate.Text = "s/kWh";
+            // 
             // tablePrice
             // 
-            this.tablePrice.AllowUserToAddRows = false;
-            this.tablePrice.AllowUserToDeleteRows = false;
             this.tablePrice.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tablePrice.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Aeg,
@@ -399,7 +395,7 @@ namespace Kasutajaliides
             this.Aeg.MinimumWidth = 6;
             this.Aeg.Name = "Aeg";
             this.Aeg.ReadOnly = true;
-            this.Aeg.Width = 300;
+            this.Aeg.Width = 125;
             // 
             // Hind
             // 
@@ -407,32 +403,32 @@ namespace Kasutajaliides
             this.Hind.MinimumWidth = 6;
             this.Hind.Name = "Hind";
             this.Hind.ReadOnly = true;
-            this.Hind.Width = 300;
+            this.Hind.Width = 125;
             // 
-            // btnChangeSize
+            // lblEur
             // 
-            this.btnChangeSize.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnChangeSize.Location = new System.Drawing.Point(890, 608);
-            this.btnChangeSize.Name = "btnChangeSize";
-            this.btnChangeSize.Size = new System.Drawing.Size(140, 54);
-            this.btnChangeSize.TabIndex = 26;
-            this.btnChangeSize.Text = "+";
-            this.btnChangeSize.UseVisualStyleBackColor = true;
-            this.btnChangeSize.Click += new System.EventHandler(this.btnNormalSize_Click);
+            this.lblEur.AutoSize = true;
+            this.lblEur.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEur.Location = new System.Drawing.Point(201, 303);
+            this.lblEur.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblEur.Name = "lblEur";
+            this.lblEur.Size = new System.Drawing.Size(23, 25);
+            this.lblEur.TabIndex = 27;
+            this.lblEur.Text = "€";
             // 
             // Kasutajaliides
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1042, 674);
-            this.Controls.Add(this.btnChangeSize);
+            this.Controls.Add(this.lblEur);
             this.Controls.Add(this.groupPriceType);
             this.Controls.Add(this.cbShowTabel);
             this.Controls.Add(this.cbShowPrice);
             this.Controls.Add(this.dateStopTime);
-            this.Controls.Add(this.lblEnd);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.dateStartTime);
-            this.Controls.Add(this.lblBeginning);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.txtDebug);
             this.Controls.Add(this.btnAvaCSV);
             this.Controls.Add(this.txtHind);
@@ -477,9 +473,9 @@ namespace Kasutajaliides
         private System.Windows.Forms.TextBox txtHind;
         private System.Windows.Forms.Button btnAvaCSV;
         private System.Windows.Forms.TextBox txtDebug;
-        private System.Windows.Forms.Label lblBeginning;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DateTimePicker dateStartTime;
-        private System.Windows.Forms.Label lblEnd;
+        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker dateStopTime;
         private System.Windows.Forms.CheckBox cbShowPrice;
         private System.Windows.Forms.CheckBox cbShowTabel;
@@ -488,9 +484,9 @@ namespace Kasutajaliides
         private System.Windows.Forms.TextBox tbMonthlyPrice;
         private System.Windows.Forms.GroupBox groupPriceType;
         private System.Windows.Forms.DataGridView tablePrice;
-        private System.Windows.Forms.Button btnChangeSize;
         private System.Windows.Forms.DataGridViewTextBoxColumn Aeg;
         private System.Windows.Forms.DataGridViewTextBoxColumn Hind;
+        private System.Windows.Forms.Label lblRate;
+        private System.Windows.Forms.Label lblEur;
     }
 }
-

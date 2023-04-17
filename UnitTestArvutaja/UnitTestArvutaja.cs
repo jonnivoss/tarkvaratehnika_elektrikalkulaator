@@ -53,23 +53,24 @@ namespace UnitTestArvutaja
         [TestMethod]
         public void V6rdsedRajad()
         {
+            var d = System.DateTime.Now;
             VecT andmed1 = new VecT
             {
-                System.Tuple.Create(System.DateTime.Now, 8.01),
-                System.Tuple.Create(System.DateTime.Now, 6.51)
+                System.Tuple.Create(d, 8.01),
+                System.Tuple.Create(d, 6.51)
             };
             VecT andmed2 = new VecT
             {
-                System.Tuple.Create(System.DateTime.Now, 8.01),
-                System.Tuple.Create(System.DateTime.Now, 6.51)
+                System.Tuple.Create(d, 8.01),
+                System.Tuple.Create(d, 6.51)
             };
-            double integraal = 5.0;
-            System.DateTime alumineRaja = andmed1[0].Item1;
-            System.DateTime ylemineRaja = andmed1[0].Item1;
+            double integraal = 0.0;
+            System.DateTime alumineRaja = d;
+            System.DateTime ylemineRaja = d;
             int reaalne1 = objekt.integreerija(andmed1, andmed2, alumineRaja, ylemineRaja, ref integraal);
             int oodatud1 = 0;
             double reaalne2 = integraal;
-            double oodatud2 = 0.0;
+            double oodatud2 = 64.1601;
             Assert.AreEqual(oodatud1, reaalne1);
             Assert.AreEqual(oodatud2, reaalne2);
         }

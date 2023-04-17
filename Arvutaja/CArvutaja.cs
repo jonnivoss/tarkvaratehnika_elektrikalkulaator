@@ -26,7 +26,7 @@ namespace Arvutaja
         // KAHE FUNKTSIOONI KORRUTISE INTEGRAATOR
         // andmed1: esimene funktsioon
         // andmed2: teine funktsioon
-        public int integreerija(VecT andmed1, VecT andmed2, System.DateTime alumine, System.DateTime ylemine, ref double integraal)
+        /*public int integreerija(VecT andmed1, VecT andmed2, System.DateTime alumine, System.DateTime ylemine, ref double integraal)
         {
             if (alumine > ylemine)
             {
@@ -63,6 +63,35 @@ namespace Arvutaja
             {
                 integraal += andmed1[indeks].Item2 * andmed2[indeks].Item2;
                 indeks++;
+            }
+            return 0;
+        }*/
+        public int integreerija(VecT andmed1, VecT andmed2, System.DateTime alumine, System.DateTime ylemine, ref double integraal)
+        {
+            if (alumine > ylemine)
+            {
+                // VIGA! RAJAD ON SUURUSE POOLEST VAHETUSES!
+                return 3;
+            }
+            // alumisele ja ülemisele rajale vastavate indekside määramine
+            int alumineIndeks = andmed1.FindIndex(Tuple => Tuple.Item1 == alumine);
+            int ylemineIndeks = andmed1.FindIndex(Tuple => Tuple.Item1 == ylemine);
+            int alumineIndeks2 = andmed2.FindIndex(Tuple => Tuple.Item1 == alumine);
+            int ylemineIndeks2 = andmed2.FindIndex(Tuple => Tuple.Item1 == ylemine);
+            if (!(alumineIndeks >= 0 && ylemineIndeks >= 0 && alumineIndeks2 >= 0 && ylemineIndeks2 >= 0))
+            {
+                // VIGA! VÄHEMALT ÜKS SOOVITUD INTEGREERIMISRAJADEST PUUDUB ANDMETE HULGAS!
+                return 1;
+            }
+            // INTEGREERIMINE
+            // NB! Eeldatud on, et ajasamm dt = 1h
+            int indeks1 = alumineIndeks, indeks2 = alumineIndeks2;
+            integraal = 0.0; // NB! viidana antud muutuja, omandab pärast integraaali väärtuse
+            while ((indeks1 <= ylemineIndeks) && (indeks2 <= ylemineIndeks2))
+            {
+                integraal += andmed1[indeks1].Item2 * andmed2[indeks2].Item2;
+                indeks1++;
+                indeks2++;
             }
             return 0;
         }

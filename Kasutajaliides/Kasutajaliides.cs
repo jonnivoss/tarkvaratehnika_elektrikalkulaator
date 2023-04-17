@@ -407,7 +407,7 @@ namespace Kasutajaliides
                 dateStartTime.Font = Bigger;
                 dateStopTime.Font = Bigger;
                 btnChangeSize.Font = Bigger;
-                btnChangeSize.Text = "Vähenda";
+                btnChangeSize.Text = "-";
                 chartPrice.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font("Comic Sans MS", 12);
                 chartPrice.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font("Comic Sans MS", 12);
                 chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Font = new Font("Comic Sans MS", 10);
@@ -440,7 +440,7 @@ namespace Kasutajaliides
                 dateStartTime.Font = Normal;
                 dateStopTime.Font = Normal;
                 btnChangeSize.Font = Normal;
-                btnChangeSize.Text = "Suurenda";
+                btnChangeSize.Text = "+";
                 chartPrice.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font("Comic Sans MS", 10);
                 chartPrice.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font("Comic Sans MS", 10);
                 chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Font = new Font("Comic Sans MS", 8.25f);

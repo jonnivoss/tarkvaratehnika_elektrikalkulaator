@@ -21,6 +21,9 @@ namespace Kasutajaliides
             InitializeComponent();
         }
 
+        Font Normal = new Font("Impact", 12);
+        Font Bigger = new Font("Impact", 16);
+ 
         List<DateTime> timeRange = new List<DateTime>();
         List<double> costRange = new List<double>();
 
@@ -38,7 +41,7 @@ namespace Kasutajaliides
 
         DateTime startTime, stopTime;
         bool showStock = true, isGraph = true;
-
+        bool state = true;
         private void updateGraph()
         {
             // Uuenda graafikut
@@ -376,6 +379,63 @@ namespace Kasutajaliides
             else
             {
                 tbMonthlyPrice.Enabled = true;
+            }
+        }
+
+        private void btnNormalSize_Click(object sender, EventArgs e)
+        {
+            //bool state = true;
+            
+            if (state)
+            {
+                lblKasutusmall.Font = Bigger;
+                lblAeg.Font = Bigger;
+                lblTund.Font = Bigger;
+                lblHind.Font = Bigger;
+                lblVoimsus.Font = Bigger;
+                lblkW.Font = Bigger;
+                cbShowPrice.Font = Bigger;
+                cbShowTabel.Font = Bigger;
+                rbMonthlyCost.Font = Bigger;
+                rbStockPrice.Font = Bigger;
+                groupPriceType.Font = new Font("Impact", 12);
+                lblBeginning.Font = Bigger;
+                lblEnd.Font = Bigger;
+                cbKasutusmall.Font = Bigger;
+                txtAjakulu.Font = Bigger;
+                txtVoimsus.Font = Bigger;
+                txtHind.Font = Bigger;
+                btnAvaCSV.Font = Bigger;
+                dateStartTime.Font = Bigger;
+                dateStopTime.Font = Bigger;
+                btnChangeSize.Font = Bigger;
+                btnChangeSize.Text = "Vähenda";
+                state = false;
+            }
+            else
+            {
+                lblKasutusmall.Font = Normal;
+                lblAeg.Font = Normal;
+                lblTund.Font = Normal;
+                lblHind.Font = Normal;
+                lblVoimsus.Font = Normal;
+                lblkW.Font = Normal;
+                cbShowPrice.Font = Normal;
+                cbShowTabel.Font = Normal;
+                rbMonthlyCost.Font = Normal;
+                rbStockPrice.Font = Normal;
+                groupPriceType.Font = new Font("Impact", 9);
+                lblBeginning.Font = Normal;
+                lblEnd.Font = Normal;
+                cbKasutusmall.Font = Normal;
+                txtAjakulu.Font = Normal;
+                txtVoimsus.Font = Normal;
+                txtHind.Font = Normal;
+                btnAvaCSV.Font = Normal;
+                dateStartTime.Font = Normal;
+                dateStopTime.Font = Normal;
+                btnChangeSize.Font = Normal;
+                state = true;
             }
         }
 

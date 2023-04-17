@@ -384,8 +384,6 @@ namespace Kasutajaliides
 
         private void btnNormalSize_Click(object sender, EventArgs e)
         {
-            //bool state = true;
-            
             if (state)
             {
                 lblKasutusmall.Font = Bigger;
@@ -410,6 +408,11 @@ namespace Kasutajaliides
                 dateStopTime.Font = Bigger;
                 btnChangeSize.Font = Bigger;
                 btnChangeSize.Text = "Vähenda";
+                chartPrice.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font("Comic Sans MS", 12);
+                chartPrice.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font("Comic Sans MS", 12);
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Font = new Font("Comic Sans MS", 10);
+                chartPrice.ChartAreas["ChartArea1"].AxisY.LabelStyle.Font = new Font("Comic Sans MS", 10);
+                chartPrice.ChartAreas["ChartArea1"].AxisY2.LabelStyle.Font = new Font("Comic Sans MS", 10);
                 state = false;
             }
             else

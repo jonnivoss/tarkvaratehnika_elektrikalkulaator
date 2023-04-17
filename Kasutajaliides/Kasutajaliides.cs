@@ -106,6 +106,7 @@ namespace Kasutajaliides
                 }
             }
             chartPrice.Series["Elektrihind"].Points.DataBindXY(priceTimeRange, priceCostRange);
+            chartPrice.Series["Elektrihind"].Enabled = showStock;
             chartPrice.Invalidate();
             tablePrice.Invalidate();
         }

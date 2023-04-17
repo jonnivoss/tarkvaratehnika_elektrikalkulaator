@@ -96,8 +96,8 @@ namespace Kasutajaliides
                 if (item.Item1 >= startTime && item.Item1 <= stopTime)
                 {
                     priceTimeRange.Add(item.Item1);
-                    priceCostRange.Add(item.Item2);
-                    tablePrice.Rows.Add(item.Item1, item.Item2);
+                    priceCostRange.Add(item.Item2 / 10.0);
+                    tablePrice.Rows.Add(item.Item1, item.Item2 / 10.0);
 
                     /*string line = "i: " + item.Item1.ToString() + ": " + item.Item2.ToString();
 

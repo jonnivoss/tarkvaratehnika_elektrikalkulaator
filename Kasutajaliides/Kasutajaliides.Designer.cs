@@ -57,10 +57,10 @@ namespace Kasutajaliides
             this.tbMonthlyPrice = new System.Windows.Forms.TextBox();
             this.groupPriceType = new System.Windows.Forms.GroupBox();
             this.tablePrice = new System.Windows.Forms.DataGridView();
-            this.Aeg = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Hind = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.btnChangeSize = new System.Windows.Forms.Button();
+            this.Aeg = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Hind = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.chartPrice)).BeginInit();
             this.groupPriceType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablePrice)).BeginInit();
@@ -378,6 +378,8 @@ namespace Kasutajaliides
             // 
             // tablePrice
             // 
+            this.tablePrice.AllowUserToAddRows = false;
+            this.tablePrice.AllowUserToDeleteRows = false;
             this.tablePrice.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tablePrice.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Aeg,
@@ -390,22 +392,6 @@ namespace Kasutajaliides
             this.tablePrice.Size = new System.Drawing.Size(742, 484);
             this.tablePrice.TabIndex = 24;
             // 
-            // Aeg
-            // 
-            this.Aeg.HeaderText = "Aeg";
-            this.Aeg.MinimumWidth = 6;
-            this.Aeg.Name = "Aeg";
-            this.Aeg.ReadOnly = true;
-            this.Aeg.Width = 125;
-            // 
-            // Hind
-            // 
-            this.Hind.HeaderText = "Hind";
-            this.Hind.MinimumWidth = 6;
-            this.Hind.Name = "Hind";
-            this.Hind.ReadOnly = true;
-            this.Hind.Width = 125;
-            // 
             // btnChangeSize
             // 
             this.btnChangeSize.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -416,6 +402,22 @@ namespace Kasutajaliides
             this.btnChangeSize.Text = "Suurendamine";
             this.btnChangeSize.UseVisualStyleBackColor = true;
             this.btnChangeSize.Click += new System.EventHandler(this.btnNormalSize_Click);
+            // 
+            // Aeg
+            // 
+            this.Aeg.HeaderText = "Aeg";
+            this.Aeg.MinimumWidth = 6;
+            this.Aeg.Name = "Aeg";
+            this.Aeg.ReadOnly = true;
+            this.Aeg.Width = 300;
+            // 
+            // Hind
+            // 
+            this.Hind.HeaderText = "Hind";
+            this.Hind.MinimumWidth = 6;
+            this.Hind.Name = "Hind";
+            this.Hind.ReadOnly = true;
+            this.Hind.Width = 300;
             // 
             // Kasutajaliides
             // 
@@ -485,10 +487,10 @@ namespace Kasutajaliides
         private System.Windows.Forms.TextBox tbMonthlyPrice;
         private System.Windows.Forms.GroupBox groupPriceType;
         private System.Windows.Forms.DataGridView tablePrice;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Aeg;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Hind;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Button btnChangeSize;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Aeg;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Hind;
     }
 }
 

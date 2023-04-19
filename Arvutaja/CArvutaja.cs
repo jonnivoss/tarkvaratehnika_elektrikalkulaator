@@ -100,5 +100,43 @@ namespace Arvutaja
         {
             return 0;
         }
+
+        public int average(
+            VecT andmed,
+            System.DateTime alumine,
+            System.DateTime ylemine,
+            ref double avg
+        )
+        {
+            if (alumine > ylemine)
+            {
+                // Rajad vahetuses
+                return 1;
+            }
+
+            int begIdx = andmed.FindIndex(Tuple => Tuple.Item1 == alumine);
+            int endIdx = andmed.FindIndex(Tuple => Tuple.Item1 == ylemine);
+            if (!((begIdx >= 0) && (endIdx >= 0) && (endIdx >= begIdx)))
+            {
+                // Kuupäevasid andmetes ei leidunud
+                return 2;
+            }
+
+            avg = 0.0;
+            int items = 0;
+            for (int idx = begIdx; idx <= endIdx; ++idx)
+            {
+                avg += andmed[idx].Item2;
+                ++items;
+            }
+            if (items == 0)
+            {
+                return 3;
+            }
+
+            avg /= (double)items;
+
+            return 0;
+        }
     }
 }

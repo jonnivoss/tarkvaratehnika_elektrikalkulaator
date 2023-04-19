@@ -15,12 +15,12 @@ namespace Andmepyydja
     {
         bool chooseFile();
 
-        bool readFile(ref string contents);
+        bool readUserDataFile(ref string contents);
 
         
-        VecT parseContents(string contents);
-        string getFile();
-        void setFile(string filename);
+        VecT parseUserData(string contents);
+        string getUserDataFileName();
+        void setUserDataFileName(string filename);
 
         //bett
 

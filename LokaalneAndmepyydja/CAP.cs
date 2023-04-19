@@ -14,6 +14,8 @@ using System.Net;
 
 using DatePriceT = System.Tuple<System.DateTime, double>;
 using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
+using ParseCSVDataLineT = System.Tuple<string, char>;
+
 
 namespace Andmepyydja
 {
@@ -35,7 +37,7 @@ namespace Andmepyydja
             return true;
         }
 
-        public bool readFile(ref string contents)
+        public bool readUserDataFile(ref string contents)
         {
             if (this.fname == "")
             {
@@ -52,62 +54,95 @@ namespace Andmepyydja
             }
         }
 
-        public VecT parseContents(string contents)
+        private static DatePriceT parseCSVUserDataLine(ParseCSVDataLineT arguments)
+        {
+            // ParseCSVDataLineT.Item1 on rida
+            // ParseCSVDataLineT.Item2 on delimiter
+
+            // Lõhub rea tokeniteks
+            var rida = arguments.Item1.Split(arguments.Item2);
+            if ((rida.Length < 4) || (rida[2].Length == 0))
+            {
+                return null;
+            }
+            double num = Convert.ToDouble(rida[2]);
+
+            DateTime d;
+            try
+            {
+                d = DateTime.ParseExact(
+                    rida[0],
+                    "dd.MM.yyyy HH:mm",
+                    CultureInfo.InvariantCulture
+                );
+            }
+            catch (Exception)
+            {
+                // Kuupäeva parsimine ebaõnnestus
+                return null;
+            }
+            return new DatePriceT(d, num);
+        }
+
+        private VecT parseCSV(
+            string contents,
+            string tableBeginToken,
+            Func<ParseCSVDataLineT, DatePriceT> parseLineFunc,
+            char delimiter
+        )
         {
             VecT v = new VecT();
 
-            System.Collections.Generic.List<string> splitcontent;
+            System.Collections.Generic.List<string> splitContents;
             try
             {
-                contents = contents.Substring(contents.IndexOf("Algus"));
-                splitcontent = contents.Split('\n').ToList();
-                splitcontent.RemoveAt(0);
+                // Discardib kõik andmed, mis asuvad enne tabeli headerit
+                contents = contents.Substring(contents.IndexOf(tableBeginToken));
+                // Teeb stringi ridade massiiviks
+                splitContents = contents.Split('\n').ToList();
+                // Eemaldab tabeli headeri
+                splitContents.RemoveAt(0);
             }
             catch (Exception)
             {
                 return v;
             }
 
-            foreach (string i in splitcontent)
+            foreach (string line in splitContents)
             {
-                if (i.Length == 0)
+                if (line.Length == 0)
                 {
                     continue;
                 }
-                var rida = i.Split(';');
-                if ((rida.Length < 4) || (rida[2].Length == 0))
-                {
-                    continue;
-                }
-                double num = Convert.ToDouble(rida[2]);
 
-                DateTime d;
-                try
+                DatePriceT item = parseLineFunc(Tuple.Create(line, delimiter));
+                if (item == null)
                 {
-                    d = DateTime.ParseExact(
-                        rida[0],
-                        "dd.MM.yyyy HH:mm",
-                        CultureInfo.InvariantCulture
-                    );
-                }
-                catch (Exception)
-                {
-                    // Carry on, ;)
                     continue;
                 }
-                var item = new DatePriceT(d, num);
+
                 v.Add(item);
             }
 
             return v;
         }
 
+        public VecT parseUserData(string contents)
+        {
+            return this.parseCSV(
+                contents,
+                "Algus",
+                CAP.parseCSVUserDataLine,
+                ';'
+            );
+        }
 
-        public string getFile()
+
+        public string getUserDataFileName()
         {
             return this.fname;
         }
-        public void setFile(string filename)
+        public void setUserDataFileName(string filename)
         {
             this.fname = filename;
         }

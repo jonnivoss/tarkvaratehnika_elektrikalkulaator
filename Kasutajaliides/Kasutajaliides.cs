@@ -146,19 +146,19 @@ namespace Kasutajaliides
         {
             if (AP.chooseFile())
             {
-                AS.changeSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed, AP.getFile());
+                AS.changeSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed, AP.getUserDataFileName());
                 this.openCSV();
             }
         }
         private void openCSV()
         {
-            if (!AP.readFile(ref fileContents))
+            if (!AP.readUserDataFile(ref fileContents))
             {
                 MessageBox.Show("Lugemine ebaõnnestus!");
             }
             else
             {
-                userData = AP.parseContents(fileContents);
+                userData = AP.parseUserData(fileContents);
 
                 timeRange.Clear();
                 costRange.Clear();
@@ -321,7 +321,7 @@ namespace Kasutajaliides
             }
 
 
-            AP.setFile(AS.getSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed));
+            AP.setUserDataFileName(AS.getSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed));
             openCSV();
         }
 

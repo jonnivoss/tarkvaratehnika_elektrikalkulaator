@@ -40,7 +40,7 @@ namespace Kasutajaliides
         private Arvutaja.CArvutaja AR = new Arvutaja.CArvutaja();
 
         DateTime startTime, stopTime;
-        bool showStock = true, isGraph = true;
+        bool showStock = true;
         bool state = true;
         bool showUsage = true;
         private void updateGraph()
@@ -349,14 +349,12 @@ namespace Kasutajaliides
                 // Kuva tabel
                 chartPrice.Visible = false;
                 tablePrice.Visible = true;
-                isGraph = false;
             }
             else
             {
                 // Kuva graafik
                 tablePrice.Visible = false;
                 chartPrice.Visible = true;
-                isGraph = true;
             }
             updateGraph();
         }

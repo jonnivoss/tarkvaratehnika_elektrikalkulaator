@@ -395,6 +395,7 @@ namespace Kasutajaliides
                 lblkW.Font = Bigger;
                 cbShowPrice.Font = Bigger;
                 cbShowTabel.Font = Bigger;
+                cbShowUsage.Font = Bigger;
                 rbMonthlyCost.Font = Bigger;
                 rbStockPrice.Font = Bigger;
                 groupPriceType.Font = new Font("Impact", 12);
@@ -430,6 +431,7 @@ namespace Kasutajaliides
                 lblkW.Font = Normal;
                 cbShowPrice.Font = Normal;
                 cbShowTabel.Font = Normal;
+                cbShowUsage.Font = Normal;
                 rbMonthlyCost.Font = Normal;
                 rbStockPrice.Font = Normal;
                 groupPriceType.Font = new Font("Impact", 9);

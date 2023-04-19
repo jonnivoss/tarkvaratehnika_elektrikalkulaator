@@ -18,4 +18,5 @@ namespace Arvutaja
             ref double avg
         );
     }
+
 }

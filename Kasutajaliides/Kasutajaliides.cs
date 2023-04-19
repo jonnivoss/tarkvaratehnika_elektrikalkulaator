@@ -40,8 +40,9 @@ namespace Kasutajaliides
         private Arvutaja.CArvutaja AR = new Arvutaja.CArvutaja();
 
         DateTime startTime, stopTime;
-        bool showStock = true, isGraph = true;
+        bool showStock = true;
         bool state = true;
+        bool showUsage = true;
         private void updateGraph()
         {
             // Uuenda graafikut
@@ -107,6 +108,7 @@ namespace Kasutajaliides
             }
             chartPrice.Series["Elektrihind"].Points.DataBindXY(priceTimeRange, priceCostRange);
             chartPrice.Series["Elektrihind"].Enabled = showStock;
+            chartPrice.Series["Tarbimine"].Enabled = showUsage;
             chartPrice.Invalidate();
             tablePrice.Invalidate();
         }
@@ -347,14 +349,12 @@ namespace Kasutajaliides
                 // Kuva tabel
                 chartPrice.Visible = false;
                 tablePrice.Visible = true;
-                isGraph = false;
             }
             else
             {
                 // Kuva graafik
                 tablePrice.Visible = false;
                 chartPrice.Visible = true;
-                isGraph = true;
             }
             updateGraph();
         }
@@ -456,6 +456,22 @@ namespace Kasutajaliides
                 tablePrice.ColumnHeadersDefaultCellStyle.Font = Normal;
                 tablePrice.RowsDefaultCellStyle.Font = Normal;
                 state = true;
+            }
+        }
+
+        private void cbShowUsage_CheckedChanged(object sender, EventArgs e)
+        {
+            var state = cbShowUsage.Checked;
+            if (state)
+            {
+                // Kuva tarbimine
+                showUsage = true;
+                updateGraph();
+            }
+            else
+            {   
+                showUsage = false;
+                updateGraph();
             }
         }
 

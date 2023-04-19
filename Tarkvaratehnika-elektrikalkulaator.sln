@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndmeSalvestaja", "AndmeSal
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestArvutaja", "UnitTestArvutaja\UnitTestArvutaja.csproj", "{80D516D7-7434-43AD-9060-6FAD9A9153AA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestAP", "UnitTestAP\UnitTestAP.csproj", "{990C3408-AD51-4A29-8498-6614B32BBDCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{80D516D7-7434-43AD-9060-6FAD9A9153AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80D516D7-7434-43AD-9060-6FAD9A9153AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80D516D7-7434-43AD-9060-6FAD9A9153AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{990C3408-AD51-4A29-8498-6614B32BBDCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{990C3408-AD51-4A29-8498-6614B32BBDCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{990C3408-AD51-4A29-8498-6614B32BBDCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{990C3408-AD51-4A29-8498-6614B32BBDCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -310,6 +310,16 @@ namespace Kasutajaliides
             // Lisab tüüp-kasutusmallid
             chartPrice.MouseWheel += chartPrice_zooming;
             txtHind.Text = "-";
+            
+            // Praeguse börsihinna kuvamiseks
+            VecT costNowData = AP.HindAegInternet(DateTime.Now, DateTime.Now);
+            List<double> costNow = new List<double>();
+            foreach (var item in costNowData)
+            {
+                costNow.Add(item.Item2);
+            }
+            txtCostNow.Text = (costNow[0]/10).ToString();
+            
             // Proovib avada CSV
             AS.loadFile();
 
@@ -508,6 +518,11 @@ namespace Kasutajaliides
                 lblHind.Font = Bigger;
                 lblVoimsus.Font = Bigger;
                 lblkW.Font = Bigger;
+                lblAndresEek.Font = Bigger;
+                lblRate.Font = Bigger;
+                lblCostNow.Font = Bigger;
+                lblSKwh2.Font = Bigger;
+                txtCostNow.Font = Bigger;
                 cbShowPrice.Font = Bigger;
                 cbShowTabel.Font = Bigger;
                 cbShowUsage.Font = Bigger;
@@ -544,6 +559,11 @@ namespace Kasutajaliides
                 lblHind.Font = Normal;
                 lblVoimsus.Font = Normal;
                 lblkW.Font = Normal;
+                lblAndresEek.Font = Normal;
+                lblRate.Font = Normal;
+                lblCostNow.Font = Normal;
+                lblSKwh2.Font = Normal;
+                txtCostNow.Font = Normal;
                 cbShowPrice.Font = Normal;
                 cbShowTabel.Font = Normal;
                 cbShowUsage.Font = Normal;

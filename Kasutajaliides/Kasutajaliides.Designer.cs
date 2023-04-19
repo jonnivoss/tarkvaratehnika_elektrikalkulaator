@@ -435,6 +435,7 @@ namespace Kasutajaliides
             this.cbShowUsage.TabIndex = 27;
             this.cbShowUsage.Text = "Kuva tarbimine";
             this.cbShowUsage.UseVisualStyleBackColor = true;
+            this.cbShowUsage.CheckedChanged += new System.EventHandler(this.cbShowUsage_CheckedChanged);
             // 
             // Kasutajaliides
             // 

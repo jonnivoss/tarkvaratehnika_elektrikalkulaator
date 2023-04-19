@@ -42,6 +42,7 @@ namespace Kasutajaliides
         DateTime startTime, stopTime;
         bool showStock = true, isGraph = true;
         bool state = true;
+        bool showUsage = true;
         private void updateGraph()
         {
             // Uuenda graafikut
@@ -107,6 +108,7 @@ namespace Kasutajaliides
             }
             chartPrice.Series["Elektrihind"].Points.DataBindXY(priceTimeRange, priceCostRange);
             chartPrice.Series["Elektrihind"].Enabled = showStock;
+            chartPrice.Series["Tarbimine"].Enabled = showUsage;
             chartPrice.Invalidate();
             tablePrice.Invalidate();
         }
@@ -456,6 +458,22 @@ namespace Kasutajaliides
                 tablePrice.ColumnHeadersDefaultCellStyle.Font = Normal;
                 tablePrice.RowsDefaultCellStyle.Font = Normal;
                 state = true;
+            }
+        }
+
+        private void cbShowUsage_CheckedChanged(object sender, EventArgs e)
+        {
+            var state = cbShowUsage.Checked;
+            if (state)
+            {
+                // Kuva tarbimine
+                showUsage = true;
+                updateGraph();
+            }
+            else
+            {   
+                showUsage = false;
+                updateGraph();
             }
         }
 

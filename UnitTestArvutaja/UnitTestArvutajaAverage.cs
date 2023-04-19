@@ -10,6 +10,12 @@ namespace UnitTestArvutaja
     {
         Arvutaja.CArvutaja objekt = new Arvutaja.CArvutaja();
 
+        public bool IsClose(double a, double b, double precision)
+        {
+            double diff = Math.Abs(a * precision);
+            return Math.Abs(a - b) <= diff;
+        }
+
         [TestMethod]
         public void TyypilisedAndmed()
         {
@@ -32,7 +38,33 @@ namespace UnitTestArvutaja
             double reaalne2 = avg;
             double oodatud2 = 4.75375;
             Assert.AreEqual(oodatud1, reaalne1);
-            Assert.AreEqual(oodatud2, reaalne2);
+            Assert.AreEqual(IsClose(oodatud2, reaalne2, 0.00001), true);
+        }
+
+
+        [TestMethod]
+        public void TyypilisedAndmedPiiratudRajad()
+        {
+            VecT andmed1 = new VecT
+            {
+                System.Tuple.Create(new System.DateTime(2023,03,10,8,0,0), 4.12),
+                System.Tuple.Create(new System.DateTime(2023,03,10,9,0,0), 5.10),
+                System.Tuple.Create(new System.DateTime(2023,03,10,10,0,0), 3.16),
+                System.Tuple.Create(new System.DateTime(2023,03,10,11,0,0), 6.12),
+                System.Tuple.Create(new System.DateTime(2023,03,10,12,0,0), 2.08),
+                System.Tuple.Create(new System.DateTime(2023,03,10,13,0,0), 4.12),
+                System.Tuple.Create(new System.DateTime(2023,03,10,14,0,0), 5.32),
+                System.Tuple.Create(new System.DateTime(2023,03,10,15,0,0), 8.01)
+            };
+            double avg = 0.0;
+            System.DateTime alumineRaja = andmed1[1].Item1;
+            System.DateTime ylemineRaja = andmed1[5].Item1;
+            int reaalne1 = objekt.average(andmed1, alumineRaja, ylemineRaja, ref avg);
+            int oodatud1 = 0;
+            double reaalne2 = avg;
+            double oodatud2 = 4.116;
+            Assert.AreEqual(oodatud1, reaalne1);
+            Assert.AreEqual(IsClose(oodatud2, reaalne2, 0.00001), true);
         }
 
         [TestMethod]
@@ -52,7 +84,7 @@ namespace UnitTestArvutaja
             double reaalne2 = avg;
             double oodatud2 = 8.01;
             Assert.AreEqual(oodatud1, reaalne1);
-            Assert.AreEqual(oodatud2, reaalne2);
+            Assert.AreEqual(IsClose(oodatud2, reaalne2, 0.00001), true);
         }
 
         [TestMethod]

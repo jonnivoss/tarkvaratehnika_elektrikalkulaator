@@ -160,51 +160,53 @@ namespace Andmepyydja
             return yez.AddHours(2);
         }
 
-        //siin 
+        //tagastab vect DatePrice 
         public VecT HindAegInternet(DateTime algus1, DateTime lopp)
         {
-            string urla = "https://dashboard.elering.ee/api/nps/price?";
+            string url = "https://dashboard.elering.ee/api/nps/price?";
             VecT nett = new VecT();
             DateTime algus = algus1.AddHours(-2);
 
             using (var httpClient = new HttpClient())
             {
-                string url = urla + "start=" + algus.ToString("yyyy-MM-ddTHH") + "%3A00%3A00.999Z&end=" + lopp.ToString("yyyy-MM-ddTHH") + "%3A00%3A00.999Z";
+                // Construct the URL with parameters
+                string start = algus.ToString("yyyy-MM-ddTHH") + "%3A00%3A00.999Z";
+                string end = lopp.ToString("yyyy-MM-ddTHH") + "%3A00%3A00.999Z";
+                string requestUrl = $"{url}start={start}&end={end}";
 
-                //siin saadab Apile requesti ja salvestab selle vastuse stringi
+                // Send request and get response
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
-                
-                var responseStringTask = httpClient.GetStringAsync(url);
-                var responseString = responseStringTask.Result;
+                var responseString = httpClient.GetStringAsync(requestUrl).Result;
 
-                //siin jagatakse üks suur api vastuse sõne sõnede jadaks
-                string[] vastuseSõned = responseString.Split('{', '[', '}', ']', ',');
-                
-                for (int i = 4; i < vastuseSõned.Length; i += 2)
+                // Split the response string into array of substrings
+                string[] responseStrings = responseString.Split('{', '[', '}', ']', ',');
+
+                // Loop through the substrings and extract date-time and price values
+                for (int i = 4; i < responseStrings.Length; i += 2)
                 {
                     int eli = i - 1;
-                    if (String.Equals(vastuseSõned[i], "\"fi\":") || String.Equals(vastuseSõned[eli], "\"fi\":"))
+                    if (String.Equals(responseStrings[i], "\"fi\":") || String.Equals(responseStrings[eli], "\"fi\":"))
                     {
                         break;
                     }
-                    if (String.IsNullOrEmpty(vastuseSõned[i]))
+                    if (String.IsNullOrEmpty(responseStrings[i]))
                     {
                         continue;
                     }
 
-                    //siin eraldatakse numbrid sõnadest
-                    string ajaString = vastuseSõned[eli].Substring(vastuseSõned[eli].IndexOf(":") + 1);
-                    string hinnaString = vastuseSõned[i].Substring(vastuseSõned[i].IndexOf(":") + 1);
+                    // Extract date-time and price strings
+                    string ajaString = responseStrings[eli].Substring(responseStrings[eli].IndexOf(":") + 1);
+                    string hinnaString = responseStrings[i].Substring(responseStrings[i].IndexOf(":") + 1);
 
-                    //siin muudetakse string numbriteks
+                    // Parse strings to DateTime and double values
                     DateTime aeg = UnixToDateTime(ajaString);
                     double hind = double.Parse(hinnaString, CultureInfo.InvariantCulture.NumberFormat);
 
-                    //ühendab hinna ja aja ning lisab selle VecT-i
-                    DatePriceT ime = Tuple.Create(aeg, hind);
-                    nett.Add(ime);
-                }   
+                    // Create DatePriceT tuple and add it to VecT
+                    DatePriceT ajutine = Tuple.Create(aeg, hind);
+                    nett.Add(ajutine);
+                }
             }
             return nett;
         }

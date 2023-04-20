@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -21,9 +17,10 @@ namespace Kasutajaliides
             InitializeComponent();
         }
 
+        // kasutajaliidese tekstifondid
         Font Normal = new Font("Impact", 12);
         Font Bigger = new Font("Impact", 16);
-
+        // 
         List<DateTime> timeRange = new List<DateTime>();
         List<double> costRange = new List<double>();
 
@@ -43,44 +40,50 @@ namespace Kasutajaliides
         bool showStock = true, showUsage = true;
         bool state = true;
 
+        // akna elementide mõõtmete vaikeväärtused
+        Rectangle originalWindowSize;
+        Rectangle originalChartPriceSize;
+        Rectangle originalTablePriceSize;
+        Rectangle originalButtonChangeSize;
+        Rectangle originalLabelKasutusmall;
+        Rectangle originalComboBoxKasutusmall;
+        Rectangle originalLabelAeg;
+        Rectangle originalTextAjakulu;
+        Rectangle originalLabelTund;
+        Rectangle originalLabelV6imsus;
+        Rectangle originalTextV6imsus;
+        Rectangle originalLabelkW;
+        Rectangle originalLabelHind;
+        Rectangle originalTextHind;
+        Rectangle originalLabelAndresEek;
+        Rectangle originalTextDebug;
+        Rectangle originalButtonAvaCsv;
+        Rectangle originalCheckBoxShowPrice;
+        Rectangle originalCheckBoxShowUsage;
+        Rectangle originalCheckBoxShowTable;
+        Rectangle originalLabelBeginning;
+        Rectangle originalDateStartTimePicker;
+        Rectangle originalLabelEnd;
+        Rectangle originalDateStopTimePicker;
+        Rectangle originalGroupBoxGroupTypePrice;
+        Rectangle originalLabelTarbimisAeg;
+        Rectangle originalTextTarbimisAeg;
+
         private void updateGraph()
         {
             // Uuenda graafikut
             timeRange.Clear();
             costRange.Clear();
-            // Ära luba lõppkuupäeva alguskuupäevast väiksemaks panna
-            //dateStopTime.MinDate = dateStartTime.Value;
             foreach (var item in userData)
             {
                 if (item.Item1 >= startTime && item.Item1 <= stopTime)
                 {
                     timeRange.Add(item.Item1);
                     costRange.Add(item.Item2);
-
-                    /*string line = item.Item1.ToString() + ": " + item.Item2.ToString();
-
-                    txtDebug.AppendText(line);
-                    txtDebug.AppendText(Environment.NewLine);*/
                 }
             }
 
-            if (rbStockPrice.Checked)
-            {
-                double integraal = 0;
-                int olek = AR.integreerija(userData, priceData, startTime, stopTime, ref integraal);
-                switch (olek)
-                {
-                    case 0:
-                        txtHind.Text = (integraal / 1000).ToString() + " €";
-                        break;
-                    case 1:
-                        txtHind.Text = "Viga 1";
-                        break;
-                    case 2:
-                        txtHind.Text = "Viga 2";
-                        break;
-                }
-            }
+
 
             if (timeRange.Count > 0)
             {
@@ -146,19 +149,19 @@ namespace Kasutajaliides
         {
             if (AP.chooseFile())
             {
-                AS.changeSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed, AP.getFile());
+                AS.changeSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed, AP.getUserDataFileName());
                 this.openCSV();
             }
         }
         private void openCSV()
         {
-            if (!AP.readFile(ref fileContents))
+            if (!AP.readUserDataFile(ref fileContents))
             {
                 MessageBox.Show("Lugemine ebaõnnestus!");
             }
             else
             {
-                userData = AP.parseContents(fileContents);
+                userData = AP.parseUserData(fileContents);
 
                 timeRange.Clear();
                 costRange.Clear();
@@ -215,7 +218,6 @@ namespace Kasutajaliides
         private void callAPI()
         {
             priceData = AP.HindAegInternet(startTime, stopTime);
-            MessageBox.Show(priceData.Count.ToString());
             foreach (var item in priceData)
             {
                 priceTimeRange.Add(item.Item1);
@@ -288,7 +290,8 @@ namespace Kasutajaliides
                     }
 
                     price = bestIntegral / 1000.0;
-                    MessageBox.Show("Tarbimist alustada " + bestDate.ToString("dd.MM.yyyy HH:mm"));
+                    txtTarbimisAeg.Text = bestDate.ToString("dd.MM.yyyy HH:mm");
+                    //MessageBox.Show("Tarbimist alustada " + bestDate.ToString("dd.MM.yyyy HH:mm"));
                 }
                 else
                 {
@@ -296,6 +299,25 @@ namespace Kasutajaliides
                     price = time * power * skwh / 100.0;
                 }
 
+                //see on pask
+                //descusting
+                /*if (rbStockPrice.Checked)
+                {
+                    double integraal = 0;
+                    int olek = AR.integreerija(userData, priceData, startTime, stopTime, ref integraal);
+                    switch (olek)
+                    {
+                        case 0:
+                            txtHind.Text = (integraal / 1000).ToString() + " €";
+                            break;
+                        case 1:
+                            txtHind.Text = "";
+                            break;
+                        case 3:
+                            txtHind.Text = "-";
+                            break;
+                    }
+                }*/
                 txtHind.Text = Math.Round(price, 2).ToString();
             }
             catch (Exception)
@@ -307,6 +329,7 @@ namespace Kasutajaliides
 
         private void Kasutajaliides_Load(object sender, EventArgs e)
         {
+            this.MinimumSize = new Size(1083, 713);
             // Lisab tüüp-kasutusmallid
             chartPrice.MouseWheel += chartPrice_zooming;
             txtHind.Text = "-";
@@ -331,8 +354,37 @@ namespace Kasutajaliides
             }
 
 
-            AP.setFile(AS.getSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed));
+            AP.setUserDataFileName(AS.getSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed));
             openCSV();
+
+            // akna elementide mõõtmete vaikeväärtuste määramine
+            originalWindowSize = new Rectangle(this.Location.X, this.Location.Y, this.Size.Width, this.Size.Height);
+            originalChartPriceSize = new Rectangle(chartPrice.Location.X, chartPrice.Location.Y, chartPrice.Size.Width, chartPrice.Size.Height);
+            originalTablePriceSize = new Rectangle(tablePrice.Location.X, tablePrice.Location.Y, tablePrice.Size.Width, tablePrice.Size.Height);
+            originalButtonChangeSize = new Rectangle(btnChangeSize.Location.X, btnChangeSize.Location.Y, btnChangeSize.Size.Width, btnChangeSize.Size.Height);
+            originalLabelKasutusmall = new Rectangle(lblKasutusmall.Location.X, lblKasutusmall.Location.Y, lblKasutusmall.Size.Width, lblKasutusmall.Size.Height);
+            originalComboBoxKasutusmall = new Rectangle(cbKasutusmall.Location.X, cbKasutusmall.Location.Y, cbKasutusmall.Size.Width, cbKasutusmall.Size.Height);
+            originalLabelAeg = new Rectangle(lblAeg.Location.X, lblAeg.Location.Y, lblAeg.Size.Width, lblAeg.Size.Height);
+            originalTextAjakulu = new Rectangle(txtAjakulu.Location.X, txtAjakulu.Location.Y, txtAjakulu.Size.Width, txtAjakulu.Size.Height);
+            originalLabelTund = new Rectangle(lblTund.Location.X, lblTund.Location.Y, lblTund.Size.Width, lblTund.Size.Height);
+            originalLabelV6imsus = new Rectangle(lblVoimsus.Location.X, lblVoimsus.Location.Y, lblVoimsus.Size.Width, lblVoimsus.Size.Height);
+            originalTextV6imsus = new Rectangle(txtVoimsus.Location.X, txtVoimsus.Location.Y, txtVoimsus.Size.Width, txtVoimsus.Size.Height);
+            originalLabelkW = new Rectangle(lblkW.Location.X, lblkW.Location.Y, lblkW.Size.Width, lblkW.Size.Height);
+            originalLabelHind = new Rectangle(lblHind.Location.X, lblHind.Location.Y, lblHind.Size.Width, lblHind.Size.Height);
+            originalTextHind = new Rectangle(txtHind.Location.X, txtHind.Location.Y, txtHind.Size.Width, txtHind.Size.Height);
+            originalLabelAndresEek = new Rectangle(lblAndresEek.Location.X, lblAndresEek.Location.Y, lblAndresEek.Size.Width, lblAndresEek.Size.Height);
+            originalTextDebug = new Rectangle(txtDebug.Location.X, txtDebug.Location.Y, txtDebug.Size.Width, txtDebug.Size.Height);
+            originalButtonAvaCsv = new Rectangle(btnAvaCSV.Location.X, btnAvaCSV.Location.Y, btnAvaCSV.Size.Width, btnAvaCSV.Size.Height);
+            originalCheckBoxShowPrice = new Rectangle(cbShowPrice.Location.X, cbShowPrice.Location.Y, cbShowPrice.Size.Width, cbShowPrice.Size.Height);
+            originalCheckBoxShowUsage = new Rectangle(cbShowUsage.Location.X, cbShowUsage.Location.Y, cbShowUsage.Size.Width, cbShowUsage.Size.Height);
+            originalCheckBoxShowTable = new Rectangle(cbShowTabel.Location.X, cbShowTabel.Location.Y, cbShowTabel.Size.Width, cbShowTabel.Size.Height);
+            originalLabelBeginning = new Rectangle(lblBeginning.Location.X, lblBeginning.Location.Y, lblBeginning.Size.Width, lblBeginning.Size.Height);
+            originalDateStartTimePicker = new Rectangle(dateStartTime.Location.X, dateStartTime.Location.Y, dateStartTime.Size.Width, dateStartTime.Size.Height);
+            originalLabelEnd = new Rectangle(lblEnd.Location.X, lblEnd.Location.Y, lblEnd.Size.Width, lblEnd.Size.Height);
+            originalDateStopTimePicker = new Rectangle(dateStopTime.Location.X, dateStopTime.Location.Y, dateStopTime.Size.Width, dateStopTime.Size.Height);
+            originalGroupBoxGroupTypePrice = new Rectangle(groupPriceType.Location.X, groupPriceType.Location.Y, groupPriceType.Size.Width, groupPriceType.Size.Height);
+            originalLabelTarbimisAeg = new Rectangle(lblTarbimisAeg.Location.X, lblTarbimisAeg.Location.Y, lblTarbimisAeg.Size.Width, lblTarbimisAeg.Size.Height);
+            originalTextTarbimisAeg = new Rectangle(txtTarbimisAeg.Location.X, txtTarbimisAeg.Location.Y, txtTarbimisAeg.Size.Width, txtTarbimisAeg.Size.Height);
         }
 
         private void txtAjakulu_KeyPress(object sender, KeyPressEventArgs e)
@@ -357,6 +409,11 @@ namespace Kasutajaliides
             }
         }
 
+        /// <summary>
+        /// ///
+        /// </summary>
+        /// <parm name="sender"></parm>
+        /// <parm name="e"></parm>
         private void dateStartTime_ValueChanged(object sender, EventArgs e)
         {
             txtDebug.AppendText("; date: " + sender.ToString());
@@ -376,6 +433,7 @@ namespace Kasutajaliides
                 this.stopTime = dateStopTime.Value;
             }
             callAPI();
+            calcPrice();
             updateGraph();
         }
         private void dateStartTime_DropDown(object sender, EventArgs e)
@@ -405,6 +463,7 @@ namespace Kasutajaliides
                 this.startTime = dateStartTime.Value;
             }
             callAPI();
+            calcPrice();
             updateGraph();
         }
         private void dateStopTime_DropDown(object sender, EventArgs e)
@@ -473,6 +532,7 @@ namespace Kasutajaliides
             {
                 tbMonthlyPrice.Enabled = true;
             }
+            calcPrice();
         }
 
         private void cbKasutusmall_SelectedValueChanged(object sender, EventArgs e)
@@ -516,6 +576,7 @@ namespace Kasutajaliides
                 lblAeg.Font = Bigger;
                 lblTund.Font = Bigger;
                 lblHind.Font = Bigger;
+                lblAndresEek.Font = Bigger;
                 lblVoimsus.Font = Bigger;
                 lblkW.Font = Bigger;
                 lblAndresEek.Font = Bigger;
@@ -539,6 +600,10 @@ namespace Kasutajaliides
                 dateStartTime.Font = Bigger;
                 dateStopTime.Font = Bigger;
                 btnChangeSize.Font = Bigger;
+                tbMonthlyPrice.Font = Bigger;
+                lblRate.Font = Bigger;
+                lblTarbimisAeg.Font = Bigger;
+                txtTarbimisAeg.Font = Bigger;
                 btnChangeSize.Text = "-";
                 chartPrice.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font("Comic Sans MS", 12);
                 chartPrice.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font("Comic Sans MS", 12);
@@ -557,6 +622,7 @@ namespace Kasutajaliides
                 lblAeg.Font = Normal;
                 lblTund.Font = Normal;
                 lblHind.Font = Normal;
+                lblAndresEek.Font = Normal;
                 lblVoimsus.Font = Normal;
                 lblkW.Font = Normal;
                 lblAndresEek.Font = Normal;
@@ -580,6 +646,10 @@ namespace Kasutajaliides
                 dateStartTime.Font = Normal;
                 dateStopTime.Font = Normal;
                 btnChangeSize.Font = Normal;
+                tbMonthlyPrice.Font = Normal;
+                lblRate.Font = Normal;
+                lblTarbimisAeg.Font = Normal;
+                txtTarbimisAeg.Font = Normal;
                 btnChangeSize.Text = "+";
                 chartPrice.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font("Comic Sans MS", 10);
                 chartPrice.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font("Comic Sans MS", 10);
@@ -620,15 +690,65 @@ namespace Kasutajaliides
             }
         }
 
+        private void resizeGuiElement(Rectangle nelinurk, Control element)
+        {
+            // kui suure osa moodustavad uued mõõtmed ja koordinaadid esialgsetest
+            float xSuhe = (float)this.Width / (float)originalWindowSize.Width;
+            float ySuhe = (float)this.Height / (float)originalWindowSize.Height;
+            int uusXkoordinaat = (int)(nelinurk.Location.X * xSuhe);
+            int uusYkoordinaat = (int)(nelinurk.Location.Y * ySuhe);
+            int uusXlaius = (int)(nelinurk.Width * xSuhe);
+            int uusYk6rgus = (int)(nelinurk.Height * ySuhe);
+            element.Location = new Point(uusXkoordinaat, uusYkoordinaat);
+            element.Size = new Size(uusXlaius, uusYk6rgus);
+        }
+
+        private void Kasutajaliides_Resize(object sender, EventArgs e)
+        {
+            resizeGuiElement(originalChartPriceSize, chartPrice);
+            resizeGuiElement(originalTablePriceSize, tablePrice);
+            resizeGuiElement(originalButtonChangeSize, btnChangeSize);
+            resizeGuiElement(originalLabelKasutusmall, lblKasutusmall);
+            resizeGuiElement(originalComboBoxKasutusmall, cbKasutusmall);
+            resizeGuiElement(originalLabelAeg, lblAeg);
+            resizeGuiElement(originalTextAjakulu, txtAjakulu);
+            resizeGuiElement(originalLabelTund, lblTund);
+            resizeGuiElement(originalLabelV6imsus, lblVoimsus);
+            resizeGuiElement(originalTextV6imsus, txtVoimsus);
+            resizeGuiElement(originalLabelkW, lblkW);
+            resizeGuiElement(originalLabelHind, lblHind);
+            resizeGuiElement(originalTextHind, txtHind);
+            resizeGuiElement(originalLabelAndresEek, lblAndresEek);
+            resizeGuiElement(originalTextDebug, txtDebug);
+            resizeGuiElement(originalButtonAvaCsv, btnAvaCSV);
+            resizeGuiElement(originalCheckBoxShowPrice, cbShowPrice);
+            resizeGuiElement(originalCheckBoxShowUsage, cbShowUsage);
+            resizeGuiElement(originalCheckBoxShowTable, cbShowTabel);
+            resizeGuiElement(originalLabelBeginning, lblBeginning);
+            resizeGuiElement(originalDateStartTimePicker, dateStartTime);
+            resizeGuiElement(originalLabelEnd, lblEnd);
+            resizeGuiElement(originalDateStopTimePicker, dateStopTime);
+            resizeGuiElement(originalGroupBoxGroupTypePrice, groupPriceType);
+            resizeGuiElement(originalLabelTarbimisAeg, lblTarbimisAeg);
+            resizeGuiElement(originalTextTarbimisAeg, txtTarbimisAeg);
+        }
+
+        // https://stackoverflow.com/questions/47463926/how-to-get-pixel-position-from-datetime-value-on-x-axis 
+        // https://stackoverflow.com/questions/11955866/retrieving-datetime-x-axis-value-from-chart-control 
         void chartPrice_zooming(object sender, MouseEventArgs e)
         {
+            // rulliga kerimisel hiire asukoht X-telje suhtes; Andmetüübiks DateTime!
+            var mousePositionDate = DateTime.FromOADate(chartPrice.ChartAreas["ChartArea1"].AxisX.PixelPositionToValue(e.Location.X));
+            //MessageBox.Show(mousePositionDate.ToString());
+            //MessageBox.Show(e.Location.X.ToString());
             if (dateStartTime.Value.Day < dateStopTime.Value.Day)
             {
                 var deltaDate = dateStopTime.Value - dateStartTime.Value;
                 var distanceFromMin = dateStartTime.Value - dateStartTime.MinDate;
                 var distanceFromMax = dateStopTime.MaxDate - dateStopTime.Value;
-                double xCoordPercent = (e.Location.X - 88) / 464.0; // jagades graafiku laiusega saame pointeri normaliseeritud asukoha graafikul vahemikus [0;1]
-                //MessageBox.Show(xCoordPercent.ToString
+                //double xCoordPercent = (e.Location.X - 88) / 464.0; // jagades graafiku laiusega saame pointeri normaliseeritud asukoha graafikul vahemikus [0;1]
+                double xCoordPercent = (mousePositionDate - dateStartTime.Value).TotalMilliseconds / (dateStopTime.Value - dateStartTime.Value).TotalMilliseconds; // jagades graafiku laiusega saame pointeri normaliseeritud asukoha graafikul vahemikus [0;1]
+                //MessageBox.Show(xCoordPercent.ToString());
                 int leftStep = 1, rightStep = 1, totalStep = 1; // sammud graafiku otste nihutamiseks (tundides)
                 if (deltaDate.TotalDays < 2) totalStep = 12;
                 else totalStep = 24;

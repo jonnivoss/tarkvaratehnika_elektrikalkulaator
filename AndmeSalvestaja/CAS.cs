@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json;
 
@@ -22,7 +19,7 @@ namespace AndmeSalvestaja
         public VecUCT useCases = new VecUCT
         {
             { "",             Tuple.Create(0.0, 0.0) },
-            { "Röster",       Tuple.Create(800.0, 1.0) },
+            { "Röster",       Tuple.Create(1200.0, 10.0) },
             { "Tolmuimeja",   Tuple.Create(2000.0, 30.0) },
             { "Televiisor",   Tuple.Create(90.0, 120.0) },
             { "Pesumasin",    Tuple.Create(900.0, 180.0) },

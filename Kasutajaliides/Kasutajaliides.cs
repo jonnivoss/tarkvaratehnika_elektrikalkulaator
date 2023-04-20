@@ -232,7 +232,6 @@ namespace Kasutajaliides
         private void callAPI()
         {
             priceData = AP.HindAegInternet(startTime, stopTime);
-            MessageBox.Show(priceData.Count.ToString());
             foreach (var item in priceData)
             {
                 priceTimeRange.Add(item.Item1);

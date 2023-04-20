@@ -66,6 +66,8 @@ namespace Kasutajaliides
         Rectangle originalLabelEnd;
         Rectangle originalDateStopTimePicker;
         Rectangle originalGroupBoxGroupTypePrice;
+        Rectangle originalLabelTarbimisAeg;
+        Rectangle originalTextTarbimisAeg;
 
         private void updateGraph()
         {
@@ -370,6 +372,8 @@ namespace Kasutajaliides
             originalLabelEnd = new Rectangle(lblEnd.Location.X, lblEnd.Location.Y, lblEnd.Size.Width, lblEnd.Size.Height);
             originalDateStopTimePicker = new Rectangle(dateStopTime.Location.X, dateStopTime.Location.Y, dateStopTime.Size.Width, dateStopTime.Size.Height);
             originalGroupBoxGroupTypePrice = new Rectangle(groupPriceType.Location.X, groupPriceType.Location.Y, groupPriceType.Size.Width, groupPriceType.Size.Height);
+            originalLabelTarbimisAeg = new Rectangle(lblTarbimisAeg.Location.X, lblTarbimisAeg.Location.Y, lblTarbimisAeg.Size.Width, lblTarbimisAeg.Size.Height);
+            originalTextTarbimisAeg = new Rectangle(txtTarbimisAeg.Location.X, txtTarbimisAeg.Location.Y, txtTarbimisAeg.Size.Width, txtTarbimisAeg.Size.Height);
         }
 
         private void txtAjakulu_KeyPress(object sender, KeyPressEventArgs e)
@@ -704,6 +708,8 @@ namespace Kasutajaliides
             resizeGuiElement(originalLabelEnd, lblEnd);
             resizeGuiElement(originalDateStopTimePicker, dateStopTime);
             resizeGuiElement(originalGroupBoxGroupTypePrice, groupPriceType);
+            resizeGuiElement(originalLabelTarbimisAeg, lblTarbimisAeg);
+            resizeGuiElement(originalTextTarbimisAeg, txtTarbimisAeg);
         }
 
         // https://stackoverflow.com/questions/47463926/how-to-get-pixel-position-from-datetime-value-on-x-axis 

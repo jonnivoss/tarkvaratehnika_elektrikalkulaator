@@ -550,6 +550,7 @@ namespace Kasutajaliides
                 lblAeg.Font = Bigger;
                 lblTund.Font = Bigger;
                 lblHind.Font = Bigger;
+                lblAndresEek.Font = Bigger;
                 lblVoimsus.Font = Bigger;
                 lblkW.Font = Bigger;
                 cbShowPrice.Font = Bigger;
@@ -568,6 +569,8 @@ namespace Kasutajaliides
                 dateStartTime.Font = Bigger;
                 dateStopTime.Font = Bigger;
                 btnChangeSize.Font = Bigger;
+                tbMonthlyPrice.Font = Bigger;
+                lblRate.Font = Bigger;
                 btnChangeSize.Text = "-";
                 chartPrice.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font("Comic Sans MS", 12);
                 chartPrice.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font("Comic Sans MS", 12);
@@ -586,6 +589,7 @@ namespace Kasutajaliides
                 lblAeg.Font = Normal;
                 lblTund.Font = Normal;
                 lblHind.Font = Normal;
+                lblAndresEek.Font = Normal;
                 lblVoimsus.Font = Normal;
                 lblkW.Font = Normal;
                 cbShowPrice.Font = Normal;
@@ -604,6 +608,8 @@ namespace Kasutajaliides
                 dateStartTime.Font = Normal;
                 dateStopTime.Font = Normal;
                 btnChangeSize.Font = Normal;
+                tbMonthlyPrice.Font = Normal;
+                lblRate.Font = Normal;
                 btnChangeSize.Text = "+";
                 chartPrice.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font("Comic Sans MS", 10);
                 chartPrice.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font("Comic Sans MS", 10);

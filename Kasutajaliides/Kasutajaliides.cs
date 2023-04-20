@@ -581,6 +581,8 @@ namespace Kasutajaliides
                 btnChangeSize.Font = Bigger;
                 tbMonthlyPrice.Font = Bigger;
                 lblRate.Font = Bigger;
+                lblTarbimisAeg.Font = Bigger;
+                txtTarbimisAeg.Font = Bigger;
                 btnChangeSize.Text = "-";
                 chartPrice.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font("Comic Sans MS", 12);
                 chartPrice.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font("Comic Sans MS", 12);
@@ -620,6 +622,8 @@ namespace Kasutajaliides
                 btnChangeSize.Font = Normal;
                 tbMonthlyPrice.Font = Normal;
                 lblRate.Font = Normal;
+                lblTarbimisAeg.Font = Normal;
+                txtTarbimisAeg.Font = Normal;
                 btnChangeSize.Text = "+";
                 chartPrice.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font("Comic Sans MS", 10);
                 chartPrice.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font("Comic Sans MS", 10);

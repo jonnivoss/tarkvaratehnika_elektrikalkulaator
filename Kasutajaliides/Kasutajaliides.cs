@@ -323,6 +323,7 @@ namespace Kasutajaliides
 
         private void Kasutajaliides_Load(object sender, EventArgs e)
         {
+            this.MinimumSize = new Size(1083, 713);
             // Lisab tüüp-kasutusmallid
             chartPrice.MouseWheel += chartPrice_zooming;
             txtHind.Text = "-";

@@ -41,15 +41,19 @@ namespace Andmepyydja
         {
             if (this.fname == "")
             {
+                // Failinime pole valitud
                 return false;
             }
             try
             {
+                // Proovib failist lugeda
                 contents = File.ReadAllText(this.fname, Encoding.UTF8);
+                // Kui fail oli tühi, siis see on automaatselt *fail*
                 return (contents != "");
             }
             catch (Exception)
             {
+                // Faili lugemine ebaõnnestus
                 return false;
             }
         }

@@ -517,6 +517,7 @@ namespace Kasutajaliides
             {
                 tbMonthlyPrice.Enabled = true;
             }
+            calcPrice();
         }
 
         private void cbKasutusmall_SelectedValueChanged(object sender, EventArgs e)

@@ -81,23 +81,7 @@ namespace Kasutajaliides
                 }
             }
 
-            if (rbStockPrice.Checked)
-            {
-                double integraal = 0;
-                int olek = AR.integreerija(userData, priceData, startTime, stopTime, ref integraal);
-                switch (olek)
-                {
-                    case 0:
-                        txtHind.Text = (integraal / 1000).ToString() + " €";
-                        break;
-                    case 1:
-                        txtHind.Text = "Viga 1";
-                        break;
-                    case 2:
-                        txtHind.Text = "Viga 2";
-                        break;
-                }
-            }
+
 
             if (timeRange.Count > 0)
             {
@@ -313,6 +297,25 @@ namespace Kasutajaliides
                     price = time * power * skwh / 100.0;
                 }
 
+                //see on pask
+                //descusting
+                /*if (rbStockPrice.Checked)
+                {
+                    double integraal = 0;
+                    int olek = AR.integreerija(userData, priceData, startTime, stopTime, ref integraal);
+                    switch (olek)
+                    {
+                        case 0:
+                            txtHind.Text = (integraal / 1000).ToString() + " €";
+                            break;
+                        case 1:
+                            txtHind.Text = "";
+                            break;
+                        case 3:
+                            txtHind.Text = "-";
+                            break;
+                    }
+                }*/
                 txtHind.Text = Math.Round(price, 2).ToString();
             }
             catch (Exception)
@@ -327,7 +330,6 @@ namespace Kasutajaliides
             this.MinimumSize = new Size(1083, 713);
             // Lisab tüüp-kasutusmallid
             chartPrice.MouseWheel += chartPrice_zooming;
-            txtHind.Text = "-";
             // Proovib avada CSV
             AS.loadFile();
 
@@ -392,6 +394,11 @@ namespace Kasutajaliides
             }
         }
 
+        /// <summary>
+        /// ///
+        /// </summary>
+        /// <parm name="sender"></parm>
+        /// <parm name="e"></parm>
         private void dateStartTime_ValueChanged(object sender, EventArgs e)
         {
             txtDebug.AppendText("; date: " + sender.ToString());
@@ -411,6 +418,7 @@ namespace Kasutajaliides
                 this.stopTime = dateStopTime.Value;
             }
             callAPI();
+            calcPrice();
             updateGraph();
         }
         private void dateStartTime_DropDown(object sender, EventArgs e)
@@ -440,6 +448,7 @@ namespace Kasutajaliides
                 this.startTime = dateStartTime.Value;
             }
             callAPI();
+            calcPrice();
             updateGraph();
         }
         private void dateStopTime_DropDown(object sender, EventArgs e)

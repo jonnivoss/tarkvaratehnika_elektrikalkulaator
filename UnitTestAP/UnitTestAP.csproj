@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{43D3E71A-B597-4718-AED9-805B0961F85E}</ProjectGuid>
+    <ProjectGuid>{990C3408-AD51-4A29-8498-6614B32BBDCD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Testid</RootNamespace>
-    <AssemblyName>Testid</AssemblyName>
+    <RootNamespace>UnitTestAP</RootNamespace>
+    <AssemblyName>UnitTestAP</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -49,21 +49,13 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TestAndmePyydja.cs" />
+    <Compile Include="UnitTestAPCSVParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AndmeSalvestaja\AndmeSalvestaja.csproj">
-      <Project>{1bd640a0-5451-48f6-a1e0-4efb425482f3}</Project>
-      <Name>AndmeSalvestaja</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Arvutaja\Arvutaja.csproj">
-      <Project>{c921fa8b-6b9b-403a-b316-4c2eba950da7}</Project>
-      <Name>Arvutaja</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LokaalneAndmepyydja\Andmepyydja.csproj">
       <Project>{0986332a-24b6-49da-8d38-d840ff5f0b4b}</Project>
       <Name>Andmepyydja</Name>

@@ -165,11 +165,12 @@ namespace Andmepyydja
         }
 
         //tagastab vect DatePrice 
-        public VecT HindAegInternet(DateTime algus1, DateTime lopp)
+        public VecT HindAegInternet(DateTime algus1, DateTime lopp1)
         {
             string url = "https://dashboard.elering.ee/api/nps/price?";
             VecT nett = new VecT();
             DateTime algus = algus1.AddHours(-2);
+            DateTime lopp = lopp1.AddHours(-2);
 
             using (var httpClient = new HttpClient())
             {

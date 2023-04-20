@@ -66,6 +66,8 @@ namespace Kasutajaliides
         Rectangle originalLabelEnd;
         Rectangle originalDateStopTimePicker;
         Rectangle originalGroupBoxGroupTypePrice;
+        Rectangle originalLabelTarbimisAeg;
+        Rectangle originalTextTarbimisAeg;
 
         private void updateGraph()
         {
@@ -81,23 +83,7 @@ namespace Kasutajaliides
                 }
             }
 
-            if (rbStockPrice.Checked)
-            {
-                double integraal = 0;
-                int olek = AR.integreerija(userData, priceData, startTime, stopTime, ref integraal);
-                switch (olek)
-                {
-                    case 0:
-                        txtHind.Text = (integraal / 1000).ToString() + " €";
-                        break;
-                    case 1:
-                        txtHind.Text = "Viga 1";
-                        break;
-                    case 2:
-                        txtHind.Text = "Viga 2";
-                        break;
-                }
-            }
+
 
             if (timeRange.Count > 0)
             {
@@ -232,7 +218,6 @@ namespace Kasutajaliides
         private void callAPI()
         {
             priceData = AP.HindAegInternet(startTime, stopTime);
-            MessageBox.Show(priceData.Count.ToString());
             foreach (var item in priceData)
             {
                 priceTimeRange.Add(item.Item1);
@@ -305,7 +290,8 @@ namespace Kasutajaliides
                     }
 
                     price = bestIntegral / 1000.0;
-                    MessageBox.Show("Tarbimist alustada " + bestDate.ToString("dd.MM.yyyy HH:mm"));
+                    txtTarbimisAeg.Text = bestDate.ToString("dd.MM.yyyy HH:mm");
+                    //MessageBox.Show("Tarbimist alustada " + bestDate.ToString("dd.MM.yyyy HH:mm"));
                 }
                 else
                 {
@@ -313,6 +299,25 @@ namespace Kasutajaliides
                     price = time * power * skwh / 100.0;
                 }
 
+                //see on pask
+                //descusting
+                /*if (rbStockPrice.Checked)
+                {
+                    double integraal = 0;
+                    int olek = AR.integreerija(userData, priceData, startTime, stopTime, ref integraal);
+                    switch (olek)
+                    {
+                        case 0:
+                            txtHind.Text = (integraal / 1000).ToString() + " €";
+                            break;
+                        case 1:
+                            txtHind.Text = "";
+                            break;
+                        case 3:
+                            txtHind.Text = "-";
+                            break;
+                    }
+                }*/
                 txtHind.Text = Math.Round(price, 2).ToString();
             }
             catch (Exception)
@@ -324,9 +329,9 @@ namespace Kasutajaliides
 
         private void Kasutajaliides_Load(object sender, EventArgs e)
         {
+            this.MinimumSize = new Size(1083, 713);
             // Lisab tüüp-kasutusmallid
             chartPrice.MouseWheel += chartPrice_zooming;
-            txtHind.Text = "-";
             // Proovib avada CSV
             AS.loadFile();
 
@@ -367,6 +372,8 @@ namespace Kasutajaliides
             originalLabelEnd = new Rectangle(lblEnd.Location.X, lblEnd.Location.Y, lblEnd.Size.Width, lblEnd.Size.Height);
             originalDateStopTimePicker = new Rectangle(dateStopTime.Location.X, dateStopTime.Location.Y, dateStopTime.Size.Width, dateStopTime.Size.Height);
             originalGroupBoxGroupTypePrice = new Rectangle(groupPriceType.Location.X, groupPriceType.Location.Y, groupPriceType.Size.Width, groupPriceType.Size.Height);
+            originalLabelTarbimisAeg = new Rectangle(lblTarbimisAeg.Location.X, lblTarbimisAeg.Location.Y, lblTarbimisAeg.Size.Width, lblTarbimisAeg.Size.Height);
+            originalTextTarbimisAeg = new Rectangle(txtTarbimisAeg.Location.X, txtTarbimisAeg.Location.Y, txtTarbimisAeg.Size.Width, txtTarbimisAeg.Size.Height);
         }
 
         private void txtAjakulu_KeyPress(object sender, KeyPressEventArgs e)
@@ -391,6 +398,11 @@ namespace Kasutajaliides
             }
         }
 
+        /// <summary>
+        /// ///
+        /// </summary>
+        /// <parm name="sender"></parm>
+        /// <parm name="e"></parm>
         private void dateStartTime_ValueChanged(object sender, EventArgs e)
         {
             txtDebug.AppendText("; date: " + sender.ToString());
@@ -410,6 +422,7 @@ namespace Kasutajaliides
                 this.stopTime = dateStopTime.Value;
             }
             callAPI();
+            calcPrice();
             updateGraph();
         }
         private void dateStartTime_DropDown(object sender, EventArgs e)
@@ -439,6 +452,7 @@ namespace Kasutajaliides
                 this.startTime = dateStartTime.Value;
             }
             callAPI();
+            calcPrice();
             updateGraph();
         }
         private void dateStopTime_DropDown(object sender, EventArgs e)
@@ -507,6 +521,7 @@ namespace Kasutajaliides
             {
                 tbMonthlyPrice.Enabled = true;
             }
+            calcPrice();
         }
 
         private void cbKasutusmall_SelectedValueChanged(object sender, EventArgs e)
@@ -550,6 +565,7 @@ namespace Kasutajaliides
                 lblAeg.Font = Bigger;
                 lblTund.Font = Bigger;
                 lblHind.Font = Bigger;
+                lblAndresEek.Font = Bigger;
                 lblVoimsus.Font = Bigger;
                 lblkW.Font = Bigger;
                 cbShowPrice.Font = Bigger;
@@ -568,6 +584,10 @@ namespace Kasutajaliides
                 dateStartTime.Font = Bigger;
                 dateStopTime.Font = Bigger;
                 btnChangeSize.Font = Bigger;
+                tbMonthlyPrice.Font = Bigger;
+                lblRate.Font = Bigger;
+                lblTarbimisAeg.Font = Bigger;
+                txtTarbimisAeg.Font = Bigger;
                 btnChangeSize.Text = "-";
                 chartPrice.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font("Comic Sans MS", 12);
                 chartPrice.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font("Comic Sans MS", 12);
@@ -586,6 +606,7 @@ namespace Kasutajaliides
                 lblAeg.Font = Normal;
                 lblTund.Font = Normal;
                 lblHind.Font = Normal;
+                lblAndresEek.Font = Normal;
                 lblVoimsus.Font = Normal;
                 lblkW.Font = Normal;
                 cbShowPrice.Font = Normal;
@@ -604,6 +625,10 @@ namespace Kasutajaliides
                 dateStartTime.Font = Normal;
                 dateStopTime.Font = Normal;
                 btnChangeSize.Font = Normal;
+                tbMonthlyPrice.Font = Normal;
+                lblRate.Font = Normal;
+                lblTarbimisAeg.Font = Normal;
+                txtTarbimisAeg.Font = Normal;
                 btnChangeSize.Text = "+";
                 chartPrice.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font("Comic Sans MS", 10);
                 chartPrice.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font("Comic Sans MS", 10);
@@ -683,6 +708,8 @@ namespace Kasutajaliides
             resizeGuiElement(originalLabelEnd, lblEnd);
             resizeGuiElement(originalDateStopTimePicker, dateStopTime);
             resizeGuiElement(originalGroupBoxGroupTypePrice, groupPriceType);
+            resizeGuiElement(originalLabelTarbimisAeg, lblTarbimisAeg);
+            resizeGuiElement(originalTextTarbimisAeg, txtTarbimisAeg);
         }
 
         // https://stackoverflow.com/questions/47463926/how-to-get-pixel-position-from-datetime-value-on-x-axis 

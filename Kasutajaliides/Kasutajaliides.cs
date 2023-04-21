@@ -43,6 +43,7 @@ namespace Kasutajaliides
         DateTime startTime, stopTime;
         bool showStock = true, showUsage = true;
         bool state = true;
+        bool state2 = true; // DARK MODE BUTTON TOGGLE
 
         // akna elementide mõõtmete vaikeväärtused
         Rectangle originalWindowSize;
@@ -75,6 +76,7 @@ namespace Kasutajaliides
         Rectangle originalLabelCostNow;
         Rectangle originalTextCostNow;
         Rectangle originalLabelSKwh2;
+        Rectangle originalButtonDarkMode;
 
         private void updateGraph()
         {
@@ -376,6 +378,9 @@ namespace Kasutajaliides
 
         private void Kasutajaliides_Load(object sender, EventArgs e)
         {
+
+            this.BackColor = SystemColors.Control;
+
             this.MinimumSize = new Size(1083, 713);
             // Lisab tüüp-kasutusmallid
             //chartPrice.MouseWheel += chartPrice_zooming;
@@ -435,6 +440,7 @@ namespace Kasutajaliides
             originalLabelCostNow = new Rectangle(lblCostNow.Location.X, lblCostNow.Location.Y, lblCostNow.Size.Width, lblCostNow.Size.Height);
             originalTextCostNow = new Rectangle(txtCostNow.Location.X, txtCostNow.Location.Y, txtCostNow.Size.Width, txtCostNow.Size.Height);
             originalLabelSKwh2 = new Rectangle(lblSKwh2.Location.X, lblSKwh2.Location.Y, lblSKwh2.Size.Width, lblSKwh2.Size.Height);
+            originalButtonDarkMode = new Rectangle(btnDarkMode.Location.X, btnDarkMode.Location.Y, btnDarkMode.Size.Width, btnDarkMode.Size.Height);
         }
 
         private void txtAjakulu_KeyPress(object sender, KeyPressEventArgs e)
@@ -747,6 +753,115 @@ namespace Kasutajaliides
             element.Size = new Size(uusXlaius, uusYk6rgus);
         }
 
+        private void btnDarkMode_Click(object sender, EventArgs e)
+        {
+            state2 = !state2;
+            // VÄRVID (RGB hex.)
+            var chalkWhite = ColorTranslator.FromHtml("#BBBBBB");
+            var midGrey = ColorTranslator.FromHtml("#202020");
+            var darkGrey = ColorTranslator.FromHtml("#090909");
+            var xtraDarkGrey = ColorTranslator.FromHtml("#050505");
+            if (!state2)
+            {
+                btnDarkMode.Text = "L";
+                // värvide varieerimine "DARK MODE" jaoks
+                // üldvärvid
+                this.BackColor = xtraDarkGrey;
+                this.ForeColor = chalkWhite;
+
+                chartPrice.BackColor = darkGrey;
+                // täpsustused
+                chartPrice.ChartAreas["ChartArea1"].BackColor = xtraDarkGrey;
+
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LineColor = chalkWhite;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.ForeColor = chalkWhite;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.MajorGrid.LineColor = chalkWhite;
+                chartPrice.ChartAreas["ChartArea1"].AxisY.LineColor = chalkWhite;
+                chartPrice.ChartAreas["ChartArea1"].AxisY.LabelStyle.ForeColor = chalkWhite;
+                chartPrice.ChartAreas["ChartArea1"].AxisY.MajorGrid.LineColor = chalkWhite;
+                chartPrice.ChartAreas["ChartArea1"].AxisY2.LineColor = chalkWhite;
+                chartPrice.ChartAreas["ChartArea1"].AxisY2.LabelStyle.ForeColor = chalkWhite;
+                chartPrice.ChartAreas["ChartArea1"].AxisY2.MajorGrid.LineColor = chalkWhite;
+                
+                tablePrice.BackgroundColor = xtraDarkGrey;
+                tablePrice.ForeColor = chalkWhite;
+                tablePrice.DefaultCellStyle.BackColor = xtraDarkGrey;
+
+                cbKasutusmall.BackColor = midGrey;
+                cbKasutusmall.ForeColor = chalkWhite;
+                txtAjakulu.BackColor = midGrey;
+                txtAjakulu.ForeColor = chalkWhite;
+                txtVoimsus.BackColor = midGrey;
+                txtVoimsus.ForeColor = chalkWhite;
+                txtHind.BackColor = midGrey;
+                txtHind.ForeColor = chalkWhite;
+                txtTarbimisAeg.BackColor = midGrey;
+                txtTarbimisAeg.ForeColor = chalkWhite;
+                txtDebug.BackColor = midGrey;
+                txtDebug.ForeColor = chalkWhite;
+                btnAvaCSV.BackColor = midGrey;
+                btnAvaCSV.ForeColor = chalkWhite;
+                txtCostNow.BackColor = midGrey;
+                txtCostNow.ForeColor = chalkWhite;
+                btnChangeSize.BackColor = midGrey;
+                btnChangeSize.ForeColor = chalkWhite;
+                btnDarkMode.BackColor = midGrey;
+                btnDarkMode.ForeColor = chalkWhite;
+                tbMonthlyPrice.BackColor = midGrey;
+                tbMonthlyPrice.ForeColor = chalkWhite;
+
+                chartPrice.ChartAreas["ChartArea1"].BorderColor = chalkWhite;
+                //Bigger = new Font("Impact", 16);
+            }
+            else
+            {
+                btnDarkMode.Text = "D";
+                // värvide varieerimine "LIGHT MODE" jaoks
+                this.BackColor = SystemColors.Control;
+                this.ForeColor = Color.Black;
+                chartPrice.BackColor = Color.White;
+                chartPrice.ChartAreas["ChartArea1"].BackColor = SystemColors.Control;
+                // täpsustused
+                chartPrice.ChartAreas["ChartArea1"].BackColor = Color.White;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LineColor = Color.Black;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.ForeColor = Color.Black;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.MajorGrid.LineColor = Color.Black;
+                chartPrice.ChartAreas["ChartArea1"].AxisY.LineColor = Color.Black;
+                chartPrice.ChartAreas["ChartArea1"].AxisY.LabelStyle.ForeColor = Color.Black;
+                chartPrice.ChartAreas["ChartArea1"].AxisY.MajorGrid.LineColor = Color.Black;
+                chartPrice.ChartAreas["ChartArea1"].AxisY2.LineColor = Color.Black;
+                chartPrice.ChartAreas["ChartArea1"].AxisY2.LabelStyle.ForeColor = Color.Black;
+                chartPrice.ChartAreas["ChartArea1"].AxisY2.MajorGrid.LineColor = Color.Black;
+
+                tablePrice.BackgroundColor = SystemColors.ControlDark;
+                tablePrice.ForeColor = Color.Black;
+                tablePrice.DefaultCellStyle.BackColor = Color.White;
+
+                cbKasutusmall.BackColor = Color.White;
+                cbKasutusmall.ForeColor = Color.Black;
+                txtAjakulu.BackColor = Color.White;
+                txtAjakulu.ForeColor = Color.Black;
+                txtVoimsus.BackColor = Color.White;
+                txtVoimsus.ForeColor = Color.Black;
+                txtHind.BackColor = SystemColors.Control;
+                txtHind.ForeColor = Color.Black;
+                txtTarbimisAeg.BackColor = SystemColors.Control;
+                txtTarbimisAeg.ForeColor = Color.Black;
+                txtDebug.BackColor = Color.White;
+                txtDebug.ForeColor = Color.Black;
+                btnAvaCSV.BackColor = SystemColors.Control;
+                btnAvaCSV.ForeColor = Color.Black;
+                txtCostNow.BackColor = SystemColors.Control;
+                txtCostNow.ForeColor = Color.Black;
+                btnChangeSize.BackColor = SystemColors.Control;
+                btnChangeSize.ForeColor = Color.Black;
+                btnDarkMode.BackColor = SystemColors.Control;
+                btnDarkMode.ForeColor = Color.Black;
+                tbMonthlyPrice.BackColor = SystemColors.Control;
+                tbMonthlyPrice.ForeColor = Color.Black;
+            }
+        }
+
         private void Kasutajaliides_Resize(object sender, EventArgs e)
         {
             resizeGuiElement(originalChartPriceSize, chartPrice);
@@ -778,6 +893,8 @@ namespace Kasutajaliides
             resizeGuiElement(originalLabelCostNow, lblCostNow);
             resizeGuiElement(originalTextCostNow, txtCostNow);
             resizeGuiElement(originalLabelSKwh2, lblSKwh2);
+            resizeGuiElement(originalButtonDarkMode, btnDarkMode);
+            Refresh(); // vajalik et ei tekiks "render glitche" (nt. ComboBox ei suurene korraks jms.)
         }
 
         // https://stackoverflow.com/questions/47463926/how-to-get-pixel-position-from-datetime-value-on-x-axis 

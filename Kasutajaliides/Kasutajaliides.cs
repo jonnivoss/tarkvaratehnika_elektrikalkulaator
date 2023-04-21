@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
+
 using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
 
 namespace Kasutajaliides
@@ -16,6 +17,9 @@ namespace Kasutajaliides
         {
             InitializeComponent();
         }
+
+        Point clickPoint = new Point();
+        ToolTip toolTip = new ToolTip();
 
         // kasutajaliidese tekstifondid
         Font Normal = new Font("Impact", 12);
@@ -114,10 +118,40 @@ namespace Kasutajaliides
                 }
             }
             chartPrice.Series["Elektrihind"].Points.DataBindXY(priceTimeRange, priceCostRange);
+            txtDebug.AppendText(chartPrice.Series["Elektrihind"].Points[1].XValue.ToString());
             chartPrice.Series["Elektrihind"].Enabled = showStock;
             chartPrice.Series["Tarbimine"].Enabled = showUsage;
             chartPrice.Invalidate();
             tablePrice.Invalidate();
+        }
+
+        private void chartPrice_MouseMove(object sender, MouseEventArgs e)
+        {
+            // Cast the sender object to a Chart control
+            Chart chart = (Chart)sender;
+
+            // Call HitTest method to get the HitTestResult
+            HitTestResult result = chart.HitTest(e.X, e.Y);
+
+            // Check if the result is a data point
+            if (result.ChartElementType == ChartElementType.DataPoint && result.Series.Name != "Tarbimine")
+            {
+                // Get the y-value of the data point
+                double yValue = result.Series.Points[result.PointIndex].YValues[0];
+                
+                DateTime ahhha = dateStartTime.Value.AddHours(result.PointIndex);
+                // Set the tooltip of the data point to the y-value
+                string clockString = "kell: ";
+                clockString += ahhha.ToString("HH");
+                ahhha = ahhha.AddHours(1);
+                clockString += "-";
+                clockString += ahhha.ToString("HH");
+                toolTip.SetToolTip(chart, "hind: " + yValue.ToString()+" senti " +clockString);
+            }
+            else 
+            {
+                toolTip.Hide(chart);
+            }
         }
 
         private void changeInterval(int count)
@@ -186,11 +220,11 @@ namespace Kasutajaliides
 
                 //dateStartTime.MinDate = timeRangeArr[0];
                 //dateStartTime.MaxDate = timeRangeArr[timeRangeArr.Length - 1];
-                dateStartTime.Value = timeRangeArr[0];
+                //dateStartTime.Value = timeRangeArr[0];
 
                 //dateStopTime.MinDate = timeRangeArr[0];
                 //dateStopTime.MaxDate = timeRangeArr[timeRangeArr.Length - 1];
-                dateStopTime.Value = timeRangeArr[timeRangeArr.Length - 1];
+                //dateStopTime.Value = timeRangeArr[timeRangeArr.Length - 1];
             }
 
             if ((this.startTime == default(DateTime)) || (this.stopTime == default(DateTime)))
@@ -417,11 +451,7 @@ namespace Kasutajaliides
             }
         }
 
-        /// <summary>
-        /// ///
-        /// </summary>
-        /// <parm name="sender"></parm>
-        /// <parm name="e"></parm>
+
         private void dateStartTime_ValueChanged(object sender, EventArgs e)
         {
             txtDebug.AppendText("; date: " + sender.ToString());
@@ -708,6 +738,8 @@ namespace Kasutajaliides
             element.Location = new Point(uusXkoordinaat, uusYkoordinaat);
             element.Size = new Size(uusXlaius, uusYk6rgus);
         }
+
+
 
         private void Kasutajaliides_Resize(object sender, EventArgs e)
         {

@@ -103,6 +103,9 @@ namespace Kasutajaliides
             priceCostRange.Clear();
             tablePrice.Rows.Clear();
 
+            DateTime ajutineDate = new DateTime();
+            double ajutinePrice = 0.0;
+
             foreach (var item in priceData)
             {
                 if (item.Item1 >= startTime && item.Item1 <= stopTime)
@@ -111,14 +114,20 @@ namespace Kasutajaliides
                     priceCostRange.Add(item.Item2 / 10.0);
                     tablePrice.Rows.Add(item.Item1, item.Item2 / 10.0);
 
+                    ajutineDate = item.Item1.AddHours(1);
+                    ajutinePrice = item.Item2 / 10.0;
+
                     /*string line = "i: " + item.Item1.ToString() + ": " + item.Item2.ToString();
 
                     txtDebug.AppendText(line);
                     txtDebug.AppendText(Environment.NewLine);*/
                 }
             }
+            priceTimeRange.Add(ajutineDate);
+            priceCostRange.Add(ajutinePrice);
+
             chartPrice.Series["Elektrihind"].Points.DataBindXY(priceTimeRange, priceCostRange);
-            txtDebug.AppendText(chartPrice.Series["Elektrihind"].Points[1].XValue.ToString());
+            
             chartPrice.Series["Elektrihind"].Enabled = showStock;
             chartPrice.Series["Tarbimine"].Enabled = showUsage;
             chartPrice.Invalidate();

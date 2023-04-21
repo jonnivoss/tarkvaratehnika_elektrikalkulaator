@@ -370,7 +370,7 @@ namespace Andmepyydja
                 s += item.ToString();
                 s += '\n';
             }
-            return "";
+            return s;
         }
 
         //siit algab neti otsimine

@@ -25,6 +25,65 @@ namespace Andmepyydja
         public string providerName, packageName;
         public double monthlyPrice, sellerMarginal, basePrice, dayPrice, nightPrice;
         public bool isDayNight, isStockPackage, isGreenPackage;
+
+        public PackageInfo()
+        {
+
+        }
+        public PackageInfo(
+            string providerName, string packageName,
+            double monthlyPrice, double sellerMarginal, double basePrice, double nightPrice,
+            bool isStockPackage, bool isGreenPackage
+        )
+        {
+            this.providerName = providerName;
+            this.packageName = packageName;
+            this.monthlyPrice = monthlyPrice;
+            this.sellerMarginal = sellerMarginal;
+            this.basePrice = basePrice;
+            this.dayPrice = this.basePrice;
+            this.nightPrice = nightPrice;
+            this.isStockPackage = isStockPackage;
+            this.isGreenPackage = isGreenPackage;
+
+            this.isDayNight = this.nightPrice == 0 ? true : false;
+        }
+
+        public override string ToString()
+        {
+            string s;
+
+            s  = this.providerName;
+            s += "; ";
+            s += this.packageName;
+            s += "; ";
+            s += this.monthlyPrice.ToString();
+            s += "; ";
+            s += this.sellerMarginal.ToString();
+            s += "; ";
+            s += this.basePrice.ToString();
+            s += "; ";
+            s += this.nightPrice.ToString();
+            s += "; ";
+            s += this.isStockPackage.ToString();
+            s += "; ";
+            s += this.isGreenPackage.ToString();
+
+            return s;
+        }
+        public override bool Equals(object obj)
+        {
+            var other = (PackageInfo)obj;
+
+            return this.providerName == other.providerName &&
+                   this.packageName == other.packageName &&
+                   this.monthlyPrice == other.monthlyPrice &&
+                   this.sellerMarginal == other.sellerMarginal &&
+                   this.basePrice == other.basePrice &&
+                   this.nightPrice == other.nightPrice &&
+                   this.isStockPackage == other.isStockPackage &&
+                   this.isGreenPackage == other.isGreenPackage;
+        }
     }
 
     public class CAP : Andmepyydja.IAP
@@ -212,22 +271,24 @@ namespace Andmepyydja
             }
 
             var info = new PackageInfo();
-            try
+            try//-hard
             {
-                info.providerName = rida[0];
-                info.packageName = rida[1];
-                info.monthlyPrice = Convert.ToDouble(rida[2]);
+                info.providerName   = rida[0].Trim();
+                info.packageName    = rida[1].Trim();
+                info.monthlyPrice   = Convert.ToDouble(rida[2]);
                 info.sellerMarginal = Convert.ToDouble(rida[3]);
-                info.basePrice = Convert.ToDouble(rida[4]);
-                info.dayPrice = info.basePrice;
-                info.nightPrice = Convert.ToDouble(rida[5]);
+                info.basePrice      = Convert.ToDouble(rida[4]);
+                info.dayPrice       = info.basePrice;
+                info.nightPrice     = Convert.ToDouble(rida[5]);
                 info.isStockPackage = Convert.ToBoolean(rida[6]);
                 info.isGreenPackage = Convert.ToBoolean(rida[7]);
 
                 info.isDayNight = info.nightPrice == 0.0 ? true : false;
+                // what throws?
             }
-            catch (Exception)
+            catch (/*an*/ Exception/*ially soft throw?*/)
             {
+                // Here's the catch - you can't catch it if there's no throw
             }
 
             return info;

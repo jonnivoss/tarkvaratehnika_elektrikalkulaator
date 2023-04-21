@@ -159,8 +159,20 @@ namespace Andmepyydja
         }
         public bool writePackageFile(string contents)
         {
-
-            return false;
+            if (this.fileNamePackage == "")
+            {
+                // Failinime pole valitud
+                return false;
+            }
+            try
+            {
+                File.WriteAllText(this.fileNamePackage, contents, Encoding.UTF8);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         private static DatePriceT parseCSVUserDataLine(ParseCSVDataLineT arguments)

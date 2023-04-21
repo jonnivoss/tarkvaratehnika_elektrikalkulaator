@@ -20,6 +20,7 @@ namespace Andmepyydja
 
         bool readUserDataFile(ref string contents);
         bool readPackageFile(ref string contents);
+        bool writePackageFile(string contents);
 
 
         string getUserDataFileName();
@@ -29,6 +30,8 @@ namespace Andmepyydja
         string getPackageFileName();
         void setPackageFileName(string fileName);
         PackageT parsePackage(string contents);
+
+        string createPackageCSV(PackageT pack);
 
         //bett
 

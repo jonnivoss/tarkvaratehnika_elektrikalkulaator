@@ -157,6 +157,11 @@ namespace Andmepyydja
                 return false;
             }
         }
+        public bool writePackageFile(string contents)
+        {
+
+            return false;
+        }
 
         private static DatePriceT parseCSVUserDataLine(ParseCSVDataLineT arguments)
         {
@@ -342,6 +347,18 @@ namespace Andmepyydja
                 "Pakkuja",
                 ';'
             );
+        }
+
+        // I'll be pack
+        public string createPackageCSV(PackageT pack)
+        {
+            string s = "Pakkuja; Nimi; Kuutasu (€); Marginaal (s/kWh); Baashind (s/kWh); Ööhind (s/kWh); BörsiPakett; Roheline\n";
+            foreach (var item in pack)
+            {
+                s += item.ToString();
+                s += '\n';
+            }
+            return "";
         }
 
         //siit algab neti otsimine

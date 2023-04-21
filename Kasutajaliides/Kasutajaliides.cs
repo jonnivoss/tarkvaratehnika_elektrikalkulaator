@@ -122,19 +122,20 @@ namespace Kasutajaliides
 
         private void changeInterval(int count)
         {
-            if (count <= 26) //kui andmeid on ühe päeva jagu
+            if (count <= 24) //kui andmeid on ühe päeva jagu
             {
                 chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Hours;
                 chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "HH:mm";
+                chartPrice.ChartAreas["ChartArea1"].AxisX.Maximum = (timeRange.Last()).ToOADate();
                 chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 2; // silt iga kahe tunni tagant
             }
-            else if (count <= 50) // kui andmeid on kahe päeva jagu
+            else if (count <= 48) // kui andmeid on kahe päeva jagu
             {
                 chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Hours;
                 chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "dd/MM HH:mm";
                 chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 4; // silt iga nelja tunni tagant
             }
-            else if (count <= 74) // kui andmeid on kolme päeva jagu
+            else if (count <= 72) // kui andmeid on kolme päeva jagu
             {
                 chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Hours;
                 chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "dd/MM HH:mm";

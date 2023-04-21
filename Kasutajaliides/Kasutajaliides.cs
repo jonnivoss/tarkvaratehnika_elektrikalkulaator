@@ -68,6 +68,9 @@ namespace Kasutajaliides
         Rectangle originalGroupBoxGroupTypePrice;
         Rectangle originalLabelTarbimisAeg;
         Rectangle originalTextTarbimisAeg;
+        Rectangle originalLabelCostNow;
+        Rectangle originalTextCostNow;
+        Rectangle originalLabelSKwh2;
 
         private void updateGraph()
         {
@@ -290,7 +293,7 @@ namespace Kasutajaliides
                     }
 
                     price = bestIntegral / 1000.0;
-                    //txtTarbimisAeg.Text = bestDate.ToString("dd.MM.yyyy HH:mm");
+                    txtTarbimisAeg.Text = bestDate.ToString("dd.MM.yyyy HH:mm");
                     //MessageBox.Show("Tarbimist alustada " + bestDate.ToString("dd.MM.yyyy HH:mm"));
                 }
                 else
@@ -383,8 +386,11 @@ namespace Kasutajaliides
             originalLabelEnd = new Rectangle(lblEnd.Location.X, lblEnd.Location.Y, lblEnd.Size.Width, lblEnd.Size.Height);
             originalDateStopTimePicker = new Rectangle(dateStopTime.Location.X, dateStopTime.Location.Y, dateStopTime.Size.Width, dateStopTime.Size.Height);
             originalGroupBoxGroupTypePrice = new Rectangle(groupPriceType.Location.X, groupPriceType.Location.Y, groupPriceType.Size.Width, groupPriceType.Size.Height);
-            //originalLabelTarbimisAeg = new Rectangle(lblTarbimisAeg.Location.X, lblTarbimisAeg.Location.Y, lblTarbimisAeg.Size.Width, lblTarbimisAeg.Size.Height);
-            //originalTextTarbimisAeg = new Rectangle(txtTarbimisAeg.Location.X, txtTarbimisAeg.Location.Y, txtTarbimisAeg.Size.Width, txtTarbimisAeg.Size.Height);
+            originalLabelTarbimisAeg = new Rectangle(lblTarbimisAeg.Location.X, lblTarbimisAeg.Location.Y, lblTarbimisAeg.Size.Width, lblTarbimisAeg.Size.Height);
+            originalTextTarbimisAeg = new Rectangle(txtTarbimisAeg.Location.X, txtTarbimisAeg.Location.Y, txtTarbimisAeg.Size.Width, txtTarbimisAeg.Size.Height);
+            originalLabelCostNow = new Rectangle(lblCostNow.Location.X, lblCostNow.Location.Y, lblCostNow.Size.Width, lblCostNow.Size.Height);
+            originalTextCostNow = new Rectangle(txtCostNow.Location.X, txtCostNow.Location.Y, txtCostNow.Size.Width, txtCostNow.Size.Height);
+            originalLabelSKwh2 = new Rectangle(lblSKwh2.Location.X, lblSKwh2.Location.Y, lblSKwh2.Size.Width, lblSKwh2.Size.Height);
         }
 
         private void txtAjakulu_KeyPress(object sender, KeyPressEventArgs e)
@@ -579,10 +585,9 @@ namespace Kasutajaliides
                 lblAndresEek.Font = Bigger;
                 lblVoimsus.Font = Bigger;
                 lblkW.Font = Bigger;
-                lblAndresEek.Font = Bigger;
                 lblRate.Font = Bigger;
-                lblCostNow.Font = Bigger;
                 lblSKwh2.Font = Bigger;
+                lblCostNow.Font = Bigger;
                 txtCostNow.Font = Bigger;
                 cbShowPrice.Font = Bigger;
                 cbShowTabel.Font = Bigger;
@@ -602,8 +607,8 @@ namespace Kasutajaliides
                 btnChangeSize.Font = Bigger;
                 tbMonthlyPrice.Font = Bigger;
                 lblRate.Font = Bigger;
-                //lblTarbimisAeg.Font = Bigger;
-                //txtTarbimisAeg.Font = Bigger;
+                lblTarbimisAeg.Font = Bigger;
+                txtTarbimisAeg.Font = Bigger;
                 btnChangeSize.Text = "-";
                 chartPrice.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font("Comic Sans MS", 12);
                 chartPrice.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font("Comic Sans MS", 12);
@@ -625,10 +630,9 @@ namespace Kasutajaliides
                 lblAndresEek.Font = Normal;
                 lblVoimsus.Font = Normal;
                 lblkW.Font = Normal;
-                lblAndresEek.Font = Normal;
                 lblRate.Font = Normal;
-                lblCostNow.Font = Normal;
                 lblSKwh2.Font = Normal;
+                lblCostNow.Font = Normal;
                 txtCostNow.Font = Normal;
                 cbShowPrice.Font = Normal;
                 cbShowTabel.Font = Normal;
@@ -648,8 +652,8 @@ namespace Kasutajaliides
                 btnChangeSize.Font = Normal;
                 tbMonthlyPrice.Font = Normal;
                 lblRate.Font = Normal;
-                //lblTarbimisAeg.Font = Normal;
-               // txtTarbimisAeg.Font = Normal;
+                lblTarbimisAeg.Font = Normal;
+                txtTarbimisAeg.Font = Normal;
                 btnChangeSize.Text = "+";
                 chartPrice.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font("Comic Sans MS", 10);
                 chartPrice.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font("Comic Sans MS", 10);
@@ -729,8 +733,11 @@ namespace Kasutajaliides
             resizeGuiElement(originalLabelEnd, lblEnd);
             resizeGuiElement(originalDateStopTimePicker, dateStopTime);
             resizeGuiElement(originalGroupBoxGroupTypePrice, groupPriceType);
-            //(originalLabelTarbimisAeg, lblTarbimisAeg);
-           // resizeGuiElement(originalTextTarbimisAeg, txtTarbimisAeg);
+            resizeGuiElement(originalLabelTarbimisAeg, lblTarbimisAeg);
+            resizeGuiElement(originalTextTarbimisAeg, txtTarbimisAeg);
+            resizeGuiElement(originalLabelCostNow, lblCostNow);
+            resizeGuiElement(originalTextCostNow, txtCostNow);
+            resizeGuiElement(originalLabelSKwh2, lblSKwh2);
         }
 
         // https://stackoverflow.com/questions/47463926/how-to-get-pixel-position-from-datetime-value-on-x-axis 

@@ -119,5 +119,55 @@ namespace UnitTestAP
                 CollectionAssert.AreEqual(vecs[i], vec2);
             }
         }
+
+        [DataTestMethod]
+        [Timeout(1000)]
+        public void Test_AP_createPackageCSVs()
+        {
+            // make content array
+            string[] contarr =
+            {
+                "Pakkuja; Nimi; Kuutasu (€); Marginaal (s/kWh); Baashind (s/kWh); Ööhind (s/kWh); BörsiPakett; Roheline\n",
+
+                "Pakkuja; Nimi; Kuutasu (€); Marginaal (s/kWh); Baashind (s/kWh); Ööhind (s/kWh); BörsiPakett; Roheline\n" +
+                "Alexela AS; Pingevaba; 1,99; 0,7; 10,2; 0; False; False\n" +
+                "Elektrum Eesti OÜ; Kaljukindel Klõps kindlustusega; 1,85; 0; 13,62; 0; False; False\n" +
+                "KGB Elektrivõrgud OÜ; Universaalteenus; 0; 1,46; 18,49; 0; False; False\n" +
+                "Elektrum Eesti OÜ; Börsi Klõps; 0; 0,65; 0; 0; True; False\n" +
+                "AsS Eesti Gaas; Muutuv; 0; 0,684; 0; 0; True; False\n" +
+                "KGB Elektrivõrgud OÜ; Not - FiNe, INFP vibes; 0; 0,75; 0; 0; True; False\n",
+
+                "Pakkuja; Nimi; Kuutasu (€); Marginaal (s/kWh); Baashind (s/kWh); Ööhind (s/kWh); BörsiPakett; Roheline\n" +
+                "Elektrišokker; Suured käärid; 10,99; 0; 13,62; 25,428; False; False\n"
+            };
+            var ap = new Andmepyydja.CAP();
+            var vecs = new List<Andmepyydja.PackageInfo>[]
+            {
+                new List<Andmepyydja.PackageInfo> { },
+
+                new List<Andmepyydja.PackageInfo>
+                {
+                    new Andmepyydja.PackageInfo("Alexela AS", "Pingevaba", 1.99, 0.7, 10.2, 0, false, false),
+                    new Andmepyydja.PackageInfo("Elektrum Eesti OÜ", "Kaljukindel Klõps kindlustusega", 1.85, 0, 13.62, 0, false, false),
+                    new Andmepyydja.PackageInfo("KGB Elektrivõrgud OÜ", "Universaalteenus", 0, 1.46, 18.49, 0, false, false),
+                    new Andmepyydja.PackageInfo("Elektrum Eesti OÜ", "Börsi Klõps", 0, 0.65, 0, 0, true, false),
+                    new Andmepyydja.PackageInfo("AsS Eesti Gaas", "Muutuv", 0, 0.684, 0, 0, true, false),
+                    new Andmepyydja.PackageInfo("KGB Elektrivõrgud OÜ", "Not - FiNe, INFP vibes", 0, 0.75, 0, 0, true, false)
+                },
+
+                new List<Andmepyydja.PackageInfo>
+                {
+                    new Andmepyydja.PackageInfo("Elektrišokker", "Suured käärid", 10.99, 0, 13.62, 25.428, false, false),
+                }
+            };
+
+            Assert.AreEqual(contarr.Length, vecs.Length);
+
+            for (int i = 0; i < contarr.Length; ++i)
+            {
+                var contents = ap.createPackageCSV(vecs[i]);
+                Assert.AreEqual(contarr[i], contents);
+            }
+        }
     }
 }

@@ -747,8 +747,6 @@ namespace Kasutajaliides
             element.Size = new Size(uusXlaius, uusYk6rgus);
         }
 
-
-
         private void Kasutajaliides_Resize(object sender, EventArgs e)
         {
             resizeGuiElement(originalChartPriceSize, chartPrice);

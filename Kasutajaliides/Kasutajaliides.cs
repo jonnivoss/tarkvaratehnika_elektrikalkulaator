@@ -169,7 +169,6 @@ namespace Kasutajaliides
             {
                 chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Hours;
                 chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "HH:mm";
-                //chartPrice.ChartAreas["ChartArea1"].AxisX.Maximum = (timeRange.Last()).ToOADate();
                 chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 2; // silt iga kahe tunni tagant
             }
             else if (count <= 48) // kui andmeid on kahe päeva jagu

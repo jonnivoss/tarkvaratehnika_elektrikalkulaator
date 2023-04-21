@@ -336,7 +336,7 @@ namespace Kasutajaliides
         {
             this.MinimumSize = new Size(1083, 713);
             // Lisab tüüp-kasutusmallid
-            chartPrice.MouseWheel += chartPrice_zooming;
+            //chartPrice.MouseWheel += chartPrice_zooming;
             txtHind.Text = "-";
             
             // Praeguse börsihinna kuvamiseks

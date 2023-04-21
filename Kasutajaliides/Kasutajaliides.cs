@@ -147,7 +147,7 @@ namespace Kasutajaliides
                 chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "dd/MM/yy";
                 chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 0; // sildi intervall määratakse automaatselt 
             }
-            chartPrice.ChartAreas[0].AxisX.IsMarginVisible = false;
+            chartPrice.ChartAreas["ChartArea1"].AxisX.IsMarginVisible = false;
         }
 
         private void btnAvaCSV_Click(object sender, EventArgs e)

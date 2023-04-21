@@ -16,30 +16,110 @@ using DatePriceT = System.Tuple<System.DateTime, double>;
 using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
 using ParseCSVDataLineT = System.Tuple<string, char>;
 
+using PackageT = System.Collections.Generic.List<Andmepyydja.PackageInfo>;
 
 namespace Andmepyydja
 {
+    public class PackageInfo
+    {
+        public string providerName, packageName;
+        public double monthlyPrice, sellerMarginal, basePrice, dayPrice, nightPrice;
+        public bool isDayNight, isStockPackage, isGreenPackage;
+
+        public PackageInfo()
+        {
+
+        }
+        public PackageInfo(
+            string providerName, string packageName,
+            double monthlyPrice, double sellerMarginal, double basePrice, double nightPrice,
+            bool isStockPackage, bool isGreenPackage
+        )
+        {
+            this.providerName = providerName;
+            this.packageName = packageName;
+            this.monthlyPrice = monthlyPrice;
+            this.sellerMarginal = sellerMarginal;
+            this.basePrice = basePrice;
+            this.dayPrice = this.basePrice;
+            this.nightPrice = nightPrice;
+            this.isStockPackage = isStockPackage;
+            this.isGreenPackage = isGreenPackage;
+
+            this.isDayNight = this.nightPrice == 0 ? true : false;
+        }
+
+        public override string ToString()
+        {
+            string s;
+
+            s  = this.providerName;
+            s += "; ";
+            s += this.packageName;
+            s += "; ";
+            s += this.monthlyPrice.ToString();
+            s += "; ";
+            s += this.sellerMarginal.ToString();
+            s += "; ";
+            s += this.basePrice.ToString();
+            s += "; ";
+            s += this.nightPrice.ToString();
+            s += "; ";
+            s += this.isStockPackage.ToString();
+            s += "; ";
+            s += this.isGreenPackage.ToString();
+
+            return s;
+        }
+        public override bool Equals(object obj)
+        {
+            var other = (PackageInfo)obj;
+
+            return this.providerName == other.providerName &&
+                   this.packageName == other.packageName &&
+                   this.monthlyPrice == other.monthlyPrice &&
+                   this.sellerMarginal == other.sellerMarginal &&
+                   this.basePrice == other.basePrice &&
+                   this.nightPrice == other.nightPrice &&
+                   this.isStockPackage == other.isStockPackage &&
+                   this.isGreenPackage == other.isGreenPackage;
+        }
+    }
+
     public class CAP : Andmepyydja.IAP
     {
-        private OpenFileDialog ofd = new OpenFileDialog();
-        private string fname = "";
+        private OpenFileDialog ofdUserData = new OpenFileDialog(), ofdPackage = new OpenFileDialog();
+        private string fileNameUserData = "";
+        private string fileNamePackage = "";
 
         public bool chooseFile()
         {
-            DialogResult result = ofd.ShowDialog();
+            DialogResult result = ofdUserData.ShowDialog();
             if (result != DialogResult.OK)
             {
                 return false;
             }
 
-            fname = ofd.FileName;
+            fileNameUserData = ofdUserData.FileName;
+
+            return true;
+        }
+        public bool chooseFilePackages()
+        {
+            DialogResult result = ofdPackage.ShowDialog();
+            if (result != DialogResult.OK)
+            {
+                return false;
+            }
+
+            fileNamePackage = ofdPackage.FileName;
 
             return true;
         }
 
         public bool readUserDataFile(ref string contents)
         {
-            if (this.fname == "")
+            if (this.fileNameUserData == "")
             {
                 // Failinime pole valitud
                 return false;
@@ -47,13 +127,50 @@ namespace Andmepyydja
             try
             {
                 // Proovib failist lugeda
-                contents = File.ReadAllText(this.fname, Encoding.UTF8);
+                contents = File.ReadAllText(this.fileNameUserData, Encoding.UTF8);
                 // Kui fail oli tühi, siis see on automaatselt *fail*
                 return (contents != "");
             }
             catch (Exception)
             {
                 // Faili lugemine ebaõnnestus
+                return false;
+            }
+        }
+        public bool readPackageFile(ref string contents)
+        {
+            if (this.fileNamePackage == "")
+            {
+                // Failinime pole valitud
+                return false;
+            }
+            try
+            {
+                // Proovib failist lugeda
+                contents = File.ReadAllText(this.fileNamePackage, Encoding.UTF8);
+                // Kui fail oli tühi, siis see on automaatselt *fail*
+                return (contents != "");
+            }
+            catch (Exception)
+            {
+                // Faili lugemine ebaõnnestus
+                return false;
+            }
+        }
+        public bool writePackageFile(string contents)
+        {
+            if (this.fileNamePackage == "")
+            {
+                // Failinime pole valitud
+                return false;
+            }
+            try
+            {
+                File.WriteAllText(this.fileNamePackage, contents, Encoding.UTF8);
+                return true;
+            }
+            catch (Exception)
+            {
                 return false;
             }
         }
@@ -88,16 +205,24 @@ namespace Andmepyydja
             return new DatePriceT(d, num);
         }
 
-        private VecT parseCSV(
+        public string getUserDataFileName()
+        {
+            return this.fileNameUserData;
+        }
+        public void setUserDataFileName(string filename)
+        {
+            this.fileNameUserData = filename;
+        }
+
+        private static VecT parseCSVUserData(
             string contents,
             string tableBeginToken,
-            Func<ParseCSVDataLineT, DatePriceT> parseLineFunc,
             char delimiter
         )
         {
             VecT v = new VecT();
 
-            System.Collections.Generic.List<string> splitContents;
+            List<string> splitContents;
             try
             {
                 // Discardib kõik andmed, mis asuvad enne tabeli headerit
@@ -119,7 +244,7 @@ namespace Andmepyydja
                     continue;
                 }
 
-                DatePriceT item = parseLineFunc(Tuple.Create(line, delimiter));
+                var item = parseCSVUserDataLine(Tuple.Create(line, delimiter));
                 if (item == null)
                 {
                     continue;
@@ -133,22 +258,119 @@ namespace Andmepyydja
 
         public VecT parseUserData(string contents)
         {
-            return this.parseCSV(
+            return CAP.parseCSVUserData(
                 contents,
                 "Algus",
-                CAP.parseCSVUserDataLine,
                 ';'
             );
         }
 
 
-        public string getUserDataFileName()
+        public string getPackageFileName()
         {
-            return this.fname;
+            return this.fileNamePackage;
         }
-        public void setUserDataFileName(string filename)
+        public void setPackageFileName(string fileName)
         {
-            this.fname = filename;
+            this.fileNamePackage = fileName;
+        }
+
+        private static PackageInfo parseCSVPackageDataLine(ParseCSVDataLineT arguments)
+        {
+            // ParseCSVDataLineT.Item1 on rida
+            // ParseCSVDataLineT.Item2 on delimiter
+
+            // Lõhub rea tokeniteks
+            var rida = arguments.Item1.Split(arguments.Item2);
+            if (rida.Length < 8)
+            {
+                return null;
+            }
+
+            var info = new PackageInfo();
+            try//-hard
+            {
+                info.providerName   = rida[0].Trim();
+                info.packageName    = rida[1].Trim();
+                info.monthlyPrice   = Convert.ToDouble(rida[2]);
+                info.sellerMarginal = Convert.ToDouble(rida[3]);
+                info.basePrice      = Convert.ToDouble(rida[4]);
+                info.dayPrice       = info.basePrice;
+                info.nightPrice     = Convert.ToDouble(rida[5]);
+                info.isStockPackage = Convert.ToBoolean(rida[6]);
+                info.isGreenPackage = Convert.ToBoolean(rida[7]);
+
+                info.isDayNight = info.nightPrice == 0.0 ? true : false;
+                // what throws?
+            }
+            catch (/*an*/ Exception/*ially soft throw?*/)
+            {
+                // Here's the catch - you can't catch it if there's no throw
+            }
+
+            return info;
+        }
+
+        private static PackageT parseCSVPackageData(
+            string contents,
+            string tableBeginToken,
+            char delimiter
+        )
+        {
+            PackageT v = new PackageT();
+
+            List<string> splitContents;
+            try
+            {
+                // Discardib kõik andmed, mis asuvad enne tabeli headerit
+                contents = contents.Substring(contents.IndexOf(tableBeginToken));
+                // Teeb stringi ridade massiiviks
+                splitContents = contents.Split('\n').ToList();
+                // Eemaldab tabeli headeri
+                splitContents.RemoveAt(0);
+            }
+            catch (Exception)
+            {
+                return v;
+            }
+
+            foreach (string line in splitContents)
+            {
+                if (line.Length == 0)
+                {
+                    continue;
+                }
+
+                var item = parseCSVPackageDataLine(Tuple.Create(line, delimiter));
+                if (item == null)
+                {
+                    continue;
+                }
+
+                v.Add(item);
+            }
+
+            return v;
+        }
+        public PackageT parsePackage(string contents)
+        {
+            return CAP.parseCSVPackageData(
+                contents,
+                "Pakkuja",
+                ';'
+            );
+        }
+
+        // I'll be pack
+        public string createPackageCSV(PackageT pack)
+        {
+            string s = "Pakkuja; Nimi; Kuutasu (€); Marginaal (s/kWh); Baashind (s/kWh); Ööhind (s/kWh); BörsiPakett; Roheline\n";
+            foreach (var item in pack)
+            {
+                s += item.ToString();
+                s += '\n';
+            }
+            return s;
         }
 
         //siit algab neti otsimine

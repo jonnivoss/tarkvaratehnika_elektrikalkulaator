@@ -18,7 +18,7 @@ namespace Kasutajaliides
             InitializeComponent();
         }
 
-        Point clickPoint = new Point();
+        //Point clickPoint = new Point();
         ToolTip toolTip = new ToolTip();
 
         // kasutajaliidese tekstifondid
@@ -380,7 +380,7 @@ namespace Kasutajaliides
             // Lisab tüüp-kasutusmallid
             //chartPrice.MouseWheel += chartPrice_zooming;
             txtHind.Text = "-";
-            
+            tablePrice.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             // Praeguse börsihinna kuvamiseks
             VecT costNowData = AP.HindAegInternet(DateTime.Now, DateTime.Now);
             List<double> costNow = new List<double>();

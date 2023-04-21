@@ -184,12 +184,12 @@ namespace Kasutajaliides
 
                 var timeRangeArr = timeRange.ToArray();
 
-                dateStartTime.MinDate = timeRangeArr[0];
-                dateStartTime.MaxDate = timeRangeArr[timeRangeArr.Length - 1];
+                //dateStartTime.MinDate = timeRangeArr[0];
+                //dateStartTime.MaxDate = timeRangeArr[timeRangeArr.Length - 1];
                 dateStartTime.Value = timeRangeArr[0];
 
-                dateStopTime.MinDate = timeRangeArr[0];
-                dateStopTime.MaxDate = timeRangeArr[timeRangeArr.Length - 1];
+                //dateStopTime.MinDate = timeRangeArr[0];
+                //dateStopTime.MaxDate = timeRangeArr[timeRangeArr.Length - 1];
                 dateStopTime.Value = timeRangeArr[timeRangeArr.Length - 1];
             }
 

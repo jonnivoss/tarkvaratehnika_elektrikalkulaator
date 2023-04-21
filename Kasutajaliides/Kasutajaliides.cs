@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
+
 using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
 
 namespace Kasutajaliides
@@ -16,6 +17,9 @@ namespace Kasutajaliides
         {
             InitializeComponent();
         }
+
+        //Point clickPoint = new Point();
+        ToolTip toolTip = new ToolTip();
 
         // kasutajaliidese tekstifondid
         Font Normal = new Font("Impact", 12);
@@ -99,6 +103,9 @@ namespace Kasutajaliides
             priceCostRange.Clear();
             tablePrice.Rows.Clear();
 
+            DateTime ajutineDate = new DateTime();
+            double ajutinePrice = 0.0;
+
             foreach (var item in priceData)
             {
                 if (item.Item1 >= startTime && item.Item1 <= stopTime)
@@ -107,34 +114,70 @@ namespace Kasutajaliides
                     priceCostRange.Add(item.Item2 / 10.0);
                     tablePrice.Rows.Add(item.Item1, item.Item2 / 10.0);
 
+                    ajutineDate = item.Item1.AddHours(1);
+                    ajutinePrice = item.Item2 / 10.0;
+
                     /*string line = "i: " + item.Item1.ToString() + ": " + item.Item2.ToString();
 
                     txtDebug.AppendText(line);
                     txtDebug.AppendText(Environment.NewLine);*/
                 }
             }
+            priceTimeRange.Add(ajutineDate);
+            priceCostRange.Add(ajutinePrice);
+
             chartPrice.Series["Elektrihind"].Points.DataBindXY(priceTimeRange, priceCostRange);
+            
             chartPrice.Series["Elektrihind"].Enabled = showStock;
             chartPrice.Series["Tarbimine"].Enabled = showUsage;
             chartPrice.Invalidate();
             tablePrice.Invalidate();
         }
 
+        private void chartPrice_MouseMove(object sender, MouseEventArgs e)
+        {
+            // Cast the sender object to a Chart control
+            Chart chart = (Chart)sender;
+
+            // Call HitTest method to get the HitTestResult
+            HitTestResult result = chart.HitTest(e.X, e.Y);
+
+            // Check if the result is a data point
+            if (result.ChartElementType == ChartElementType.DataPoint && result.Series.Name != "Tarbimine")
+            {
+                // Get the y-value of the data point
+                double yValue = result.Series.Points[result.PointIndex].YValues[0];
+                
+                DateTime ahhha = dateStartTime.Value.AddHours(result.PointIndex);
+                // Set the tooltip of the data point to the y-value
+                string clockString = "kell: ";
+                clockString += ahhha.ToString("HH");
+                ahhha = ahhha.AddHours(1);
+                clockString += "-";
+                clockString += ahhha.ToString("HH");
+                toolTip.SetToolTip(chart, "hind: " + yValue.ToString()+" senti " +clockString);
+            }
+            else 
+            {
+                toolTip.Hide(chart);
+            }
+        }
+
         private void changeInterval(int count)
         {
-            if (count <= 26) //kui andmeid on ühe päeva jagu
+            if (count <= 24) //kui andmeid on ühe päeva jagu
             {
                 chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Hours;
                 chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "HH:mm";
                 chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 2; // silt iga kahe tunni tagant
             }
-            else if (count <= 50) // kui andmeid on kahe päeva jagu
+            else if (count <= 48) // kui andmeid on kahe päeva jagu
             {
                 chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Hours;
                 chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "dd/MM HH:mm";
                 chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 4; // silt iga nelja tunni tagant
             }
-            else if (count <= 74) // kui andmeid on kolme päeva jagu
+            else if (count <= 72) // kui andmeid on kolme päeva jagu
             {
                 chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Hours;
                 chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "dd/MM HH:mm";
@@ -146,6 +189,7 @@ namespace Kasutajaliides
                 chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "dd/MM/yy";
                 chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 0; // sildi intervall määratakse automaatselt 
             }
+            chartPrice.ChartAreas["ChartArea1"].AxisX.IsMarginVisible = false;
         }
 
         private void btnAvaCSV_Click(object sender, EventArgs e)
@@ -182,13 +226,13 @@ namespace Kasutajaliides
 
                 var timeRangeArr = timeRange.ToArray();
 
-                dateStartTime.MinDate = timeRangeArr[0];
-                dateStartTime.MaxDate = timeRangeArr[timeRangeArr.Length - 1];
-                dateStartTime.Value = timeRangeArr[0];
+                //dateStartTime.MinDate = timeRangeArr[0];
+                //dateStartTime.MaxDate = timeRangeArr[timeRangeArr.Length - 1];
+                //dateStartTime.Value = timeRangeArr[0];
 
-                dateStopTime.MinDate = timeRangeArr[0];
-                dateStopTime.MaxDate = timeRangeArr[timeRangeArr.Length - 1];
-                dateStopTime.Value = timeRangeArr[timeRangeArr.Length - 1];
+                //dateStopTime.MinDate = timeRangeArr[0];
+                //dateStopTime.MaxDate = timeRangeArr[timeRangeArr.Length - 1];
+                //dateStopTime.Value = timeRangeArr[timeRangeArr.Length - 1];
             }
 
             if ((this.startTime == default(DateTime)) || (this.stopTime == default(DateTime)))
@@ -334,9 +378,9 @@ namespace Kasutajaliides
         {
             this.MinimumSize = new Size(1083, 713);
             // Lisab tüüp-kasutusmallid
-            chartPrice.MouseWheel += chartPrice_zooming;
+            //chartPrice.MouseWheel += chartPrice_zooming;
             txtHind.Text = "-";
-            
+            tablePrice.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             // Praeguse börsihinna kuvamiseks
             VecT costNowData = AP.HindAegInternet(DateTime.Now, DateTime.Now);
             List<double> costNow = new List<double>();
@@ -415,11 +459,7 @@ namespace Kasutajaliides
             }
         }
 
-        /// <summary>
-        /// ///
-        /// </summary>
-        /// <parm name="sender"></parm>
-        /// <parm name="e"></parm>
+
         private void dateStartTime_ValueChanged(object sender, EventArgs e)
         {
             txtDebug.AppendText("; date: " + sender.ToString());

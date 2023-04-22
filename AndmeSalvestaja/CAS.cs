@@ -12,11 +12,12 @@ namespace AndmeSalvestaja
     {
         public Dictionary<ASSetting, string> setMap = new Dictionary<ASSetting, string>
         {
-            { ASSetting.tarbijaAndmed,    "" },
-            { ASSetting.paketiAndmed,     "" },
-            { ASSetting.suurendusLubatud, "0" }
+            { ASSetting.tarbijaAndmed,    "" }, // tarbijaandmete CSV asukoht
+            { ASSetting.paketiAndmed,     "" }, // paketiandmete CSV asukoht
+            { ASSetting.suurendusLubatud, "0" } // mäletab kas suurendus on lubatud
         };
         public VecT marketData = new VecT { };
+        // Default kasutusmallid
         public VecUCT useCases = new VecUCT
         {
             { "",             Tuple.Create(0.0, 0.0) },
@@ -41,11 +42,13 @@ namespace AndmeSalvestaja
 
         public CAS(string savepath)
         {
+            // Jätab meelde sätetefaili asukoha
             this.path = savepath;
         }
 
         public bool loadFile()
         {
+            // Kui sätetefaili asukohta pole valitud
             if (this.path.Length == 0)
             {
                 return false;
@@ -79,6 +82,7 @@ namespace AndmeSalvestaja
 
         public bool changeSetting(ASSetting setting, string value)
         {
+            // Kui valitud sätte indeks on piirkonnast väljas
             if ((int)setting >= (int)ASSetting.size)
             {
                 return false;
@@ -97,6 +101,7 @@ namespace AndmeSalvestaja
 
         public string getSetting(ASSetting setting)
         {
+            // Kui soovitud sätte indeks on piirkonnast väljas
             if ((int)setting >= (int)ASSetting.size)
             {
                 return null;

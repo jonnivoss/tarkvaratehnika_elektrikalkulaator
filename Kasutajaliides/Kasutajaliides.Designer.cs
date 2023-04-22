@@ -29,12 +29,12 @@ namespace Kasutajaliides
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.chartPrice = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.cbKasutusmall = new System.Windows.Forms.ComboBox();
             this.lblKasutusmall = new System.Windows.Forms.Label();
@@ -92,45 +92,45 @@ namespace Kasutajaliides
             // 
             // chartPrice
             // 
-            chartArea1.AxisX.MajorGrid.Enabled = false;
-            chartArea1.AxisX.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Horizontal;
-            chartArea1.AxisX.Title = "Aeg";
-            chartArea1.AxisX.TitleFont = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea1.AxisX2.TitleFont = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea1.AxisY.MajorGrid.Enabled = false;
-            chartArea1.AxisY.Title = "kWh";
-            chartArea1.AxisY.TitleFont = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea1.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
-            chartArea1.AxisY2.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Rotated270;
-            chartArea1.AxisY2.Title = "s/kWh";
-            chartArea1.AxisY2.TitleFont = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea1.Name = "ChartArea1";
-            this.chartPrice.ChartAreas.Add(chartArea1);
-            legend1.Font = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            legend1.IsTextAutoFit = false;
-            legend1.Name = "Legend1";
-            this.chartPrice.Legends.Add(legend1);
+            chartArea2.AxisX.MajorGrid.Enabled = false;
+            chartArea2.AxisX.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Horizontal;
+            chartArea2.AxisX.Title = "Aeg";
+            chartArea2.AxisX.TitleFont = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea2.AxisX2.TitleFont = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea2.AxisY.MajorGrid.Enabled = false;
+            chartArea2.AxisY.Title = "kWh";
+            chartArea2.AxisY.TitleFont = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea2.AxisY2.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
+            chartArea2.AxisY2.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Rotated270;
+            chartArea2.AxisY2.Title = "s/kWh";
+            chartArea2.AxisY2.TitleFont = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea2.Name = "ChartArea1";
+            this.chartPrice.ChartAreas.Add(chartArea2);
+            legend2.Font = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            legend2.IsTextAutoFit = false;
+            legend2.Name = "Legend1";
+            this.chartPrice.Legends.Add(legend2);
             this.chartPrice.Location = new System.Drawing.Point(289, 12);
             this.chartPrice.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chartPrice.Name = "chartPrice";
             this.chartPrice.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series1.Font = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            series1.Legend = "Legend1";
-            series1.Name = "Elektrihind";
-            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
-            series1.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
-            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
-            series2.Font = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            series2.Legend = "Legend1";
-            series2.Name = "Tarbimine";
-            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
-            series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            this.chartPrice.Series.Add(series1);
-            this.chartPrice.Series.Add(series2);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series3.Font = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            series3.Legend = "Legend1";
+            series3.Name = "Elektrihind";
+            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series3.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
+            series3.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series4.Font = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            series4.Legend = "Legend1";
+            series4.Name = "Tarbimine";
+            series4.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series4.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            this.chartPrice.Series.Add(series3);
+            this.chartPrice.Series.Add(series4);
             this.chartPrice.Size = new System.Drawing.Size(762, 485);
             this.chartPrice.TabIndex = 0;
             this.chartPrice.Text = "chartElektrihind";
@@ -414,8 +414,8 @@ namespace Kasutajaliides
             this.tablePrice.Name = "tablePrice";
             this.tablePrice.ReadOnly = true;
             this.tablePrice.RowHeadersWidth = 51;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tablePrice.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tablePrice.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.tablePrice.RowTemplate.Height = 24;
             this.tablePrice.Size = new System.Drawing.Size(762, 484);
             this.tablePrice.TabIndex = 24;
@@ -446,9 +446,9 @@ namespace Kasutajaliides
             // btnChangeSize
             // 
             this.btnChangeSize.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnChangeSize.Location = new System.Drawing.Point(1000, 624);
+            this.btnChangeSize.Location = new System.Drawing.Point(1000, 625);
             this.btnChangeSize.Name = "btnChangeSize";
-            this.btnChangeSize.Size = new System.Drawing.Size(51, 54);
+            this.btnChangeSize.Size = new System.Drawing.Size(51, 41);
             this.btnChangeSize.TabIndex = 26;
             this.btnChangeSize.Text = "+";
             this.btnChangeSize.UseVisualStyleBackColor = true;
@@ -557,9 +557,9 @@ namespace Kasutajaliides
             // btnDarkMode
             // 
             this.btnDarkMode.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDarkMode.Location = new System.Drawing.Point(1000, 562);
+            this.btnDarkMode.Location = new System.Drawing.Point(1000, 575);
             this.btnDarkMode.Name = "btnDarkMode";
-            this.btnDarkMode.Size = new System.Drawing.Size(51, 54);
+            this.btnDarkMode.Size = new System.Drawing.Size(51, 41);
             this.btnDarkMode.TabIndex = 33;
             this.btnDarkMode.Text = "D";
             this.btnDarkMode.UseVisualStyleBackColor = true;
@@ -583,8 +583,8 @@ namespace Kasutajaliides
             this.tablePackages.Name = "tablePackages";
             this.tablePackages.ReadOnly = true;
             this.tablePackages.RowHeadersWidth = 51;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tablePackages.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tablePackages.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.tablePackages.RowTemplate.Height = 24;
             this.tablePackages.Size = new System.Drawing.Size(1063, 173);
             this.tablePackages.TabIndex = 34;
@@ -655,10 +655,10 @@ namespace Kasutajaliides
             // btnOpenPackages
             // 
             this.btnOpenPackages.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOpenPackages.Location = new System.Drawing.Point(740, 637);
+            this.btnOpenPackages.Location = new System.Drawing.Point(727, 625);
             this.btnOpenPackages.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btnOpenPackages.Name = "btnOpenPackages";
-            this.btnOpenPackages.Size = new System.Drawing.Size(218, 41);
+            this.btnOpenPackages.Size = new System.Drawing.Size(268, 41);
             this.btnOpenPackages.TabIndex = 35;
             this.btnOpenPackages.Text = "Ava pakettide CŠV";
             this.btnOpenPackages.UseVisualStyleBackColor = true;

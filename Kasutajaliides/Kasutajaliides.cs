@@ -365,15 +365,16 @@ namespace Kasutajaliides
                 // Ajaintervalli määramine kuvamisel
                 changeInterval(timeRange.Count);
                 txtDebug.AppendText("  kaas   ");
+                callAPI(startTime, stopTime);
             }
-            else // määra otspunktide vaikeväärtuseks tarbimisandmete algus- ja lõppaeg
+            else  // määra otspunktide vaikeväärtuseks tarbimisandmete algus- ja lõppaeg
             {
                 dateStartTime.Value = timeRange.First();
                 dateStopTime.Value = timeRange.Last();
                 startTime = dateStartTime.Value;
                 stopTime = dateStopTime.Value;
+                callAPI(timeRange.First().AddDays(-30), endOfDayDate);
             }
-            callAPI(timeRange.First().AddDays(-30), endOfDayDate);
             updateGraph();
         }
 

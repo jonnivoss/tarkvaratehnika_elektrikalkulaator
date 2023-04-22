@@ -133,14 +133,27 @@ namespace Kasutajaliides
             }
 
             averagePrice /= priceCostRange.Count;
+            averagePrice /= 10;
 
-            //MessageBox.Show("Keskmine hind" + averagePrice.ToString());
+            MessageBox.Show("Keskmine hind" + averagePrice.ToString());
 
             priceTimeRange.Add(ajutineDate);
             priceCostRange.Add(ajutinePrice);
 
             chartPrice.Series["Elektrihind"].Points.DataBindXY(priceTimeRange, priceCostRange);
-            
+
+            for (int i = 0; i < priceCostRange.Count; i++)
+            {
+                if (priceCostRange[i] <= averagePrice)
+                {
+                    chartPrice.Series["Elektrihind"].Points[i].Color = Color.Green;
+                }
+                else
+                {
+                    chartPrice.Series["Elektrihind"].Points[i].Color = Color.Red;
+                }
+            }
+
             chartPrice.Series["Elektrihind"].Enabled = showStock;
             chartPrice.Series["Tarbimine"].Enabled = showUsage;
             chartPrice.Invalidate();

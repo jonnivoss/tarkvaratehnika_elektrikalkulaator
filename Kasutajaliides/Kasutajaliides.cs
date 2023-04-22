@@ -924,10 +924,10 @@ namespace Kasutajaliides
                     tablePackages.Rows.Add(
                         item.providerName,
                         item.packageName,
-                        item.monthlyPrice.ToString(),
-                        item.sellerMarginal.ToString(),
-                        item.isStockPackage ? "-" : item.basePrice.ToString(),
-                        (!item.isDayNight || item.isStockPackage) ? "-" : item.nightPrice.ToString(),
+                        item.monthlyPrice.ToString("0.00"),
+                        item.sellerMarginal.ToString("0.000"),
+                        item.isStockPackage ? "-" : item.basePrice.ToString("0.000"),
+                        (!item.isDayNight || item.isStockPackage) ? "-" : item.nightPrice.ToString("0.000"),
                         item.isStockPackage ? "Jah" : "Ei",
                         item.isGreenPackage ? "Jah" : "Ei"
                     );

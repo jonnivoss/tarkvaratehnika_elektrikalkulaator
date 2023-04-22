@@ -13,6 +13,7 @@ namespace AndmeSalvestaja
     public enum ASSetting
     {
         tarbijaAndmed,
+        paketiAndmed,
         suurendusLubatud,
 
         size

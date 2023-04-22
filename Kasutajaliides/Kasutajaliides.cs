@@ -409,9 +409,11 @@ namespace Kasutajaliides
 
 
             AP.setUserDataFileName(AS.getSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed));
+            AP.setPackageFileName(AS.getSetting(AndmeSalvestaja.ASSetting.paketiAndmed));
             //callAPI(DateTime.Now.Date.AddDays(-60), DateTime.Now);
             //MessageBox.Show(priceTimeRange.Last().ToString());
             openCSV();
+            openCSVPackage();
 
             // akna elementide mõõtmete vaikeväärtuste määramine
             originalWindowSize = new Rectangle(this.Location.X, this.Location.Y, this.Size.Width, this.Size.Height);

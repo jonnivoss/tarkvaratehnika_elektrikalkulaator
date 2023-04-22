@@ -78,6 +78,7 @@ namespace Kasutajaliides
         Rectangle originalTextCostNow;
         Rectangle originalLabelSKwh2;
         Rectangle originalButtonDarkMode;
+        Rectangle originalBtnOpenPackages;
 
         private void updateGraph()
         {
@@ -443,6 +444,7 @@ namespace Kasutajaliides
             originalTextCostNow = new Rectangle(txtCostNow.Location.X, txtCostNow.Location.Y, txtCostNow.Size.Width, txtCostNow.Size.Height);
             originalLabelSKwh2 = new Rectangle(lblSKwh2.Location.X, lblSKwh2.Location.Y, lblSKwh2.Size.Width, lblSKwh2.Size.Height);
             originalButtonDarkMode = new Rectangle(btnDarkMode.Location.X, btnDarkMode.Location.Y, btnDarkMode.Size.Width, btnDarkMode.Size.Height);
+            originalBtnOpenPackages = new Rectangle(btnOpenPackages.Location.X, btnOpenPackages.Location.Y, btnOpenPackages.Size.Width, btnOpenPackages.Size.Height);
         }
 
         private void txtAjakulu_KeyPress(object sender, KeyPressEventArgs e)
@@ -675,6 +677,7 @@ namespace Kasutajaliides
                 tablePrice.RowsDefaultCellStyle.Font = Bigger;
                 tablePackages.ColumnHeadersDefaultCellStyle.Font = Bigger;
                 tablePackages.RowsDefaultCellStyle.Font = Bigger;
+                btnOpenPackages.Font = Bigger;
                 state = false;
             }
             else
@@ -722,6 +725,7 @@ namespace Kasutajaliides
                 tablePrice.RowsDefaultCellStyle.Font = Normal;
                 tablePackages.ColumnHeadersDefaultCellStyle.Font = Normal;
                 tablePackages.RowsDefaultCellStyle.Font = Normal;
+                btnOpenPackages.Font = Normal;
                 state = true;
             }
         }
@@ -827,6 +831,9 @@ namespace Kasutajaliides
                 tbMonthlyPrice.ForeColor = chalkWhite;
                 groupPriceType.ForeColor = chalkWhite;
 
+                btnOpenPackages.ForeColor = chalkWhite;
+                btnOpenPackages.BackColor = midGrey;
+
                 chartPrice.ChartAreas["ChartArea1"].BorderColor = chalkWhite;
                 //Bigger = new Font("Impact", 16);
             }
@@ -881,6 +888,9 @@ namespace Kasutajaliides
                 tbMonthlyPrice.BackColor = SystemColors.Control;
                 tbMonthlyPrice.ForeColor = Color.Black;
                 groupPriceType.ForeColor = Color.Black;
+
+                btnOpenPackages.BackColor = SystemColors.Control;
+                btnOpenPackages.ForeColor = Color.Black;
             }
         }
 
@@ -917,6 +927,7 @@ namespace Kasutajaliides
             resizeGuiElement(originalTextCostNow, txtCostNow);
             resizeGuiElement(originalLabelSKwh2, lblSKwh2);
             resizeGuiElement(originalButtonDarkMode, btnDarkMode);
+            resizeGuiElement(originalBtnOpenPackages, btnOpenPackages);
             Refresh(); // vajalik et ei tekiks "render glitche" (nt. ComboBox ei suurene korraks jms.)
         }
 

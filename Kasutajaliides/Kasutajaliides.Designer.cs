@@ -83,6 +83,7 @@ namespace Kasutajaliides
             this.NightPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IsStockPackage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IsGreenPackage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnOpenPackages = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chartPrice)).BeginInit();
             this.groupPriceType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablePrice)).BeginInit();
@@ -651,11 +652,23 @@ namespace Kasutajaliides
             this.IsGreenPackage.ReadOnly = true;
             this.IsGreenPackage.Width = 80;
             // 
+            // btnOpenPackages
+            // 
+            this.btnOpenPackages.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOpenPackages.Location = new System.Drawing.Point(740, 637);
+            this.btnOpenPackages.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.btnOpenPackages.Name = "btnOpenPackages";
+            this.btnOpenPackages.Size = new System.Drawing.Size(218, 41);
+            this.btnOpenPackages.TabIndex = 35;
+            this.btnOpenPackages.Text = "Ava pakettide CŠV";
+            this.btnOpenPackages.UseVisualStyleBackColor = true;
+            // 
             // Kasutajaliides
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1067, 866);
+            this.Controls.Add(this.btnOpenPackages);
             this.Controls.Add(this.tablePackages);
             this.Controls.Add(this.btnDarkMode);
             this.Controls.Add(this.txtTarbimisAeg);
@@ -757,5 +770,6 @@ namespace Kasutajaliides
         private System.Windows.Forms.DataGridViewTextBoxColumn NightPrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn IsStockPackage;
         private System.Windows.Forms.DataGridViewTextBoxColumn IsGreenPackage;
+        private System.Windows.Forms.Button btnOpenPackages;
     }
 }

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
-
 using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
 
 namespace Kasutajaliides
@@ -41,8 +40,10 @@ namespace Kasutajaliides
         private Arvutaja.CArvutaja AR = new Arvutaja.CArvutaja();
 
         DateTime startTime, stopTime;
+        DateTime endOfDayDate = DateTime.Now.Date.AddHours(24); // vastab tänase päeva lõpule (24:00)
         bool showStock = true, showUsage = true;
         bool state = true;
+        bool state2 = true; // DARK MODE BUTTON TOGGLE
 
         // akna elementide mõõtmete vaikeväärtused
         Rectangle originalWindowSize;
@@ -75,6 +76,7 @@ namespace Kasutajaliides
         Rectangle originalLabelCostNow;
         Rectangle originalTextCostNow;
         Rectangle originalLabelSKwh2;
+        Rectangle originalButtonDarkMode;
 
         private void updateGraph()
         {
@@ -90,14 +92,11 @@ namespace Kasutajaliides
                 }
             }
 
-
-
             if (timeRange.Count > 0)
             {
                 changeInterval(timeRange.Count);
                 chartPrice.Series["Tarbimine"].Points.DataBindXY(timeRange, costRange);
             }
-
 
             priceTimeRange.Clear();
             priceCostRange.Clear();
@@ -306,7 +305,6 @@ namespace Kasutajaliides
             priceTimeRange.Clear();
             priceCostRange.Clear();
 
-
             if (timeRange.Count == 0)
             {
                 this.startTime = DateTime.Now.Date + new TimeSpan(0, 0, 0);
@@ -315,15 +313,15 @@ namespace Kasutajaliides
                 changeInterval(timeRange.Count);
                 txtDebug.AppendText("  kaas   ");
             }
-
-
-            callAPI();
+            //MessageBox.Show(priceData.Last().Item1.ToString());
+            callAPI(startTime.Date.AddDays(-60), endOfDayDate); // kutsub API ainult vajadusel välja ja loeb seejuures korraga rohkem andmeid!
             updateGraph();
         }
 
-        private void callAPI()
+        // API caller muudetud üldisemaks, saab kutsuda suvaliste ajaparameetritega (peale startTime ja stopTime)
+        private void callAPI(DateTime start, DateTime stop)
         {
-            priceData = AP.HindAegInternet(startTime, stopTime);
+            priceData = AP.HindAegInternet(start, stop);
             foreach (var item in priceData)
             {
                 priceTimeRange.Add(item.Item1);
@@ -435,13 +433,17 @@ namespace Kasutajaliides
 
         private void Kasutajaliides_Load(object sender, EventArgs e)
         {
+            // "MOUSE SCROLL" suurendus. EI KUSTUTA KURAT, kui vaja siis commenti välja!
+            this.chartPrice.MouseWheel += new MouseEventHandler(chartPrice_zooming);
+
+            this.BackColor = SystemColors.Control;
+
             this.MinimumSize = new Size(1083, 713);
             // Lisab tüüp-kasutusmallid
-            //chartPrice.MouseWheel += chartPrice_zooming;
             txtHind.Text = "-";
             tablePrice.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            // Praeguse börsihinna kuvamiseks
-            VecT costNowData = AP.HindAegInternet(DateTime.Now, DateTime.Now);
+            // LAEN KOHE SISSE KAHE KUU JAGU ANDMEID ET EI PEAKS IGA KORD APId VÄLJA KUTSUMA KUI KUUPÄEV VEIDI MUUTUB!
+            VecT costNowData = AP.HindAegInternet(DateTime.Now.Date.AddDays(-60), DateTime.Now);
             List<double> costNow = new List<double>();
             foreach (var item in costNowData)
             {
@@ -461,6 +463,8 @@ namespace Kasutajaliides
 
 
             AP.setUserDataFileName(AS.getSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed));
+            //callAPI(DateTime.Now.Date.AddDays(-60), DateTime.Now);
+            //MessageBox.Show(priceTimeRange.Last().ToString());
             openCSV();
 
             // akna elementide mõõtmete vaikeväärtuste määramine
@@ -494,6 +498,7 @@ namespace Kasutajaliides
             originalLabelCostNow = new Rectangle(lblCostNow.Location.X, lblCostNow.Location.Y, lblCostNow.Size.Width, lblCostNow.Size.Height);
             originalTextCostNow = new Rectangle(txtCostNow.Location.X, txtCostNow.Location.Y, txtCostNow.Size.Width, txtCostNow.Size.Height);
             originalLabelSKwh2 = new Rectangle(lblSKwh2.Location.X, lblSKwh2.Location.Y, lblSKwh2.Size.Width, lblSKwh2.Size.Height);
+            originalButtonDarkMode = new Rectangle(btnDarkMode.Location.X, btnDarkMode.Location.Y, btnDarkMode.Size.Width, btnDarkMode.Size.Height);
         }
 
         private void txtAjakulu_KeyPress(object sender, KeyPressEventArgs e)
@@ -537,7 +542,10 @@ namespace Kasutajaliides
                 dateStopTime.Value = d.Date + new TimeSpan(23, 59, 59);
                 this.stopTime = dateStopTime.Value;
             }
-            callAPI();
+            if (startTime < priceData.First().Item1 || stopTime > priceData.Last().Item1)
+            {
+                callAPI(startTime.Date.AddDays(-60), endOfDayDate); // kutsub API ainult vajadusel välja ja loeb seejuures korraga rohkem andmeid!
+            }
             calcPrice();
             updateGraph();
         }
@@ -567,7 +575,10 @@ namespace Kasutajaliides
                 dateStartTime.Value = d.Date + new TimeSpan(0, 0, 0);
                 this.startTime = dateStartTime.Value;
             }
-            callAPI();
+            if (startTime < priceData.First().Item1 || stopTime > priceData.Last().Item1)
+            {
+                callAPI(startTime.Date.AddDays(-60), endOfDayDate); // kutsub API ainult vajadusel välja ja loeb seejuures korraga rohkem andmeid!
+            }
             calcPrice();
             updateGraph();
         }
@@ -806,6 +817,117 @@ namespace Kasutajaliides
             element.Size = new Size(uusXlaius, uusYk6rgus);
         }
 
+        private void btnDarkMode_Click(object sender, EventArgs e)
+        {
+            state2 = !state2;
+            // VÄRVID (RGB hex.)
+            var chalkWhite = ColorTranslator.FromHtml("#BBBBBB");
+            var midGrey = ColorTranslator.FromHtml("#202020");
+            var darkGrey = ColorTranslator.FromHtml("#090909");
+            var xtraDarkGrey = ColorTranslator.FromHtml("#050505");
+            if (!state2)
+            {
+                btnDarkMode.Text = "L";
+                // värvide varieerimine "DARK MODE" jaoks
+                // üldvärvid
+                this.BackColor = xtraDarkGrey;
+                this.ForeColor = chalkWhite;
+
+                chartPrice.BackColor = darkGrey;
+                // täpsustused
+                chartPrice.ChartAreas["ChartArea1"].BackColor = xtraDarkGrey;
+
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LineColor = chalkWhite;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.ForeColor = chalkWhite;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.MajorGrid.LineColor = chalkWhite;
+                chartPrice.ChartAreas["ChartArea1"].AxisY.LineColor = chalkWhite;
+                chartPrice.ChartAreas["ChartArea1"].AxisY.LabelStyle.ForeColor = chalkWhite;
+                chartPrice.ChartAreas["ChartArea1"].AxisY.MajorGrid.LineColor = chalkWhite;
+                chartPrice.ChartAreas["ChartArea1"].AxisY2.LineColor = chalkWhite;
+                chartPrice.ChartAreas["ChartArea1"].AxisY2.LabelStyle.ForeColor = chalkWhite;
+                chartPrice.ChartAreas["ChartArea1"].AxisY2.MajorGrid.LineColor = chalkWhite;
+                
+                tablePrice.BackgroundColor = xtraDarkGrey;
+                tablePrice.ForeColor = chalkWhite;
+                tablePrice.DefaultCellStyle.BackColor = xtraDarkGrey;
+
+                cbKasutusmall.BackColor = midGrey;
+                cbKasutusmall.ForeColor = chalkWhite;
+                txtAjakulu.BackColor = midGrey;
+                txtAjakulu.ForeColor = chalkWhite;
+                txtVoimsus.BackColor = midGrey;
+                txtVoimsus.ForeColor = chalkWhite;
+                txtHind.BackColor = midGrey;
+                txtHind.ForeColor = chalkWhite;
+                txtTarbimisAeg.BackColor = midGrey;
+                txtTarbimisAeg.ForeColor = chalkWhite;
+                txtDebug.BackColor = midGrey;
+                txtDebug.ForeColor = chalkWhite;
+                btnAvaCSV.BackColor = midGrey;
+                btnAvaCSV.ForeColor = chalkWhite;
+                txtCostNow.BackColor = midGrey;
+                txtCostNow.ForeColor = chalkWhite;
+                btnChangeSize.BackColor = midGrey;
+                btnChangeSize.ForeColor = chalkWhite;
+                btnDarkMode.BackColor = midGrey;
+                btnDarkMode.ForeColor = chalkWhite;
+                tbMonthlyPrice.BackColor = midGrey;
+                tbMonthlyPrice.ForeColor = chalkWhite;
+                groupPriceType.ForeColor = chalkWhite;
+
+                chartPrice.ChartAreas["ChartArea1"].BorderColor = chalkWhite;
+                //Bigger = new Font("Impact", 16);
+            }
+            else
+            {
+                btnDarkMode.Text = "D";
+                // värvide varieerimine "LIGHT MODE" jaoks
+                this.BackColor = SystemColors.Control;
+                this.ForeColor = Color.Black;
+                chartPrice.BackColor = Color.White;
+                chartPrice.ChartAreas["ChartArea1"].BackColor = SystemColors.Control;
+                // täpsustused
+                chartPrice.ChartAreas["ChartArea1"].BackColor = Color.White;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LineColor = Color.Black;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.ForeColor = Color.Black;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.MajorGrid.LineColor = Color.Black;
+                chartPrice.ChartAreas["ChartArea1"].AxisY.LineColor = Color.Black;
+                chartPrice.ChartAreas["ChartArea1"].AxisY.LabelStyle.ForeColor = Color.Black;
+                chartPrice.ChartAreas["ChartArea1"].AxisY.MajorGrid.LineColor = Color.Black;
+                chartPrice.ChartAreas["ChartArea1"].AxisY2.LineColor = Color.Black;
+                chartPrice.ChartAreas["ChartArea1"].AxisY2.LabelStyle.ForeColor = Color.Black;
+                chartPrice.ChartAreas["ChartArea1"].AxisY2.MajorGrid.LineColor = Color.Black;
+
+                tablePrice.BackgroundColor = SystemColors.ControlDark;
+                tablePrice.ForeColor = Color.Black;
+                tablePrice.DefaultCellStyle.BackColor = Color.White;
+
+                cbKasutusmall.BackColor = Color.White;
+                cbKasutusmall.ForeColor = Color.Black;
+                txtAjakulu.BackColor = Color.White;
+                txtAjakulu.ForeColor = Color.Black;
+                txtVoimsus.BackColor = Color.White;
+                txtVoimsus.ForeColor = Color.Black;
+                txtHind.BackColor = SystemColors.Control;
+                txtHind.ForeColor = Color.Black;
+                txtTarbimisAeg.BackColor = SystemColors.Control;
+                txtTarbimisAeg.ForeColor = Color.Black;
+                txtDebug.BackColor = Color.White;
+                txtDebug.ForeColor = Color.Black;
+                btnAvaCSV.BackColor = SystemColors.Control;
+                btnAvaCSV.ForeColor = Color.Black;
+                txtCostNow.BackColor = SystemColors.Control;
+                txtCostNow.ForeColor = Color.Black;
+                btnChangeSize.BackColor = SystemColors.Control;
+                btnChangeSize.ForeColor = Color.Black;
+                btnDarkMode.BackColor = SystemColors.Control;
+                btnDarkMode.ForeColor = Color.Black;
+                tbMonthlyPrice.BackColor = SystemColors.Control;
+                tbMonthlyPrice.ForeColor = Color.Black;
+                groupPriceType.ForeColor = Color.Black;
+            }
+        }
+
         private void Kasutajaliides_Resize(object sender, EventArgs e)
         {
             resizeGuiElement(originalChartPriceSize, chartPrice);
@@ -837,65 +959,80 @@ namespace Kasutajaliides
             resizeGuiElement(originalLabelCostNow, lblCostNow);
             resizeGuiElement(originalTextCostNow, txtCostNow);
             resizeGuiElement(originalLabelSKwh2, lblSKwh2);
+            resizeGuiElement(originalButtonDarkMode, btnDarkMode);
+            Refresh(); // vajalik et ei tekiks "render glitche" (nt. ComboBox ei suurene korraks jms.)
         }
 
         // https://stackoverflow.com/questions/47463926/how-to-get-pixel-position-from-datetime-value-on-x-axis 
         // https://stackoverflow.com/questions/11955866/retrieving-datetime-x-axis-value-from-chart-control 
         void chartPrice_zooming(object sender, MouseEventArgs e)
         {
+            dateStartTime.ValueChanged += dateStartTime_ValueChanged; // lülita DateTimePickeri muutuse handler sisse
             // rulliga kerimisel hiire asukoht X-telje suhtes; Andmetüübiks DateTime!
             var mousePositionDate = DateTime.FromOADate(chartPrice.ChartAreas["ChartArea1"].AxisX.PixelPositionToValue(e.Location.X));
-            //MessageBox.Show(mousePositionDate.ToString());
-            //MessageBox.Show(e.Location.X.ToString());
-            if (dateStartTime.Value.Day < dateStopTime.Value.Day)
+            if (startTime < stopTime)
             {
-                var deltaDate = dateStopTime.Value - dateStartTime.Value;
-                var distanceFromMin = dateStartTime.Value - dateStartTime.MinDate;
-                var distanceFromMax = dateStopTime.MaxDate - dateStopTime.Value;
+                //MessageBox.Show(startTime.ToString() + " " + stopTime.ToString());
+                var deltaDate = stopTime - startTime;
+                var distanceFromToday = DateTime.Now - stopTime;
                 //double xCoordPercent = (e.Location.X - 88) / 464.0; // jagades graafiku laiusega saame pointeri normaliseeritud asukoha graafikul vahemikus [0;1]
-                double xCoordPercent = (mousePositionDate - dateStartTime.Value).TotalMilliseconds / (dateStopTime.Value - dateStartTime.Value).TotalMilliseconds; // jagades graafiku laiusega saame pointeri normaliseeritud asukoha graafikul vahemikus [0;1]
+                double xCoordPercent = (mousePositionDate - startTime).TotalMilliseconds / (stopTime - startTime).TotalMilliseconds; // jagades graafiku laiusega saame pointeri normaliseeritud asukoha graafikul vahemikus [0;1]
                 //MessageBox.Show(xCoordPercent.ToString());
                 int leftStep = 1, rightStep = 1, totalStep = 1; // sammud graafiku otste nihutamiseks (tundides)
-                if (deltaDate.TotalDays < 2) totalStep = 12;
-                else totalStep = 24;
+                if (deltaDate.TotalDays < 2)
+                {
+                    totalStep = 12;
+                }
+                else if (deltaDate.TotalDays < 10)
+                {
+                    totalStep = 24;
+                }
+                else if (deltaDate.TotalDays < 30)
+                {
+                    totalStep = 96;
+                }
+                else if(deltaDate.TotalDays < 60)
+                {
+                    totalStep = 192;
+                }
+                else
+                {
+                    totalStep = 384;
+                }
+                totalStep = 24;
                 leftStep = Convert.ToInt16(xCoordPercent * totalStep);
                 rightStep = totalStep - leftStep;
-
+                //MessageBox.Show((mousePositionDate - startTime).TotalMilliseconds.ToString());
                 if (xCoordPercent <= 1 && xCoordPercent >= 0)
                 {
-                    if (e.Delta > 0 && (dateStartTime.Value < dateStopTime.Value) && deltaDate.TotalDays >= 2)
+                    if (e.Delta > 0 && (startTime < stopTime) && deltaDate.TotalDays >= 2)
                     {
                         dateStartTime.Value = dateStartTime.Value.AddHours(leftStep);
                         dateStopTime.Value = dateStopTime.Value.AddHours(-rightStep);
-                        startTime = dateStartTime.Value;
-                        stopTime = dateStopTime.Value;
+                        startTime = startTime.AddHours(leftStep);
+                        stopTime = stopTime.AddHours(-rightStep);
                     }
                     else if (e.Delta < 0)
                     {
-                        if (distanceFromMin.TotalDays >= 1)
+                        if (distanceFromToday.TotalHours <= 2)
                         {
-                            dateStartTime.Value = dateStartTime.Value.AddHours(-leftStep);
-                            startTime = dateStartTime.Value;
+                            dateStopTime.Value = endOfDayDate; // ümardab alla täistunniks
+                            stopTime = endOfDayDate;
+                            dateStartTime.Value = dateStartTime.Value.AddHours(-totalStep);
+                            startTime = startTime.AddHours(-totalStep);
                         }
                         else
-                        {
-                            dateStartTime.Value = dateStartTime.MinDate;
-                            startTime = dateStartTime.Value;
-                        }
-                        if (distanceFromMax.TotalDays >= 1)
                         {
                             dateStopTime.Value = dateStopTime.Value.AddHours(rightStep);
-                            stopTime = dateStopTime.Value;
-                        }
-                        else
-                        {
-                            dateStopTime.Value = dateStopTime.MaxDate;
-                            stopTime = dateStopTime.Value;
+                            stopTime = stopTime.AddHours(rightStep);
+                            dateStartTime.Value = dateStartTime.Value.AddHours(-leftStep);
+                            startTime = startTime.AddHours(-leftStep);
                         }
                     }
                 }
             }
             updateGraph();
+            dateStartTime.ValueChanged -= dateStartTime_ValueChanged; // lülita DateTimePickeri muutuse handler välja
         }
     }
 }

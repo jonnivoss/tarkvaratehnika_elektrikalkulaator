@@ -208,37 +208,16 @@ namespace Kasutajaliides
 
         private VerticalLineAnnotation vert;
 
+        private void toolTip_Draw(object sender, DrawToolTipEventArgs e)
+        {
+            e.DrawBackground();
+            e.DrawBorder();
+            e.DrawText();
+        }
+
         private void chartPrice_MouseMove(object sender, MouseEventArgs e)
         {
-            /*// Cast the sender object to a Chart control
             Chart chart = (Chart)sender;
-
-            // Call HitTest method to get the HitTestResult
-            HitTestResult result = chart.HitTest(e.X, e.Y);
-
-            // Check if the result is a data point
-            if (result.ChartElementType == ChartElementType.DataPoint && result.Series.Name != "Tarbimine")
-            {
-                // Get the y-value of the data point
-                double yValue = result.Series.Points[result.PointIndex].YValues[0];
-                
-                DateTime ahhha = dateStartTime.Value.AddHours(result.PointIndex);
-                // Set the tooltip of the data point to the y-value
-                string clockString = "kell: ";
-                clockString += ahhha.ToString("HH");
-                ahhha = ahhha.AddHours(1);
-                clockString += "-";
-                clockString += ahhha.ToString("HH");
-                toolTip.SetToolTip(chart, "hind: " + yValue.ToString()+" senti " +clockString);
-            }
-            else 
-            {
-                toolTip.Hide(chart);
-            }*/
-
-            Chart chart = (Chart)sender;
-            //kui tt tühi tee uus
-            if (toolTip == null) toolTip = new ToolTip();
 
             ChartArea ca = chart.ChartAreas[0];
             //kui hiir on graafiku sees ss hakka asju tegema
@@ -261,6 +240,7 @@ namespace Kasutajaliides
                     }
                 }
                 //tt tekst
+                
                 toolTip.SetToolTip(chart, "hind: " + y.ToString("0.000") + "\n" + s.ToString("kell HH:00") + "\n" + s.ToString("dd/MM/yy"));
                 //kui juba joon olemas ss kustuta ära et uus joonistada
                 if (vert != null)
@@ -501,11 +481,16 @@ namespace Kasutajaliides
             }
         }
 
-
         private void Kasutajaliides_Load(object sender, EventArgs e)
         {
             // "MOUSE SCROLL" suurendus. EI KUSTUTA KURAT, kui vaja siis commenti välja!
             this.chartPrice.MouseWheel += new MouseEventHandler(chartPrice_zooming);
+
+            toolTip.OwnerDraw = true;
+            toolTip.Draw += new System.Windows.Forms.DrawToolTipEventHandler(toolTip_Draw);
+            toolTip.BackColor = SystemColors.Control;
+            toolTip.ForeColor = Color.Black;
+
 
             this.BackColor = SystemColors.Control;
 
@@ -966,6 +951,9 @@ namespace Kasutajaliides
 
                 chartPrice.ChartAreas["ChartArea1"].BorderColor = chalkWhite;
                 //Bigger = new Font("Impact", 16);
+
+                toolTip.BackColor = midGrey;
+                toolTip.ForeColor = chalkWhite;
             }
             else
             {
@@ -1021,6 +1009,9 @@ namespace Kasutajaliides
 
                 btnOpenPackages.BackColor = SystemColors.Control;
                 btnOpenPackages.ForeColor = Color.Black;
+
+                toolTip.BackColor = SystemColors.Control;
+                toolTip.ForeColor = Color.Black;
             }
         }
 

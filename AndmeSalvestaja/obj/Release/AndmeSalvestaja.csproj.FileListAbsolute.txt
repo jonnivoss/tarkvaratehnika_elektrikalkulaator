@@ -1,0 +1,9 @@
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\AndmeSalvestaja\bin\Release\AndmeSalvestaja.dll
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\AndmeSalvestaja\bin\Release\AndmeSalvestaja.pdb
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\AndmeSalvestaja\bin\Release\Newtonsoft.Json.dll
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\AndmeSalvestaja\bin\Release\Newtonsoft.Json.xml
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\AndmeSalvestaja\obj\Release\AndmeSalvestaja.csproj.AssemblyReference.cache
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\AndmeSalvestaja\obj\Release\AndmeSalvestaja.csproj.CoreCompileInputs.cache
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\AndmeSalvestaja\obj\Release\AndmeSalvestaja.csproj.CopyComplete
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\AndmeSalvestaja\obj\Release\AndmeSalvestaja.dll
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\AndmeSalvestaja\obj\Release\AndmeSalvestaja.pdb

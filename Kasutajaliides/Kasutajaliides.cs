@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
 using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
+using PackageT = System.Collections.Generic.List<Andmepyydja.PackageInfo>;
 
 namespace Kasutajaliides
 {
@@ -31,9 +32,10 @@ namespace Kasutajaliides
         List<double> priceCostRange = new List<double>();
 
         VecT userData = new VecT();
-        string fileContents;
+        string fileContents, packageFileContents;
 
         VecT priceData = new VecT();
+        PackageT packageData = new PackageT();
 
         private Andmepyydja.CAP AP = new Andmepyydja.CAP();
         private AndmeSalvestaja.CAS AS = new AndmeSalvestaja.CAS("settings.json");
@@ -49,6 +51,7 @@ namespace Kasutajaliides
         Rectangle originalWindowSize;
         Rectangle originalChartPriceSize;
         Rectangle originalTablePriceSize;
+        Rectangle originalTablePackagesSize;
         Rectangle originalButtonChangeSize;
         Rectangle originalLabelKasutusmall;
         Rectangle originalComboBoxKasutusmall;
@@ -77,6 +80,7 @@ namespace Kasutajaliides
         Rectangle originalTextCostNow;
         Rectangle originalLabelSKwh2;
         Rectangle originalButtonDarkMode;
+        Rectangle originalBtnOpenPackages;
 
         private void updateGraph()
         {
@@ -463,6 +467,7 @@ namespace Kasutajaliides
             // Lisab tüüp-kasutusmallid
             txtHind.Text = "-";
             tablePrice.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            tablePackages.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             // LAEN KOHE SISSE KAHE KUU JAGU ANDMEID ET EI PEAKS IGA KORD APId VÄLJA KUTSUMA KUI KUUPÄEV VEIDI MUUTUB!
             VecT costNowData = AP.HindAegInternet(DateTime.Now.Date.AddDays(-60), DateTime.Now);
             List<double> costNow = new List<double>();
@@ -484,14 +489,17 @@ namespace Kasutajaliides
 
 
             AP.setUserDataFileName(AS.getSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed));
+            AP.setPackageFileName(AS.getSetting(AndmeSalvestaja.ASSetting.paketiAndmed));
             //callAPI(DateTime.Now.Date.AddDays(-60), DateTime.Now);
             //MessageBox.Show(priceTimeRange.Last().ToString());
             openCSV();
+            openCSVPackage();
 
             // akna elementide mõõtmete vaikeväärtuste määramine
             originalWindowSize = new Rectangle(this.Location.X, this.Location.Y, this.Size.Width, this.Size.Height);
             originalChartPriceSize = new Rectangle(chartPrice.Location.X, chartPrice.Location.Y, chartPrice.Size.Width, chartPrice.Size.Height);
             originalTablePriceSize = new Rectangle(tablePrice.Location.X, tablePrice.Location.Y, tablePrice.Size.Width, tablePrice.Size.Height);
+            originalTablePackagesSize = new Rectangle(tablePackages.Location.X, tablePackages.Location.Y, tablePackages.Size.Width, tablePackages.Size.Height);
             originalButtonChangeSize = new Rectangle(btnChangeSize.Location.X, btnChangeSize.Location.Y, btnChangeSize.Size.Width, btnChangeSize.Size.Height);
             originalLabelKasutusmall = new Rectangle(lblKasutusmall.Location.X, lblKasutusmall.Location.Y, lblKasutusmall.Size.Width, lblKasutusmall.Size.Height);
             originalComboBoxKasutusmall = new Rectangle(cbKasutusmall.Location.X, cbKasutusmall.Location.Y, cbKasutusmall.Size.Width, cbKasutusmall.Size.Height);
@@ -520,6 +528,7 @@ namespace Kasutajaliides
             originalTextCostNow = new Rectangle(txtCostNow.Location.X, txtCostNow.Location.Y, txtCostNow.Size.Width, txtCostNow.Size.Height);
             originalLabelSKwh2 = new Rectangle(lblSKwh2.Location.X, lblSKwh2.Location.Y, lblSKwh2.Size.Width, lblSKwh2.Size.Height);
             originalButtonDarkMode = new Rectangle(btnDarkMode.Location.X, btnDarkMode.Location.Y, btnDarkMode.Size.Width, btnDarkMode.Size.Height);
+            originalBtnOpenPackages = new Rectangle(btnOpenPackages.Location.X, btnOpenPackages.Location.Y, btnOpenPackages.Size.Width, btnOpenPackages.Size.Height);
         }
 
         private void txtAjakulu_KeyPress(object sender, KeyPressEventArgs e)
@@ -750,6 +759,9 @@ namespace Kasutajaliides
                 chartPrice.Legends["Legend1"].Font = new Font("Comic Sans MS", 10);
                 tablePrice.ColumnHeadersDefaultCellStyle.Font = Bigger;
                 tablePrice.RowsDefaultCellStyle.Font = Bigger;
+                tablePackages.ColumnHeadersDefaultCellStyle.Font = Bigger;
+                tablePackages.RowsDefaultCellStyle.Font = Bigger;
+                btnOpenPackages.Font = Bigger;
                 state = false;
             }
             else
@@ -795,6 +807,9 @@ namespace Kasutajaliides
                 chartPrice.Legends["Legend1"].Font = new Font("Comic Sans MS", 8.25f);
                 tablePrice.ColumnHeadersDefaultCellStyle.Font = Normal;
                 tablePrice.RowsDefaultCellStyle.Font = Normal;
+                tablePackages.ColumnHeadersDefaultCellStyle.Font = Normal;
+                tablePackages.RowsDefaultCellStyle.Font = Normal;
+                btnOpenPackages.Font = Normal;
                 state = true;
             }
         }
@@ -872,6 +887,10 @@ namespace Kasutajaliides
                 tablePrice.ForeColor = chalkWhite;
                 tablePrice.DefaultCellStyle.BackColor = xtraDarkGrey;
 
+                tablePackages.BackgroundColor = xtraDarkGrey;
+                tablePackages.ForeColor = chalkWhite;
+                tablePackages.DefaultCellStyle.BackColor = xtraDarkGrey;
+
                 cbKasutusmall.BackColor = midGrey;
                 cbKasutusmall.ForeColor = chalkWhite;
                 txtAjakulu.BackColor = midGrey;
@@ -895,6 +914,9 @@ namespace Kasutajaliides
                 tbMonthlyPrice.BackColor = midGrey;
                 tbMonthlyPrice.ForeColor = chalkWhite;
                 groupPriceType.ForeColor = chalkWhite;
+
+                btnOpenPackages.ForeColor = chalkWhite;
+                btnOpenPackages.BackColor = midGrey;
 
                 chartPrice.ChartAreas["ChartArea1"].BorderColor = chalkWhite;
                 //Bigger = new Font("Impact", 16);
@@ -923,6 +945,10 @@ namespace Kasutajaliides
                 tablePrice.ForeColor = Color.Black;
                 tablePrice.DefaultCellStyle.BackColor = Color.White;
 
+                tablePackages.BackgroundColor = SystemColors.ControlDark;
+                tablePackages.ForeColor = Color.Black;
+                tablePackages.DefaultCellStyle.BackColor = Color.White;
+
                 cbKasutusmall.BackColor = Color.White;
                 cbKasutusmall.ForeColor = Color.Black;
                 txtAjakulu.BackColor = Color.White;
@@ -946,6 +972,48 @@ namespace Kasutajaliides
                 tbMonthlyPrice.BackColor = SystemColors.Control;
                 tbMonthlyPrice.ForeColor = Color.Black;
                 groupPriceType.ForeColor = Color.Black;
+
+                btnOpenPackages.BackColor = SystemColors.Control;
+                btnOpenPackages.ForeColor = Color.Black;
+            }
+        }
+
+        
+
+
+        private void btnOpenPackages_Click(object sender, EventArgs e)
+        {
+            if (AP.chooseFilePackages())
+            {
+                AS.changeSetting(AndmeSalvestaja.ASSetting.paketiAndmed, AP.getPackageFileName());
+                this.openCSVPackage();
+            }
+        }
+
+        private void openCSVPackage()
+        {
+            if (!AP.readPackageFile(ref packageFileContents))
+            {
+                MessageBox.Show("Lugemine ebaõnnestus!");
+            }
+            else
+            {
+                packageData = AP.parsePackage(packageFileContents);
+
+                tablePackages.Rows.Clear();
+                foreach (var item in packageData)
+                {
+                    tablePackages.Rows.Add(
+                        item.providerName,
+                        item.packageName,
+                        item.monthlyPrice.ToString("0.00"),
+                        item.sellerMarginal.ToString("0.000"),
+                        item.isStockPackage ? "-" : item.basePrice.ToString("0.000"),
+                        (!item.isDayNight || item.isStockPackage) ? "-" : item.nightPrice.ToString("0.000"),
+                        item.isStockPackage ? "Jah" : "Ei",
+                        item.isGreenPackage ? "Jah" : "Ei"
+                    );
+                }
             }
         }
 
@@ -953,6 +1021,7 @@ namespace Kasutajaliides
         {
             resizeGuiElement(originalChartPriceSize, chartPrice);
             resizeGuiElement(originalTablePriceSize, tablePrice);
+            resizeGuiElement(originalTablePackagesSize, tablePackages);
             resizeGuiElement(originalButtonChangeSize, btnChangeSize);
             resizeGuiElement(originalLabelKasutusmall, lblKasutusmall);
             resizeGuiElement(originalComboBoxKasutusmall, cbKasutusmall);
@@ -981,6 +1050,7 @@ namespace Kasutajaliides
             resizeGuiElement(originalTextCostNow, txtCostNow);
             resizeGuiElement(originalLabelSKwh2, lblSKwh2);
             resizeGuiElement(originalButtonDarkMode, btnDarkMode);
+            resizeGuiElement(originalBtnOpenPackages, btnOpenPackages);
             Refresh(); // vajalik et ei tekiks "render glitche" (nt. ComboBox ei suurene korraks jms.)
         }
 

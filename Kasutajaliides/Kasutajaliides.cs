@@ -45,6 +45,8 @@ namespace Kasutajaliides
         bool state = true;
         bool state2 = true; // DARK MODE BUTTON TOGGLE
 
+        double averagePrice;
+
         // akna elementide mõõtmete vaikeväärtused
         Rectangle originalWindowSize;
         Rectangle originalChartPriceSize;
@@ -81,6 +83,7 @@ namespace Kasutajaliides
         private void updateGraph()
         {
             // Uuenda graafikut
+            // Tarbimise andmed
             timeRange.Clear();
             costRange.Clear();
             foreach (var item in userData)
@@ -105,6 +108,9 @@ namespace Kasutajaliides
             DateTime ajutineDate = new DateTime();
             double ajutinePrice = 0.0;
 
+            averagePrice = 0;
+
+            // Börsihinna andmed
             foreach (var item in priceData)
             {
                 if (item.Item1 >= startTime && item.Item1 <= stopTime)
@@ -112,6 +118,9 @@ namespace Kasutajaliides
                     priceTimeRange.Add(item.Item1);
                     priceCostRange.Add(item.Item2 / 10.0);
                     tablePrice.Rows.Add(item.Item1, item.Item2 / 10.0);
+
+                    // Keskmise hinna arvutamiseks hindade kokku liitmine
+                    averagePrice += item.Item2;
 
                     ajutineDate = item.Item1.AddHours(1);
                     ajutinePrice = item.Item2 / 10.0;
@@ -122,6 +131,11 @@ namespace Kasutajaliides
                     txtDebug.AppendText(Environment.NewLine);*/
                 }
             }
+
+            averagePrice /= priceCostRange.Count;
+
+            //MessageBox.Show("Keskmine hind" + averagePrice.ToString());
+
             priceTimeRange.Add(ajutineDate);
             priceCostRange.Add(ajutinePrice);
 

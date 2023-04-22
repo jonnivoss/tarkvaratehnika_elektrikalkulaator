@@ -28,3 +28,9 @@ C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-COLORS\Arvuta
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-COLORS\Arvutaja\obj\Debug\Arvutaja.csproj.CoreCompileInputs.cache
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-COLORS\Arvutaja\obj\Debug\Arvutaja.dll
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-COLORS\Arvutaja\obj\Debug\Arvutaja.pdb
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER2\Arvutaja\bin\Debug\Arvutaja.dll
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER2\Arvutaja\bin\Debug\Arvutaja.pdb
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER2\Arvutaja\obj\Debug\Arvutaja.csproj.AssemblyReference.cache
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER2\Arvutaja\obj\Debug\Arvutaja.csproj.CoreCompileInputs.cache
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER2\Arvutaja\obj\Debug\Arvutaja.dll
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER2\Arvutaja\obj\Debug\Arvutaja.pdb

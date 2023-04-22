@@ -34,6 +34,7 @@ namespace Kasutajaliides
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.chartPrice = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.cbKasutusmall = new System.Windows.Forms.ComboBox();
             this.lblKasutusmall = new System.Windows.Forms.Label();
@@ -73,9 +74,19 @@ namespace Kasutajaliides
             this.lblTarbimisAeg = new System.Windows.Forms.Label();
             this.txtTarbimisAeg = new System.Windows.Forms.TextBox();
             this.btnDarkMode = new System.Windows.Forms.Button();
+            this.tablePackages = new System.Windows.Forms.DataGridView();
+            this.ProviderName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PackageName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MonthlyPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SellerMarginal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BasePrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NightPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IsStockPackage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IsGreenPackage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.chartPrice)).BeginInit();
             this.groupPriceType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablePrice)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tablePackages)).BeginInit();
             this.SuspendLayout();
             // 
             // chartPrice
@@ -553,11 +564,99 @@ namespace Kasutajaliides
             this.btnDarkMode.UseVisualStyleBackColor = true;
             this.btnDarkMode.Click += new System.EventHandler(this.btnDarkMode_Click);
             // 
+            // tablePackages
+            // 
+            this.tablePackages.AllowUserToAddRows = false;
+            this.tablePackages.AllowUserToDeleteRows = false;
+            this.tablePackages.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tablePackages.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ProviderName,
+            this.PackageName,
+            this.MonthlyPrice,
+            this.SellerMarginal,
+            this.BasePrice,
+            this.NightPrice,
+            this.IsStockPackage,
+            this.IsGreenPackage});
+            this.tablePackages.Location = new System.Drawing.Point(3, 690);
+            this.tablePackages.Name = "tablePackages";
+            this.tablePackages.ReadOnly = true;
+            this.tablePackages.RowHeadersWidth = 51;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tablePackages.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            this.tablePackages.RowTemplate.Height = 24;
+            this.tablePackages.Size = new System.Drawing.Size(1062, 173);
+            this.tablePackages.TabIndex = 34;
+            // 
+            // ProviderName
+            // 
+            this.ProviderName.HeaderText = "Ülepakkuja";
+            this.ProviderName.MinimumWidth = 6;
+            this.ProviderName.Name = "ProviderName";
+            this.ProviderName.ReadOnly = true;
+            this.ProviderName.Width = 220;
+            // 
+            // PackageName
+            // 
+            this.PackageName.HeaderText = "Pakett";
+            this.PackageName.MinimumWidth = 6;
+            this.PackageName.Name = "PackageName";
+            this.PackageName.ReadOnly = true;
+            this.PackageName.Width = 220;
+            // 
+            // MonthlyPrice
+            // 
+            this.MonthlyPrice.HeaderText = "Kuutasu";
+            this.MonthlyPrice.MinimumWidth = 6;
+            this.MonthlyPrice.Name = "MonthlyPrice";
+            this.MonthlyPrice.ReadOnly = true;
+            this.MonthlyPrice.Width = 80;
+            // 
+            // SellerMarginal
+            // 
+            this.SellerMarginal.HeaderText = "Marginaal";
+            this.SellerMarginal.MinimumWidth = 6;
+            this.SellerMarginal.Name = "SellerMarginal";
+            this.SellerMarginal.ReadOnly = true;
+            this.SellerMarginal.Width = 80;
+            // 
+            // BasePrice
+            // 
+            this.BasePrice.HeaderText = "Baashind/päevane";
+            this.BasePrice.MinimumWidth = 6;
+            this.BasePrice.Name = "BasePrice";
+            this.BasePrice.ReadOnly = true;
+            this.BasePrice.Width = 130;
+            // 
+            // NightPrice
+            // 
+            this.NightPrice.HeaderText = "Öine hind";
+            this.NightPrice.MinimumWidth = 6;
+            this.NightPrice.Name = "NightPrice";
+            this.NightPrice.ReadOnly = true;
+            this.NightPrice.Width = 90;
+            // 
+            // IsStockPackage
+            // 
+            this.IsStockPackage.HeaderText = "Börsipakett?";
+            this.IsStockPackage.MinimumWidth = 6;
+            this.IsStockPackage.Name = "IsStockPackage";
+            this.IsStockPackage.ReadOnly = true;
+            // 
+            // IsGreenPackage
+            // 
+            this.IsGreenPackage.HeaderText = "Roheline?";
+            this.IsGreenPackage.MinimumWidth = 6;
+            this.IsGreenPackage.Name = "IsGreenPackage";
+            this.IsGreenPackage.ReadOnly = true;
+            this.IsGreenPackage.Width = 80;
+            // 
             // Kasutajaliides
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1067, 696);
+            this.ClientSize = new System.Drawing.Size(1067, 866);
+            this.Controls.Add(this.tablePackages);
             this.Controls.Add(this.btnDarkMode);
             this.Controls.Add(this.txtTarbimisAeg);
             this.Controls.Add(this.lblTarbimisAeg);
@@ -602,6 +701,7 @@ namespace Kasutajaliides
             this.groupPriceType.ResumeLayout(false);
             this.groupPriceType.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablePrice)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tablePackages)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -648,5 +748,14 @@ namespace Kasutajaliides
         private System.Windows.Forms.DataGridViewTextBoxColumn Aeg;
         private System.Windows.Forms.DataGridViewTextBoxColumn Hind;
         private System.Windows.Forms.Button btnDarkMode;
+        private System.Windows.Forms.DataGridView tablePackages;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ProviderName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PackageName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MonthlyPrice;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SellerMarginal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BasePrice;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NightPrice;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IsStockPackage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IsGreenPackage;
     }
 }

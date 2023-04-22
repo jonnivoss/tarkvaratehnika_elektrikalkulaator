@@ -45,3 +45,9 @@ C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER6\Arvut
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER6\Arvutaja\obj\Debug\Arvutaja.csproj.CoreCompileInputs.cache
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER6\Arvutaja\obj\Debug\Arvutaja.dll
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER6\Arvutaja\obj\Debug\Arvutaja.pdb
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER7\Arvutaja\bin\Debug\Arvutaja.dll
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER7\Arvutaja\bin\Debug\Arvutaja.pdb
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER7\Arvutaja\obj\Debug\Arvutaja.csproj.AssemblyReference.cache
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER7\Arvutaja\obj\Debug\Arvutaja.csproj.CoreCompileInputs.cache
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER7\Arvutaja\obj\Debug\Arvutaja.dll
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER7\Arvutaja\obj\Debug\Arvutaja.pdb

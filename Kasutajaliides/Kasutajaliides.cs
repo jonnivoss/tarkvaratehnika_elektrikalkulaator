@@ -917,14 +917,17 @@ namespace Kasutajaliides
 
                 chartPrice.ChartAreas["ChartArea1"].AxisX.LineColor = chalkWhite;
                 chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.ForeColor = chalkWhite;
+                chartPrice.ChartAreas["ChartArea1"].AxisX.TitleForeColor = chalkWhite;
                 chartPrice.ChartAreas["ChartArea1"].AxisX.MajorGrid.LineColor = chalkWhite;
                 chartPrice.ChartAreas["ChartArea1"].AxisY.LineColor = chalkWhite;
                 chartPrice.ChartAreas["ChartArea1"].AxisY.LabelStyle.ForeColor = chalkWhite;
+                chartPrice.ChartAreas["ChartArea1"].AxisY.TitleForeColor = chalkWhite;
                 chartPrice.ChartAreas["ChartArea1"].AxisY.MajorGrid.LineColor = chalkWhite;
                 chartPrice.ChartAreas["ChartArea1"].AxisY2.LineColor = chalkWhite;
                 chartPrice.ChartAreas["ChartArea1"].AxisY2.LabelStyle.ForeColor = chalkWhite;
                 chartPrice.ChartAreas["ChartArea1"].AxisY2.MajorGrid.LineColor = chalkWhite;
-                
+                chartPrice.ChartAreas["ChartArea1"].AxisY2.TitleForeColor = chalkWhite;
+
                 tablePrice.BackgroundColor = xtraDarkGrey;
                 tablePrice.ForeColor = chalkWhite;
                 tablePrice.DefaultCellStyle.BackColor = xtraDarkGrey;
@@ -1025,6 +1028,9 @@ namespace Kasutajaliides
                 toolTip.BackColor = SystemColors.Control;
                 toolTip.ForeColor = Color.Black;
                 chartPrice.Series["Tarbimine"].Color = ColorTranslator.FromHtml("#090909");
+                chartPrice.ChartAreas["ChartArea1"].AxisX.TitleForeColor = Color.Black;
+                chartPrice.ChartAreas["ChartArea1"].AxisY.TitleForeColor = Color.Black;
+                chartPrice.ChartAreas["ChartArea1"].AxisY2.TitleForeColor = Color.Black;
             }
         }
 

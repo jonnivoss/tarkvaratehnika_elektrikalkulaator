@@ -585,7 +585,7 @@ namespace Kasutajaliides
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tablePackages.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.tablePackages.RowTemplate.Height = 24;
-            this.tablePackages.Size = new System.Drawing.Size(1062, 173);
+            this.tablePackages.Size = new System.Drawing.Size(1063, 173);
             this.tablePackages.TabIndex = 34;
             // 
             // ProviderName
@@ -626,7 +626,7 @@ namespace Kasutajaliides
             this.BasePrice.MinimumWidth = 6;
             this.BasePrice.Name = "BasePrice";
             this.BasePrice.ReadOnly = true;
-            this.BasePrice.Width = 130;
+            this.BasePrice.Width = 140;
             // 
             // NightPrice
             // 

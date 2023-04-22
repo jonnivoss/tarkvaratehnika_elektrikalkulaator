@@ -49,6 +49,7 @@ namespace Kasutajaliides
         Rectangle originalWindowSize;
         Rectangle originalChartPriceSize;
         Rectangle originalTablePriceSize;
+        Rectangle originalTablePackagesSize;
         Rectangle originalButtonChangeSize;
         Rectangle originalLabelKasutusmall;
         Rectangle originalComboBoxKasutusmall;
@@ -383,6 +384,7 @@ namespace Kasutajaliides
             // Lisab tüüp-kasutusmallid
             txtHind.Text = "-";
             tablePrice.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            tablePackages.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             // LAEN KOHE SISSE KAHE KUU JAGU ANDMEID ET EI PEAKS IGA KORD APId VÄLJA KUTSUMA KUI KUUPÄEV VEIDI MUUTUB!
             VecT costNowData = AP.HindAegInternet(DateTime.Now.Date.AddDays(-60), DateTime.Now);
             List<double> costNow = new List<double>();
@@ -412,6 +414,7 @@ namespace Kasutajaliides
             originalWindowSize = new Rectangle(this.Location.X, this.Location.Y, this.Size.Width, this.Size.Height);
             originalChartPriceSize = new Rectangle(chartPrice.Location.X, chartPrice.Location.Y, chartPrice.Size.Width, chartPrice.Size.Height);
             originalTablePriceSize = new Rectangle(tablePrice.Location.X, tablePrice.Location.Y, tablePrice.Size.Width, tablePrice.Size.Height);
+            originalTablePackagesSize = new Rectangle(tablePackages.Location.X, tablePackages.Location.Y, tablePackages.Size.Width, tablePackages.Size.Height);
             originalButtonChangeSize = new Rectangle(btnChangeSize.Location.X, btnChangeSize.Location.Y, btnChangeSize.Size.Width, btnChangeSize.Size.Height);
             originalLabelKasutusmall = new Rectangle(lblKasutusmall.Location.X, lblKasutusmall.Location.Y, lblKasutusmall.Size.Width, lblKasutusmall.Size.Height);
             originalComboBoxKasutusmall = new Rectangle(cbKasutusmall.Location.X, cbKasutusmall.Location.Y, cbKasutusmall.Size.Width, cbKasutusmall.Size.Height);
@@ -670,6 +673,8 @@ namespace Kasutajaliides
                 chartPrice.Legends["Legend1"].Font = new Font("Comic Sans MS", 10);
                 tablePrice.ColumnHeadersDefaultCellStyle.Font = Bigger;
                 tablePrice.RowsDefaultCellStyle.Font = Bigger;
+                tablePackages.ColumnHeadersDefaultCellStyle.Font = Bigger;
+                tablePackages.RowsDefaultCellStyle.Font = Bigger;
                 state = false;
             }
             else
@@ -715,6 +720,8 @@ namespace Kasutajaliides
                 chartPrice.Legends["Legend1"].Font = new Font("Comic Sans MS", 8.25f);
                 tablePrice.ColumnHeadersDefaultCellStyle.Font = Normal;
                 tablePrice.RowsDefaultCellStyle.Font = Normal;
+                tablePackages.ColumnHeadersDefaultCellStyle.Font = Normal;
+                tablePackages.RowsDefaultCellStyle.Font = Normal;
                 state = true;
             }
         }
@@ -792,6 +799,10 @@ namespace Kasutajaliides
                 tablePrice.ForeColor = chalkWhite;
                 tablePrice.DefaultCellStyle.BackColor = xtraDarkGrey;
 
+                tablePackages.BackgroundColor = xtraDarkGrey;
+                tablePackages.ForeColor = chalkWhite;
+                tablePackages.DefaultCellStyle.BackColor = xtraDarkGrey;
+
                 cbKasutusmall.BackColor = midGrey;
                 cbKasutusmall.ForeColor = chalkWhite;
                 txtAjakulu.BackColor = midGrey;
@@ -843,6 +854,10 @@ namespace Kasutajaliides
                 tablePrice.ForeColor = Color.Black;
                 tablePrice.DefaultCellStyle.BackColor = Color.White;
 
+                tablePackages.BackgroundColor = SystemColors.ControlDark;
+                tablePackages.ForeColor = Color.Black;
+                tablePackages.DefaultCellStyle.BackColor = Color.White;
+
                 cbKasutusmall.BackColor = Color.White;
                 cbKasutusmall.ForeColor = Color.Black;
                 txtAjakulu.BackColor = Color.White;
@@ -873,6 +888,7 @@ namespace Kasutajaliides
         {
             resizeGuiElement(originalChartPriceSize, chartPrice);
             resizeGuiElement(originalTablePriceSize, tablePrice);
+            resizeGuiElement(originalTablePackagesSize, tablePackages);
             resizeGuiElement(originalButtonChangeSize, btnChangeSize);
             resizeGuiElement(originalLabelKasutusmall, lblKasutusmall);
             resizeGuiElement(originalComboBoxKasutusmall, cbKasutusmall);

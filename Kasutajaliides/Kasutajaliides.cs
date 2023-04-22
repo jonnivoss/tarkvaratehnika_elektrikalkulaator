@@ -133,7 +133,6 @@ namespace Kasutajaliides
             tablePrice.Invalidate();
         }
 
-
         //arvutab ristküllikuid
         //https://stackoverflow.com/questions/9647666/finding-the-value-of-the-points-in-a-chart
         //arvutab charti pindala
@@ -159,13 +158,38 @@ namespace Kasutajaliides
 
         private VerticalLineAnnotation vert;
 
-        //hiire liigutamisel kutsub funktsiooni välja
         private void chartPrice_MouseMove(object sender, MouseEventArgs e)
         {
+            /*// Cast the sender object to a Chart control
+            Chart chart = (Chart)sender;
+
+            // Call HitTest method to get the HitTestResult
+            HitTestResult result = chart.HitTest(e.X, e.Y);
+
+            // Check if the result is a data point
+            if (result.ChartElementType == ChartElementType.DataPoint && result.Series.Name != "Tarbimine")
+            {
+                // Get the y-value of the data point
+                double yValue = result.Series.Points[result.PointIndex].YValues[0];
+                
+                DateTime ahhha = dateStartTime.Value.AddHours(result.PointIndex);
+                // Set the tooltip of the data point to the y-value
+                string clockString = "kell: ";
+                clockString += ahhha.ToString("HH");
+                ahhha = ahhha.AddHours(1);
+                clockString += "-";
+                clockString += ahhha.ToString("HH");
+                toolTip.SetToolTip(chart, "hind: " + yValue.ToString()+" senti " +clockString);
+            }
+            else 
+            {
+                toolTip.Hide(chart);
+            }*/
+
             Chart chart = (Chart)sender;
             //kui tt tühi tee uus
             if (toolTip == null) toolTip = new ToolTip();
-            
+
             ChartArea ca = chart.ChartAreas[0];
             //kui hiir on graafiku sees ss hakka asju tegema
             if (InnerPlotPositionClientRectangle(chart, ca).Contains(e.Location))
@@ -180,16 +204,16 @@ namespace Kasutajaliides
                 DateTime s = DateTime.FromOADate(x);
                 foreach (var item in priceData)
                 {
-                    if (item.Item1.Hour == s.Hour && item.Item1.Date == s.Date) 
+                    if (item.Item1.Hour == s.Hour && item.Item1.Date == s.Date)
                     {
-                        y = item.Item2/10.0;
+                        y = item.Item2 / 10.0;
                         break;
                     }
                 }
                 //tt tekst
-                toolTip.SetToolTip(chart,"hind: " + y.ToString("0.000") + "\n" + s.ToString("kell HH:00") + "\n"+ s.ToString("dd/MM/yy"));
+                toolTip.SetToolTip(chart, "hind: " + y.ToString("0.000") + "\n" + s.ToString("kell HH:00") + "\n" + s.ToString("dd/MM/yy"));
                 //kui juba joon olemas ss kustuta ära et uus joonistada
-                if(vert != null)
+                if (vert != null)
                 {
                     chart.Annotations.Remove(vert);
                 }
@@ -210,16 +234,13 @@ namespace Kasutajaliides
                 //joonista joon
                 chart.Annotations.Add(vert);
             }
-            else 
+            else
             {
                 //kustuta tt ja joon
                 chart.Annotations.Remove(vert);
-                toolTip.Hide(chart); 
+                toolTip.Hide(chart);
             }
         }
-
-
-
 
         private void changeInterval(int count)
         {

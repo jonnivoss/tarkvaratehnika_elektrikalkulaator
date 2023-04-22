@@ -46,7 +46,7 @@ namespace Andmepyydja
             this.isStockPackage = isStockPackage;
             this.isGreenPackage = isGreenPackage;
 
-            this.isDayNight = this.nightPrice == 0 ? true : false;
+            this.isDayNight = this.nightPrice != 0 ? true : false;
         }
 
         public override string ToString()
@@ -306,7 +306,7 @@ namespace Andmepyydja
                 info.isStockPackage = Convert.ToBoolean(rida[6]);
                 info.isGreenPackage = Convert.ToBoolean(rida[7]);
 
-                info.isDayNight = info.nightPrice == 0.0 ? true : false;
+                info.isDayNight = info.nightPrice != 0.0 ? true : false;
                 // what throws?
             }
             catch (/*an*/ Exception/*ially soft throw?*/)

@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
 using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
+using PackageT = System.Collections.Generic.List<Andmepyydja.PackageInfo>;
 
 namespace Kasutajaliides
 {
@@ -31,9 +32,10 @@ namespace Kasutajaliides
         List<double> priceCostRange = new List<double>();
 
         VecT userData = new VecT();
-        string fileContents;
+        string fileContents, packageFileContents;
 
         VecT priceData = new VecT();
+        PackageT packageData = new PackageT();
 
         private Andmepyydja.CAP AP = new Andmepyydja.CAP();
         private AndmeSalvestaja.CAS AS = new AndmeSalvestaja.CAS("settings.json");
@@ -891,6 +893,45 @@ namespace Kasutajaliides
 
                 btnOpenPackages.BackColor = SystemColors.Control;
                 btnOpenPackages.ForeColor = Color.Black;
+            }
+        }
+
+        
+
+
+        private void btnOpenPackages_Click(object sender, EventArgs e)
+        {
+            if (AP.chooseFilePackages())
+            {
+                AS.changeSetting(AndmeSalvestaja.ASSetting.paketiAndmed, AP.getPackageFileName());
+                this.openCSVPackage();
+            }
+        }
+
+        private void openCSVPackage()
+        {
+            if (!AP.readPackageFile(ref packageFileContents))
+            {
+                MessageBox.Show("Lugemine ebaõnnestus!");
+            }
+            else
+            {
+                packageData = AP.parsePackage(packageFileContents);
+
+                tablePackages.Rows.Clear();
+                foreach (var item in packageData)
+                {
+                    tablePackages.Rows.Add(
+                        item.providerName,
+                        item.packageName,
+                        item.monthlyPrice.ToString(),
+                        item.sellerMarginal.ToString(),
+                        item.isStockPackage ? "-" : item.basePrice.ToString(),
+                        (!item.isDayNight || item.isStockPackage) ? "-" : item.nightPrice.ToString(),
+                        item.isStockPackage ? "Jah" : "Ei",
+                        item.isGreenPackage ? "Jah" : "Ei"
+                    );
+                }
             }
         }
 

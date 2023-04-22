@@ -134,34 +134,93 @@ namespace Kasutajaliides
             tablePrice.Invalidate();
         }
 
+
+        //arvutab ristküllikuid
+        //https://stackoverflow.com/questions/9647666/finding-the-value-of-the-points-in-a-chart
+        //arvutab charti pindala
+        RectangleF ChartAreaClientRectangle(Chart chart, ChartArea CA)
+        {
+            RectangleF CAR = CA.Position.ToRectangleF();
+            float pw = chart.ClientSize.Width / 100f;
+            float ph = chart.ClientSize.Height / 100f;
+            return new RectangleF(pw * CAR.X, ph * CAR.Y, pw * CAR.Width, ph * CAR.Height);
+        }
+        //sama asi
+        RectangleF InnerPlotPositionClientRectangle(Chart chart, ChartArea CA)
+        {
+            RectangleF IPP = CA.InnerPlotPosition.ToRectangleF();
+            RectangleF CArp = ChartAreaClientRectangle(chart, CA);
+
+            float pw = CArp.Width / 100f;
+            float ph = CArp.Height / 100f;
+
+            return new RectangleF(CArp.X + pw * IPP.X, CArp.Y + ph * IPP.Y,
+                                    pw * IPP.Width, ph * IPP.Height);
+        }
+
+        private VerticalLineAnnotation vert;
+
+        //hiire liigutamisel kutsub funktsiooni välja
         private void chartPrice_MouseMove(object sender, MouseEventArgs e)
         {
-            // Cast the sender object to a Chart control
             Chart chart = (Chart)sender;
-
-            // Call HitTest method to get the HitTestResult
-            HitTestResult result = chart.HitTest(e.X, e.Y);
-
-            // Check if the result is a data point
-            if (result.ChartElementType == ChartElementType.DataPoint && result.Series.Name != "Tarbimine")
+            //kui tt tühi tee uus
+            if (toolTip == null) toolTip = new ToolTip();
+            
+            ChartArea ca = chart.ChartAreas[0];
+            //kui hiir on graafiku sees ss hakka asju tegema
+            if (InnerPlotPositionClientRectangle(chart, ca).Contains(e.Location))
             {
-                // Get the y-value of the data point
-                double yValue = result.Series.Points[result.PointIndex].YValues[0];
-                
-                DateTime ahhha = dateStartTime.Value.AddHours(result.PointIndex);
-                // Set the tooltip of the data point to the y-value
-                string clockString = "kell: ";
-                clockString += ahhha.ToString("HH");
-                ahhha = ahhha.AddHours(1);
-                clockString += "-";
-                clockString += ahhha.ToString("HH");
-                toolTip.SetToolTip(chart, "hind: " + yValue.ToString()+" senti " +clockString);
+
+                Axis ax = ca.AxisX;
+                Axis ay = ca.AxisY;
+                //leia x kordinaat kus hiir on
+                double x = ax.PixelPositionToValue(e.X);
+                double y = 0;
+                //leia punkt millele x vastab ja salvesta selle y kordinaat
+                DateTime s = DateTime.FromOADate(x);
+                foreach (var item in priceData)
+                {
+                    if (item.Item1.Hour == s.Hour && item.Item1.Date == s.Date) 
+                    {
+                        y = item.Item2/10.0;
+                        break;
+                    }
+                }
+                //tt tekst
+                toolTip.SetToolTip(chart,"hind: " + y.ToString("0.000") + "\n" + s.ToString("kell HH:00") + "\n"+ s.ToString("dd/MM/yy"));
+                //kui juba joon olemas ss kustuta ära et uus joonistada
+                if(vert != null)
+                {
+                    chart.Annotations.Remove(vert);
+                }
+                //new line
+                vert = new VerticalLineAnnotation();
+                //joonistub x axise kohal
+                vert.AxisX = chart.ChartAreas[0].AxisX;
+                vert.X = chart.ChartAreas[0].AxisX.PixelPositionToValue(e.X);
+                //läbib tervet charti
+                vert.IsInfinitive = true;
+                vert.ClipToChartArea = ca.Name;
+                //joone nimi
+                vert.Name = "Elektrihind";
+                //joone stiil värv ja laius
+                vert.LineColor = Color.Green;
+                vert.LineWidth = 1;
+                vert.LineDashStyle = ChartDashStyle.Solid;
+                //joonista joon
+                chart.Annotations.Add(vert);
             }
             else 
             {
-                toolTip.Hide(chart);
+                //kustuta tt ja joon
+                chart.Annotations.Remove(vert);
+                toolTip.Hide(chart); 
             }
         }
+
+
+
 
         private void changeInterval(int count)
         {

@@ -47,6 +47,8 @@ namespace Kasutajaliides
         bool state = true;
         bool state2 = true; // DARK MODE BUTTON TOGGLE
 
+        double averagePrice;
+
         // akna elementide mõõtmete vaikeväärtused
         Rectangle originalWindowSize;
         Rectangle originalChartPriceSize;
@@ -85,6 +87,7 @@ namespace Kasutajaliides
         private void updateGraph()
         {
             // Uuenda graafikut
+            // Tarbimise andmed
             timeRange.Clear();
             costRange.Clear();
             foreach (var item in userData)
@@ -109,6 +112,9 @@ namespace Kasutajaliides
             DateTime ajutineDate = new DateTime();
             double ajutinePrice = 0.0;
 
+            averagePrice = 0.0;
+
+            // Börsihinna andmed
             foreach (var item in priceData)
             {
                 if (item.Item1 >= startTime && item.Item1 <= stopTime)
@@ -116,6 +122,9 @@ namespace Kasutajaliides
                     priceTimeRange.Add(item.Item1);
                     priceCostRange.Add(item.Item2 / 10.0);
                     tablePrice.Rows.Add(item.Item1, item.Item2 / 10.0);
+
+                    // Keskmise hinna arvutamiseks hindade kokku liitmine
+                    averagePrice += item.Item2 / 10.0; // s/kWh
 
                     ajutineDate = item.Item1.AddHours(1);
                     ajutinePrice = item.Item2 / 10.0;
@@ -126,11 +135,48 @@ namespace Kasutajaliides
                     txtDebug.AppendText(Environment.NewLine);*/
                 }
             }
+
+            // Jagab kokkuliidetud hinnad hindade arvuga ==> keskmine hind
+            averagePrice /= priceCostRange.Count;
+
+            string line = "Keskmine hind: " + averagePrice.ToString();
+            txtDebug.AppendText(Environment.NewLine);
+            txtDebug.AppendText(line);
+     
+
             priceTimeRange.Add(ajutineDate);
             priceCostRange.Add(ajutinePrice);
 
             chartPrice.Series["Elektrihind"].Points.DataBindXY(priceTimeRange, priceCostRange);
-            
+
+
+            for (int i = 0; i < priceCostRange.Count; i++) // Käib valitud ajaintervalli hinnad läbi
+            {
+                if(i != priceCostRange.Count - 1) // Kui ei ole tegemist viimase hinnaga
+                {
+                    if (priceCostRange[i] < averagePrice) // Väiksem kui keskmine hind ==> roheline
+                    {
+                        chartPrice.Series["Elektrihind"].Points[i+1].Color = Color.Green;
+                    }
+                    else // Suurem kui keskmine hind ==> punane
+                    {
+                        chartPrice.Series["Elektrihind"].Points[i+1].Color = Color.Red;
+                    }
+                }
+                else // Kui on tegemist viimase hinnaga
+                {
+                    if (priceCostRange[i] < averagePrice) // Väiksem kui keskmine hind ==> roheline
+                    {
+                        chartPrice.Series["Elektrihind"].Points[i].Color = Color.Green;
+                    }
+                    else // Suurem kui keskmine hind ==> punane
+                    {
+                        chartPrice.Series["Elektrihind"].Points[i].Color = Color.Red;
+                    }
+                }
+                
+            }
+
             chartPrice.Series["Elektrihind"].Enabled = showStock;
             chartPrice.Series["Tarbimine"].Enabled = showUsage;
             chartPrice.Invalidate();

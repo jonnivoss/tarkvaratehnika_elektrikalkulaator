@@ -75,6 +75,7 @@ namespace Andmepyydja
         {
             var other = (PackageInfo)obj;
 
+            // Kontrollib, kas üksikud elemendid on võrdsed
             return this.providerName == other.providerName &&
                    this.packageName == other.packageName &&
                    this.monthlyPrice == other.monthlyPrice &&
@@ -88,6 +89,8 @@ namespace Andmepyydja
 
     public class CAP : Andmepyydja.IAP
     {
+        // Erinevad failiavamisdialoogid kasutajaandmete ja paketiandmete jaoks, sest kui need asuvad
+        // erinevates kaustades, siis on väga frustreeriv, kui ühe valimisel unustatakse ära teise kaust
         private OpenFileDialog ofdUserData = new OpenFileDialog(), ofdPackage = new OpenFileDialog();
         private string fileNameUserData = "";
         private string fileNamePackage = "";
@@ -171,6 +174,7 @@ namespace Andmepyydja
             }
             catch (Exception)
             {
+                // No kui kirjutamine ei õnnestunud, siis sellest saadakse siin teada
                 return false;
             }
         }
@@ -186,11 +190,13 @@ namespace Andmepyydja
             {
                 return null;
             }
+            // Saab kätte tarbitud elektri hulga
             double num = Convert.ToDouble(rida[2]);
 
             DateTime d;
             try
             {
+                // Saab kätte kellaaja, mis tunni kohta tarbimisinfo käib
                 d = DateTime.ParseExact(
                     rida[0],
                     "dd.MM.yyyy HH:mm",
@@ -306,6 +312,7 @@ namespace Andmepyydja
             catch (/*an*/ Exception/*ially soft throw?*/)
             {
                 // Here's the catch - you can't catch it if there's no throw
+                return null;
             }
 
             return info;
@@ -341,6 +348,7 @@ namespace Andmepyydja
                     continue;
                 }
 
+                // Proovib parsida paketiandmete rea
                 var item = parseCSVPackageDataLine(Tuple.Create(line, delimiter));
                 if (item == null)
                 {
@@ -361,11 +369,11 @@ namespace Andmepyydja
             );
         }
 
-        // I'll be pack
-        public string createPackageCSV(PackageT pack)
+        // I'll be package CSV
+        public string createPackageCSV(PackageT package)
         {
             string s = "Pakkuja; Nimi; Kuutasu (€); Marginaal (s/kWh); Baashind (s/kWh); Ööhind (s/kWh); BörsiPakett; Roheline\n";
-            foreach (var item in pack)
+            foreach (var item in package)
             {
                 s += item.ToString();
                 s += '\n';
@@ -379,11 +387,11 @@ namespace Andmepyydja
         //muuda unix standard time DateTimeiks
         public DateTime UnixToDateTime(string a)
         {
-           
+            // long sest 64 bitti
             long unixTime = long.Parse(a);
             DateTimeOffset systemTime = DateTimeOffset.FromUnixTimeSeconds(unixTime);
-            DateTime yez = systemTime.UtcDateTime;
-            return yez.AddHours(2);
+            DateTime utcTime = systemTime.UtcDateTime;
+            return utcTime.AddHours(2);
         }
 
         //tagastab vect DatePrice 

@@ -178,27 +178,35 @@ namespace Kasutajaliides
                 double y = 0;
                 
                 DateTime s = DateTime.FromOADate(x);
-                int index = 0;
-                int i = 0;
                 foreach (var item in priceData)
                 {
-                    if (item.Item1 <= s) 
+                    if (item.Item1.Hour == s.Hour && item.Item1.Date == s.Date) 
                     {
-                        index = i;
                         y = item.Item2/10.0;
-
+                        break;
                     }
-                    i++;
                 }
-                toolTip.SetToolTip(chart,"hind: " + y.ToString("0.000") + "\n" + s.ToString("kell HH") + "\n"+ s.ToString("dd/MM"));
-                if (vert != null)
+                toolTip.SetToolTip(chart,"hind: " + y.ToString("0.000") + "\n" + s.ToString("kell HH:00") + "\n"+ s.ToString("dd/MM/yy"));
+                if(vert != null)
                 {
                     chart.Annotations.Remove(vert);
                 }
                 vert = new VerticalLineAnnotation();
+                vert.AxisX = chart.ChartAreas[0].AxisX;
+                vert.X = chart.ChartAreas[0].AxisX.PixelPositionToValue(e.X);
+
+                vert.IsInfinitive = true;
+                vert.ClipToChartArea = ca.Name;
+
+                vert.Name = "Elektrihind";
+                vert.LineColor = Color.Green;
+                vert.LineWidth = 1;
+                vert.LineDashStyle = ChartDashStyle.Solid;
+                chart.Annotations.Add(vert);
             }
             else 
-            { 
+            {
+                chart.Annotations.Remove(vert);
                 toolTip.Hide(chart); 
             }
         }

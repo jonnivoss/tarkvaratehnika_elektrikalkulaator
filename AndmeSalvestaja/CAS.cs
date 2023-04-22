@@ -13,6 +13,7 @@ namespace AndmeSalvestaja
         public Dictionary<ASSetting, string> setMap = new Dictionary<ASSetting, string>
         {
             { ASSetting.tarbijaAndmed,    "" },
+            { ASSetting.paketiAndmed,     "" },
             { ASSetting.suurendusLubatud, "0" }
         };
         public VecT marketData = new VecT { };

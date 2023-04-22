@@ -1,0 +1,6 @@
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\Arvutaja\bin\Release\Arvutaja.dll
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\Arvutaja\bin\Release\Arvutaja.pdb
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\Arvutaja\obj\Release\Arvutaja.csproj.AssemblyReference.cache
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\Arvutaja\obj\Release\Arvutaja.csproj.CoreCompileInputs.cache
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\Arvutaja\obj\Release\Arvutaja.dll
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\Arvutaja\obj\Release\Arvutaja.pdb

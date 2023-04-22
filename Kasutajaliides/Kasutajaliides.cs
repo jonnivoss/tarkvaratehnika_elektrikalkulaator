@@ -43,9 +43,11 @@ namespace Kasutajaliides
 
         DateTime startTime, stopTime;
         DateTime endOfDayDate = DateTime.Now.Date.AddHours(24); // vastab tänase päeva lõpule (24:00)
+        DateTime zoomStartTime, zoomStopTime;
         bool showStock = true, showUsage = true;
         bool state = true;
         bool state2 = true; // DARK MODE BUTTON TOGGLE
+        bool state3 = false; // graafiku vajutamisega suurendamise jaoks
 
         double averagePrice;
 
@@ -364,8 +366,14 @@ namespace Kasutajaliides
                 changeInterval(timeRange.Count);
                 txtDebug.AppendText("  kaas   ");
             }
-            //MessageBox.Show(priceData.Last().Item1.ToString());
-            callAPI(startTime.Date.AddDays(-60), endOfDayDate); // kutsub API ainult vajadusel välja ja loeb seejuures korraga rohkem andmeid!
+            else // määra otspunktide vaikeväärtuseks tarbimisandmete algus- ja lõppaeg
+            {
+                dateStartTime.Value = timeRange.First();
+                dateStopTime.Value = timeRange.Last();
+                startTime = dateStartTime.Value;
+                stopTime = dateStopTime.Value;
+            }
+            callAPI(timeRange.First().AddDays(-30), endOfDayDate);
             updateGraph();
         }
 
@@ -485,6 +493,9 @@ namespace Kasutajaliides
         {
             // "MOUSE SCROLL" suurendus. EI KUSTUTA KURAT, kui vaja siis commenti välja!
             this.chartPrice.MouseWheel += new MouseEventHandler(chartPrice_zooming);
+            // tarbimisandmete graafiku värv
+            chartPrice.Series["Tarbimine"].Color = ColorTranslator.FromHtml("#090909");
+            chartPrice.Series["Elektrihind"].Color = Color.Black;
 
             toolTip.OwnerDraw = true;
             toolTip.Draw += new System.Windows.Forms.DrawToolTipEventHandler(toolTip_Draw);
@@ -499,7 +510,6 @@ namespace Kasutajaliides
             txtHind.Text = "-";
             tablePrice.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             tablePackages.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            // LAEN KOHE SISSE KAHE KUU JAGU ANDMEID ET EI PEAKS IGA KORD APId VÄLJA KUTSUMA KUI KUUPÄEV VEIDI MUUTUB!
             VecT costNowData = AP.HindAegInternet(DateTime.Now.Date.AddDays(-60), DateTime.Now);
             List<double> costNow = new List<double>();
             foreach (var item in costNowData)
@@ -950,6 +960,7 @@ namespace Kasutajaliides
                 btnOpenPackages.BackColor = midGrey;
 
                 chartPrice.ChartAreas["ChartArea1"].BorderColor = chalkWhite;
+                chartPrice.Series["Tarbimine"].Color = ColorTranslator.FromHtml("#CCCC00");
                 //Bigger = new Font("Impact", 16);
 
                 toolTip.BackColor = midGrey;
@@ -1012,6 +1023,7 @@ namespace Kasutajaliides
 
                 toolTip.BackColor = SystemColors.Control;
                 toolTip.ForeColor = Color.Black;
+                chartPrice.Series["Tarbimine"].Color = ColorTranslator.FromHtml("#090909");
             }
         }
 
@@ -1095,15 +1107,12 @@ namespace Kasutajaliides
         // https://stackoverflow.com/questions/11955866/retrieving-datetime-x-axis-value-from-chart-control 
         void chartPrice_zooming(object sender, MouseEventArgs e)
         {
-            dateStartTime.ValueChanged += dateStartTime_ValueChanged; // lülita DateTimePickeri muutuse handler sisse
-            // rulliga kerimisel hiire asukoht X-telje suhtes; Andmetüübiks DateTime!
-            var mousePositionDate = DateTime.FromOADate(chartPrice.ChartAreas["ChartArea1"].AxisX.PixelPositionToValue(e.Location.X));
             if (startTime < stopTime)
             {
-                //MessageBox.Show(startTime.ToString() + " " + stopTime.ToString());
+                // rulliga kerimisel hiire asukoht X-telje suhtes; Andmetüübiks DateTime!
+                var mousePositionDate = DateTime.FromOADate(chartPrice.ChartAreas["ChartArea1"].AxisX.PixelPositionToValue(e.Location.X));
                 var deltaDate = stopTime - startTime;
                 var distanceFromToday = DateTime.Now - stopTime;
-                //double xCoordPercent = (e.Location.X - 88) / 464.0; // jagades graafiku laiusega saame pointeri normaliseeritud asukoha graafikul vahemikus [0;1]
                 double xCoordPercent = (mousePositionDate - startTime).TotalMilliseconds / (stopTime - startTime).TotalMilliseconds; // jagades graafiku laiusega saame pointeri normaliseeritud asukoha graafikul vahemikus [0;1]
                 //MessageBox.Show(xCoordPercent.ToString());
                 int leftStep = 1, rightStep = 1, totalStep = 1; // sammud graafiku otste nihutamiseks (tundides)
@@ -1127,7 +1136,6 @@ namespace Kasutajaliides
                 {
                     totalStep = 384;
                 }
-                totalStep = 24;
                 leftStep = Convert.ToInt16(xCoordPercent * totalStep);
                 rightStep = totalStep - leftStep;
                 //MessageBox.Show((mousePositionDate - startTime).TotalMilliseconds.ToString());
@@ -1135,32 +1143,61 @@ namespace Kasutajaliides
                 {
                     if (e.Delta > 0 && (startTime < stopTime) && deltaDate.TotalDays >= 2)
                     {
-                        dateStartTime.Value = dateStartTime.Value.AddHours(leftStep);
-                        dateStopTime.Value = dateStopTime.Value.AddHours(-rightStep);
-                        startTime = startTime.AddHours(leftStep);
-                        stopTime = stopTime.AddHours(-rightStep);
+                        priceChart_zoom(dateStartTime.Value.AddHours(leftStep), stopTime.AddHours(-rightStep));
                     }
                     else if (e.Delta < 0)
                     {
                         if (distanceFromToday.TotalHours <= 2)
                         {
-                            dateStopTime.Value = endOfDayDate; // ümardab alla täistunniks
-                            stopTime = endOfDayDate;
-                            dateStartTime.Value = dateStartTime.Value.AddHours(-totalStep);
-                            startTime = startTime.AddHours(-totalStep);
+                            priceChart_zoom(dateStartTime.Value.AddHours(-totalStep), endOfDayDate);
                         }
                         else
                         {
-                            dateStopTime.Value = dateStopTime.Value.AddHours(rightStep);
-                            stopTime = stopTime.AddHours(rightStep);
-                            dateStartTime.Value = dateStartTime.Value.AddHours(-leftStep);
-                            startTime = startTime.AddHours(-leftStep);
+                            priceChart_zoom(dateStartTime.Value.AddHours(-leftStep), dateStopTime.Value.AddHours(rightStep));
                         }
                     }
                 }
             }
+        }
+
+        void priceChart_MouseDown(object sender, MouseEventArgs e)
+        {
+            state3 = true;
+            if (e.Button == MouseButtons.Left) // vasak hiireklahv ALLA
+            {
+                zoomStartTime = DateTime.FromOADate(chartPrice.ChartAreas["ChartArea1"].AxisX.PixelPositionToValue(e.Location.X));
+                zoomStartTime = zoomStartTime.AddMilliseconds(-(zoomStartTime.Millisecond + 1000*zoomStartTime.Second + 60000*zoomStartTime.Minute));
+            }
+        }
+        void priceChart_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (state3) // vasak hiireklahv ALLA
+            {
+                try
+                {
+                    zoomStopTime = DateTime.FromOADate(chartPrice.ChartAreas["ChartArea1"].AxisX.PixelPositionToValue(e.Location.X));
+                }
+                catch
+                {
+                    // You know nothing, Jon Snow...
+                }
+                if (zoomStopTime - zoomStartTime >= TimeSpan.FromHours(1) && zoomStartTime >= startTime && zoomStopTime < stopTime)
+                {
+                    priceChart_zoom(zoomStartTime, zoomStopTime);
+                }
+            }
+            state3 = false;
+        }
+        void priceChart_zoom(DateTime start, DateTime stop)
+        {
+            dateStartTime.ValueChanged += dateStartTime_ValueChanged; // lülita DateTimePickeri muutuse handler sisse
+            dateStartTime.Value = start;
+            startTime = start;
+            dateStopTime.Value = stop;
+            stopTime = stop;
             updateGraph();
             dateStartTime.ValueChanged -= dateStartTime_ValueChanged; // lülita DateTimePickeri muutuse handler välja
         }
+
     }
 }

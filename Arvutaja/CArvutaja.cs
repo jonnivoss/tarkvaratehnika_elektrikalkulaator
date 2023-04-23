@@ -210,6 +210,9 @@ namespace Arvutaja
 
         public double finalPrice(double stockPrice, Andmepyydja.PackageInfo package, DateTime time)
         {
+            // Käibemaks
+            const double tax = 0.2;
+
             double price;
             if (package.isStockPackage)
             {
@@ -231,7 +234,7 @@ namespace Arvutaja
                 }
             }
 
-            return price * 1.20;
+            return price * (1.0 + tax);
         }
 
     }

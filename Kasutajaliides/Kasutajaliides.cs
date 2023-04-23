@@ -259,7 +259,7 @@ namespace Kasutajaliides
 
                 if (e.X != this.lastX || e.Y != this.lastY)
                 {
-                    toolTip.SetToolTip(chart, tooltipText);
+                    toolTip.SetToolTip(chart, " ");
 
                     this.lastX = e.X;
                     this.lastY = e.Y;

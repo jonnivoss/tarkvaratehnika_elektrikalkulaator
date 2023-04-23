@@ -51,6 +51,8 @@ namespace Kasutajaliides
 
         double averagePrice;
 
+        
+
         // akna elementide mõõtmete vaikeväärtused
         Rectangle originalWindowSize;
         Rectangle originalChartPriceSize;

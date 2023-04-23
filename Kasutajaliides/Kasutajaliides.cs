@@ -51,7 +51,8 @@ namespace Kasutajaliides
 
         double averagePrice;
 
-        
+        // Keskmise hinna joon graafikul
+        StripLine averagePriceLine = new StripLine();
 
         // akna elementide mõõtmete vaikeväärtused
         Rectangle originalWindowSize;
@@ -142,6 +143,10 @@ namespace Kasutajaliides
 
             // Jagab kokkuliidetud hinnad hindade arvuga ==> keskmine hind
             averagePrice /= priceCostRange.Count;
+            averagePriceLine.Interval = 0;
+            averagePriceLine.IntervalOffset = averagePrice;
+            averagePriceLine.StripWidth = 0.05;
+            averagePriceLine.BackColor = Color.Blue;
 
             string line = "Keskmine hind: " + averagePrice.ToString();
             txtDebug.AppendText(Environment.NewLine);
@@ -152,7 +157,7 @@ namespace Kasutajaliides
             priceCostRange.Add(ajutinePrice);
 
             chartPrice.Series["Elektrihind"].Points.DataBindXY(priceTimeRange, priceCostRange);
-
+            chartPrice.ChartAreas["ChartArea1"].AxisY2.StripLines.Add(averagePriceLine);
 
             for (int i = 0; i < priceCostRange.Count; i++) // Käib valitud ajaintervalli hinnad läbi
             {

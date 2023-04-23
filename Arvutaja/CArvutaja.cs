@@ -138,5 +138,104 @@ namespace Arvutaja
 
             return 0;
         }
+
+        private static bool isDailyRate(DateTime time)
+        {
+            // https://xn--riigiphad-v9a.ee/
+            DateTime[] riigiPyhad =
+            {
+                new DateTime(2023,  4,  7),  // suur reede 2023
+                new DateTime(2023,  4,  9),  // ülestõusmispühade 1. püha 2023
+                new DateTime(2023,  5, 28), // nelipühade 1. püha 2023
+                new DateTime(2023,  1,  1),
+                new DateTime(2023,  2, 24),
+                new DateTime(2023,  5,  1),
+                new DateTime(2023,  6, 23),
+                new DateTime(2023,  6, 24),
+                new DateTime(2023,  8, 20),
+                new DateTime(2023, 12, 24),
+                new DateTime(2023, 12, 25),
+                new DateTime(2023, 12, 26)
+            };
+
+            // Add suur reede
+            // Add ülestõusmispühade 1. püha
+            // Add nelipühade 1. püha
+            // Mitte-deterministlikud riigipühad :/
+            switch (time.Year)
+            {
+                case 2024:
+                    riigiPyhad[0] = new DateTime(2024, 3, 29);
+                    riigiPyhad[1] = new DateTime(2024, 3, 31);
+                    riigiPyhad[2] = new DateTime(2024, 5, 19);
+                    break;
+                case 2025:
+                    riigiPyhad[0] = new DateTime(2025, 4, 18);
+                    riigiPyhad[1] = new DateTime(2025, 4, 20);
+                    riigiPyhad[2] = new DateTime(2025, 6,  8);
+                    break;
+                case 2026:
+                    riigiPyhad[0] = new DateTime(2026, 4,  3);
+                    riigiPyhad[1] = new DateTime(2026, 4,  5);
+                    riigiPyhad[2] = new DateTime(2026, 5, 24);
+                    break;
+                case 2027:
+                    riigiPyhad[0] = new DateTime(2027, 3, 26);
+                    riigiPyhad[1] = new DateTime(2027, 3, 28);
+                    riigiPyhad[2] = new DateTime(2027, 5, 16);
+                    break;
+            }
+
+            var clock = time.TimeOfDay;
+
+            // Riigipühadel on öötariif
+            // https://raha.geenius.ee/rubriik/uudis/eesti-energia-muudab-oma-tuuptingimusi/
+            if (riigiPyhad.Contains(time))
+            {
+                return false;
+            }
+            else
+            {
+                // Kella check, 7-22 on päevatariif
+                if ((clock.Hours >= 7) && (clock.Hours <= 22))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        public double finalPrice(double stockPrice, Andmepyydja.PackageInfo package, DateTime time)
+        {
+            // Käibemaks
+            const double tax = 0.2;
+
+            double price;
+            if (package.isStockPackage)
+            {
+                price = stockPrice + package.sellerMarginal;
+            }
+            else if (!package.isDayNight)
+            {
+                price = package.basePrice + package.sellerMarginal;
+            }
+            else
+            {
+                if (isDailyRate(time))
+                {
+                    price = package.dayPrice + package.sellerMarginal;
+                }
+                else
+                {
+                    price = package.nightPrice + package.sellerMarginal;
+                }
+            }
+
+            return price * (1.0 + tax);
+        }
+
     }
 }

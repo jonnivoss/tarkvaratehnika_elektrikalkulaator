@@ -38,7 +38,7 @@ namespace UnitTestArvutaja
             double reaalne2 = avg;
             double oodatud2 = 4.75375;
             Assert.AreEqual(oodatud1, reaalne1);
-            Assert.AreEqual(IsClose(oodatud2, reaalne2, 0.00001), true);
+            Assert.AreEqual(true, IsClose(oodatud2, reaalne2, 0.00001));
         }
 
 
@@ -64,7 +64,7 @@ namespace UnitTestArvutaja
             double reaalne2 = avg;
             double oodatud2 = 4.116;
             Assert.AreEqual(oodatud1, reaalne1);
-            Assert.AreEqual(IsClose(oodatud2, reaalne2, 0.00001), true);
+            Assert.AreEqual(true, IsClose(oodatud2, reaalne2, 0.00001));
         }
 
         [TestMethod]
@@ -84,7 +84,7 @@ namespace UnitTestArvutaja
             double reaalne2 = avg;
             double oodatud2 = 8.01;
             Assert.AreEqual(oodatud1, reaalne1);
-            Assert.AreEqual(IsClose(oodatud2, reaalne2, 0.00001), true);
+            Assert.AreEqual(true, IsClose(oodatud2, reaalne2, 0.00001));
         }
 
         [TestMethod]

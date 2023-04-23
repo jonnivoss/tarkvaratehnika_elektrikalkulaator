@@ -36,17 +36,17 @@ namespace Andmepyydja
             bool isStockPackage, bool isGreenPackage
         )
         {
-            this.providerName = providerName;
-            this.packageName = packageName;
-            this.monthlyPrice = monthlyPrice;
+            this.providerName   = providerName;
+            this.packageName    = packageName;
+            this.monthlyPrice   = monthlyPrice;
             this.sellerMarginal = sellerMarginal;
-            this.basePrice = basePrice;
-            this.dayPrice = this.basePrice;
-            this.nightPrice = nightPrice;
+            this.basePrice      = basePrice;
+            this.dayPrice       = this.basePrice;
+            this.nightPrice     = nightPrice;
             this.isStockPackage = isStockPackage;
             this.isGreenPackage = isGreenPackage;
 
-            this.isDayNight = this.nightPrice != 0 ? true : false;
+            this.isDayNight     = this.nightPrice != 0 ? true : false;
         }
 
         public override string ToString()
@@ -76,12 +76,12 @@ namespace Andmepyydja
             var other = (PackageInfo)obj;
 
             // Kontrollib, kas üksikud elemendid on võrdsed
-            return this.providerName == other.providerName &&
-                   this.packageName == other.packageName &&
-                   this.monthlyPrice == other.monthlyPrice &&
+            return this.providerName   == other.providerName &&
+                   this.packageName    == other.packageName &&
+                   this.monthlyPrice   == other.monthlyPrice &&
                    this.sellerMarginal == other.sellerMarginal &&
-                   this.basePrice == other.basePrice &&
-                   this.nightPrice == other.nightPrice &&
+                   this.basePrice      == other.basePrice &&
+                   this.nightPrice     == other.nightPrice &&
                    this.isStockPackage == other.isStockPackage &&
                    this.isGreenPackage == other.isGreenPackage;
         }

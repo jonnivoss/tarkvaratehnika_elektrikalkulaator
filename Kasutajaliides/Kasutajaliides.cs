@@ -7,6 +7,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
 using PackageT = System.Collections.Generic.List<Andmepyydja.PackageInfo>;
+using Cursor = System.Windows.Forms.DataVisualization.Charting.Cursor;
 
 namespace Kasutajaliides
 {
@@ -52,7 +53,8 @@ namespace Kasutajaliides
         double averagePrice;
 
         // Keskmise hinna joon graafikul
-        StripLine averagePriceLine = new StripLine();
+        //StripLine averagePriceLine = new StripLine();
+        HorizontalLineAnnotation averagePriceLine = new HorizontalLineAnnotation();
 
         // akna elementide mõõtmete vaikeväärtused
         Rectangle originalWindowSize;
@@ -143,21 +145,49 @@ namespace Kasutajaliides
 
             // Jagab kokkuliidetud hinnad hindade arvuga ==> keskmine hind
             averagePrice /= priceCostRange.Count;
-            averagePriceLine.Interval = 0;
+
+            // Keskmise hinna joon
+            /*averagePriceLine.Interval = 0;
             averagePriceLine.IntervalOffset = averagePrice;
-            averagePriceLine.StripWidth = 0.05;
+            //averagePriceLine.StripWidth = 0.5;
             averagePriceLine.BackColor = Color.Blue;
+            chartPrice.ChartAreas["ChartArea1"].AxisY2.StripLines.Add(averagePriceLine);
+
+            if(Double.IsNaN(chartPrice.ChartAreas["ChartArea1"].AxisY2.Maximum))
+            {
+                averagePriceLine.StripWidth = 0.05;
+            }
+            else
+            {
+                averagePriceLine.StripWidth = chartPrice.ChartAreas["ChartArea1"].AxisY2.Maximum * 0.01;
+            }*/
+
+            //0.05 * chartPrice.ChartAreas["ChartArea1"].AxisY2.Maximum;
+            //chartPrice.ChartAreas["ChartArea1"].AxisY2.Maximum;
+            chartPrice.Annotations.Remove(averagePriceLine);
+            averagePriceLine.AxisY = chartPrice.ChartAreas["ChartArea1"].AxisY2;
+            averagePriceLine.IsSizeAlwaysRelative = false;
+            averagePriceLine.AnchorY = averagePrice;
+            averagePriceLine.IsInfinitive = true;
+            averagePriceLine.ClipToChartArea = chartPrice.ChartAreas["ChartArea1"].Name;
+            averagePriceLine.LineColor = Color.BlueViolet;
+            averagePriceLine.LineWidth = 1;
+            averagePriceLine.Name = "priceLine";
+            chartPrice.Annotations.Add(averagePriceLine);
+
+
 
             string line = "Keskmine hind: " + averagePrice.ToString();
+            string line2 = "Max: " + chartPrice.ChartAreas["ChartArea1"].AxisY2.Maximum.ToString();
             txtDebug.AppendText(Environment.NewLine);
             txtDebug.AppendText(line);
-     
+            txtDebug.AppendText(line2);
 
             priceTimeRange.Add(ajutineDate);
             priceCostRange.Add(ajutinePrice);
 
             chartPrice.Series["Elektrihind"].Points.DataBindXY(priceTimeRange, priceCostRange);
-            chartPrice.ChartAreas["ChartArea1"].AxisY2.StripLines.Add(averagePriceLine);
+            //chartPrice.ChartAreas["ChartArea1"].AxisY2.StripLines.Add(averagePriceLine);
 
             for (int i = 0; i < priceCostRange.Count; i++) // Käib valitud ajaintervalli hinnad läbi
             {
@@ -536,6 +566,7 @@ namespace Kasutajaliides
                 cbKasutusmall.Items.Add(i.Key);
             }
 
+            
 
             AP.setUserDataFileName(AS.getSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed));
             AP.setPackageFileName(AS.getSetting(AndmeSalvestaja.ASSetting.paketiAndmed));
@@ -1211,6 +1242,7 @@ namespace Kasutajaliides
             stopTime = stop;
             updateGraph();
             dateStartTime.ValueChanged -= dateStartTime_ValueChanged; // lülita DateTimePickeri muutuse handler välja
+
         }
 
     }

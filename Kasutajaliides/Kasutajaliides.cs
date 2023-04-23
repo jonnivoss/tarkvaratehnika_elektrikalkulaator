@@ -54,6 +54,9 @@ namespace Kasutajaliides
 
         double averagePrice;
 
+        // Keskmise hinna joon graafikul
+        HorizontalLineAnnotation averagePriceLine = new HorizontalLineAnnotation();
+
         // akna elementide mõõtmete vaikeväärtused
         Rectangle originalWindowSize;
         Rectangle originalChartPriceSize;
@@ -144,16 +147,30 @@ namespace Kasutajaliides
             // Jagab kokkuliidetud hinnad hindade arvuga ==> keskmine hind
             averagePrice /= priceCostRange.Count;
 
+            // Keskmise hinna joon
+            chartPrice.Annotations.Remove(averagePriceLine);
+            averagePriceLine.AxisY = chartPrice.ChartAreas["ChartArea1"].AxisY2;
+            averagePriceLine.IsSizeAlwaysRelative = false;
+            averagePriceLine.AnchorY = averagePrice;
+            averagePriceLine.IsInfinitive = true;
+            averagePriceLine.ClipToChartArea = chartPrice.ChartAreas["ChartArea1"].Name;
+            averagePriceLine.LineColor = Color.BlueViolet;
+            averagePriceLine.LineWidth = 1;
+            averagePriceLine.Name = "priceLine";
+            chartPrice.Annotations.Add(averagePriceLine);
+
+
+
             string line = "Keskmine hind: " + averagePrice.ToString();
+            string line2 = "Max: " + chartPrice.ChartAreas["ChartArea1"].AxisY2.Maximum.ToString();
             txtDebug.AppendText(Environment.NewLine);
             txtDebug.AppendText(line);
-     
+            txtDebug.AppendText(line2);
 
             priceTimeRange.Add(ajutineDate);
             priceCostRange.Add(ajutinePrice);
 
             chartPrice.Series["Elektrihind"].Points.DataBindXY(priceTimeRange, priceCostRange);
-
 
             for (int i = 0; i < priceCostRange.Count; i++) // Käib valitud ajaintervalli hinnad läbi
             {
@@ -552,6 +569,7 @@ namespace Kasutajaliides
                 cbKasutusmall.Items.Add(i.Key);
             }
 
+            
 
             AP.setUserDataFileName(AS.getSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed));
             AP.setPackageFileName(AS.getSetting(AndmeSalvestaja.ASSetting.paketiAndmed));
@@ -1227,6 +1245,7 @@ namespace Kasutajaliides
             stopTime = stop;
             updateGraph();
             dateStartTime.ValueChanged -= dateStartTime_ValueChanged; // lülita DateTimePickeri muutuse handler välja
+
         }
 
     }

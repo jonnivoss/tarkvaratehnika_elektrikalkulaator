@@ -7,7 +7,6 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
 using PackageT = System.Collections.Generic.List<Andmepyydja.PackageInfo>;
-using Cursor = System.Windows.Forms.DataVisualization.Charting.Cursor;
 
 namespace Kasutajaliides
 {
@@ -53,7 +52,6 @@ namespace Kasutajaliides
         double averagePrice;
 
         // Keskmise hinna joon graafikul
-        //StripLine averagePriceLine = new StripLine();
         HorizontalLineAnnotation averagePriceLine = new HorizontalLineAnnotation();
 
         // akna elementide mõõtmete vaikeväärtused
@@ -147,23 +145,6 @@ namespace Kasutajaliides
             averagePrice /= priceCostRange.Count;
 
             // Keskmise hinna joon
-            /*averagePriceLine.Interval = 0;
-            averagePriceLine.IntervalOffset = averagePrice;
-            //averagePriceLine.StripWidth = 0.5;
-            averagePriceLine.BackColor = Color.Blue;
-            chartPrice.ChartAreas["ChartArea1"].AxisY2.StripLines.Add(averagePriceLine);
-
-            if(Double.IsNaN(chartPrice.ChartAreas["ChartArea1"].AxisY2.Maximum))
-            {
-                averagePriceLine.StripWidth = 0.05;
-            }
-            else
-            {
-                averagePriceLine.StripWidth = chartPrice.ChartAreas["ChartArea1"].AxisY2.Maximum * 0.01;
-            }*/
-
-            //0.05 * chartPrice.ChartAreas["ChartArea1"].AxisY2.Maximum;
-            //chartPrice.ChartAreas["ChartArea1"].AxisY2.Maximum;
             chartPrice.Annotations.Remove(averagePriceLine);
             averagePriceLine.AxisY = chartPrice.ChartAreas["ChartArea1"].AxisY2;
             averagePriceLine.IsSizeAlwaysRelative = false;
@@ -187,7 +168,6 @@ namespace Kasutajaliides
             priceCostRange.Add(ajutinePrice);
 
             chartPrice.Series["Elektrihind"].Points.DataBindXY(priceTimeRange, priceCostRange);
-            //chartPrice.ChartAreas["ChartArea1"].AxisY2.StripLines.Add(averagePriceLine);
 
             for (int i = 0; i < priceCostRange.Count; i++) // Käib valitud ajaintervalli hinnad läbi
             {

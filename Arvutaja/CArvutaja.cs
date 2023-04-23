@@ -138,5 +138,101 @@ namespace Arvutaja
 
             return 0;
         }
+
+        private bool isDailyRate(DateTime time)
+        {
+            // riigipühad.ee
+            DateTime[] riigiPyhad =
+            {
+                new DateTime(0, 4, 7),  // suur reede 2023
+                new DateTime(0, 4, 9),  // ülestõusmispühade 1. püha 2023
+                new DateTime(0, 5, 28), // nelipühade 1. püha 2023
+                new DateTime(0, 1, 1),
+                new DateTime(0, 2, 24),
+                new DateTime(0, 5, 1),
+                new DateTime(0, 6, 23),
+                new DateTime(0, 6, 24),
+                new DateTime(0, 8, 20),
+                new DateTime(0, 12, 24),
+                new DateTime(0, 12, 25),
+                new DateTime(0, 12, 26)
+            };
+
+            // Add suur reede
+            // Add ülestõusmispühade 1. püha
+            // Add nelipühade 1. püha
+            // Mitte-deterministlikud riigipühad :/
+            switch (time.Year)
+            {
+                case 2024:
+                    riigiPyhad[0] = new DateTime(0, 3, 29);
+                    riigiPyhad[1] = new DateTime(0, 3, 31);
+                    riigiPyhad[2] = new DateTime(0, 5, 19);
+                    break;
+                case 2025:
+                    riigiPyhad[0] = new DateTime(0, 4, 18);
+                    riigiPyhad[1] = new DateTime(0, 4, 20);
+                    riigiPyhad[2] = new DateTime(0, 6, 8);
+                    break;
+                case 2026:
+                    riigiPyhad[0] = new DateTime(0, 4, 3);
+                    riigiPyhad[1] = new DateTime(0, 4, 5);
+                    riigiPyhad[2] = new DateTime(0, 5, 24);
+                    break;
+                case 2027:
+                    riigiPyhad[0] = new DateTime(0, 3, 26);
+                    riigiPyhad[1] = new DateTime(0, 3, 28);
+                    riigiPyhad[2] = new DateTime(0, 5, 16);
+                    break;
+            }
+
+            var clock = time.TimeOfDay;
+            time = new DateTime(0, time.Month, time.Day);
+
+            // Riigipühadel on öötariif
+            if (riigiPyhad.Contains(time))
+            {
+                return false;
+            }
+            else
+            {
+                // Kella check, 7-22 on päevatariif
+                if ((clock.Hours >= 7) && (clock.Hours <= 22))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        public double finalPrice(double stockPrice, Andmepyydja.PackageInfo package, DateTime time)
+        {
+            double price;
+            if (package.isStockPackage)
+            {
+                price = stockPrice + package.sellerMarginal;
+            }
+            else if (!package.isDayNight)
+            {
+                price = package.basePrice + package.sellerMarginal;
+            }
+            else
+            {
+                if (isDailyRate(time))
+                {
+                    price = package.dayPrice + package.sellerMarginal;
+                }
+                else
+                {
+                    price = package.nightPrice + package.sellerMarginal;
+                }
+            }
+
+            return price * 1.20;
+        }
+
     }
 }

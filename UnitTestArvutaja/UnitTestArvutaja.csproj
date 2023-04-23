@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTestArvutajaFinalPrice.cs" />
     <Compile Include="UnitTestArvutajaAverage.cs" />
     <Compile Include="UnitTestArvutajaIntegreerija.cs" />
   </ItemGroup>
@@ -60,6 +61,10 @@
     <ProjectReference Include="..\Arvutaja\Arvutaja.csproj">
       <Project>{c921fa8b-6b9b-403a-b316-4c2eba950da7}</Project>
       <Name>Arvutaja</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LokaalneAndmepyydja\Andmepyydja.csproj">
+      <Project>{0986332a-24b6-49da-8d38-d840ff5f0b4b}</Project>
+      <Name>Andmepyydja</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

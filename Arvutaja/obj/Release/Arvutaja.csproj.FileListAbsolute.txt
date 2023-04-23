@@ -4,3 +4,12 @@ C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\Arvut
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\Arvutaja\obj\Release\Arvutaja.csproj.CoreCompileInputs.cache
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\Arvutaja\obj\Release\Arvutaja.dll
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\Arvutaja\obj\Release\Arvutaja.pdb
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\bin\Release\Arvutaja.dll
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\bin\Release\Arvutaja.pdb
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\bin\Release\Andmepyydja.dll
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\bin\Release\Andmepyydja.pdb
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\obj\Release\Arvutaja.csproj.AssemblyReference.cache
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\obj\Release\Arvutaja.csproj.CoreCompileInputs.cache
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\obj\Release\Arvutaja.csproj.CopyComplete
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\obj\Release\Arvutaja.dll
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\obj\Release\Arvutaja.pdb

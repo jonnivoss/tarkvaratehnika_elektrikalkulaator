@@ -4,3 +4,9 @@ C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\Lokaa
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\LokaalneAndmepyydja\obj\Release\Andmepyydja.csproj.CoreCompileInputs.cache
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\LokaalneAndmepyydja\obj\Release\Andmepyydja.dll
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\LokaalneAndmepyydja\obj\Release\Andmepyydja.pdb
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\bin\Release\Andmepyydja.dll
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\bin\Release\Andmepyydja.pdb
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\obj\Release\Andmepyydja.csproj.AssemblyReference.cache
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\obj\Release\Andmepyydja.csproj.CoreCompileInputs.cache
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\obj\Release\Andmepyydja.dll
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\obj\Release\Andmepyydja.pdb

@@ -17,6 +17,8 @@ namespace Arvutaja
             System.DateTime ylemine,
             ref double avg
         );
+
+        double finalPrice(double stockPrice, Andmepyydja.PackageInfo package, DateTime time);
     }
 
 }

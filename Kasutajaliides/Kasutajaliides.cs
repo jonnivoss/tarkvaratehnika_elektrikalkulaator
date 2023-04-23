@@ -18,8 +18,11 @@ namespace Kasutajaliides
             InitializeComponent();
         }
 
-        //Point clickPoint = new Point();
+        //tooltip seotud muutujad
         ToolTip toolTip = new ToolTip();
+        string tooltipText;
+        private int lastX;
+        private int lastY;
 
         // kasutajaliidese tekstifondid
         Font Normal = new Font("Impact", 12);
@@ -227,11 +230,20 @@ namespace Kasutajaliides
 
         private VerticalLineAnnotation vert;
 
+        void toolTip_Popup(object sender, PopupEventArgs e)
+        {
+            Font f = (state) ? Normal : Bigger;
+            e.ToolTipSize = TextRenderer.MeasureText(tooltipText, f);
+        }
+
         private void toolTip_Draw(object sender, DrawToolTipEventArgs e)
         {
+            //font ja värv
+            Font f  = (state)?  Normal       : Bigger;
+            Brush b = (state2)? Brushes.Black : Brushes.White;
             e.DrawBackground();
             e.DrawBorder();
-            e.DrawText();
+            e.Graphics.DrawString(tooltipText, f, b, new Point(2, 2));
         }
 
         private void chartPrice_MouseMove(object sender, MouseEventArgs e)
@@ -259,8 +271,16 @@ namespace Kasutajaliides
                     }
                 }
                 //tt tekst
-                
-                toolTip.SetToolTip(chart, "hind: " + y.ToString("0.000") + "\n" + s.ToString("kell HH:00") + "\n" + s.ToString("dd/MM/yy"));
+                tooltipText = "hind: ";
+                tooltipText += y.ToString("0.000") + "\n" + s.ToString("kell HH:00") + "\n" + s.ToString("dd/MM/yy");
+
+                if (e.X != this.lastX || e.Y != this.lastY)
+                {
+                    toolTip.SetToolTip(chart, " ");
+
+                    this.lastX = e.X;
+                    this.lastY = e.Y;
+                }
                 //kui juba joon olemas ss kustuta ära et uus joonistada
                 if (vert != null)
                 {
@@ -516,9 +536,12 @@ namespace Kasutajaliides
             chartPrice.Series["Elektrihind"].Color = Color.Black;
 
             toolTip.OwnerDraw = true;
-            toolTip.Draw += new System.Windows.Forms.DrawToolTipEventHandler(toolTip_Draw);
+            toolTip.Draw += new DrawToolTipEventHandler(toolTip_Draw);
+            toolTip.Popup += new PopupEventHandler(toolTip_Popup);
             toolTip.BackColor = SystemColors.Control;
             toolTip.ForeColor = Color.Black;
+            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            toolTip.SetToolTip(chartPrice, null);
 
 
             this.BackColor = SystemColors.Control;

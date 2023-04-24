@@ -59,7 +59,6 @@ namespace Kasutajaliides
 
         Series packageSeries = new Series();
         string packageName;
-        int selectedIndex;
 
         // Keskmise hinna joon graafikul
         HorizontalLineAnnotation averagePriceLine = new HorizontalLineAnnotation();

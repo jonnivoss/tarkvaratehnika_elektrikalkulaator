@@ -1181,7 +1181,64 @@ namespace Kasutajaliides
         {
             //MessageBox.Show("It works!");
             packageCost.Clear();
-            selectedIndex = tablePackages.SelectedRows[0].Index;
+        
+            packageState = tablePackages.SelectedRows.Count != 0;
+
+
+            List<Series> removables = new List<Series>();
+            // Eemaldab vanad, mida enam pole valitud
+            foreach (var series in chartPrice.Series)
+            {
+                if (series.Name == "Elektrihind" || series.Name == "Tarbimine")
+                {
+                    continue;
+                }
+
+                bool removeItem = true;
+                for (int j = 0; j < tablePackages.SelectedRows.Count; ++j)
+                {
+                    string seriesName = tablePackages.SelectedRows[j].Cells[1].Value.ToString();
+                    if (seriesName == series.Name)
+                    {
+                        removeItem = false;
+                        break;
+                    }
+                }
+
+                if (removeItem)
+                {
+                    removables.Add(series);
+                }
+            }
+            foreach (var removable in removables)
+            {
+                chartPrice.Series.Remove(removable);
+            }
+            removables.Clear();
+
+
+            // Lisab uued, mis on valitud
+            for (int i = 0; i < tablePackages.SelectedRows.Count; ++i)
+            {
+                packageName = tablePackages.SelectedRows[i].Cells[1].Value.ToString();
+                if (chartPrice.Series.FindByName(packageName) != null)
+                {
+                    continue;
+                }
+                
+                chartPrice.Series.Add(packageName);
+                chartPrice.Series[packageName].ChartArea = "ChartArea1";
+                chartPrice.Series[packageName].YAxisType = AxisType.Secondary;
+                chartPrice.Series[packageName].Color = Color.Blue;
+                chartPrice.Series[packageName].Legend = "Legend1";
+                chartPrice.Series[packageName].ChartType = SeriesChartType.Line;
+                foreach (var item in priceTimeRange)
+                {
+                    packageCost.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[2].Value));
+                }
+                chartPrice.Series[tablePackages.SelectedRows[i].Cells[1].Value.ToString()].Points.DataBindXY(priceTimeRange, packageCost);
+            }
+            /*selectedIndex = tablePackages.SelectedRows[0].Index;
             packageName = tablePackages.Rows[selectedIndex].Cells[1].Value.ToString();
             chartPrice.Series.Add(packageName);
             chartPrice.Series[packageName].ChartArea = "ChartArea1";
@@ -1192,7 +1249,7 @@ namespace Kasutajaliides
             foreach (var item in priceTimeRange){
                 packageCost.Add(Convert.ToDouble(tablePackages.Rows[selectedIndex].Cells[2].Value));
             }
-            packageState = true;
+            packageState = true;*/
             //chartPrice.Series[tablePackages.Rows[selectedIndex].Cells[1].Value.ToString()].Points.DataBindXY(priceTimeRange,packageCost);
             updateGraph();
         }

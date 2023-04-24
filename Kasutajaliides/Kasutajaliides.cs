@@ -552,12 +552,16 @@ namespace Kasutajaliides
             tablePrice.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             tablePackages.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             VecT costNowData = AP.HindAegInternet(DateTime.Now.Date.AddDays(-60), DateTime.Now);
-            List<double> costNow = new List<double>();
+            double costNow = 0.0;
             foreach (var item in costNowData)
             {
-                costNow.Add(item.Item2);
+                if (item.Item1.Date == DateTime.Now.Date && item.Item1.Hour == DateTime.Now.Hour) {
+                    costNow = item.Item2 /10.0;
+                    break;
+                }
+                
             }
-            txtCostNow.Text = (costNow[0]/10).ToString();
+            txtCostNow.Text = costNow.ToString();
             
             // Proovib avada CSV
             AS.loadFile();

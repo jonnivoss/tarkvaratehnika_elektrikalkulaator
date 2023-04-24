@@ -590,6 +590,7 @@ namespace Kasutajaliides
             this.tablePackages.RowTemplate.Height = 24;
             this.tablePackages.Size = new System.Drawing.Size(1063, 173);
             this.tablePackages.TabIndex = 34;
+            this.tablePackages.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tablePackages_RowHeaderMouseClick);
             // 
             // ProviderName
             // 

@@ -1151,6 +1151,25 @@ namespace Kasutajaliides
             Refresh(); // vajalik et ei tekiks "render glitche" (nt. ComboBox ei suurene korraks jms.)
         }
 
+        private void tablePackages_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            //MessageBox.Show("It works!");
+            int selectedPackageCount = tablePackages.Rows.GetRowCount(DataGridViewElementStates.Selected);
+            if(selectedPackageCount > 0)
+            {
+                for(int i = 0; i < selectedPackageCount; i++)
+                {
+                    int selectedIndex = tablePackages.SelectedRows[i].Index;
+                    var newPackage = chartPrice.ChartAreas["ChartArea1"];
+                    chartPrice.Series.Add(tablePackages.Rows[selectedIndex].Cells[1].Value.ToString());
+                    chartPrice.Series[tablePackages.Rows[selectedIndex].Cells[1].Value.ToString()].YAxisType = AxisType.Secondary;
+                    chartPrice.Series[tablePackages.Rows[selectedIndex].Cells[1].Value.ToString()].Color = Color.Blue;
+                    chartPrice.Series[tablePackages.Rows[selectedIndex].Cells[1].Value.ToString()].Legend = "Legend1";
+                    chartPrice.Series[tablePackages.Rows[selectedIndex].Cells[1].Value.ToString()].Points.AddY(tablePackages.Rows[selectedIndex].Cells[2].Value);
+                } 
+            }
+        }
+
         // https://stackoverflow.com/questions/47463926/how-to-get-pixel-position-from-datetime-value-on-x-axis 
         // https://stackoverflow.com/questions/11955866/retrieving-datetime-x-axis-value-from-chart-control 
         void chartPrice_zooming(object sender, MouseEventArgs e)

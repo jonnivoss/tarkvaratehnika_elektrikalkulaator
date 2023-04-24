@@ -34,6 +34,8 @@ namespace Kasutajaliides
         List<DateTime> priceTimeRange = new List<DateTime>();
         List<double> priceCostRange = new List<double>();
 
+        List<double> packageCost = new List<double>(); // paketi hinna punktide jaoks
+
         VecT userData = new VecT();
         string fileContents, packageFileContents;
 
@@ -51,8 +53,13 @@ namespace Kasutajaliides
         bool state = true;
         bool state2 = true; // DARK MODE BUTTON TOGGLE
         bool state3 = false; // graafiku vajutamisega suurendamise jaoks
+        bool packageState = false;
 
         double averagePrice;
+
+        Series packageSeries = new Series();
+        string packageName;
+        int selectedIndex;
 
         // Keskmise hinna joon graafikul
         HorizontalLineAnnotation averagePriceLine = new HorizontalLineAnnotation();
@@ -171,6 +178,17 @@ namespace Kasutajaliides
             priceCostRange.Add(ajutinePrice);
 
             chartPrice.Series["Elektrihind"].Points.DataBindXY(priceTimeRange, priceCostRange);
+            if (packageState)
+            {
+                packageCost.Clear();
+                foreach (var item in priceTimeRange)
+                {
+                    packageCost.Add(Convert.ToDouble(tablePackages.Rows[selectedIndex].Cells[2].Value));
+                }
+                chartPrice.Series[packageName].Points.DataBindXY(priceTimeRange, packageCost);
+                packageState = false;
+            }
+            
 
             for (int i = 0; i < priceCostRange.Count; i++) // Käib valitud ajaintervalli hinnad läbi
             {
@@ -1154,20 +1172,21 @@ namespace Kasutajaliides
         private void tablePackages_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             //MessageBox.Show("It works!");
-            int selectedPackageCount = tablePackages.Rows.GetRowCount(DataGridViewElementStates.Selected);
-            if(selectedPackageCount > 0)
-            {
-                for(int i = 0; i < selectedPackageCount; i++)
-                {
-                    int selectedIndex = tablePackages.SelectedRows[i].Index;
-                    var newPackage = chartPrice.ChartAreas["ChartArea1"];
-                    chartPrice.Series.Add(tablePackages.Rows[selectedIndex].Cells[1].Value.ToString());
-                    chartPrice.Series[tablePackages.Rows[selectedIndex].Cells[1].Value.ToString()].YAxisType = AxisType.Secondary;
-                    chartPrice.Series[tablePackages.Rows[selectedIndex].Cells[1].Value.ToString()].Color = Color.Blue;
-                    chartPrice.Series[tablePackages.Rows[selectedIndex].Cells[1].Value.ToString()].Legend = "Legend1";
-                    chartPrice.Series[tablePackages.Rows[selectedIndex].Cells[1].Value.ToString()].Points.AddY(tablePackages.Rows[selectedIndex].Cells[2].Value);
-                } 
+            packageCost.Clear();
+            selectedIndex = tablePackages.SelectedRows[0].Index;
+            packageName = tablePackages.Rows[selectedIndex].Cells[1].Value.ToString();
+            chartPrice.Series.Add(packageName);
+            chartPrice.Series[packageName].ChartArea = "ChartArea1";
+            chartPrice.Series[packageName].YAxisType = AxisType.Secondary;
+            chartPrice.Series[packageName].Color = Color.Blue;
+            chartPrice.Series[packageName].Legend = "Legend1";
+            chartPrice.Series[packageName].ChartType = SeriesChartType.Line;
+            foreach (var item in priceTimeRange){
+                packageCost.Add(Convert.ToDouble(tablePackages.Rows[selectedIndex].Cells[2].Value));
             }
+            packageState = true;
+            //chartPrice.Series[tablePackages.Rows[selectedIndex].Cells[1].Value.ToString()].Points.DataBindXY(priceTimeRange,packageCost);
+            updateGraph();
         }
 
         // https://stackoverflow.com/questions/47463926/how-to-get-pixel-position-from-datetime-value-on-x-axis 

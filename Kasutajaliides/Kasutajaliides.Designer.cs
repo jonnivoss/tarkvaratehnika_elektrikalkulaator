@@ -75,7 +75,6 @@ namespace Kasutajaliides
             this.txtTarbimisAeg = new System.Windows.Forms.TextBox();
             this.btnDarkMode = new System.Windows.Forms.Button();
             this.tablePackages = new System.Windows.Forms.DataGridView();
-            this.btnOpenPackages = new System.Windows.Forms.Button();
             this.ProviderName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MonthlyPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SellerMarginal = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -83,6 +82,7 @@ namespace Kasutajaliides
             this.NightPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IsStockPackage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IsGreenPackage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnOpenPackages = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chartPrice)).BeginInit();
             this.groupPriceType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablePrice)).BeginInit();
@@ -589,18 +589,7 @@ namespace Kasutajaliides
             this.tablePackages.Size = new System.Drawing.Size(1063, 173);
             this.tablePackages.TabIndex = 34;
             this.tablePackages.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tablePackages_RowHeaderMouseClick);
-            // 
-            // btnOpenPackages
-            // 
-            this.btnOpenPackages.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOpenPackages.Location = new System.Drawing.Point(727, 625);
-            this.btnOpenPackages.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.btnOpenPackages.Name = "btnOpenPackages";
-            this.btnOpenPackages.Size = new System.Drawing.Size(268, 41);
-            this.btnOpenPackages.TabIndex = 35;
-            this.btnOpenPackages.Text = "Ava pakettide CŠV";
-            this.btnOpenPackages.UseVisualStyleBackColor = true;
-            this.btnOpenPackages.Click += new System.EventHandler(this.btnOpenPackages_Click);
+            this.tablePackages.RowHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tablePackages_RowHeaderMouseDoubleClick);
             // 
             // ProviderName
             // 
@@ -616,6 +605,7 @@ namespace Kasutajaliides
             this.MonthlyPrice.MinimumWidth = 6;
             this.MonthlyPrice.Name = "MonthlyPrice";
             this.MonthlyPrice.ReadOnly = true;
+            this.MonthlyPrice.Width = 125;
             // 
             // SellerMarginal
             // 
@@ -623,6 +613,7 @@ namespace Kasutajaliides
             this.SellerMarginal.MinimumWidth = 6;
             this.SellerMarginal.Name = "SellerMarginal";
             this.SellerMarginal.ReadOnly = true;
+            this.SellerMarginal.Width = 125;
             // 
             // BasePrice
             // 
@@ -655,6 +646,18 @@ namespace Kasutajaliides
             this.IsGreenPackage.Name = "IsGreenPackage";
             this.IsGreenPackage.ReadOnly = true;
             this.IsGreenPackage.Width = 80;
+            // 
+            // btnOpenPackages
+            // 
+            this.btnOpenPackages.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOpenPackages.Location = new System.Drawing.Point(727, 625);
+            this.btnOpenPackages.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.btnOpenPackages.Name = "btnOpenPackages";
+            this.btnOpenPackages.Size = new System.Drawing.Size(268, 41);
+            this.btnOpenPackages.TabIndex = 35;
+            this.btnOpenPackages.Text = "Ava pakettide CŠV";
+            this.btnOpenPackages.UseVisualStyleBackColor = true;
+            this.btnOpenPackages.Click += new System.EventHandler(this.btnOpenPackages_Click);
             // 
             // Kasutajaliides
             // 

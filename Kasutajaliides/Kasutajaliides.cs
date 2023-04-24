@@ -1254,6 +1254,16 @@ namespace Kasutajaliides
             updateGraph();
         }
 
+        private void tablePackages_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            var index = e.RowIndex;
+
+            // Unselect the line
+            tablePackages.Rows[index].Selected = false;
+
+            tablePackages_RowHeaderMouseClick(sender, e);
+        }
+
         // https://stackoverflow.com/questions/47463926/how-to-get-pixel-position-from-datetime-value-on-x-axis 
         // https://stackoverflow.com/questions/11955866/retrieving-datetime-x-axis-value-from-chart-control 
         void chartPrice_zooming(object sender, MouseEventArgs e)

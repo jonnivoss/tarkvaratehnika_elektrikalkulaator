@@ -23,6 +23,7 @@ namespace Kasutajaliides
         string tooltipText;
         private int lastX;
         private int lastY;
+        private VerticalLineAnnotation mouseTimeHover;
 
         // kasutajaliidese tekstifondid
         Font Normal = new Font("Impact", 12);
@@ -223,8 +224,6 @@ namespace Kasutajaliides
                                     pw * IPP.Width, ph * IPP.Height);
         }
 
-        private VerticalLineAnnotation vert;
-
         void toolTip_Popup(object sender, PopupEventArgs e)
         {
             Font f = (state) ? Normal : Bigger;
@@ -281,36 +280,36 @@ namespace Kasutajaliides
                 }
                 
                 //kui juba joon olemas ss kustuta ära et uus joonistada
-                if (vert != null)
+                if (mouseTimeHover != null)
                 {
-                    chart.Annotations.Remove(vert);
+                    chart.Annotations.Remove(mouseTimeHover);
                 }
                 //new line
-                vert = new VerticalLineAnnotation();
+                mouseTimeHover = new VerticalLineAnnotation();
                 
                 //joonistub x axise kohal
-                vert.AxisX = chart.ChartAreas[0].AxisX;
-                vert.X = chart.ChartAreas[0].AxisX.PixelPositionToValue(e.X);
+                mouseTimeHover.AxisX = chart.ChartAreas[0].AxisX;
+                mouseTimeHover.X = chart.ChartAreas[0].AxisX.PixelPositionToValue(e.X);
                 
                 //läbib tervet charti
-                vert.IsInfinitive = true;
-                vert.ClipToChartArea = ca.Name;
+                mouseTimeHover.IsInfinitive = true;
+                mouseTimeHover.ClipToChartArea = ca.Name;
                 
                 //joone nimi
-                vert.Name = "Elektrihind";
+                mouseTimeHover.Name = "Elektrihind";
                 
                 //joone stiil värv ja laius
-                vert.LineColor = Color.Green;
-                vert.LineWidth = 1;
-                vert.LineDashStyle = ChartDashStyle.Solid;
+                mouseTimeHover.LineColor = Color.Green;
+                mouseTimeHover.LineWidth = 1;
+                mouseTimeHover.LineDashStyle = ChartDashStyle.Solid;
 
                 //joonista joon
-                chart.Annotations.Add(vert);
+                chart.Annotations.Add(mouseTimeHover);
             }
             else
             {
                 //kustuta tt ja joon
-                chart.Annotations.Remove(vert);
+                chart.Annotations.Remove(mouseTimeHover);
                 toolTip.Hide(chart);
             }
         }

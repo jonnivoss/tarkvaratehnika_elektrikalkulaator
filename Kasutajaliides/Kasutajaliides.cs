@@ -45,7 +45,7 @@ namespace Kasutajaliides
         private Arvutaja.CArvutaja AR = new Arvutaja.CArvutaja();
 
         DateTime startTime, stopTime;
-        DateTime endOfDayDate = DateTime.Now.Date.AddHours(24); // vastab tänase päeva lõpule (24:00)
+        DateTime endOfDayDate = DateTime.Now.Date.AddHours(48); // vastab järgmise päeva lõpule (24:00)
         DateTime zoomStartTime, zoomStopTime;
         bool showStock = true, showUsage = true;
         bool state = true;

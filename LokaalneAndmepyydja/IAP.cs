@@ -15,7 +15,7 @@ namespace Andmepyydja
 {
     interface IAP
     {
-        bool chooseFile();
+        bool chooseFileUserData();
         bool chooseFilePackages();
 
         bool readUserDataFile(ref string contents);

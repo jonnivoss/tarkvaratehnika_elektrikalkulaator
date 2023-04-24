@@ -360,7 +360,7 @@ namespace Kasutajaliides
 
         private void btnAvaCSV_Click(object sender, EventArgs e)
         {
-            if (AP.chooseFile())
+            if (AP.chooseFileUserData())
             {
                 AS.changeSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed, AP.getUserDataFileName());
                 this.openCSVUserData();

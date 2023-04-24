@@ -1229,11 +1229,13 @@ namespace Kasutajaliides
                 {
                     continue;
                 }
-                
+
+                Random r = new Random();
+
                 chartPrice.Series.Add(packageName);
                 chartPrice.Series[packageName].ChartArea = "ChartArea1";
                 chartPrice.Series[packageName].YAxisType = AxisType.Secondary;
-                chartPrice.Series[packageName].Color     = Color.Blue;
+                chartPrice.Series[packageName].Color     = Color.FromArgb(r.Next(256), r.Next(256), r.Next(256));
                 chartPrice.Series[packageName].Legend    = "Legend1";
                 chartPrice.Series[packageName].ChartType = SeriesChartType.Line;
 

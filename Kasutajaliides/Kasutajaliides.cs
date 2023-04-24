@@ -1229,28 +1229,17 @@ namespace Kasutajaliides
                 chartPrice.Series.Add(packageName);
                 chartPrice.Series[packageName].ChartArea = "ChartArea1";
                 chartPrice.Series[packageName].YAxisType = AxisType.Secondary;
-                chartPrice.Series[packageName].Color = Color.Blue;
-                chartPrice.Series[packageName].Legend = "Legend1";
+                chartPrice.Series[packageName].Color     = Color.Blue;
+                chartPrice.Series[packageName].Legend    = "Legend1";
                 chartPrice.Series[packageName].ChartType = SeriesChartType.Line;
+
+                packageCost.Clear();
                 foreach (var item in priceTimeRange)
                 {
                     packageCost.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[2].Value));
                 }
                 chartPrice.Series[tablePackages.SelectedRows[i].Cells[1].Value.ToString()].Points.DataBindXY(priceTimeRange, packageCost);
             }
-            /*selectedIndex = tablePackages.SelectedRows[0].Index;
-            packageName = tablePackages.Rows[selectedIndex].Cells[1].Value.ToString();
-            chartPrice.Series.Add(packageName);
-            chartPrice.Series[packageName].ChartArea = "ChartArea1";
-            chartPrice.Series[packageName].YAxisType = AxisType.Secondary;
-            chartPrice.Series[packageName].Color = Color.Blue;
-            chartPrice.Series[packageName].Legend = "Legend1";
-            chartPrice.Series[packageName].ChartType = SeriesChartType.Line;
-            foreach (var item in priceTimeRange){
-                packageCost.Add(Convert.ToDouble(tablePackages.Rows[selectedIndex].Cells[2].Value));
-            }
-            packageState = true;*/
-            //chartPrice.Series[tablePackages.Rows[selectedIndex].Cells[1].Value.ToString()].Points.DataBindXY(priceTimeRange,packageCost);
             updateGraph();
         }
 

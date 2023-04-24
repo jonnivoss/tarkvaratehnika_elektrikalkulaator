@@ -1197,7 +1197,7 @@ namespace Kasutajaliides
                 bool removeItem = true;
                 for (int j = 0; j < tablePackages.SelectedRows.Count; ++j)
                 {
-                    string seriesName = tablePackages.SelectedRows[j].Cells[1].Value.ToString();
+                    string seriesName = tablePackages.SelectedRows[j].Index.ToString() + ": " + tablePackages.SelectedRows[j].Cells[1].Value.ToString();
                     if (seriesName == series.Name)
                     {
                         removeItem = false;
@@ -1220,7 +1220,7 @@ namespace Kasutajaliides
             // Lisab uued, mis on valitud
             for (int i = 0; i < tablePackages.SelectedRows.Count; ++i)
             {
-                packageName = tablePackages.SelectedRows[i].Cells[1].Value.ToString();
+                packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[1].Value.ToString();
                 if (chartPrice.Series.FindByName(packageName) != null)
                 {
                     continue;
@@ -1238,7 +1238,7 @@ namespace Kasutajaliides
                 {
                     packageCost.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[2].Value));
                 }
-                chartPrice.Series[tablePackages.SelectedRows[i].Cells[1].Value.ToString()].Points.DataBindXY(priceTimeRange, packageCost);
+                chartPrice.Series[packageName].Points.DataBindXY(priceTimeRange, packageCost);
             }
             updateGraph();
         }

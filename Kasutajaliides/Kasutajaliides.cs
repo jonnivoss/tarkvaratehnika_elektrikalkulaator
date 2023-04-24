@@ -363,14 +363,15 @@ namespace Kasutajaliides
             if (AP.chooseFile())
             {
                 AS.changeSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed, AP.getUserDataFileName());
-                this.openCSV();
+                this.openCSVUserData();
             }
         }
-        private void openCSV()
+        private bool openCSVUserData()
         {
+            bool ret = false;
             if (!AP.readUserDataFile(ref fileContents))
             {
-                MessageBox.Show("Lugemine ebaõnnestus!");
+                ret = false;
             }
             else
             {
@@ -431,6 +432,7 @@ namespace Kasutajaliides
                 callAPI(timeRange.First().AddDays(-30), endOfDayDate);
             }
             updateGraph();
+            return ret;
         }
 
         // API caller muudetud üldisemaks, saab kutsuda suvaliste ajaparameetritega (peale startTime ja stopTime)
@@ -593,8 +595,12 @@ namespace Kasutajaliides
             AP.setPackageFileName(AS.getSetting(AndmeSalvestaja.ASSetting.paketiAndmed));
             //callAPI(DateTime.Now.Date.AddDays(-60), DateTime.Now);
             //MessageBox.Show(priceTimeRange.Last().ToString());
-            openCSV();
-            openCSVPackage();
+            bool isUserData = openCSVUserData();
+            bool isPackage = openCSVPackage();
+            if (!isUserData || !isPackage)
+            {
+                MessageBox.Show("Lugemine ebaõnnestus!");
+            }
 
             // akna elementide mõõtmete vaikeväärtuste määramine
             originalWindowSize = new Rectangle(this.Location.X, this.Location.Y, this.Size.Width, this.Size.Height);
@@ -1105,11 +1111,12 @@ namespace Kasutajaliides
             }
         }
 
-        private void openCSVPackage()
+        private bool openCSVPackage()
         {
+            bool ret = true;
             if (!AP.readPackageFile(ref packageFileContents))
             {
-                MessageBox.Show("Lugemine ebaõnnestus!");
+                ret = false;
             }
             else
             {
@@ -1130,6 +1137,7 @@ namespace Kasutajaliides
                     );
                 }
             }
+            return ret;
         }
 
         private void Kasutajaliides_Resize(object sender, EventArgs e)

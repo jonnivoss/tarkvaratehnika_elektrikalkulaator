@@ -180,13 +180,17 @@ namespace Kasutajaliides
             chartPrice.Series["Elektrihind"].Points.DataBindXY(priceTimeRange, priceCostRange);
             if (packageState)
             {
-                packageCost.Clear();
-                foreach (var item in priceTimeRange)
+                for (int i = 0; i < tablePackages.SelectedRows.Count; ++i)
                 {
-                    packageCost.Add(Convert.ToDouble(tablePackages.Rows[selectedIndex].Cells[2].Value));
+                    packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[1].Value.ToString();
+                    packageCost.Clear();
+                    foreach (var item in priceTimeRange)
+                    {
+                        packageCost.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[2].Value));
+                    }
+                    chartPrice.Series[packageName].Points.DataBindXY(priceTimeRange, packageCost);
+                    //packageState = false;
                 }
-                chartPrice.Series[packageName].Points.DataBindXY(priceTimeRange, packageCost);
-                packageState = false;
             }
             
 

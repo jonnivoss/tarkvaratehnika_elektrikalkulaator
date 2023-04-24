@@ -136,11 +136,6 @@ namespace Kasutajaliides
 
                     ajutineDate = item.Item1.AddHours(1);
                     ajutinePrice = item.Item2 / 10.0;
-
-                    /*string line = "i: " + item.Item1.ToString() + ": " + item.Item2.ToString();
-
-                    txtDebug.AppendText(line);
-                    txtDebug.AppendText(Environment.NewLine);*/
                 }
             }
 
@@ -257,9 +252,11 @@ namespace Kasutajaliides
 
                 Axis ax = ca.AxisX;
                 Axis ay = ca.AxisY;
+                
                 //leia x kordinaat kus hiir on
                 double x = ax.PixelPositionToValue(e.X);
                 double y = 0;
+                
                 //leia punkt millele x vastab ja salvesta selle y kordinaat
                 DateTime s = DateTime.FromOADate(x);
                 foreach (var item in priceData)
@@ -270,6 +267,7 @@ namespace Kasutajaliides
                         break;
                     }
                 }
+                
                 //tt tekst
                 tooltipText = "hind: ";
                 tooltipText += y.ToString("0.000") + "\n" + s.ToString("kell HH:00") + "\n" + s.ToString("dd/MM/yy");
@@ -281,6 +279,7 @@ namespace Kasutajaliides
                     this.lastX = e.X;
                     this.lastY = e.Y;
                 }
+                
                 //kui juba joon olemas ss kustuta ära et uus joonistada
                 if (vert != null)
                 {
@@ -288,18 +287,23 @@ namespace Kasutajaliides
                 }
                 //new line
                 vert = new VerticalLineAnnotation();
+                
                 //joonistub x axise kohal
                 vert.AxisX = chart.ChartAreas[0].AxisX;
                 vert.X = chart.ChartAreas[0].AxisX.PixelPositionToValue(e.X);
+                
                 //läbib tervet charti
                 vert.IsInfinitive = true;
                 vert.ClipToChartArea = ca.Name;
+                
                 //joone nimi
                 vert.Name = "Elektrihind";
+                
                 //joone stiil värv ja laius
                 vert.LineColor = Color.Green;
                 vert.LineWidth = 1;
                 vert.LineDashStyle = ChartDashStyle.Solid;
+
                 //joonista joon
                 chart.Annotations.Add(vert);
             }
@@ -365,28 +369,14 @@ namespace Kasutajaliides
                 {
                     timeRange.Add(item.Item1);
                     costRange.Add(item.Item2);
-
-                    /*string line = item.Item1.ToString() + ": " + item.Item2.ToString();
-
-                    txtDebug.AppendText(line);
-                    txtDebug.AppendText(Environment.NewLine);*/
                 }
 
                 var timeRangeArr = timeRange.ToArray();
-
-                //dateStartTime.MinDate = timeRangeArr[0];
-                //dateStartTime.MaxDate = timeRangeArr[timeRangeArr.Length - 1];
-                //dateStartTime.Value = timeRangeArr[0];
-
-                //dateStopTime.MinDate = timeRangeArr[0];
-                //dateStopTime.MaxDate = timeRangeArr[timeRangeArr.Length - 1];
-                //dateStopTime.Value = timeRangeArr[timeRangeArr.Length - 1];
             }
 
             if ((this.startTime == default(DateTime)) || (this.stopTime == default(DateTime)))
             {
-                //txtDebug.AppendText("Jõudsin nullini");
-                //txtDebug.AppendText(Environment.NewLine);
+
                 this.startTime = dateStartTime.Value + new TimeSpan(0, 0, 0);
                 this.stopTime  = dateStopTime.Value + new TimeSpan(23, 59, 59);
                 txtDebug.AppendText("jeba\n\n");
@@ -425,12 +415,7 @@ namespace Kasutajaliides
                 priceCostRange.Add(item.Item2);
                 tablePrice.Rows.Add(item.Item1, item.Item2);
             }
-
             changeInterval(priceData.Count);
-            /*if (priceTimeRange.Count <= 50)
-            {
-                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "HH:mm";
-            }*/
             txtDebug.AppendText("kutsun api\n");
         }
 
@@ -472,13 +457,6 @@ namespace Kasutajaliides
                         double integral = 0.0;
                         if (AR.integreerija(useData, this.priceData, useData.First().Item1, useData.Last().Item1, ref integral) == 0)
                         {
-                            /*Console.WriteLine("beg: " + beg.ToString() + "; end: " + end.ToString() + "; int: " + integral.ToString());
-                            Console.Write("!!!All DATA");
-                            for (int d = this.priceData.FindIndex(Tuple => Tuple.Item1 == useData.First().Item1), l = this.priceData.FindIndex(Tuple => Tuple.Item1 == useData.Last().Item1) + 1; d <= l; ++d)
-                            {
-                                var item = this.priceData[d];
-                                Console.WriteLine("dat: " + item.Item1.ToString() + ": " + item.Item2.ToString());
-                            }*/
                             if (integral < bestIntegral)
                             {
                                 bestIntegral = integral;
@@ -492,33 +470,12 @@ namespace Kasutajaliides
 
                     price = bestIntegral / 1000.0;
                     txtTarbimisAeg.Text = bestDate.ToString("dd.MM.yyyy HH:mm");
-                    //MessageBox.Show("Tarbimist alustada " + bestDate.ToString("dd.MM.yyyy HH:mm"));
                 }
                 else
                 {
                     var skwh = Double.Parse(tbMonthlyPrice.Text);
                     price = time * power * skwh / 100.0;
                 }
-
-                //see on pask
-                //descusting
-                /*if (rbStockPrice.Checked)
-                {
-                    double integraal = 0;
-                    int olek = AR.integreerija(userData, priceData, startTime, stopTime, ref integraal);
-                    switch (olek)
-                    {
-                        case 0:
-                            txtHind.Text = (integraal / 1000).ToString() + " €";
-                            break;
-                        case 1:
-                            txtHind.Text = "";
-                            break;
-                        case 3:
-                            txtHind.Text = "-";
-                            break;
-                    }
-                }*/
                 txtHind.Text = Math.Round(price, 2).ToString();
             }
             catch (Exception)
@@ -551,7 +508,7 @@ namespace Kasutajaliides
             txtHind.Text = "-";
             tablePrice.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             tablePackages.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            VecT costNowData = AP.HindAegInternet(DateTime.Now.Date.AddDays(-60), DateTime.Now);
+            VecT costNowData = AP.HindAegInternet(DateTime.Now, DateTime.Now);
             double costNow = 0.0;
             foreach (var item in costNowData)
             {

@@ -488,7 +488,7 @@ namespace Kasutajaliides
             // "MOUSE SCROLL" suurendus. EI KUSTUTA KURAT, kui vaja siis commenti välja!
             this.chartPrice.MouseWheel += new MouseEventHandler(chartPrice_zooming);
             // tarbimisandmete graafiku värv
-            chartPrice.Series["Tarbimine"].Color = ColorTranslator.FromHtml("#090909");
+            chartPrice.Series["Tarbimine"].Color = ColorTranslator.FromHtml("#0BD0D1");
             chartPrice.Series["Elektrihind"].Color = Color.Black;
 
             toolTip.OwnerDraw = true;
@@ -965,7 +965,7 @@ namespace Kasutajaliides
                 btnOpenPackages.BackColor = midGrey;
 
                 chartPrice.ChartAreas["ChartArea1"].BorderColor = chalkWhite;
-                chartPrice.Series["Tarbimine"].Color = ColorTranslator.FromHtml("#CCCC00");
+                chartPrice.Series["Tarbimine"].Color = ColorTranslator.FromHtml("#0BD0D1");
                 //Bigger = new Font("Impact", 16);
 
                 toolTip.BackColor = midGrey;
@@ -1028,7 +1028,7 @@ namespace Kasutajaliides
 
                 toolTip.BackColor = SystemColors.Control;
                 toolTip.ForeColor = Color.Black;
-                chartPrice.Series["Tarbimine"].Color = ColorTranslator.FromHtml("#090909");
+                chartPrice.Series["Tarbimine"].Color = ColorTranslator.FromHtml("#0BD0D1");
                 chartPrice.ChartAreas["ChartArea1"].AxisX.TitleForeColor = Color.Black;
                 chartPrice.ChartAreas["ChartArea1"].AxisY.TitleForeColor = Color.Black;
                 chartPrice.ChartAreas["ChartArea1"].AxisY2.TitleForeColor = Color.Black;

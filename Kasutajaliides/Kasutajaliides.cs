@@ -182,11 +182,11 @@ namespace Kasutajaliides
             {
                 for (int i = 0; i < tablePackages.SelectedRows.Count; ++i)
                 {
-                    packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[1].Value.ToString();
+                    packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString();
                     packageCost.Clear();
                     foreach (var item in priceTimeRange)
                     {
-                        packageCost.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[2].Value));
+                        packageCost.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[3].Value));
                     }
                     chartPrice.Series[packageName].Points.DataBindXY(priceTimeRange, packageCost);
                     //packageState = false;
@@ -1127,9 +1127,11 @@ namespace Kasutajaliides
                 packageData = AP.parsePackage(packageFileContents);
 
                 tablePackages.Rows.Clear();
+                int i = 0;
                 foreach (var item in packageData)
                 {
                     tablePackages.Rows.Add(
+                        i,
                         item.providerName,
                         item.packageName,
                         item.monthlyPrice.ToString("0.00"),
@@ -1139,6 +1141,7 @@ namespace Kasutajaliides
                         item.isStockPackage ? "Jah" : "Ei",
                         item.isGreenPackage ? "Jah" : "Ei"
                     );
+                    ++i;
                 }
             }
             return ret;
@@ -1201,7 +1204,7 @@ namespace Kasutajaliides
                 bool removeItem = true;
                 for (int j = 0; j < tablePackages.SelectedRows.Count; ++j)
                 {
-                    string seriesName = tablePackages.SelectedRows[j].Index.ToString() + ": " + tablePackages.SelectedRows[j].Cells[1].Value.ToString();
+                    string seriesName = tablePackages.SelectedRows[j].Index.ToString() + ": " + tablePackages.SelectedRows[j].Cells[2].Value.ToString();
                     if (seriesName == series.Name)
                     {
                         removeItem = false;
@@ -1224,7 +1227,7 @@ namespace Kasutajaliides
             // Lisab uued, mis on valitud
             for (int i = 0; i < tablePackages.SelectedRows.Count; ++i)
             {
-                packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[1].Value.ToString();
+                packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString();
                 if (chartPrice.Series.FindByName(packageName) != null)
                 {
                     continue;
@@ -1242,7 +1245,7 @@ namespace Kasutajaliides
                 packageCost.Clear();
                 foreach (var item in priceTimeRange)
                 {
-                    packageCost.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[2].Value));
+                    packageCost.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[3].Value));
                 }
                 chartPrice.Series[packageName].Points.DataBindXY(priceTimeRange, packageCost);
             }

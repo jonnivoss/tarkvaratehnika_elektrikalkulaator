@@ -95,7 +95,7 @@ namespace Andmepyydja
         private string fileNameUserData = "";
         private string fileNamePackage = "";
 
-        public bool chooseFile()
+        public bool chooseFileUserData()
         {
             DialogResult result = ofdUserData.ShowDialog();
             if (result != DialogResult.OK)

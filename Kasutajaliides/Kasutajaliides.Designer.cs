@@ -35,6 +35,7 @@ namespace Kasutajaliides
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Kasutajaliides));
             this.chartPrice = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.cbKasutusmall = new System.Windows.Forms.ComboBox();
             this.lblKasutusmall = new System.Windows.Forms.Label();
@@ -75,15 +76,16 @@ namespace Kasutajaliides
             this.txtTarbimisAeg = new System.Windows.Forms.TextBox();
             this.btnDarkMode = new System.Windows.Forms.Button();
             this.tablePackages = new System.Windows.Forms.DataGridView();
+            this.btnOpenPackages = new System.Windows.Forms.Button();
+            this.Indeks = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ProviderName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PackageName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Pakett = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MonthlyPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SellerMarginal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BasePrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NightPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IsStockPackage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IsGreenPackage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnOpenPackages = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chartPrice)).BeginInit();
             this.groupPriceType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablePrice)).BeginInit();
@@ -573,8 +575,9 @@ namespace Kasutajaliides
             this.tablePackages.AllowUserToDeleteRows = false;
             this.tablePackages.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tablePackages.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Indeks,
             this.ProviderName,
-            this.PackageName,
+            this.Pakett,
             this.MonthlyPrice,
             this.SellerMarginal,
             this.BasePrice,
@@ -590,6 +593,28 @@ namespace Kasutajaliides
             this.tablePackages.RowTemplate.Height = 24;
             this.tablePackages.Size = new System.Drawing.Size(1063, 173);
             this.tablePackages.TabIndex = 34;
+            this.tablePackages.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tablePackages_RowHeaderMouseClick);
+            this.tablePackages.RowHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tablePackages_RowHeaderMouseDoubleClick);
+            // 
+            // btnOpenPackages
+            // 
+            this.btnOpenPackages.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOpenPackages.Location = new System.Drawing.Point(727, 625);
+            this.btnOpenPackages.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.btnOpenPackages.Name = "btnOpenPackages";
+            this.btnOpenPackages.Size = new System.Drawing.Size(268, 41);
+            this.btnOpenPackages.TabIndex = 35;
+            this.btnOpenPackages.Text = "Ava pakettide CŠV";
+            this.btnOpenPackages.UseVisualStyleBackColor = true;
+            this.btnOpenPackages.Click += new System.EventHandler(this.btnOpenPackages_Click);
+            // 
+            // Indeks
+            // 
+            this.Indeks.HeaderText = "#";
+            this.Indeks.MinimumWidth = 6;
+            this.Indeks.Name = "Indeks";
+            this.Indeks.ReadOnly = true;
+            this.Indeks.Width = 6;
             // 
             // ProviderName
             // 
@@ -599,33 +624,33 @@ namespace Kasutajaliides
             this.ProviderName.ReadOnly = true;
             this.ProviderName.Width = 220;
             // 
-            // PackageName
+            // Pakett
             // 
-            this.PackageName.HeaderText = "Pakett";
-            this.PackageName.MinimumWidth = 6;
-            this.PackageName.Name = "PackageName";
-            this.PackageName.ReadOnly = true;
-            this.PackageName.Width = 220;
+            this.Pakett.HeaderText = "Pakett";
+            this.Pakett.MinimumWidth = 6;
+            this.Pakett.Name = "Pakett";
+            this.Pakett.ReadOnly = true;
+            this.Pakett.Width = 125;
             // 
             // MonthlyPrice
             // 
-            this.MonthlyPrice.HeaderText = "Kuutasu";
+            this.MonthlyPrice.HeaderText = "Kuutasu (€)";
             this.MonthlyPrice.MinimumWidth = 6;
             this.MonthlyPrice.Name = "MonthlyPrice";
             this.MonthlyPrice.ReadOnly = true;
-            this.MonthlyPrice.Width = 80;
+            this.MonthlyPrice.Width = 125;
             // 
             // SellerMarginal
             // 
-            this.SellerMarginal.HeaderText = "Marginaal";
+            this.SellerMarginal.HeaderText = "Marginaal (s/kWh)";
             this.SellerMarginal.MinimumWidth = 6;
             this.SellerMarginal.Name = "SellerMarginal";
             this.SellerMarginal.ReadOnly = true;
-            this.SellerMarginal.Width = 80;
+            this.SellerMarginal.Width = 125;
             // 
             // BasePrice
             // 
-            this.BasePrice.HeaderText = "Baashind/päevane";
+            this.BasePrice.HeaderText = "Baashind/päevane (s/kWh)";
             this.BasePrice.MinimumWidth = 6;
             this.BasePrice.Name = "BasePrice";
             this.BasePrice.ReadOnly = true;
@@ -633,7 +658,7 @@ namespace Kasutajaliides
             // 
             // NightPrice
             // 
-            this.NightPrice.HeaderText = "Öine hind";
+            this.NightPrice.HeaderText = "Öine hind (s/kWh)";
             this.NightPrice.MinimumWidth = 6;
             this.NightPrice.Name = "NightPrice";
             this.NightPrice.ReadOnly = true;
@@ -654,18 +679,6 @@ namespace Kasutajaliides
             this.IsGreenPackage.Name = "IsGreenPackage";
             this.IsGreenPackage.ReadOnly = true;
             this.IsGreenPackage.Width = 80;
-            // 
-            // btnOpenPackages
-            // 
-            this.btnOpenPackages.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOpenPackages.Location = new System.Drawing.Point(727, 625);
-            this.btnOpenPackages.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.btnOpenPackages.Name = "btnOpenPackages";
-            this.btnOpenPackages.Size = new System.Drawing.Size(268, 41);
-            this.btnOpenPackages.TabIndex = 35;
-            this.btnOpenPackages.Text = "Ava pakettide CŠV";
-            this.btnOpenPackages.UseVisualStyleBackColor = true;
-            this.btnOpenPackages.Click += new System.EventHandler(this.btnOpenPackages_Click);
             // 
             // Kasutajaliides
             // 
@@ -708,6 +721,7 @@ namespace Kasutajaliides
             this.Controls.Add(this.chartPrice);
             this.Controls.Add(this.tablePrice);
             this.Font = new System.Drawing.Font("Impact", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.Name = "Kasutajaliides";
             this.Text = "Elektrihinna kalkulaator";
@@ -766,14 +780,15 @@ namespace Kasutajaliides
         private System.Windows.Forms.DataGridViewTextBoxColumn Hind;
         private System.Windows.Forms.Button btnDarkMode;
         private System.Windows.Forms.DataGridView tablePackages;
+        private System.Windows.Forms.Button btnOpenPackages;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Indeks;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProviderName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PackageName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Pakett;
         private System.Windows.Forms.DataGridViewTextBoxColumn MonthlyPrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn SellerMarginal;
         private System.Windows.Forms.DataGridViewTextBoxColumn BasePrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn NightPrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn IsStockPackage;
         private System.Windows.Forms.DataGridViewTextBoxColumn IsGreenPackage;
-        private System.Windows.Forms.Button btnOpenPackages;
     }
 }

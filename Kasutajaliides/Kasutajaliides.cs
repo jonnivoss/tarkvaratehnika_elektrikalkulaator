@@ -217,7 +217,7 @@ namespace Kasutajaliides
             }
 
             chartPrice.Series["Elektrihind"].Enabled = showStock;
-            chartPrice.Series["Tarbimine"].Enabled = showUsage;
+            chartPrice.Series["Tarbimine"].Enabled = showUsage && (timeRange.Count > 0);
             chartPrice.Invalidate();
             tablePrice.Invalidate();
         }

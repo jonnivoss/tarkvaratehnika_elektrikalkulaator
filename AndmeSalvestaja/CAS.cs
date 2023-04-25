@@ -31,7 +31,8 @@ namespace AndmeSalvestaja
             { "Kohvimasin",   Tuple.Create(1500.0, 5.0) },
             { "Raadio",       Tuple.Create(50.0, 120.0) },
             { "Munakeetja",   Tuple.Create(1000.0, 6.0)  },
-            { "Föön",         Tuple.Create(2000.0, 10.0) }
+            { "Föön",         Tuple.Create(2000.0, 10.0) },
+            { "Elektriauto",  Tuple.Create(7200.0, 420.0) }
         };
     }
 

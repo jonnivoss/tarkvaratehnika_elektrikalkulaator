@@ -7,3 +7,12 @@ C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\Andme
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\AndmeSalvestaja\obj\Release\AndmeSalvestaja.csproj.CopyComplete
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\AndmeSalvestaja\obj\Release\AndmeSalvestaja.dll
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER5\AndmeSalvestaja\obj\Release\AndmeSalvestaja.pdb
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\bin\Release\AndmeSalvestaja.dll
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\bin\Release\AndmeSalvestaja.pdb
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\bin\Release\Newtonsoft.Json.dll
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\bin\Release\Newtonsoft.Json.xml
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\obj\Release\AndmeSalvestaja.csproj.AssemblyReference.cache
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\obj\Release\AndmeSalvestaja.csproj.CoreCompileInputs.cache
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\obj\Release\AndmeSalvestaja.csproj.CopyComplete
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\obj\Release\AndmeSalvestaja.dll
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\obj\Release\AndmeSalvestaja.pdb

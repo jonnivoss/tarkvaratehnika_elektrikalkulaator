@@ -35,6 +35,8 @@ namespace Kasutajaliides
         List<DateTime> priceTimeRange = new List<DateTime>();
         List<double> priceCostRange = new List<double>();
 
+        List<double> packageCost = new List<double>(); // paketi hinna punktide jaoks
+
         VecT userData = new VecT();
         string fileContents, packageFileContents;
 
@@ -52,8 +54,12 @@ namespace Kasutajaliides
         bool state = true;
         bool state2 = true; // DARK MODE BUTTON TOGGLE
         bool state3 = false; // graafiku vajutamisega suurendamise jaoks
+        bool packageState = false;
 
         double averagePrice;
+
+        Series packageSeries = new Series();
+        string packageName;
 
         // Keskmise hinna joon graafikul
         HorizontalLineAnnotation averagePriceLine = new HorizontalLineAnnotation();
@@ -167,6 +173,21 @@ namespace Kasutajaliides
             priceCostRange.Add(ajutinePrice);
 
             chartPrice.Series["Elektrihind"].Points.DataBindXY(priceTimeRange, priceCostRange);
+            if (packageState)
+            {
+                for (int i = 0; i < tablePackages.SelectedRows.Count; ++i)
+                {
+                    packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString();
+                    packageCost.Clear();
+                    foreach (var item in priceTimeRange)
+                    {
+                        packageCost.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[3].Value));
+                    }
+                    chartPrice.Series[packageName].Points.DataBindXY(priceTimeRange, packageCost);
+                    //packageState = false;
+                }
+            }
+            
 
             for (int i = 0; i < priceCostRange.Count; i++) // Käib valitud ajaintervalli hinnad läbi
             {
@@ -345,17 +366,18 @@ namespace Kasutajaliides
 
         private void btnAvaCSV_Click(object sender, EventArgs e)
         {
-            if (AP.chooseFile())
+            if (AP.chooseFileUserData())
             {
                 AS.changeSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed, AP.getUserDataFileName());
-                this.openCSV();
+                this.openCSVUserData();
             }
         }
-        private void openCSV()
+        private bool openCSVUserData()
         {
+            bool ret = false;
             if (!AP.readUserDataFile(ref fileContents))
             {
-                MessageBox.Show("Lugemine ebaõnnestus!");
+                ret = false;
             }
             else
             {
@@ -402,6 +424,7 @@ namespace Kasutajaliides
                 callAPI(timeRange.First().AddDays(-30), endOfDayDate);
             }
             updateGraph();
+            return ret;
         }
 
         // API caller muudetud üldisemaks, saab kutsuda suvaliste ajaparameetritega (peale startTime ja stopTime)
@@ -535,8 +558,12 @@ namespace Kasutajaliides
             AP.setPackageFileName(AS.getSetting(AndmeSalvestaja.ASSetting.paketiAndmed));
             //callAPI(DateTime.Now.Date.AddDays(-60), DateTime.Now);
             //MessageBox.Show(priceTimeRange.Last().ToString());
-            openCSV();
-            openCSVPackage();
+            bool isUserData = openCSVUserData();
+            bool isPackage = openCSVPackage();
+            if (!isUserData || !isPackage)
+            {
+                MessageBox.Show("Lugemine ebaõnnestus!");
+            }
 
             // akna elementide mõõtmete vaikeväärtuste määramine
             originalWindowSize = new Rectangle(this.Location.X, this.Location.Y, this.Size.Width, this.Size.Height);
@@ -1047,20 +1074,23 @@ namespace Kasutajaliides
             }
         }
 
-        private void openCSVPackage()
+        private bool openCSVPackage()
         {
+            bool ret = true;
             if (!AP.readPackageFile(ref packageFileContents))
             {
-                MessageBox.Show("Lugemine ebaõnnestus!");
+                ret = false;
             }
             else
             {
                 packageData = AP.parsePackage(packageFileContents);
 
                 tablePackages.Rows.Clear();
+                int i = 0;
                 foreach (var item in packageData)
                 {
                     tablePackages.Rows.Add(
+                        i,
                         item.providerName,
                         item.packageName,
                         item.monthlyPrice.ToString("0.00"),
@@ -1070,8 +1100,10 @@ namespace Kasutajaliides
                         item.isStockPackage ? "Jah" : "Ei",
                         item.isGreenPackage ? "Jah" : "Ei"
                     );
+                    ++i;
                 }
             }
+            return ret;
         }
 
         private void Kasutajaliides_Resize(object sender, EventArgs e)
@@ -1109,6 +1141,84 @@ namespace Kasutajaliides
             resizeGuiElement(originalButtonDarkMode, btnDarkMode);
             resizeGuiElement(originalBtnOpenPackages, btnOpenPackages);
             Refresh(); // vajalik et ei tekiks "render glitche" (nt. ComboBox ei suurene korraks jms.)
+        }
+
+        private void tablePackages_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            //MessageBox.Show("It works!");
+            packageCost.Clear();
+        
+            packageState = tablePackages.SelectedRows.Count != 0;
+
+
+            List<Series> removables = new List<Series>();
+            // Eemaldab vanad, mida enam pole valitud
+            foreach (var series in chartPrice.Series)
+            {
+                if (series.Name == "Elektrihind" || series.Name == "Tarbimine")
+                {
+                    continue;
+                }
+
+                bool removeItem = true;
+                for (int j = 0; j < tablePackages.SelectedRows.Count; ++j)
+                {
+                    string seriesName = tablePackages.SelectedRows[j].Index.ToString() + ": " + tablePackages.SelectedRows[j].Cells[2].Value.ToString();
+                    if (seriesName == series.Name)
+                    {
+                        removeItem = false;
+                        break;
+                    }
+                }
+
+                if (removeItem)
+                {
+                    removables.Add(series);
+                }
+            }
+            foreach (var removable in removables)
+            {
+                chartPrice.Series.Remove(removable);
+            }
+            removables.Clear();
+
+
+            // Lisab uued, mis on valitud
+            for (int i = 0; i < tablePackages.SelectedRows.Count; ++i)
+            {
+                packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString();
+                if (chartPrice.Series.FindByName(packageName) != null)
+                {
+                    continue;
+                }
+
+                Random r = new Random();
+
+                chartPrice.Series.Add(packageName);
+                chartPrice.Series[packageName].ChartArea = "ChartArea1";
+                chartPrice.Series[packageName].YAxisType = AxisType.Secondary;
+                chartPrice.Series[packageName].Color     = Color.FromArgb(r.Next(256), r.Next(256), r.Next(256));
+                chartPrice.Series[packageName].Legend    = "Legend1";
+                chartPrice.Series[packageName].ChartType = SeriesChartType.Line;
+
+                packageCost.Clear();
+                foreach (var item in priceTimeRange)
+                {
+                    packageCost.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[3].Value));
+                }
+                chartPrice.Series[packageName].Points.DataBindXY(priceTimeRange, packageCost);
+            }
+            updateGraph();
+        }
+
+        private void tablePackages_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            var index = e.RowIndex;
+
+            // Unselect the line
+            tablePackages.Rows[index].Selected = false;
+
+            tablePackages_RowHeaderMouseClick(sender, e);
         }
 
         // https://stackoverflow.com/questions/47463926/how-to-get-pixel-position-from-datetime-value-on-x-axis 

@@ -535,12 +535,12 @@ namespace Kasutajaliides
             foreach (var item in costNowData)
             {
                 if (item.Item1.Date == DateTime.Now.Date && item.Item1.Hour == DateTime.Now.Hour) {
-                    costNow = item.Item2 /10.0;
+                    costNow = item.Item2 / 10.0;
                     break;
                 }
                 
             }
-            txtCostNow.Text = costNow.ToString();
+            txtCostNow.Text = costNow.ToString("0.000");
             
             // Proovib avada CSV
             AS.loadFile();

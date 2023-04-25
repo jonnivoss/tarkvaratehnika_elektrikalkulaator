@@ -400,7 +400,7 @@ namespace Kasutajaliides
             {
 
                 this.startTime = dateStartTime.Value + new TimeSpan(0, 0, 0);
-                this.stopTime  = dateStopTime.Value + new TimeSpan(23, 59, 59);
+                this.stopTime  = dateStopTime.Value + new TimeSpan(23, 0, 0);
                 txtDebug.AppendText("jeba\n\n");
             }
 
@@ -410,7 +410,7 @@ namespace Kasutajaliides
             if (timeRange.Count == 0)
             {
                 this.startTime = DateTime.Now.Date + new TimeSpan(0, 0, 0);
-                this.stopTime = DateTime.Now.Date + new TimeSpan(23, 59, 59);
+                this.stopTime = DateTime.Now.Date + new TimeSpan(23, 0, 0);
                 // Ajaintervalli määramine kuvamisel
                 changeInterval(timeRange.Count);
                 txtDebug.AppendText("  kaas   ");

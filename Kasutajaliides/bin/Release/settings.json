@@ -1,7 +1,7 @@
 {
   "setMap": {
-    "tarbijaAndmed": "",
-    "paketiAndmed": "",
+    "tarbijaAndmed": "C:\\Users\\admin\\Documents\\TTU\\Tarkvaratehnika\\Projekt\\tarbimine_eestiEnergia_.csv",
+    "paketiAndmed": "C:\\Users\\admin\\Documents\\TTU\\Tarkvaratehnika\\Projekt\\elektripaketidtest.csv",
     "suurendusLubatud": "0"
   },
   "marketData": [],
@@ -53,6 +53,10 @@
     "Föön": {
       "Item1": 2000.0,
       "Item2": 10.0
+    },
+    "Elektriauto": {
+      "Item1": 7200.0,
+      "Item2": 420.0
     }
   }
 }

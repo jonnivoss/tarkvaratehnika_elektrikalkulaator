@@ -47,7 +47,6 @@ namespace Kasutajaliides
         private AndmeSalvestaja.CAS AS = new AndmeSalvestaja.CAS("settings.json");
         private Arvutaja.CArvutaja AR = new Arvutaja.CArvutaja();
 
-        DateTime startTime, stopTime;
         DateTime endOfDayDate = DateTime.Now.Date.AddHours(48); // vastab järgmise päeva lõpule (24:00)
         DateTime zoomStartTime, zoomStopTime;
         bool showStock = true, showUsage = true;
@@ -107,17 +106,11 @@ namespace Kasutajaliides
             costRange.Clear();
             foreach (var item in userData)
             {
-                if (item.Item1 >= startTime && item.Item1 <= stopTime)
+                if (item.Item1 >= dateStartTime.Value && item.Item1 <= dateStopTime.Value)
                 {
                     timeRange.Add(item.Item1);
                     costRange.Add(item.Item2);
                 }
-            }
-
-            if (timeRange.Count > 0)
-            {
-                changeInterval(timeRange.Count);
-                chartPrice.Series["Tarbimine"].Points.DataBindXY(timeRange, costRange);
             }
 
             priceTimeRange.Clear();
@@ -132,7 +125,7 @@ namespace Kasutajaliides
             // Börsihinna andmed
             foreach (var item in priceData)
             {
-                if (item.Item1 >= startTime && item.Item1 <= stopTime)
+                if (item.Item1 >= dateStartTime.Value && item.Item1 <= dateStopTime.Value)
                 {
                     priceTimeRange.Add(item.Item1);
                     priceCostRange.Add(item.Item2 / 10.0);
@@ -160,8 +153,6 @@ namespace Kasutajaliides
             averagePriceLine.LineWidth = 1;
             averagePriceLine.Name = "priceLine";
             chartPrice.Annotations.Add(averagePriceLine);
-
-
 
             string line = "Keskmine hind: " + averagePrice.ToString();
             string line2 = "Max: " + chartPrice.ChartAreas["ChartArea1"].AxisY2.Maximum.ToString();
@@ -220,6 +211,9 @@ namespace Kasutajaliides
             chartPrice.Series["Tarbimine"].Enabled = showUsage && (timeRange.Count > 0);
             chartPrice.Invalidate();
             tablePrice.Invalidate();
+            // Skaala reguleerimine:
+            changeInterval(Convert.ToInt32((dateStopTime.Value - dateStartTime.Value).TotalHours));
+            chartPrice.Series["Tarbimine"].Points.DataBindXY(timeRange, costRange);
         }
 
         //arvutab ristküllikuid
@@ -335,32 +329,15 @@ namespace Kasutajaliides
             }
         }
 
+        // Muudab graafiku X-teljele kantavate jaotiste tihedust (time scale density)
         private void changeInterval(int count)
         {
-            if (count <= 24) //kui andmeid on ühe päeva jagu
-            {
-                chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Hours;
-                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "HH:mm";
-                chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 2; // silt iga kahe tunni tagant
-            }
-            else if (count <= 48) // kui andmeid on kahe päeva jagu
-            {
-                chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Hours;
-                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "dd/MM HH:mm";
-                chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 4; // silt iga nelja tunni tagant
-            }
-            else if (count <= 72) // kui andmeid on kolme päeva jagu
-            {
-                chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Hours;
-                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "dd/MM HH:mm";
-                chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 12; // silt iga 12 tunni tagant
-            }
-            else // kui andmeid on 4+ päeva jagu
-            {
-                chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = DateTimeIntervalType.Days;
-                chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "dd/MM/yy";
-                chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 0; // sildi intervall määratakse automaatselt 
-            }
+            // DateTimeInterval: 6 = Hours; 5 = Days. ERGO'S ARROGANT OPINION - SHORT IS GOOOOOOOOD! :P (KVAASI-HARGNEMISTETA VERSIOON)
+            chartPrice.ChartAreas["ChartArea1"].AxisX.IntervalType = (DateTimeIntervalType)(6*(Convert.ToInt32(count <= 72)) + 5*(Convert.ToInt32(count > 72)));
+            chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 0 + (Convert.ToInt32(count <= 12)) + 2*(Convert.ToInt32(count <= 24 && count > 12)) + 4*(Convert.ToInt32(count <= 48 && count > 24)) + 12*(Convert.ToInt32(count <= 72 && count > 48));
+            //MessageBox.Show(count.ToString());
+            //MessageBox.Show(("HH:mm ".Substring(5 - 5 * Convert.ToInt32(count <= 24)) + "dd/MM HH:mm ".Substring(11 - 11 * Convert.ToInt32(count <= 72 && count > 24)) + "dd/MM/yy ".Substring(9 - 9 * Convert.ToInt32(count > 72))).Replace(" ", "").ToString());
+            chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = ("HH:mm ".Substring(5 - 5*Convert.ToInt32(count <= 24)) + "dd/MM HH:mm ".Substring(11 - 11*Convert.ToInt32(count <= 72 && count > 24)) + "dd/MM/yy ".Substring(9 - 9*Convert.ToInt32(count > 72))).Replace(" ", "");
             chartPrice.ChartAreas["ChartArea1"].AxisX.IsMarginVisible = false;
         }
 
@@ -395,12 +372,12 @@ namespace Kasutajaliides
                 var timeRangeArr = timeRange.ToArray();
             }
 
-            // startTime ja stopTime võivad olla initsialiseerimata, aga siis nad omavad väärtust default(DateTime)
-            if ((this.startTime == default(DateTime)) || (this.stopTime == default(DateTime)))
+            if ((this.dateStartTime.Value == default(DateTime)) || (this.dateStopTime.Value == default(DateTime)))
             {
 
-                this.startTime = dateStartTime.Value + new TimeSpan(0, 0, 0);
-                this.stopTime  = dateStopTime.Value + new TimeSpan(23, 0, 0);
+                this.dateStartTime.Value += new TimeSpan(0, 0, 0);
+                this.dateStopTime.Value += new TimeSpan(23, 00, 00);
+                //dateStopTime.Value += new TimeSpan(24, 00, 00);
                 txtDebug.AppendText("jeba\n\n");
             }
 
@@ -409,19 +386,16 @@ namespace Kasutajaliides
 
             if (timeRange.Count == 0)
             {
-                this.startTime = DateTime.Now.Date + new TimeSpan(0, 0, 0);
-                this.stopTime = DateTime.Now.Date + new TimeSpan(23, 0, 0);
-                // Ajaintervalli määramine kuvamisel
-                changeInterval(timeRange.Count);
+                this.dateStartTime.Value = DateTime.Now.Date + new TimeSpan(0, 0, 0);
+                this.dateStopTime.Value = DateTime.Now.Date + new TimeSpan(23, 00, 00);
+                //dateStopTime.Value += new TimeSpan(24, 00, 00);
                 txtDebug.AppendText("  kaas   ");
-                callAPI(startTime, stopTime);
+                callAPI(dateStartTime.Value, dateStopTime.Value);
             }
             else  // määra otspunktide vaikeväärtuseks tarbimisandmete algus- ja lõppaeg
             {
                 dateStartTime.Value = timeRange.First();
                 dateStopTime.Value = timeRange.Last();
-                startTime = dateStartTime.Value;
-                stopTime = dateStopTime.Value;
                 callAPI(timeRange.First().AddDays(-30), endOfDayDate);
             }
             updateGraph();
@@ -438,7 +412,6 @@ namespace Kasutajaliides
                 priceCostRange.Add(item.Item2);
                 tablePrice.Rows.Add(item.Item1, item.Item2);
             }
-            changeInterval(priceData.Count);
             txtDebug.AppendText("kutsun api\n");
         }
 
@@ -454,14 +427,14 @@ namespace Kasutajaliides
                 {
                     // Sööstab arvutajasse, leiab valitud ajavahemikust optimaalseima ajapikkuse
                     Console.WriteLine("Time: " + time.ToString());
-                    var beg = this.startTime;
+                    var beg = this.dateStartTime.Value;
                     var end = beg.Date + TimeSpan.FromHours(Math.Ceiling(time));
                     Console.WriteLine("Begin: " + beg.ToString() + "; end: " + end.ToString());
 
                     double bestIntegral = double.PositiveInfinity;
                     var bestDate = beg;
 
-                    for (; end <= this.stopTime;)
+                    for (; end <= this.dateStopTime.Value;)
                     {
                         VecT useData = new VecT();
                         // Generate usedata
@@ -523,7 +496,6 @@ namespace Kasutajaliides
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             toolTip.SetToolTip(chartPrice, null);
 
-
             this.BackColor = SystemColors.Control;
 
             this.MinimumSize = new Size(1083, 905);
@@ -552,8 +524,6 @@ namespace Kasutajaliides
             {
                 cbKasutusmall.Items.Add(i.Key);
             }
-
-            
 
             AP.setUserDataFileName(AS.getSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed));
             AP.setPackageFileName(AS.getSetting(AndmeSalvestaja.ASSetting.paketiAndmed));
@@ -624,7 +594,6 @@ namespace Kasutajaliides
             }
         }
 
-
         private void dateStartTime_ValueChanged(object sender, EventArgs e)
         {
             txtDebug.AppendText("; date: " + sender.ToString());
@@ -635,21 +604,18 @@ namespace Kasutajaliides
             // Sea uus algusaeg
             if (dateStartTime.Value <= dateStopTime.Value)
             {
-                this.startTime = d;
+                this.dateStartTime.Value = d;
             }
             else
             {
-                this.startTime = d;
+                this.dateStartTime.Value = d;
                 dateStopTime.Value = d.Date + new TimeSpan(23, 59, 59);
-                this.stopTime = dateStopTime.Value;
+                this.dateStopTime.Value = dateStopTime.Value;
             }
-            if (startTime < priceData.First().Item1 || stopTime > priceData.Last().Item1)
-            {
-                callAPI(startTime.Date.AddDays(-60), endOfDayDate); // kutsub API ainult vajadusel välja ja loeb seejuures korraga rohkem andmeid!
-            }
+            priceChart_zoom(dateStartTime.Value, dateStopTime.Value); // uuendab ja suurendab graafikut!
             calcPrice();
-            updateGraph();
         }
+
         private void dateStartTime_DropDown(object sender, EventArgs e)
         {
             dateStartTime.ValueChanged += dateStartTime_ValueChanged;
@@ -668,20 +634,16 @@ namespace Kasutajaliides
 
             if (dateStopTime.Value >= dateStartTime.Value)
             {
-                this.stopTime = d;
+                this.dateStopTime.Value = d;
             }
             else
             {
-                this.stopTime = d;
+                this.dateStopTime.Value = d;
                 dateStartTime.Value = d.Date + new TimeSpan(0, 0, 0);
-                this.startTime = dateStartTime.Value;
+                this.dateStartTime.Value = dateStartTime.Value;
             }
-            if (startTime < priceData.First().Item1 || stopTime > priceData.Last().Item1)
-            {
-                callAPI(startTime.Date.AddDays(-60), endOfDayDate); // kutsub API ainult vajadusel välja ja loeb seejuures korraga rohkem andmeid!
-            }
+            priceChart_zoom(dateStartTime.Value, dateStopTime.Value); // uuendab ja suurendab graafikut!
             calcPrice();
-            updateGraph();
         }
         private void dateStopTime_DropDown(object sender, EventArgs e)
         {
@@ -1226,43 +1188,23 @@ namespace Kasutajaliides
         // https://stackoverflow.com/questions/11955866/retrieving-datetime-x-axis-value-from-chart-control 
         void chartPrice_zooming(object sender, MouseEventArgs e)
         {
-            if (startTime < stopTime)
+            if (dateStartTime.Value < dateStopTime.Value)
             {
                 // rulliga kerimisel hiire asukoht X-telje suhtes; Andmetüübiks DateTime!
                 var mousePositionDate = DateTime.FromOADate(chartPrice.ChartAreas["ChartArea1"].AxisX.PixelPositionToValue(e.Location.X));
-                var deltaDate = stopTime - startTime;
-                var distanceFromToday = DateTime.Now - stopTime;
-                double xCoordPercent = (mousePositionDate - startTime).TotalMilliseconds / (stopTime - startTime).TotalMilliseconds; // jagades graafiku laiusega saame pointeri normaliseeritud asukoha graafikul vahemikus [0;1]
-                //MessageBox.Show(xCoordPercent.ToString());
+                var deltaDate = dateStopTime.Value - dateStartTime.Value;
+                var distanceFromToday = DateTime.Now - dateStopTime.Value;
+                double xCoordPercent = (mousePositionDate - dateStartTime.Value).TotalMilliseconds / (deltaDate).TotalMilliseconds; // jagades graafiku laiusega saame pointeri normaliseeritud asukoha graafikul vahemikus [0;1]
                 int leftStep = 1, rightStep = 1, totalStep = 1; // sammud graafiku otste nihutamiseks (tundides)
-                if (deltaDate.TotalDays < 2)
-                {
-                    totalStep = 12;
-                }
-                else if (deltaDate.TotalDays < 10)
-                {
-                    totalStep = 24;
-                }
-                else if (deltaDate.TotalDays < 30)
-                {
-                    totalStep = 96;
-                }
-                else if(deltaDate.TotalDays < 60)
-                {
-                    totalStep = 192;
-                }
-                else
-                {
-                    totalStep = 384;
-                }
-                leftStep = Convert.ToInt16(xCoordPercent * totalStep);
+                totalStep = 12*Convert.ToInt32(deltaDate.TotalDays <= 2) + 48*Convert.ToInt32(deltaDate.TotalDays <= 10 && deltaDate.TotalDays > 2) + 196*Convert.ToInt32(deltaDate.TotalDays <= 30 && deltaDate.TotalDays > 10) + 384*Convert.ToInt32(deltaDate.TotalDays > 30);
+                leftStep = Convert.ToInt32(xCoordPercent * totalStep);
                 rightStep = totalStep - leftStep;
                 //MessageBox.Show((mousePositionDate - startTime).TotalMilliseconds.ToString());
                 if (xCoordPercent <= 1 && xCoordPercent >= 0)
                 {
-                    if (e.Delta > 0 && (startTime < stopTime) && deltaDate.TotalDays >= 2)
+                    if (e.Delta > 0 && (dateStartTime.Value < dateStopTime.Value) && deltaDate.TotalHours >= 12)
                     {
-                        priceChart_zoom(dateStartTime.Value.AddHours(leftStep), stopTime.AddHours(-rightStep));
+                        priceChart_zoom(dateStartTime.Value.AddHours(leftStep), dateStopTime.Value.AddHours(-rightStep));
                     }
                     else if (e.Delta < 0)
                     {
@@ -1300,7 +1242,7 @@ namespace Kasutajaliides
                 {
                     // You know nothing, Jon Snow...
                 }
-                if (zoomStopTime - zoomStartTime >= TimeSpan.FromHours(1) && zoomStartTime >= startTime && zoomStopTime < stopTime)
+                if (zoomStopTime - zoomStartTime >= TimeSpan.FromHours(1) && zoomStartTime >= dateStartTime.Value && zoomStopTime < dateStopTime.Value)
                 {
                     priceChart_zoom(zoomStartTime, zoomStopTime);
                 }
@@ -1309,14 +1251,14 @@ namespace Kasutajaliides
         }
         void priceChart_zoom(DateTime start, DateTime stop)
         {
-            dateStartTime.ValueChanged += dateStartTime_ValueChanged; // lülita DateTimePickeri muutuse handler sisse
             dateStartTime.Value = start;
-            startTime = start;
             dateStopTime.Value = stop;
-            stopTime = stop;
+            if (dateStartTime.Value < priceData.First().Item1 || dateStopTime.Value > priceData.Last().Item1)
+            {
+                callAPI(dateStartTime.Value.Date.AddDays(-60), endOfDayDate); // kutsub API ainult vajadusel välja ja loeb seejuures korraga rohkem andmeid!
+            }
             updateGraph();
-            dateStartTime.ValueChanged -= dateStartTime_ValueChanged; // lülita DateTimePickeri muutuse handler välja
-
+            calcPrice();
         }
 
     }

@@ -366,7 +366,7 @@ namespace Kasutajaliides
 
         private void btnAvaCSV_Click(object sender, EventArgs e)
         {
-            if (AP.chooseFileUserData())
+            if (AP.chooseFileUserData())//ei
             {
                 AS.changeSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed, AP.getUserDataFileName());
                 this.openCSVUserData();

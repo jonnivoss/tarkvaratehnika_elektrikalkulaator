@@ -395,6 +395,7 @@ namespace Kasutajaliides
                 var timeRangeArr = timeRange.ToArray();
             }
 
+            // startTime ja stopTime võivad olla initsialiseerimata, aga siis nad omavad väärtust default(DateTime)
             if ((this.startTime == default(DateTime)) || (this.stopTime == default(DateTime)))
             {
 

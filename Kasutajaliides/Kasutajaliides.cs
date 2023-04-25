@@ -374,7 +374,7 @@ namespace Kasutajaliides
         }
         private bool openCSVUserData()
         {
-            bool ret = false;
+            bool ret = true;
             if (!AP.readUserDataFile(ref fileContents))
             {
                 ret = false;

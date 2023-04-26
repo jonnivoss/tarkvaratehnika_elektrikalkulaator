@@ -36,6 +36,10 @@
     <ApplicationIcon>el ritsikas.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CSVExporterDNF, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CSVExporterDNF.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
@@ -92,9 +96,9 @@
       <Project>{c921fa8b-6b9b-403a-b316-4c2eba950da7}</Project>
       <Name>Arvutaja</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LokaalneAndmepyydja\Andmepyydja.csproj">
+    <ProjectReference Include="..\LokaalneAndmepyydja\AndmePyydja.csproj">
       <Project>{0986332a-24b6-49da-8d38-d840ff5f0b4b}</Project>
-      <Name>Andmepyydja</Name>
+      <Name>AndmePyydja</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

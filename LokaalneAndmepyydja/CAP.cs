@@ -16,9 +16,9 @@ using DatePriceT = System.Tuple<System.DateTime, double>;
 using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
 using ParseCSVDataLineT = System.Tuple<string, char>;
 
-using PackageT = System.Collections.Generic.List<Andmepyydja.PackageInfo>;
+using PackageT = System.Collections.Generic.List<AndmePyydja.PackageInfo>;
 
-namespace Andmepyydja
+namespace AndmePyydja
 {
     public class PackageInfo
     {
@@ -87,7 +87,7 @@ namespace Andmepyydja
         }
     }
 
-    public class CAP : Andmepyydja.IAP
+    public class CAP : AndmePyydja.IAP
     {
         // Erinevad failiavamisdialoogid kasutajaandmete ja paketiandmete jaoks, sest kui need asuvad
         // erinevates kaustades, siis on väga frustreeriv, kui ühe valimisel unustatakse ära teise kaust

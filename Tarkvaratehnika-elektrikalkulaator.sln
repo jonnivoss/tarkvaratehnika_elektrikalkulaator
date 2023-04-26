@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.33328.57
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kasutajaliides", "Kasutajaliides\Kasutajaliides.csproj", "{E9B65801-0BBB-4EB4-A4F2-2BC5CEA60588}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Andmepyydja", "LokaalneAndmepyydja\Andmepyydja.csproj", "{0986332A-24B6-49DA-8D38-D840FF5F0B4B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndmePyydja", "LokaalneAndmepyydja\AndmePyydja.csproj", "{0986332A-24B6-49DA-8D38-D840FF5F0B4B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arvutaja", "Arvutaja\Arvutaja.csproj", "{C921FA8B-6B9B-403A-B316-4C2EBA950DA7}"
 EndProject

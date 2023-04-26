@@ -46,9 +46,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LokaalneAndmepyydja\Andmepyydja.csproj">
+    <ProjectReference Include="..\LokaalneAndmepyydja\AndmePyydja.csproj">
       <Project>{0986332a-24b6-49da-8d38-d840ff5f0b4b}</Project>
-      <Name>Andmepyydja</Name>
+      <Name>AndmePyydja</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

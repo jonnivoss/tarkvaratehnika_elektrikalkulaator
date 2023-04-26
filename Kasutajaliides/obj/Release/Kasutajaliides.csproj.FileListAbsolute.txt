@@ -36,3 +36,4 @@ C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\ob
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Release\Kasutajaliides.csproj.CopyComplete
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Release\Kasutajaliides.exe
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\obj\Release\Kasutajaliides.pdb
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Release\CSVExporterDNF.dll

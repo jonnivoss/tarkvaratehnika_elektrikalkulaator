@@ -19,7 +19,7 @@ namespace AndmeSalvestaja
         size
     };
 
-    interface IAS
+    public interface IAS
     {
         bool loadFile();
         bool saveFile();

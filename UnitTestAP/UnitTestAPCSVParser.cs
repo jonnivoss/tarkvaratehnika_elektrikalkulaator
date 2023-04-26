@@ -31,7 +31,7 @@ namespace UnitTestAP
                     "01.03.2023 01:00; 01.03.2023 02:00; 0,104; 60,40; \n" +
                     "01.03.2023 02:00; 01.03.2023 03:00; 0,084; 44,45; \n\n\n\n"
             };
-            var ap = new Andmepyydja.CAP();
+            var ap = new AndmePyydja.CAP();
             var vecs = new VecT[]
             {
                 new VecT { },
@@ -90,22 +90,22 @@ namespace UnitTestAP
                 "AsS Eesti Gaas; Muutuv; 0; 0,684; 0; 0; true; false\n" +
                 "KGB Elektrivõrgud OÜ; Not - FiNe, INFP vibes; 0; 0,75; 0; 0; true; false\nasdasd;asdasd;\n\n\n\n"
             };
-            var ap = new Andmepyydja.CAP();
-            var vecs = new List<Andmepyydja.PackageInfo>[]
+            var ap = new AndmePyydja.CAP();
+            var vecs = new List<AndmePyydja.PackageInfo>[]
             {
-                new List<Andmepyydja.PackageInfo> { },
-                new List<Andmepyydja.PackageInfo> { },
-                new List<Andmepyydja.PackageInfo> { },
-                new List<Andmepyydja.PackageInfo> { },
+                new List<AndmePyydja.PackageInfo> { },
+                new List<AndmePyydja.PackageInfo> { },
+                new List<AndmePyydja.PackageInfo> { },
+                new List<AndmePyydja.PackageInfo> { },
 
-                new List<Andmepyydja.PackageInfo>
+                new List<AndmePyydja.PackageInfo>
                 {
-                    new Andmepyydja.PackageInfo("Alexela AS", "Pingevaba", 1.99, 0.7, 10.2, 0, false, false),
-                    new Andmepyydja.PackageInfo("Elektrum Eesti OÜ", "Kaljukindel Klõps kindlustusega", 1.85, 0, 13.62, 0, false, false),
-                    new Andmepyydja.PackageInfo("KGB Elektrivõrgud OÜ", "Universaalteenus", 0, 1.46, 18.49, 0, false, false),
-                    new Andmepyydja.PackageInfo("Elektrum Eesti OÜ", "Börsi Klõps", 0, 0.65, 0, 0, true, false),
-                    new Andmepyydja.PackageInfo("AsS Eesti Gaas", "Muutuv", 0, 0.684, 0, 0, true, false),
-                    new Andmepyydja.PackageInfo("KGB Elektrivõrgud OÜ", "Not - FiNe, INFP vibes", 0, 0.75, 0, 0, true, false)
+                    new AndmePyydja.PackageInfo("Alexela AS", "Pingevaba", 1.99, 0.7, 10.2, 0, false, false),
+                    new AndmePyydja.PackageInfo("Elektrum Eesti OÜ", "Kaljukindel Klõps kindlustusega", 1.85, 0, 13.62, 0, false, false),
+                    new AndmePyydja.PackageInfo("KGB Elektrivõrgud OÜ", "Universaalteenus", 0, 1.46, 18.49, 0, false, false),
+                    new AndmePyydja.PackageInfo("Elektrum Eesti OÜ", "Börsi Klõps", 0, 0.65, 0, 0, true, false),
+                    new AndmePyydja.PackageInfo("AsS Eesti Gaas", "Muutuv", 0, 0.684, 0, 0, true, false),
+                    new AndmePyydja.PackageInfo("KGB Elektrivõrgud OÜ", "Not - FiNe, INFP vibes", 0, 0.75, 0, 0, true, false)
                 }
             };
 
@@ -140,24 +140,24 @@ namespace UnitTestAP
                 "Pakkuja; Nimi; Kuutasu (€); Marginaal (s/kWh); Baashind (s/kWh); Ööhind (s/kWh); BörsiPakett; Roheline\n" +
                 "Elektrišokker; Suured käärid; 10,99; 0; 13,62; 25,428; False; False\n"
             };
-            var ap = new Andmepyydja.CAP();
-            var vecs = new List<Andmepyydja.PackageInfo>[]
+            var ap = new AndmePyydja.CAP();
+            var vecs = new List<AndmePyydja.PackageInfo>[]
             {
-                new List<Andmepyydja.PackageInfo> { },
+                new List<AndmePyydja.PackageInfo> { },
 
-                new List<Andmepyydja.PackageInfo>
+                new List<AndmePyydja.PackageInfo>
                 {
-                    new Andmepyydja.PackageInfo("Alexela AS", "Pingevaba", 1.99, 0.7, 10.2, 0, false, false),
-                    new Andmepyydja.PackageInfo("Elektrum Eesti OÜ", "Kaljukindel Klõps kindlustusega", 1.85, 0, 13.62, 0, false, false),
-                    new Andmepyydja.PackageInfo("KGB Elektrivõrgud OÜ", "Universaalteenus", 0, 1.46, 18.49, 0, false, false),
-                    new Andmepyydja.PackageInfo("Elektrum Eesti OÜ", "Börsi Klõps", 0, 0.65, 0, 0, true, false),
-                    new Andmepyydja.PackageInfo("AsS Eesti Gaas", "Muutuv", 0, 0.684, 0, 0, true, false),
-                    new Andmepyydja.PackageInfo("KGB Elektrivõrgud OÜ", "Not - FiNe, INFP vibes", 0, 0.75, 0, 0, true, false)
+                    new AndmePyydja.PackageInfo("Alexela AS", "Pingevaba", 1.99, 0.7, 10.2, 0, false, false),
+                    new AndmePyydja.PackageInfo("Elektrum Eesti OÜ", "Kaljukindel Klõps kindlustusega", 1.85, 0, 13.62, 0, false, false),
+                    new AndmePyydja.PackageInfo("KGB Elektrivõrgud OÜ", "Universaalteenus", 0, 1.46, 18.49, 0, false, false),
+                    new AndmePyydja.PackageInfo("Elektrum Eesti OÜ", "Börsi Klõps", 0, 0.65, 0, 0, true, false),
+                    new AndmePyydja.PackageInfo("AsS Eesti Gaas", "Muutuv", 0, 0.684, 0, 0, true, false),
+                    new AndmePyydja.PackageInfo("KGB Elektrivõrgud OÜ", "Not - FiNe, INFP vibes", 0, 0.75, 0, 0, true, false)
                 },
 
-                new List<Andmepyydja.PackageInfo>
+                new List<AndmePyydja.PackageInfo>
                 {
-                    new Andmepyydja.PackageInfo("Elektrišokker", "Suured käärid", 10.99, 0, 13.62, 25.428, false, false),
+                    new AndmePyydja.PackageInfo("Elektrišokker", "Suured käärid", 10.99, 0, 13.62, 25.428, false, false),
                 }
             };
 

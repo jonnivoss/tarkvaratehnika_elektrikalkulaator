@@ -47,6 +47,9 @@ namespace Kasutajaliides
         private AndmeSalvestaja.IAS AS = new AndmeSalvestaja.CAS("settings.json");
         private Arvutaja.IArvutaja AR = new Arvutaja.CArvutaja();
         private CSVExporterDNF.IExporter CSV = new CSVExporterDNF.CExporter();
+        // IDGAFAKT
+        // a "friendly" reminder, mi deer amigo
+        private VaheKiht.IVK VK = new VaheKiht.CVK();
 
         DateTime endOfDayDate = DateTime.Now.Date.AddHours(48); // vastab järgmise päeva lõpule (24:00)
         DateTime zoomStartTime, zoomStopTime;

@@ -100,6 +100,10 @@
       <Project>{0986332a-24b6-49da-8d38-d840ff5f0b4b}</Project>
       <Name>AndmePyydja</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VaheKiht\VaheKiht.csproj">
+      <Project>{8f0af5ef-4213-461a-b11c-05a7e61caffc}</Project>
+      <Name>VaheKiht</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="el ritsikas.ico" />

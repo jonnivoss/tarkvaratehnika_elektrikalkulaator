@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestArvutaja", "UnitTes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestAP", "UnitTestAP\UnitTestAP.csproj", "{990C3408-AD51-4A29-8498-6614B32BBDCD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VaheKiht", "VaheKiht\VaheKiht.csproj", "{8F0AF5EF-4213-461A-B11C-05A7E61CAFFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{990C3408-AD51-4A29-8498-6614B32BBDCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{990C3408-AD51-4A29-8498-6614B32BBDCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{990C3408-AD51-4A29-8498-6614B32BBDCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F0AF5EF-4213-461A-B11C-05A7E61CAFFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F0AF5EF-4213-461A-B11C-05A7E61CAFFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F0AF5EF-4213-461A-B11C-05A7E61CAFFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F0AF5EF-4213-461A-B11C-05A7E61CAFFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

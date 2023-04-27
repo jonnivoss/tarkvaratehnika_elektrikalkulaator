@@ -72,9 +72,9 @@ namespace Arvutaja
             
             double bestIntegral = double.PositiveInfinity;
             DateTime bestDate = start;
-            DateTime end = start + TimeSpan.FromHours(Math.Ceiling(usageLength));
+            DateTime usageEnd = start + TimeSpan.FromHours(Math.Ceiling(usageLength));
 
-            while (end <= stop)
+            while (usageEnd <= stop)
             {
                 VecT tempUsageData = new VecT();
                 // Generate usage data
@@ -97,8 +97,8 @@ namespace Arvutaja
                     }
                 }
 
-                start = start.AddHours(1);
-                end   = end.AddHours(1);
+                start    = start.AddHours(1);
+                usageEnd = usageEnd.AddHours(1);
             }
 
             if (bestIntegral == double.PositiveInfinity)

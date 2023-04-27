@@ -135,49 +135,43 @@ namespace Kasutajaliides
             }
 
 
-            //priceTimeRange.Clear();
-            //priceCostRange.Clear();
+            var priceTime = VK.getPriceTimeRange();
+            var priceCost = VK.getPriceCostRange();
+
             tablePrice.Rows.Clear();
-
             averagePrice = 0.0;
-
+            for (int i = 0; i < priceTime.Count; ++i)
             {
-                var priceTime = VK.getPriceTimeRange();
-                var priceCost = VK.getPriceCostRange();
+                tablePrice.Rows.Add(priceTime[i], priceCost[i]);
 
-                for (int i = 0; i < priceTime.Count; ++i)
+                // Keskmise hinna arvutamiseks hindade kokku liitmine
+                averagePrice += priceCost[i]; // s/kWh
+            }
+            // Jagab kokkuliidetud hinnad hindade arvuga ==> keskmine hind
+            averagePrice /= priceCost.Count;
+
+            for (int i = 0; i < priceCost.Count; i++) // Käib valitud ajaintervalli hinnad läbi
+            {
+                if (i != priceCost.Count - 1) // Kui ei ole tegemist viimase hinnaga
                 {
-                    tablePrice.Rows.Add(priceTime[i], priceCost[i]);
-
-                    // Keskmise hinna arvutamiseks hindade kokku liitmine
-                    averagePrice += priceCost[i]; // s/kWh
-                }
-                // Jagab kokkuliidetud hinnad hindade arvuga ==> keskmine hind
-                averagePrice /= priceCost.Count;
-
-                for (int i = 0; i < priceCost.Count; i++) // Käib valitud ajaintervalli hinnad läbi
-                {
-                    if (i != priceCost.Count - 1) // Kui ei ole tegemist viimase hinnaga
+                    if (priceCost[i] < averagePrice) // Väiksem kui keskmine hind ==> roheline
                     {
-                        if (priceCost[i] < averagePrice) // Väiksem kui keskmine hind ==> roheline
-                        {
-                            chartPrice.Series["Elektrihind"].Points[i + 1].Color = Color.Green;
-                        }
-                        else // Suurem kui keskmine hind ==> punane
-                        {
-                            chartPrice.Series["Elektrihind"].Points[i + 1].Color = Color.Red;
-                        }
+                        chartPrice.Series["Elektrihind"].Points[i + 1].Color = Color.Green;
                     }
-                    else // Kui on tegemist viimase hinnaga
+                    else // Suurem kui keskmine hind ==> punane
                     {
-                        if (priceCost[i] < averagePrice) // Väiksem kui keskmine hind ==> roheline
-                        {
-                            chartPrice.Series["Elektrihind"].Points[i].Color = Color.Green;
-                        }
-                        else // Suurem kui keskmine hind ==> punane
-                        {
-                            chartPrice.Series["Elektrihind"].Points[i].Color = Color.Red;
-                        }
+                        chartPrice.Series["Elektrihind"].Points[i + 1].Color = Color.Red;
+                    }
+                }
+                else // Kui on tegemist viimase hinnaga
+                {
+                    if (priceCost[i] < averagePrice) // Väiksem kui keskmine hind ==> roheline
+                    {
+                        chartPrice.Series["Elektrihind"].Points[i].Color = Color.Green;
+                    }
+                    else // Suurem kui keskmine hind ==> punane
+                    {
+                        chartPrice.Series["Elektrihind"].Points[i].Color = Color.Red;
                     }
                 }
             }
@@ -213,10 +207,8 @@ namespace Kasutajaliides
                         packageCost.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[3].Value));
                     }
                     chartPrice.Series[packageName].Points.DataBindXY(VK.getPriceTimeRange(), packageCost);
-                    //packageState = false;
                 }
             }
-            
 
             chartPrice.Invalidate();
             tablePrice.Invalidate();
@@ -281,11 +273,13 @@ namespace Kasutajaliides
                 
                 //leia punkt millele x vastab ja salvesta selle y kordinaat
                 DateTime s = DateTime.FromOADate(x);
-                foreach (var item in priceData)
+                var timeRange = VK.getPriceTimeRange();
+                var costRange = VK.getPriceCostRange();
+                for (int i = 0; i < timeRange.Count; ++i)
                 {
-                    if (item.Item1.Hour == s.Hour && item.Item1.Date == s.Date)
+                    if (timeRange[i].Hour == s.Hour && timeRange[i].Date == s.Date)
                     {
-                        y = item.Item2;
+                        y = costRange[i];
                         break;
                     }
                 }
@@ -366,7 +360,7 @@ namespace Kasutajaliides
             }
             else
             {
-                userData = AP.parseUserData(fileContents);
+                this.userData = AP.parseUserData(fileContents);
             }
 
             if ((this.dateStartTime.Value == default(DateTime)) || (this.dateStopTime.Value == default(DateTime)))
@@ -384,13 +378,13 @@ namespace Kasutajaliides
                 this.dateStopTime.Value = DateTime.Now.Date + new TimeSpan(23, 00, 00);
                 //dateStopTime.Value += new TimeSpan(24, 00, 00);
                 txtDebug.AppendText("  kaas   ");
-                priceData = AP.HindAegInternet(dateStartTime.Value, dateStopTime.Value);
+                this.priceData = AP.HindAegInternet(dateStartTime.Value, dateStopTime.Value);
             }
             else  // määra otspunktide vaikeväärtuseks tarbimisandmete algus- ja lõppaeg
             {
                 dateStartTime.Value = this.userData.First().Item1;
                 dateStopTime.Value = this.userData.Last().Item1;
-                priceData = AP.HindAegInternet(this.userData.First().Item1.AddDays(-30), endOfDayDate);
+                this.priceData = AP.HindAegInternet(this.userData.First().Item1.AddDays(-30), endOfDayDate);
             }
             updateGraph();
             return ret;
@@ -457,7 +451,6 @@ namespace Kasutajaliides
             }
             catch (Exception)
             {
-                return;
             }
         }
 

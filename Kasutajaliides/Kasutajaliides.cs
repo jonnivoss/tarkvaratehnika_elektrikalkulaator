@@ -394,29 +394,16 @@ namespace Kasutajaliides
                 this.dateStopTime.Value = DateTime.Now.Date + new TimeSpan(23, 00, 00);
                 //dateStopTime.Value += new TimeSpan(24, 00, 00);
                 txtDebug.AppendText("  kaas   ");
-                callAPI(dateStartTime.Value, dateStopTime.Value);
+                priceData = AP.HindAegInternet(dateStartTime.Value, dateStopTime.Value);
             }
             else  // määra otspunktide vaikeväärtuseks tarbimisandmete algus- ja lõppaeg
             {
                 dateStartTime.Value = timeRange.First();
                 dateStopTime.Value = timeRange.Last();
-                callAPI(timeRange.First().AddDays(-30), endOfDayDate);
+                priceData = AP.HindAegInternet(timeRange.First().AddDays(-30), endOfDayDate);
             }
             updateGraph();
             return ret;
-        }
-
-        // API caller muudetud üldisemaks, saab kutsuda suvaliste ajaparameetritega (peale startTime ja stopTime)
-        private void callAPI(DateTime start, DateTime stop)
-        {
-            priceData = AP.HindAegInternet(start, stop);
-            foreach (var item in priceData)
-            {
-                priceTimeRange.Add(item.Item1);
-                priceCostRange.Add(item.Item2);
-                tablePrice.Rows.Add(item.Item1, item.Item2);
-            }
-            txtDebug.AppendText("kutsun api\n");
         }
 
         private void calcPrice()
@@ -531,7 +518,7 @@ namespace Kasutajaliides
 
             AP.setUserDataFileName(AS.getSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed));
             AP.setPackageFileName(AS.getSetting(AndmeSalvestaja.ASSetting.paketiAndmed));
-            //callAPI(DateTime.Now.Date.AddDays(-60), DateTime.Now);
+            //priceData = AP.HindAegInternet(DateTime.Now.Date.AddDays(-60), DateTime.Now);
             //MessageBox.Show(priceTimeRange.Last().ToString());
             bool isUserData = openCSVUserData();
             bool isPackage = openCSVPackage();
@@ -1259,7 +1246,7 @@ namespace Kasutajaliides
             dateStopTime.Value = stop;
             if (dateStartTime.Value < priceData.First().Item1 || dateStopTime.Value > priceData.Last().Item1)
             {
-                callAPI(dateStartTime.Value.Date.AddDays(-60), endOfDayDate); // kutsub API ainult vajadusel välja ja loeb seejuures korraga rohkem andmeid!
+                priceData = AP.HindAegInternet(dateStartTime.Value.Date.AddDays(-60), endOfDayDate); // kutsub API ainult vajadusel välja ja loeb seejuures korraga rohkem andmeid!
             }
             updateGraph();
             calcPrice();

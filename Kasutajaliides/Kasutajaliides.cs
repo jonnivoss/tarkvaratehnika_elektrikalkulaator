@@ -338,7 +338,8 @@ namespace Kasutajaliides
             chartPrice.ChartAreas["ChartArea1"].AxisX.Interval = 0 + (Convert.ToInt32(count <= 12)) + 2*(Convert.ToInt32(count <= 24 && count > 12)) + 4*(Convert.ToInt32(count <= 48 && count > 24)) + 12*(Convert.ToInt32(count <= 72 && count > 48));
             //MessageBox.Show(count.ToString());
             //MessageBox.Show(("HH:mm ".Substring(5 - 5 * Convert.ToInt32(count <= 24)) + "dd/MM HH:mm ".Substring(11 - 11 * Convert.ToInt32(count <= 72 && count > 24)) + "dd/MM/yy ".Substring(9 - 9 * Convert.ToInt32(count > 72))).Replace(" ", "").ToString());
-            chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = ("HH:mm ".Substring(5 - 5*Convert.ToInt32(count <= 24)) + "dd/MM HH:mm ".Substring(11 - 11*Convert.ToInt32(count <= 72 && count > 24)) + "dd/MM/yy ".Substring(9 - 9*Convert.ToInt32(count > 72))).Replace(" ", "");
+            // TrimEnd eemaldab lõpust üleliigsed tühikud
+            chartPrice.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = ("HH:mm ".Substring(6 - 6*Convert.ToInt32(count <= 24)) + "dd/MM HH:mm ".Substring(12 - 12*Convert.ToInt32(count <= 72 && count > 24)) + "dd/MM/yy ".Substring(9 - 9*Convert.ToInt32(count > 72))).TrimEnd();
             chartPrice.ChartAreas["ChartArea1"].AxisX.IsMarginVisible = false;
         }
 

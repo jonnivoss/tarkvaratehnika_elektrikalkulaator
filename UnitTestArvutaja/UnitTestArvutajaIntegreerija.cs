@@ -42,7 +42,7 @@ namespace UnitTestArvutaja
             double integraal = 0.0;
             System.DateTime alumineRaja = andmed1[0].Item1;
             System.DateTime ylemineRaja = andmed1[7].Item1;
-            int reaalne1 = objekt.integreerija(andmed1, andmed2, alumineRaja, ylemineRaja, ref integraal);
+            int reaalne1 = objekt.integral(andmed1, andmed2, alumineRaja, ylemineRaja, ref integraal);
             int oodatud1 = 0;
             double reaalne2 = integraal;
             double oodatud2 = 204.1877;
@@ -67,7 +67,7 @@ namespace UnitTestArvutaja
             double integraal = 0.0;
             System.DateTime alumineRaja = d;
             System.DateTime ylemineRaja = d;
-            int reaalne1 = objekt.integreerija(andmed1, andmed2, alumineRaja, ylemineRaja, ref integraal);
+            int reaalne1 = objekt.integral(andmed1, andmed2, alumineRaja, ylemineRaja, ref integraal);
             int oodatud1 = 0;
             double reaalne2 = integraal;
             double oodatud2 = 64.1601;
@@ -87,7 +87,7 @@ namespace UnitTestArvutaja
             double integraal = 0.0;
             System.DateTime alumineRaja = new System.DateTime(2022, 03, 10, 8, 15, 0);
             System.DateTime ylemineRaja = new System.DateTime(2022, 03, 10, 9, 15, 0);
-            int reaalne1 = objekt.integreerija(andmed1, andmed2, alumineRaja, ylemineRaja, ref integraal);
+            int reaalne1 = objekt.integral(andmed1, andmed2, alumineRaja, ylemineRaja, ref integraal);
             int oodatud1 = 1;
             double reaalne2 = integraal;
             double oodatud2 = 0.0;
@@ -117,7 +117,7 @@ namespace UnitTestArvutaja
             double integraal = 0.0;
             System.DateTime alumineRaja = new System.DateTime(2023, 03, 10, 7, 0, 0);
             System.DateTime ylemineRaja = new System.DateTime(2023, 03, 10, 11, 0, 0);
-            int reaalne1 = objekt.integreerija(andmed1, andmed2, alumineRaja, ylemineRaja, ref integraal);
+            int reaalne1 = objekt.integral(andmed1, andmed2, alumineRaja, ylemineRaja, ref integraal);
             int oodatud1 = 1;
             double reaalne2 = integraal;
             double oodatud2 = 0.0;
@@ -147,7 +147,7 @@ namespace UnitTestArvutaja
             double integraal = 0.0;
             System.DateTime alumineRaja = new System.DateTime(2023, 03, 10, 8, 0, 0);
             System.DateTime ylemineRaja = new System.DateTime(2023, 03, 10, 13, 0, 0);
-            int reaalne1 = objekt.integreerija(andmed1, andmed2, alumineRaja, ylemineRaja, ref integraal);
+            int reaalne1 = objekt.integral(andmed1, andmed2, alumineRaja, ylemineRaja, ref integraal);
             int oodatud1 = 1;
             double reaalne2 = integraal;
             double oodatud2 = 0.0;
@@ -177,7 +177,7 @@ namespace UnitTestArvutaja
             double integraal = 0.0;
             System.DateTime alumineRaja = new System.DateTime(2023, 03, 10, 12, 0, 0);
             System.DateTime ylemineRaja = new System.DateTime(2023, 03, 10, 8, 0, 0);
-            int reaalne1 = objekt.integreerija(andmed1, andmed2, alumineRaja, ylemineRaja, ref integraal);
+            int reaalne1 = objekt.integral(andmed1, andmed2, alumineRaja, ylemineRaja, ref integraal);
             int oodatud1 = 3;
             double reaalne2 = integraal;
             double oodatud2 = 0.0;

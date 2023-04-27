@@ -397,6 +397,7 @@ namespace Kasutajaliides
                 time  = Double.Parse(txtAjakulu.Text);
                 power = Double.Parse(txtVoimsus.Text);
                 // Do some crazy price calculation
+                int smRet = 0;
                 if (rbStockPrice.Checked)
                 {
                     // Sööstab arvutajasse, leiab valitud ajavahemikust optimaalseima ajapikkuse
@@ -405,42 +406,26 @@ namespace Kasutajaliides
                     var now = DateTime.Now.Date + new TimeSpan(DateTime.Now.Hour, 0, 0);
 
                     var beg = (this.dateStartTime.Value < now) ? now : this.dateStartTime.Value;
-                    var end = beg.Date + TimeSpan.FromHours(Math.Ceiling(time));
+                    //var end = beg + TimeSpan.FromHours(Math.Ceiling(time));
 
-                    Console.WriteLine("Begin: " + beg.ToString() + "; end: " + end.ToString());
+                    //Console.WriteLine("Begin: " + beg.ToString() + "; end: " + end.ToString());
 
-                    double bestIntegral = double.PositiveInfinity;
+
+                    double bestIntegral = Double.PositiveInfinity;
                     DateTime bestDate = beg;
 
-                    while (end <= this.dateStopTime.Value)
-                    {
-                        VecT tempUsageData = new VecT();
-                        // Generate usedata
-                        for (DateTime date = beg, tempend = (beg + TimeSpan.FromHours(time)); date < tempend; date = date.AddHours(1))
-                        {
-                            // Maksimaalne samm on 1 tund
-                            var hrs = Math.Min((tempend - date).TotalHours, 1.0);
-                            //Console.WriteLine("asd: " + date.ToString() + "; " + (power * hrs).ToString());
-                            tempUsageData.Add(Tuple.Create(date, power * hrs));
-                        }
-
-                        // Integreerib
-                        double integral = 0.0;
-                        if (AR.integreerija(tempUsageData, this.priceData, tempUsageData.First().Item1, tempUsageData.Last().Item1, ref integral) == 0)
-                        {
-                            if (integral < bestIntegral)
-                            {
-                                bestIntegral = integral;
-                                bestDate = beg;
-                            }
-                        }
-
-                        beg = beg.AddHours(1);
-                        end = end.AddHours(1);
-                    }
+                    smRet = AR.smallestIntegral(
+                        this.priceData,
+                        power,
+                        time,
+                        beg,
+                        dateStopTime.Value,
+                        ref bestIntegral,
+                        ref bestDate
+                    );
 
                     price = bestIntegral / 100.0;
-                    if ((end < DateTime.Now) || (bestIntegral == Double.PositiveInfinity))
+                    if ((this.dateStopTime.Value < DateTime.Now) || (smRet != 0))
                     {
                         txtTarbimisAeg.Text = "-";
                     }
@@ -454,7 +439,7 @@ namespace Kasutajaliides
                     var skwh = Double.Parse(tbMonthlyPrice.Text);
                     price = time * power * skwh / 100.0;
                 }
-                if (price == Double.PositiveInfinity)
+                if (smRet != 0)
                 {
                     // arvutab tarbimishinna keskmise hinnaga
                     price = time * power * this.averagePrice / 100.0;

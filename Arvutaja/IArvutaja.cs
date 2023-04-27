@@ -8,7 +8,7 @@ using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, doubl
 
 namespace Arvutaja
 {
-    interface IArvutaja
+    public interface IArvutaja
     {
         int integreerija(VecT andmed1, VecT andmed2, System.DateTime alumine, System.DateTime ylemine, ref double integraal);
         int average(
@@ -18,7 +18,7 @@ namespace Arvutaja
             ref double avg
         );
 
-        double finalPrice(double stockPrice, Andmepyydja.PackageInfo package, DateTime time);
+        double finalPrice(double stockPrice, AndmePyydja.PackageInfo package, DateTime time);
     }
 
 }

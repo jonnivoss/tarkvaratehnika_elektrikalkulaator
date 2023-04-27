@@ -9,11 +9,11 @@ using System.Runtime;
 using DatePriceT = System.Tuple<System.DateTime, float>;
 using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
 
-using PackageT = System.Collections.Generic.List<Andmepyydja.PackageInfo>;
+using PackageT = System.Collections.Generic.List<AndmePyydja.PackageInfo>;
 
-namespace Andmepyydja
+namespace AndmePyydja
 {
-    interface IAP
+    public interface IAP
     {
         bool chooseFileUserData();
         bool chooseFilePackages();

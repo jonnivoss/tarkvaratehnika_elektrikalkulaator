@@ -24,12 +24,12 @@ namespace UnitTestArvutaja
                 6.4,
                 123.2
             };
-            Andmepyydja.PackageInfo[] packageData =
+            AndmePyydja.PackageInfo[] packageData =
             {
-                new Andmepyydja.PackageInfo("", "", 0.0, 4.3, 0,      0,   true, false),
-                new Andmepyydja.PackageInfo("", "", 0.0, 4.3, 234234, 0,   true, false),
-                new Andmepyydja.PackageInfo("", "", 0.0, 4.3, 0,      343, true, false),
-                new Andmepyydja.PackageInfo("", "", 0.0, 4.3, 123,    343, true, false),
+                new AndmePyydja.PackageInfo("", "", 0.0, 4.3, 0,      0,   true, false),
+                new AndmePyydja.PackageInfo("", "", 0.0, 4.3, 234234, 0,   true, false),
+                new AndmePyydja.PackageInfo("", "", 0.0, 4.3, 0,      343, true, false),
+                new AndmePyydja.PackageInfo("", "", 0.0, 4.3, 123,    343, true, false),
             };
             DateTime[] timeData =
             {
@@ -68,12 +68,12 @@ namespace UnitTestArvutaja
                 0.0,
                 0.0
             };
-            Andmepyydja.PackageInfo[] packageData =
+            AndmePyydja.PackageInfo[] packageData =
             {
-                new Andmepyydja.PackageInfo("", "", 0.0, 0.0, 4,     0.4, false, false),
-                new Andmepyydja.PackageInfo("", "", 0.0, 0.0, 2.344, 0.4, false, false),
-                new Andmepyydja.PackageInfo("", "", 0.0, 4.3, 4.2,   0.0, false, false),
-                new Andmepyydja.PackageInfo("", "", 0.0, 1.1, 123,   0.001, false, false),
+                new AndmePyydja.PackageInfo("", "", 0.0, 0.0, 4,     0.4, false, false),
+                new AndmePyydja.PackageInfo("", "", 0.0, 0.0, 2.344, 0.4, false, false),
+                new AndmePyydja.PackageInfo("", "", 0.0, 4.3, 4.2,   0.0, false, false),
+                new AndmePyydja.PackageInfo("", "", 0.0, 1.1, 123,   0.001, false, false),
             };
             DateTime[] timeData =
             {
@@ -112,12 +112,12 @@ namespace UnitTestArvutaja
                 0.0,
                 0.0
             };
-            Andmepyydja.PackageInfo[] packageData =
+            AndmePyydja.PackageInfo[] packageData =
             {
-                new Andmepyydja.PackageInfo("", "", 0.0, 1.1, 4,     0.4, false, false),
-                new Andmepyydja.PackageInfo("", "", 0.0, 2.2, 2.344, 0.4, false, false),
-                new Andmepyydja.PackageInfo("", "", 0.0, 4.3, 4.2,   0.1, false, false),
-                new Andmepyydja.PackageInfo("", "", 0.0, 1.1, 123,   0.001, false, false),
+                new AndmePyydja.PackageInfo("", "", 0.0, 1.1, 4,     0.4, false, false),
+                new AndmePyydja.PackageInfo("", "", 0.0, 2.2, 2.344, 0.4, false, false),
+                new AndmePyydja.PackageInfo("", "", 0.0, 4.3, 4.2,   0.1, false, false),
+                new AndmePyydja.PackageInfo("", "", 0.0, 1.1, 123,   0.001, false, false),
             };
             DateTime[] timeData =
             {
@@ -156,12 +156,12 @@ namespace UnitTestArvutaja
                 0.0,
                 0.0
             };
-            Andmepyydja.PackageInfo[] packageData =
+            AndmePyydja.PackageInfo[] packageData =
             {
-                new Andmepyydja.PackageInfo("", "", 0.0, 0.0, 4,     0.4, false, false),
-                new Andmepyydja.PackageInfo("", "", 0.0, 0.0, 2.344, 5.0, false, false),
-                new Andmepyydja.PackageInfo("", "", 0.0, 4.3, 4.2,   4.0, false, false),
-                new Andmepyydja.PackageInfo("", "", 0.0, 1.1, 123,   0.0, false, false),
+                new AndmePyydja.PackageInfo("", "", 0.0, 0.0, 4,     0.4, false, false),
+                new AndmePyydja.PackageInfo("", "", 0.0, 0.0, 2.344, 5.0, false, false),
+                new AndmePyydja.PackageInfo("", "", 0.0, 4.3, 4.2,   4.0, false, false),
+                new AndmePyydja.PackageInfo("", "", 0.0, 1.1, 123,   0.0, false, false),
             };
             DateTime[] timeData =
             {

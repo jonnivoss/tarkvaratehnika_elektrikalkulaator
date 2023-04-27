@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
 using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
-using PackageT = System.Collections.Generic.List<Andmepyydja.PackageInfo>;
+using PackageT = System.Collections.Generic.List<AndmePyydja.PackageInfo>;
 
 namespace Kasutajaliides
 {
@@ -43,9 +43,13 @@ namespace Kasutajaliides
         VecT priceData = new VecT();
         PackageT packageData = new PackageT();
 
-        private Andmepyydja.CAP AP = new Andmepyydja.CAP();
-        private AndmeSalvestaja.CAS AS = new AndmeSalvestaja.CAS("settings.json");
-        private Arvutaja.CArvutaja AR = new Arvutaja.CArvutaja();
+        private AndmePyydja.IAP AP = new AndmePyydja.CAP();
+        private AndmeSalvestaja.IAS AS = new AndmeSalvestaja.CAS("settings.json");
+        private Arvutaja.IArvutaja AR = new Arvutaja.CArvutaja();
+        private CSVExporterDNF.IExporter CSV = new CSVExporterDNF.CExporter();
+        // IDGAFAKT
+        // a "friendly" reminder, mi deer amigo
+        private VaheKiht.IVK VK = new VaheKiht.CVK();
 
         DateTime endOfDayDate = DateTime.Now.Date.AddHours(48); // vastab järgmise päeva lõpule (24:00)
         DateTime zoomStartTime, zoomStopTime;

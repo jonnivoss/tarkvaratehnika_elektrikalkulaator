@@ -395,38 +395,39 @@ namespace Kasutajaliides
             double time, power, price;
             try
             {
-                time = Double.Parse(txtAjakulu.Text);
+                time  = Double.Parse(txtAjakulu.Text);
                 power = Double.Parse(txtVoimsus.Text);
                 // Do some crazy price calculation
                 if (rbStockPrice.Checked)
                 {
                     // Sööstab arvutajasse, leiab valitud ajavahemikust optimaalseima ajapikkuse
                     Console.WriteLine("Time: " + time.ToString());
-                    var beg = this.dateStartTime.Value;
+
+                    var now = DateTime.Now.Date + new TimeSpan(DateTime.Now.Hour, 0, 0);
+
+                    var beg = (this.dateStartTime.Value < now) ? now : this.dateStartTime.Value;
                     var end = beg.Date + TimeSpan.FromHours(Math.Ceiling(time));
+
                     Console.WriteLine("Begin: " + beg.ToString() + "; end: " + end.ToString());
 
                     double bestIntegral = double.PositiveInfinity;
-                    var bestDate = beg;
+                    DateTime bestDate = beg;
 
-                    for (; end <= this.dateStopTime.Value;)
+                    while (end <= this.dateStopTime.Value)
                     {
-                        VecT useData = new VecT();
+                        VecT tempUsageData = new VecT();
                         // Generate usedata
                         for (DateTime date = beg, tempend = (beg + TimeSpan.FromHours(time)); date < tempend; date = date.AddHours(1))
                         {
-                            var hrs = (tempend - date).TotalHours;
-                            if (hrs > 1.0)
-                            {
-                                hrs = 1.0;
-                            }
-                            Console.WriteLine("asd: " + date.ToString() + "; " + (power * hrs).ToString());
-                            useData.Add(Tuple.Create(date, power * hrs));
+                            // Maksimaalne samm on 1 tund
+                            var hrs = Math.Min((tempend - date).TotalHours, 1.0);
+                            //Console.WriteLine("asd: " + date.ToString() + "; " + (power * hrs).ToString());
+                            tempUsageData.Add(Tuple.Create(date, power * hrs));
                         }
 
                         // Integreerib
                         double integral = 0.0;
-                        if (AR.integreerija(useData, this.priceData, useData.First().Item1, useData.Last().Item1, ref integral) == 0)
+                        if (AR.integreerija(tempUsageData, this.priceData, tempUsageData.First().Item1, tempUsageData.Last().Item1, ref integral) == 0)
                         {
                             if (integral < bestIntegral)
                             {
@@ -440,14 +441,28 @@ namespace Kasutajaliides
                     }
 
                     price = bestIntegral / 100.0;
-                    txtTarbimisAeg.Text = bestDate.ToString("dd.MM.yyyy HH:mm");
+                    if ((end < DateTime.Now) || (bestIntegral == Double.PositiveInfinity))
+                    {
+                        txtTarbimisAeg.Text = "-";
+                    }
+                    else
+                    {
+                        txtTarbimisAeg.Text = bestDate.ToString("dd.MM.yyyy HH:mm");
+                    }
                 }
                 else
                 {
                     var skwh = Double.Parse(tbMonthlyPrice.Text);
                     price = time * power * skwh / 100.0;
                 }
-                txtHind.Text = Math.Round(price, 2).ToString();
+                if (price == Double.PositiveInfinity)
+                {
+                    // arvutab tarbimishinna keskmise hinnaga
+                    price = time * power * this.averagePrice / 100.0;
+                }
+
+                // Ümardab 3 komakohani ja ümardab üles
+                txtHind.Text = Math.Round(price + 0.0005, 3).ToString();
             }
             catch (Exception)
             {

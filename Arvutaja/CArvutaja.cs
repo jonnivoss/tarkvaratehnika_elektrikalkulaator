@@ -87,6 +87,11 @@ namespace Arvutaja
                 }
 
                 // Integreerib
+                if (tempUsageData.Count == 0)
+                {
+                    return 2;
+                }
+
                 double integral = 0.0;
                 if (this.integral(tempUsageData, priceData, tempUsageData.First().Item1, tempUsageData.Last().Item1, ref integral) == 0)
                 {

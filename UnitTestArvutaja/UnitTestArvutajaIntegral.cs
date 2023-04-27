@@ -6,7 +6,7 @@ using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, doubl
 namespace UnitTestArvutaja
 {
     [TestClass]
-    public class UnitTestArvutajaIntegreerija
+    public class UnitTestArvutajaIntegral
     {
         // klassi Arvutaja põhjal uue objekti loomine (new instance of the class Arvutaja)
         Arvutaja.CArvutaja objekt = new Arvutaja.CArvutaja();

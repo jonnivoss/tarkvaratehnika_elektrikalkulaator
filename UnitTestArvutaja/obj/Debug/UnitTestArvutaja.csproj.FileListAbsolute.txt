@@ -46,3 +46,5 @@ C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER\UnitTe
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER\UnitTestArvutaja\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER\UnitTestArvutaja\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER\UnitTestArvutaja\obj\Debug\UnitTestArvutaja.csproj.CopyComplete
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\UnitTestArvutaja\bin\Debug\Andmepyydja.dll
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\UnitTestArvutaja\bin\Debug\Andmepyydja.pdb

@@ -565,7 +565,7 @@ namespace Kasutajaliides
             }
 
             VecT costNowData = AP.HindAegInternet(time, time.AddHours(1));
-            double costNow = Double.MinValue;
+            double costNow = Double.NegativeInfinity;
             foreach (var item in costNowData)
             {
                 if (item.Item1.Date == DateTime.Now.Date && item.Item1.Hour == DateTime.Now.Hour)
@@ -574,7 +574,7 @@ namespace Kasutajaliides
                     break;
                 }
             }
-            if (costNow == Double.MinValue)
+            if (costNow == Double.NegativeInfinity)
             {
                 txtCostNow.Text = "Error!";
             }
@@ -1230,6 +1230,13 @@ namespace Kasutajaliides
                     }
                 }
             }
+        }
+
+        private void tmrCostNow_Tick(object sender, EventArgs e)
+        {
+            this.updateCostNow();
+            txtDebug.AppendText("Kontrollisin hinda...");
+            txtDebug.AppendText(Environment.NewLine);
         }
 
         void priceChart_MouseDown(object sender, MouseEventArgs e)

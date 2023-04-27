@@ -74,6 +74,21 @@ namespace VaheKiht
             }
         }
 
+        public void addLastPoints()
+        {
+            if (this.userTimeRange.Count > 0)
+            {
+                this.userTimeRange.Add(this.userTimeRange.Last().AddHours(1));
+                this.userUsageRange.Add(this.userUsageRange.Last());
+            }
+
+            if (this.priceTimeRange.Count > 0)
+            {
+                this.priceTimeRange.Add(this.priceTimeRange.Last().AddHours(1));
+                this.priceCostRange.Add(this.priceCostRange.Last());
+            }
+        }
+
         public List<DateTime> getUserDataTimeRange()
         {
             return this.userTimeRange;

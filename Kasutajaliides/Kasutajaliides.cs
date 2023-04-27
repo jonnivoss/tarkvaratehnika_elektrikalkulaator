@@ -29,13 +29,11 @@ namespace Kasutajaliides
         Font Normal = new Font("Impact", 12);
         Font Bigger = new Font("Impact", 16);
         // 
-        //List<DateTime> timeRange = new List<DateTime>();
-        //List<double> costRange = new List<double>();
 
-        List<DateTime> priceTimeRange = new List<DateTime>();
-        List<double> priceCostRange = new List<double>();
+        //List<DateTime> priceTimeRange = new List<DateTime>();
+        //List<double> priceCostRange = new List<double>();
 
-        List<double> packageCost = new List<double>(); // paketi hinna punktide jaoks
+        //List<double> packageCost = new List<double>(); // paketi hinna punktide jaoks
 
         VecT userData = new VecT();
         string fileContents, packageFileContents;
@@ -106,48 +104,84 @@ namespace Kasutajaliides
         {
             // Uuenda graafikut
             // Tarbimise andmed
+
+            var start = dateStartTime.Value;
+            var stop  = dateStopTime.Value;
+
+            if (showUsage && !VK.createUserDataRange(this.userData, start, stop))
+            {
+                MessageBox.Show("kankel!");
+                return;
+            }
+            if (showStock && !VK.createStockRange(this.priceData, start, stop))
+            {
+                MessageBox.Show("kankel!");
+                return;
+            }
+            // Lisab lõppu ühe punkti juurde, et saada "ilusat" joont
+            VK.addLastPoints();
+
+
+            chartPrice.Series["Tarbimine"].Enabled = showUsage && (VK.getUserDataTimeRange().Count > 0);
+            chartPrice.Series["Elektrihind"].Enabled = showStock;
+
             if (showUsage)
             {
-                if (VK.createUserDataRange(this.userData, dateStartTime.Value, dateStopTime.Value))
-                {
-                    chartPrice.Series["Tarbimine"].Points.DataBindXY(VK.getUserDataTimeRange(), VK.getUserDataUsageRange());
-                }
-                else
-                {
-                    MessageBox.Show("kankel!");
-                    return;
-                }
+                chartPrice.Series["Tarbimine"].Points.DataBindXY(VK.getUserDataTimeRange(), VK.getUserDataUsageRange());
             }
-            chartPrice.Series["Tarbimine"].Enabled = showUsage && (VK.getUserDataTimeRange().Count > 0);
+            if (showStock)
+            {
+                chartPrice.Series["Elektrihind"].Points.DataBindXY(VK.getPriceTimeRange(), VK.getPriceCostRange());
+            }
 
-            priceTimeRange.Clear();
-            priceCostRange.Clear();
+
+            //priceTimeRange.Clear();
+            //priceCostRange.Clear();
             tablePrice.Rows.Clear();
-
-            DateTime ajutineDate = new DateTime();
-            double ajutinePrice = 0.0;
 
             averagePrice = 0.0;
 
-            // Börsihinna andmed
-            foreach (var item in priceData)
             {
-                if (item.Item1 >= dateStartTime.Value && item.Item1 <= dateStopTime.Value)
+                var priceTime = VK.getPriceTimeRange();
+                var priceCost = VK.getPriceCostRange();
+
+                for (int i = 0; i < priceTime.Count; ++i)
                 {
-                    priceTimeRange.Add(item.Item1);
-                    priceCostRange.Add(item.Item2);
-                    tablePrice.Rows.Add(item.Item1, item.Item2);
+                    tablePrice.Rows.Add(priceTime[i], priceCost[i]);
 
                     // Keskmise hinna arvutamiseks hindade kokku liitmine
-                    averagePrice += item.Item2; // s/kWh
+                    averagePrice += priceCost[i]; // s/kWh
+                }
+                // Jagab kokkuliidetud hinnad hindade arvuga ==> keskmine hind
+                averagePrice /= priceCost.Count;
 
-                    ajutineDate = item.Item1.AddHours(1);
-                    ajutinePrice = item.Item2;
+                for (int i = 0; i < priceCost.Count; i++) // Käib valitud ajaintervalli hinnad läbi
+                {
+                    if (i != priceCost.Count - 1) // Kui ei ole tegemist viimase hinnaga
+                    {
+                        if (priceCost[i] < averagePrice) // Väiksem kui keskmine hind ==> roheline
+                        {
+                            chartPrice.Series["Elektrihind"].Points[i + 1].Color = Color.Green;
+                        }
+                        else // Suurem kui keskmine hind ==> punane
+                        {
+                            chartPrice.Series["Elektrihind"].Points[i + 1].Color = Color.Red;
+                        }
+                    }
+                    else // Kui on tegemist viimase hinnaga
+                    {
+                        if (priceCost[i] < averagePrice) // Väiksem kui keskmine hind ==> roheline
+                        {
+                            chartPrice.Series["Elektrihind"].Points[i].Color = Color.Green;
+                        }
+                        else // Suurem kui keskmine hind ==> punane
+                        {
+                            chartPrice.Series["Elektrihind"].Points[i].Color = Color.Red;
+                        }
+                    }
                 }
             }
 
-            // Jagab kokkuliidetud hinnad hindade arvuga ==> keskmine hind
-            averagePrice /= priceCostRange.Count;
 
             // Keskmise hinna joon
             chartPrice.Annotations.Remove(averagePriceLine);
@@ -167,59 +201,27 @@ namespace Kasutajaliides
             txtDebug.AppendText(line);
             txtDebug.AppendText(line2);
 
-            priceTimeRange.Add(ajutineDate);
-            priceCostRange.Add(ajutinePrice);
 
-            chartPrice.Series["Elektrihind"].Points.DataBindXY(priceTimeRange, priceCostRange);
             if (packageState)
             {
                 for (int i = 0; i < tablePackages.SelectedRows.Count; ++i)
                 {
                     packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString();
-                    packageCost.Clear();
-                    foreach (var item in priceTimeRange)
+                    var packageCost = new List<double>();
+                    foreach (var item in VK.getPriceTimeRange())
                     {
                         packageCost.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[3].Value));
                     }
-                    chartPrice.Series[packageName].Points.DataBindXY(priceTimeRange, packageCost);
+                    chartPrice.Series[packageName].Points.DataBindXY(VK.getPriceTimeRange(), packageCost);
                     //packageState = false;
                 }
             }
             
 
-            for (int i = 0; i < priceCostRange.Count; i++) // Käib valitud ajaintervalli hinnad läbi
-            {
-                if(i != priceCostRange.Count - 1) // Kui ei ole tegemist viimase hinnaga
-                {
-                    if (priceCostRange[i] < averagePrice) // Väiksem kui keskmine hind ==> roheline
-                    {
-                        chartPrice.Series["Elektrihind"].Points[i+1].Color = Color.Green;
-                    }
-                    else // Suurem kui keskmine hind ==> punane
-                    {
-                        chartPrice.Series["Elektrihind"].Points[i+1].Color = Color.Red;
-                    }
-                }
-                else // Kui on tegemist viimase hinnaga
-                {
-                    if (priceCostRange[i] < averagePrice) // Väiksem kui keskmine hind ==> roheline
-                    {
-                        chartPrice.Series["Elektrihind"].Points[i].Color = Color.Green;
-                    }
-                    else // Suurem kui keskmine hind ==> punane
-                    {
-                        chartPrice.Series["Elektrihind"].Points[i].Color = Color.Red;
-                    }
-                }
-                
-            }
-
-            chartPrice.Series["Elektrihind"].Enabled = showStock;
-            
             chartPrice.Invalidate();
             tablePrice.Invalidate();
             // Skaala reguleerimine:
-            changeInterval(Convert.ToInt32((dateStopTime.Value - dateStartTime.Value).TotalHours));
+            changeInterval(Convert.ToInt32((stop - start).TotalHours));
         }
 
         //arvutab ristküllikuid
@@ -375,9 +377,6 @@ namespace Kasutajaliides
                 //dateStopTime.Value += new TimeSpan(24, 00, 00);
                 txtDebug.AppendText("jeba\n\n");
             }
-
-            priceTimeRange.Clear();
-            priceCostRange.Clear();
 
             if (this.userData.Count == 0)
             {
@@ -1091,8 +1090,6 @@ namespace Kasutajaliides
         private void tablePackages_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             //MessageBox.Show("It works!");
-            packageCost.Clear();
-        
             packageState = tablePackages.SelectedRows.Count != 0;
 
 
@@ -1146,12 +1143,12 @@ namespace Kasutajaliides
                 chartPrice.Series[packageName].Legend    = "Legend1";
                 chartPrice.Series[packageName].ChartType = SeriesChartType.Line;
 
-                packageCost.Clear();
-                foreach (var item in priceTimeRange)
+                var packageCost = new List<double>();
+                foreach (var item in VK.getPriceTimeRange())
                 {
                     packageCost.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[3].Value));
                 }
-                chartPrice.Series[packageName].Points.DataBindXY(priceTimeRange, packageCost);
+                chartPrice.Series[packageName].Points.DataBindXY(VK.getPriceTimeRange(), packageCost);
             }
             updateGraph();
         }

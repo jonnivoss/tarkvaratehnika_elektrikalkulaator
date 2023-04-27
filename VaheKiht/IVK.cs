@@ -12,6 +12,7 @@ namespace VaheKiht
     {
         bool createUserDataRange(VecT data, DateTime start, DateTime stop);
         bool createStockRange(VecT data, DateTime start, DateTime stop);
+        void addLastPoints();
 
         List<DateTime> getUserDataTimeRange();
         List<double> getUserDataUsageRange();

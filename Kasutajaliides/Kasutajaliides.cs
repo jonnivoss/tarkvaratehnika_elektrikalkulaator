@@ -132,14 +132,14 @@ namespace Kasutajaliides
                 if (item.Item1 >= dateStartTime.Value && item.Item1 <= dateStopTime.Value)
                 {
                     priceTimeRange.Add(item.Item1);
-                    priceCostRange.Add(item.Item2 / 10.0);
-                    tablePrice.Rows.Add(item.Item1, item.Item2 / 10.0);
+                    priceCostRange.Add(item.Item2);
+                    tablePrice.Rows.Add(item.Item1, item.Item2);
 
                     // Keskmise hinna arvutamiseks hindade kokku liitmine
-                    averagePrice += item.Item2 / 10.0; // s/kWh
+                    averagePrice += item.Item2; // s/kWh
 
                     ajutineDate = item.Item1.AddHours(1);
-                    ajutinePrice = item.Item2 / 10.0;
+                    ajutinePrice = item.Item2;
                 }
             }
 
@@ -281,7 +281,7 @@ namespace Kasutajaliides
                 {
                     if (item.Item1.Hour == s.Hour && item.Item1.Date == s.Date)
                     {
-                        y = item.Item2 / 10.0;
+                        y = item.Item2;
                         break;
                     }
                 }
@@ -455,7 +455,7 @@ namespace Kasutajaliides
                         end = end.AddHours(1);
                     }
 
-                    price = bestIntegral / 1000.0;
+                    price = bestIntegral / 100.0;
                     txtTarbimisAeg.Text = bestDate.ToString("dd.MM.yyyy HH:mm");
                 }
                 else
@@ -499,7 +499,7 @@ namespace Kasutajaliides
             foreach (var item in costNowData)
             {
                 if (item.Item1.Date == DateTime.Now.Date && item.Item1.Hour == DateTime.Now.Hour) {
-                    costNow = item.Item2 / 10.0;
+                    costNow = item.Item2;
                     break;
                 }
                 

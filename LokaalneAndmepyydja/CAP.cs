@@ -438,8 +438,8 @@ namespace AndmePyydja
                     DateTime aeg = UnixToDateTime(ajaString);
                     double hind = double.Parse(hinnaString, CultureInfo.InvariantCulture.NumberFormat);
 
-                    // Create DatePriceT tuple and add it to VecT
-                    DatePriceT ajutine = Tuple.Create(aeg, hind);
+                    // Create DatePriceT tuple and add it to VecT, hind on s/kWh
+                    DatePriceT ajutine = Tuple.Create(aeg, hind / 10.0);
                     nett.Add(ajutine);
                 }
             }

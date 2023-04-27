@@ -39,7 +39,6 @@ namespace Kasutajaliides
         string fileContents, packageFileContents;
 
         VecT priceData = new VecT();
-        PackageT packageData = new PackageT();
 
         private AndmePyydja.IAP AP = new AndmePyydja.CAP();
         private AndmeSalvestaja.IAS AS = new AndmeSalvestaja.CAS("settings.json");
@@ -708,11 +707,6 @@ namespace Kasutajaliides
             AS.saveFile();
         }
 
-        private void btnElektriHind_Click(object sender, EventArgs e)
-        {
-            updateGraph();
-        }
-
         private void rbStockPrice_CheckedChanged(object sender, EventArgs e)
         {
             var state = rbStockPrice.Checked;
@@ -866,13 +860,12 @@ namespace Kasutajaliides
             if (state)
             {
                 this.showUsage = true;
-                updateGraph();
             }
             else
             {
                 this.showUsage = false;
-                updateGraph();
             }
+            updateGraph();
         }
 
         private void tbMonthlyPrice_KeyPress(object sender, KeyPressEventArgs e)
@@ -882,7 +875,6 @@ namespace Kasutajaliides
             {
                 MessageBox.Show("Palun sisestage ainult numbreid!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Handled = true;
-                return;
             }
         }
 
@@ -1059,7 +1051,7 @@ namespace Kasutajaliides
             }
             else
             {
-                packageData = AP.parsePackage(packageFileContents);
+                var packageData = AP.parsePackage(packageFileContents);
 
                 tablePackages.Rows.Clear();
                 int i = 0;
@@ -1191,7 +1183,7 @@ namespace Kasutajaliides
 
             // Unselect the line
             tablePackages.Rows[index].Selected = false;
-
+            // Update graph based on selected items
             tablePackages_RowHeaderMouseClick(sender, e);
         }
 
@@ -1235,8 +1227,8 @@ namespace Kasutajaliides
         private void tmrCostNow_Tick(object sender, EventArgs e)
         {
             this.updateCostNow();
-            txtDebug.AppendText("Kontrollisin hinda...");
-            txtDebug.AppendText(Environment.NewLine);
+            //txtDebug.AppendText("Kontrollisin hinda...");
+            //txtDebug.AppendText(Environment.NewLine);
         }
 
         void priceChart_MouseDown(object sender, MouseEventArgs e)

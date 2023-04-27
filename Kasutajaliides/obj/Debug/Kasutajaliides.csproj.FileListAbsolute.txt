@@ -169,3 +169,6 @@ C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER7\Kasut
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER7\Kasutajaliides\obj\Debug\Kasutajaliides.csproj.CopyComplete
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER7\Kasutajaliides\obj\Debug\Kasutajaliides.exe
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER7\Kasutajaliides\obj\Debug\Kasutajaliides.pdb
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\CSVExporterDNF.dll
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\VaheKiht.dll
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\VaheKiht.pdb

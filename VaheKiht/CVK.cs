@@ -11,31 +11,85 @@ namespace VaheKiht
 {
     public class CVK : VaheKiht.IVK
     {
+        List<DateTime> userTimeRange = new List<DateTime>();
+        List<double> userUsageRange = new List<double>();
+
+        List<DateTime> priceTimeRange = new List<DateTime>();
+        List<double> priceCostRange = new List<double>();
+
         public bool createUserDataRange(VecT data, DateTime start, DateTime stop)
         {
-            return false;
+            if (start > stop)
+            {
+                return false;
+            }
+
+            userTimeRange.Clear();
+            userUsageRange.Clear();
+
+            try
+            {
+                foreach (var item in data)
+                {
+                    if (item.Item1 >= start && item.Item1 <= stop)
+                    {
+                        userTimeRange.Add(item.Item1);
+                        userUsageRange.Add(item.Item2);
+                    }
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                // trust issues with RAM :/
+                return false;
+            }
         }
         public bool createStockRange(VecT data, DateTime start, DateTime stop)
         {
-            return false;
+            if (start > stop)
+            {
+                return false;
+            }
+
+            priceTimeRange.Clear();
+            priceCostRange.Clear();
+
+            try
+            {
+                foreach (var item in data)
+                {
+                    if (item.Item1 >= start && item.Item1 <= stop)
+                    {
+                        priceTimeRange.Add(item.Item1);
+                        priceCostRange.Add(item.Item2);
+                    }
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                // trust issues with RAM :/
+                return false;
+            }
         }
 
         public List<DateTime> getUserDataTimeRange()
         {
-            return null;
+            return this.userTimeRange;
         }
         public List<double> getUserDataUsageRange()
         {
-            return null;
+            return this.userUsageRange;
         }
 
-        public List<DateTime> getStockTimeRange()
+        public List<DateTime> getPriceTimeRange()
         {
-            return null;
+            return this.priceTimeRange;
         }
-        public List<double> getStockPriceRange()
+        public List<double> getPriceCostRange()
         {
-            return null;
+            return this.priceCostRange;
         }
     }
 }

@@ -16,8 +16,8 @@ namespace VaheKiht
         List<DateTime> getUserDataTimeRange();
         List<double> getUserDataUsageRange();
 
-        List<DateTime> getStockTimeRange();
-        List<double> getStockPriceRange();
+        List<DateTime> getPriceTimeRange();
+        List<double> getPriceCostRange();
 
 
     }

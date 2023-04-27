@@ -29,8 +29,8 @@ namespace Kasutajaliides
         Font Normal = new Font("Impact", 12);
         Font Bigger = new Font("Impact", 16);
         // 
-        List<DateTime> timeRange = new List<DateTime>();
-        List<double> costRange = new List<double>();
+        //List<DateTime> timeRange = new List<DateTime>();
+        //List<double> costRange = new List<double>();
 
         List<DateTime> priceTimeRange = new List<DateTime>();
         List<double> priceCostRange = new List<double>();
@@ -106,16 +106,19 @@ namespace Kasutajaliides
         {
             // Uuenda graafikut
             // Tarbimise andmed
-            timeRange.Clear();
-            costRange.Clear();
-            foreach (var item in userData)
+            if (showUsage)
             {
-                if (item.Item1 >= dateStartTime.Value && item.Item1 <= dateStopTime.Value)
+                if (VK.createUserDataRange(this.userData, dateStartTime.Value, dateStopTime.Value))
                 {
-                    timeRange.Add(item.Item1);
-                    costRange.Add(item.Item2);
+                    chartPrice.Series["Tarbimine"].Points.DataBindXY(VK.getUserDataTimeRange(), VK.getUserDataUsageRange());
+                }
+                else
+                {
+                    MessageBox.Show("kankel!");
+                    return;
                 }
             }
+            chartPrice.Series["Tarbimine"].Enabled = showUsage && (VK.getUserDataTimeRange().Count > 0);
 
             priceTimeRange.Clear();
             priceCostRange.Clear();
@@ -212,12 +215,11 @@ namespace Kasutajaliides
             }
 
             chartPrice.Series["Elektrihind"].Enabled = showStock;
-            chartPrice.Series["Tarbimine"].Enabled = showUsage && (timeRange.Count > 0);
+            
             chartPrice.Invalidate();
             tablePrice.Invalidate();
             // Skaala reguleerimine:
             changeInterval(Convert.ToInt32((dateStopTime.Value - dateStartTime.Value).TotalHours));
-            chartPrice.Series["Tarbimine"].Points.DataBindXY(timeRange, costRange);
         }
 
         //arvutab ristküllikuid
@@ -363,17 +365,6 @@ namespace Kasutajaliides
             else
             {
                 userData = AP.parseUserData(fileContents);
-
-                timeRange.Clear();
-                costRange.Clear();
-
-                foreach (var item in userData)
-                {
-                    timeRange.Add(item.Item1);
-                    costRange.Add(item.Item2);
-                }
-
-                var timeRangeArr = timeRange.ToArray();
             }
 
             if ((this.dateStartTime.Value == default(DateTime)) || (this.dateStopTime.Value == default(DateTime)))
@@ -388,7 +379,7 @@ namespace Kasutajaliides
             priceTimeRange.Clear();
             priceCostRange.Clear();
 
-            if (timeRange.Count == 0)
+            if (this.userData.Count == 0)
             {
                 this.dateStartTime.Value = DateTime.Now.Date + new TimeSpan(0, 0, 0);
                 this.dateStopTime.Value = DateTime.Now.Date + new TimeSpan(23, 00, 00);
@@ -398,9 +389,9 @@ namespace Kasutajaliides
             }
             else  // määra otspunktide vaikeväärtuseks tarbimisandmete algus- ja lõppaeg
             {
-                dateStartTime.Value = timeRange.First();
-                dateStopTime.Value = timeRange.Last();
-                priceData = AP.HindAegInternet(timeRange.First().AddDays(-30), endOfDayDate);
+                dateStartTime.Value = this.userData.First().Item1;
+                dateStopTime.Value = this.userData.Last().Item1;
+                priceData = AP.HindAegInternet(this.userData.First().Item1.AddDays(-30), endOfDayDate);
             }
             updateGraph();
             return ret;

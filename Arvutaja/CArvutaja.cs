@@ -26,47 +26,7 @@ namespace Arvutaja
         // KAHE FUNKTSIOONI KORRUTISE INTEGRAATOR
         // andmed1: esimene funktsioon
         // andmed2: teine funktsioon
-        /*public int integreerija(VecT andmed1, VecT andmed2, System.DateTime alumine, System.DateTime ylemine, ref double integraal)
-        {
-            if (alumine > ylemine)
-            {
-                // VIGA! RAJAD ON SUURUSE POOLEST VAHETUSES!
-                return 2;
-            }
-            // alumisele ja ülemisele rajale vastavate indekside määramine
-            int alumineIndeks = andmed1.FindIndex(Tuple => Tuple.Item1 == alumine);
-            int ylemineIndeks = andmed1.FindIndex(Tuple => Tuple.Item1 == ylemine);
-            int alumineIndeks2 = andmed2.FindIndex(Tuple => Tuple.Item1 == alumine);
-            int ylemineIndeks2 = andmed2.FindIndex(Tuple => Tuple.Item1 == ylemine);
-            if (alumineIndeks >= 0 && ylemineIndeks >= 0 && alumineIndeks2 >= 0 && ylemineIndeks2 >= 0)
-            {
-                alumineRaja = andmed1[alumineIndeks].Item1;
-                ylemineRaja = andmed1[ylemineIndeks].Item1;
-            }
-            else
-            {
-                // VIGA! VÄHEMALT ÜKS SOOVITUD INTEGREERIMISRAJADEST PUUDUB ANDMETE HULGAS!
-                return 1;
-            }
-            // INTEGREERIMINE
-            // NB! Eeldatud on, et ajasamm dt = 1h
-            int indeks = alumineIndeks;
-            System.DateTime raja = andmed1[indeks].Item1;
-            integraal = 0.0; // NB! viidana antud muutuja, omandab pärast integraaali väärtuse
-            if (alumine == ylemine)
-            {
-                // rajad on võrdsed, integraal on null
-                integraal = 0.0;
-                return 0;
-            }
-            while (indeks <= ylemineIndeks)
-            {
-                integraal += andmed1[indeks].Item2 * andmed2[indeks].Item2;
-                indeks++;
-            }
-            return 0;
-        }*/
-        public int integreerija(VecT andmed1, VecT andmed2, System.DateTime alumine, System.DateTime ylemine, ref double integraal)
+        public int integral(VecT andmed1, VecT andmed2, System.DateTime alumine, System.DateTime ylemine, ref double integraal)
         {
             if (alumine > ylemine)
             {
@@ -93,6 +53,67 @@ namespace Arvutaja
                 indeks1++;
                 indeks2++;
             }
+            return 0;
+        }
+        public int smallestIntegral(
+            VecT priceData,
+            double power,
+            double usageLength,
+            System.DateTime start,
+            System.DateTime stop,
+            ref double outSmallestIntegral,
+            ref System.DateTime outOptimalDate
+        )
+        {
+            if (start > stop)
+            {
+                return 1;
+            }
+            
+            double bestIntegral = double.PositiveInfinity;
+            DateTime bestDate = start;
+            DateTime usageEnd = start + TimeSpan.FromHours(Math.Ceiling(usageLength));
+
+            while (usageEnd <= stop)
+            {
+                VecT tempUsageData = new VecT();
+                // Generate usage data
+                for (DateTime date = start, tempend = (start + TimeSpan.FromHours(usageLength)); date < tempend; date = date.AddHours(1))
+                {
+                    // Maksimaalne samm on 1 tund
+                    var hrs = Math.Min((tempend - date).TotalHours, 1.0);
+                    //Console.WriteLine("asd: " + date.ToString() + "; " + (power * hrs).ToString());
+                    tempUsageData.Add(Tuple.Create(date, power * hrs));
+                }
+
+                // Integreerib
+                if (tempUsageData.Count == 0)
+                {
+                    return 2;
+                }
+
+                double integral = 0.0;
+                if (this.integral(tempUsageData, priceData, tempUsageData.First().Item1, tempUsageData.Last().Item1, ref integral) == 0)
+                {
+                    if (integral < bestIntegral)
+                    {
+                        bestIntegral = integral;
+                        bestDate = start;
+                    }
+                }
+
+                start    = start.AddHours(1);
+                usageEnd = usageEnd.AddHours(1);
+            }
+
+            if (bestIntegral == double.PositiveInfinity)
+            {
+                return 2;
+            }
+
+            outSmallestIntegral = bestIntegral;
+            outOptimalDate      = bestDate;
+
             return 0;
         }
 

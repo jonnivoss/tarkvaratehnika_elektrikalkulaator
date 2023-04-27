@@ -492,17 +492,7 @@ namespace Kasutajaliides
             txtHind.Text = "-";
             tablePrice.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             tablePackages.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            VecT costNowData = AP.HindAegInternet(DateTime.Now, DateTime.Now);
-            double costNow = 0.0;
-            foreach (var item in costNowData)
-            {
-                if (item.Item1.Date == DateTime.Now.Date && item.Item1.Hour == DateTime.Now.Hour) {
-                    costNow = item.Item2;
-                    break;
-                }
-                
-            }
-            txtCostNow.Text = costNow.ToString("0.000");
+            this.updateCostNow();
             
             // Proovib avada CSV
             AS.loadFile();
@@ -559,6 +549,40 @@ namespace Kasutajaliides
             originalLabelSKwh2 = new Rectangle(lblSKwh2.Location.X, lblSKwh2.Location.Y, lblSKwh2.Size.Width, lblSKwh2.Size.Height);
             originalButtonDarkMode = new Rectangle(btnDarkMode.Location.X, btnDarkMode.Location.Y, btnDarkMode.Size.Width, btnDarkMode.Size.Height);
             originalBtnOpenPackages = new Rectangle(btnOpenPackages.Location.X, btnOpenPackages.Location.Y, btnOpenPackages.Size.Width, btnOpenPackages.Size.Height);
+        }
+
+
+        private DateTime lastUpdated;
+        private void updateCostNow()
+        {
+            var time = DateTime.Now;
+            time = time.Date + new TimeSpan(time.Hour, 0, 0);
+
+            // Kontrollib, kas uuendamine on põhjendatud
+            if (lastUpdated == time)
+            {
+                return;
+            }
+
+            VecT costNowData = AP.HindAegInternet(time, time.AddHours(1));
+            double costNow = Double.MinValue;
+            foreach (var item in costNowData)
+            {
+                if (item.Item1.Date == DateTime.Now.Date && item.Item1.Hour == DateTime.Now.Hour)
+                {
+                    costNow = item.Item2;
+                    break;
+                }
+            }
+            if (costNow == Double.MinValue)
+            {
+                txtCostNow.Text = "Error!";
+            }
+            else
+            {
+                txtCostNow.Text = costNow.ToString("0.000");
+                lastUpdated = time;
+            }
         }
 
         private void txtAjakulu_KeyPress(object sender, KeyPressEventArgs e)

@@ -21,5 +21,6 @@ namespace VaheKiht
         List<DateTime> getPriceTimeRange();
         List<double> getPriceCostRange();
         VecT getPriceRange();
+        double getAveragePrice();
     }
 }

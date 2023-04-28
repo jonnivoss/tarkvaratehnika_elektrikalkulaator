@@ -49,8 +49,6 @@ namespace Kasutajaliides
         bool state3 = false; // graafiku vajutamisega suurendamise jaoks
         bool isPackageSelected = false;
 
-        double averagePrice;
-
         // Keskmise hinna joon graafikul
         HorizontalLineAnnotation averagePriceLine = new HorizontalLineAnnotation();
 
@@ -92,7 +90,7 @@ namespace Kasutajaliides
         private void updateGraph()
         {
             // Uuenda graafikut
-            // Tarbimise andmed
+            //Console.WriteLine("updateGraph!!!!");
 
             var start = dateStartTime.Value;
             var stop  = dateStopTime.Value;
@@ -128,22 +126,16 @@ namespace Kasutajaliides
             var priceCost = VK.getPriceCostRange();
 
             tablePrice.Rows.Clear();
-            averagePrice = 0.0;
             for (int i = 0; i < priceTime.Count; ++i)
             {
                 tablePrice.Rows.Add(priceTime[i], priceCost[i]);
-
-                // Keskmise hinna arvutamiseks hindade kokku liitmine
-                averagePrice += priceCost[i]; // s/kWh
             }
-            // Jagab kokkuliidetud hinnad hindade arvuga ==> keskmine hind
-            averagePrice /= priceCost.Count;
 
             for (int i = 0; i < priceCost.Count; i++) // Käib valitud ajaintervalli hinnad läbi
             {
                 if (i != priceCost.Count - 1) // Kui ei ole tegemist viimase hinnaga
                 {
-                    if (priceCost[i] < averagePrice) // Väiksem kui keskmine hind ==> roheline
+                    if (priceCost[i] < VK.getAveragePrice()) // Väiksem kui keskmine hind ==> roheline
                     {
                         chartPrice.Series["Elektrihind"].Points[i + 1].Color = Color.Green;
                     }
@@ -154,7 +146,7 @@ namespace Kasutajaliides
                 }
                 else // Kui on tegemist viimase hinnaga
                 {
-                    if (priceCost[i] < averagePrice) // Väiksem kui keskmine hind ==> roheline
+                    if (priceCost[i] < VK.getAveragePrice()) // Väiksem kui keskmine hind ==> roheline
                     {
                         chartPrice.Series["Elektrihind"].Points[i].Color = Color.Green;
                     }
@@ -170,7 +162,7 @@ namespace Kasutajaliides
             chartPrice.Annotations.Remove(averagePriceLine);
             averagePriceLine.AxisY = chartPrice.ChartAreas["ChartArea1"].AxisY2;
             averagePriceLine.IsSizeAlwaysRelative = false;
-            averagePriceLine.AnchorY = averagePrice;
+            averagePriceLine.AnchorY = VK.getAveragePrice();
             averagePriceLine.IsInfinitive = true;
             averagePriceLine.ClipToChartArea = chartPrice.ChartAreas["ChartArea1"].Name;
             averagePriceLine.LineColor = Color.BlueViolet;
@@ -178,7 +170,7 @@ namespace Kasutajaliides
             averagePriceLine.Name = "priceLine";
             chartPrice.Annotations.Add(averagePriceLine);
 
-            string line = "Keskmine hind: " + averagePrice.ToString();
+            string line = "Keskmine hind: " + VK.getAveragePrice().ToString();
             string line2 = "Max: " + chartPrice.ChartAreas["ChartArea1"].AxisY2.Maximum.ToString();
             txtDebug.AppendText(Environment.NewLine);
             txtDebug.AppendText(line);
@@ -435,7 +427,7 @@ namespace Kasutajaliides
                 if (smRet != 0)
                 {
                     // arvutab tarbimishinna keskmise hinnaga
-                    price = time * power * this.averagePrice / 100.0;
+                    price = time * power * VK.getAveragePrice() / 100.0;
                 }
 
                 // Arvutab korrektse lõpphinna, lisab käibemaksu

@@ -19,6 +19,8 @@ namespace VaheKiht
         List<double> priceCostRange = new List<double>();
         VecT priceRange = new VecT();
 
+        double averagePrice = 0.0;
+
         public bool createUserDataRange(VecT data, DateTime start, DateTime stop)
         {
             if (start > stop)
@@ -59,6 +61,7 @@ namespace VaheKiht
             priceTimeRange.Clear();
             priceCostRange.Clear();
             priceRange.Clear();
+            averagePrice = 0.0;
 
             try
             {
@@ -69,8 +72,13 @@ namespace VaheKiht
                         priceRange.Add(item);
                         priceTimeRange.Add(item.Item1);
                         priceCostRange.Add(item.Item2);
+                        // Keskmise hinna arvutamiseks hindade kokku liitmine
+                        averagePrice += item.Item2; // s/kWh
                     }
                 }
+                // Jagab kokkuliidetud hinnad hindade arvuga ==> keskmine hind
+                averagePrice /= priceCostRange.Count;
+
                 return true;
             }
             catch (Exception)
@@ -121,6 +129,10 @@ namespace VaheKiht
         public VecT getPriceRange()
         {
             return this.priceRange;
+        }
+        public double getAveragePrice()
+        {
+            return this.averagePrice;
         }
     }
 }

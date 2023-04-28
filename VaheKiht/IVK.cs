@@ -16,10 +16,10 @@ namespace VaheKiht
 
         List<DateTime> getUserDataTimeRange();
         List<double> getUserDataUsageRange();
+        VecT getUserDataRange();
 
         List<DateTime> getPriceTimeRange();
         List<double> getPriceCostRange();
-
-
+        VecT getPriceRange();
     }
 }

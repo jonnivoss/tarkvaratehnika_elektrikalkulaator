@@ -341,7 +341,7 @@ namespace Kasutajaliides
         {
             if (AP.chooseFileUserData())//ei
             {
-                AS.changeSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed, AP.getUserDataFileName());
+                AS.changeSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed, AP.userDataFileName);
                 this.openCSVUserData();
             }
         }
@@ -488,8 +488,8 @@ namespace Kasutajaliides
                 cbKasutusmall.Items.Add(i.Key);
             }
 
-            AP.setUserDataFileName(AS.getSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed));
-            AP.setPackageFileName(AS.getSetting(AndmeSalvestaja.ASSetting.paketiAndmed));
+            AP.userDataFileName = AS.getSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed);
+            AP.packageFileName = AS.getSetting(AndmeSalvestaja.ASSetting.paketiAndmed);
             //priceData = AP.HindAegInternet(DateTime.Now.Date.AddDays(-60), DateTime.Now);
             //MessageBox.Show(priceTimeRange.Last().ToString());
             bool isUserData = openCSVUserData();
@@ -1097,7 +1097,7 @@ namespace Kasutajaliides
         {
             if (AP.chooseFilePackages())
             {
-                AS.changeSetting(AndmeSalvestaja.ASSetting.paketiAndmed, AP.getPackageFileName());
+                AS.changeSetting(AndmeSalvestaja.ASSetting.paketiAndmed, AP.packageFileName);
                 this.openCSVPackage();
             }
         }
@@ -1313,6 +1313,60 @@ namespace Kasutajaliides
                 zoomStartTime = zoomStartTime.AddMilliseconds(-(zoomStartTime.Millisecond + 1000*zoomStartTime.Second + 60000*zoomStartTime.Minute));
             }
         }
+
+        private void btnExportSave_Click(object sender, EventArgs e)
+        {
+            if (txtExportPath.Text.Length == 0)
+            {
+                btnExportOpen_Click(sender, e);
+            }
+            if (txtExportPath.Text.Length == 0)
+            {
+                MessageBox.Show("Faili pole valitud!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var isAppend = cbExportAppend.Checked;
+
+            List< string > exportStrings = new List<string>();
+            exportStrings.Add("asdf");
+
+            Array exportData = exportStrings.ToArray();
+
+
+            string errorStr = "";
+            if (txtExportDelimiter.Text == "")
+            {
+                errorStr += "Eksporditava CSV eraldajat pole valitud!\n";
+            }
+            if (txtExportQualifier.Text == "")
+            {
+                errorStr += "Eksporditava CSV sõne kvalifikaatorit pole valitud!\n";
+            }
+
+            if (errorStr.Length > 0)
+            {
+                MessageBox.Show(errorStr, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Proovib kirjutada faili
+            
+            CSV.delimiter = txtExportDelimiter.Text;
+            CSV.textQualifier = txtExportQualifier.Text;
+            int numLines = (int)CSV.saveDataToCsv(ref exportData, isAppend);
+
+            if (numLines != exportData.Length)
+            {
+                MessageBox.Show("Faili kirjutamine nurjus!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnExportOpen_Click(object sender, EventArgs e)
+        {
+            txtExportPath.Text = (string)CSV.setFileToSave();
+        }
+
         void priceChart_MouseUp(object sender, MouseEventArgs e)
         {
             if (state3) // vasak hiireklahv ALLA

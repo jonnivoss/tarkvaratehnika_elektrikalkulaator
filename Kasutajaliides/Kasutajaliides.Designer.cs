@@ -86,15 +86,15 @@ namespace Kasutajaliides
             this.btnOpenPackages = new System.Windows.Forms.Button();
             this.tmrCostNow = new System.Windows.Forms.Timer(this.components);
             this.groupExport = new System.Windows.Forms.GroupBox();
-            this.lblExportDelimiter = new System.Windows.Forms.Label();
-            this.txtExportDelimiter = new System.Windows.Forms.TextBox();
-            this.lblExportQualifier = new System.Windows.Forms.Label();
-            this.txtExportQualifier = new System.Windows.Forms.TextBox();
-            this.lblExportPath = new System.Windows.Forms.Label();
-            this.txtExportPath = new System.Windows.Forms.TextBox();
-            this.cbExportAppend = new System.Windows.Forms.CheckBox();
-            this.btnExportOpen = new System.Windows.Forms.Button();
             this.btnExportSave = new System.Windows.Forms.Button();
+            this.btnExportOpen = new System.Windows.Forms.Button();
+            this.cbExportAppend = new System.Windows.Forms.CheckBox();
+            this.txtExportPath = new System.Windows.Forms.TextBox();
+            this.lblExportPath = new System.Windows.Forms.Label();
+            this.txtExportQualifier = new System.Windows.Forms.TextBox();
+            this.lblExportQualifier = new System.Windows.Forms.Label();
+            this.txtExportDelimiter = new System.Windows.Forms.TextBox();
+            this.lblExportDelimiter = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chartPrice)).BeginInit();
             this.groupPriceType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablePrice)).BeginInit();
@@ -695,69 +695,29 @@ namespace Kasutajaliides
             this.groupExport.TabStop = false;
             this.groupExport.Text = "CSV eksport";
             // 
-            // lblExportDelimiter
+            // btnExportSave
             // 
-            this.lblExportDelimiter.AutoSize = true;
-            this.lblExportDelimiter.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExportDelimiter.Location = new System.Drawing.Point(11, 27);
-            this.lblExportDelimiter.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblExportDelimiter.Name = "lblExportDelimiter";
-            this.lblExportDelimiter.Size = new System.Drawing.Size(81, 25);
-            this.lblExportDelimiter.TabIndex = 37;
-            this.lblExportDelimiter.Text = "Eraldaja:";
+            this.btnExportSave.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExportSave.Location = new System.Drawing.Point(426, 19);
+            this.btnExportSave.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.btnExportSave.Name = "btnExportSave";
+            this.btnExportSave.Size = new System.Drawing.Size(51, 41);
+            this.btnExportSave.TabIndex = 42;
+            this.btnExportSave.Text = "💾";
+            this.btnExportSave.UseVisualStyleBackColor = true;
+            this.btnExportSave.Click += new System.EventHandler(this.btnExportSave_Click);
             // 
-            // txtExportDelimiter
+            // btnExportOpen
             // 
-            this.txtExportDelimiter.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtExportDelimiter.Location = new System.Drawing.Point(96, 24);
-            this.txtExportDelimiter.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.txtExportDelimiter.MaxLength = 1;
-            this.txtExportDelimiter.Name = "txtExportDelimiter";
-            this.txtExportDelimiter.Size = new System.Drawing.Size(39, 32);
-            this.txtExportDelimiter.TabIndex = 37;
-            // 
-            // lblExportQualifier
-            // 
-            this.lblExportQualifier.AutoSize = true;
-            this.lblExportQualifier.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExportQualifier.Location = new System.Drawing.Point(139, 28);
-            this.lblExportQualifier.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblExportQualifier.Name = "lblExportQualifier";
-            this.lblExportQualifier.Size = new System.Drawing.Size(120, 25);
-            this.lblExportQualifier.TabIndex = 38;
-            this.lblExportQualifier.Text = "Kvalifikaator:";
-            // 
-            // txtExportQualifier
-            // 
-            this.txtExportQualifier.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtExportQualifier.Location = new System.Drawing.Point(264, 24);
-            this.txtExportQualifier.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.txtExportQualifier.MaxLength = 1;
-            this.txtExportQualifier.Name = "txtExportQualifier";
-            this.txtExportQualifier.Size = new System.Drawing.Size(39, 32);
-            this.txtExportQualifier.TabIndex = 39;
-            // 
-            // lblExportPath
-            // 
-            this.lblExportPath.AutoSize = true;
-            this.lblExportPath.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExportPath.Location = new System.Drawing.Point(590, 28);
-            this.lblExportPath.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblExportPath.Name = "lblExportPath";
-            this.lblExportPath.Size = new System.Drawing.Size(98, 25);
-            this.lblExportPath.TabIndex = 40;
-            this.lblExportPath.Text = "Kaustatee:";
-            // 
-            // txtExportPath
-            // 
-            this.txtExportPath.Enabled = false;
-            this.txtExportPath.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtExportPath.Location = new System.Drawing.Point(695, 25);
-            this.txtExportPath.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.txtExportPath.MaxLength = 1;
-            this.txtExportPath.Name = "txtExportPath";
-            this.txtExportPath.Size = new System.Drawing.Size(361, 32);
-            this.txtExportPath.TabIndex = 41;
+            this.btnExportOpen.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExportOpen.Location = new System.Drawing.Point(481, 19);
+            this.btnExportOpen.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.btnExportOpen.Name = "btnExportOpen";
+            this.btnExportOpen.Size = new System.Drawing.Size(105, 41);
+            this.btnExportOpen.TabIndex = 37;
+            this.btnExportOpen.Text = "Vali fail";
+            this.btnExportOpen.UseVisualStyleBackColor = true;
+            this.btnExportOpen.Click += new System.EventHandler(this.btnExportOpen_Click);
             // 
             // cbExportAppend
             // 
@@ -771,27 +731,71 @@ namespace Kasutajaliides
             this.cbExportAppend.Text = "Lisa lõppu";
             this.cbExportAppend.UseVisualStyleBackColor = true;
             // 
-            // btnExportOpen
+            // txtExportPath
             // 
-            this.btnExportOpen.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExportOpen.Location = new System.Drawing.Point(481, 19);
-            this.btnExportOpen.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.btnExportOpen.Name = "btnExportOpen";
-            this.btnExportOpen.Size = new System.Drawing.Size(105, 41);
-            this.btnExportOpen.TabIndex = 37;
-            this.btnExportOpen.Text = "Vali fail";
-            this.btnExportOpen.UseVisualStyleBackColor = true;
+            this.txtExportPath.Enabled = false;
+            this.txtExportPath.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtExportPath.Location = new System.Drawing.Point(695, 25);
+            this.txtExportPath.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.txtExportPath.MaxLength = 1;
+            this.txtExportPath.Name = "txtExportPath";
+            this.txtExportPath.Size = new System.Drawing.Size(361, 32);
+            this.txtExportPath.TabIndex = 41;
             // 
-            // btnExportSave
+            // lblExportPath
             // 
-            this.btnExportSave.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExportSave.Location = new System.Drawing.Point(426, 19);
-            this.btnExportSave.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.btnExportSave.Name = "btnExportSave";
-            this.btnExportSave.Size = new System.Drawing.Size(51, 41);
-            this.btnExportSave.TabIndex = 42;
-            this.btnExportSave.Text = "💾";
-            this.btnExportSave.UseVisualStyleBackColor = true;
+            this.lblExportPath.AutoSize = true;
+            this.lblExportPath.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblExportPath.Location = new System.Drawing.Point(590, 28);
+            this.lblExportPath.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblExportPath.Name = "lblExportPath";
+            this.lblExportPath.Size = new System.Drawing.Size(98, 25);
+            this.lblExportPath.TabIndex = 40;
+            this.lblExportPath.Text = "Kaustatee:";
+            // 
+            // txtExportQualifier
+            // 
+            this.txtExportQualifier.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtExportQualifier.Location = new System.Drawing.Point(264, 24);
+            this.txtExportQualifier.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.txtExportQualifier.MaxLength = 1;
+            this.txtExportQualifier.Name = "txtExportQualifier";
+            this.txtExportQualifier.Size = new System.Drawing.Size(39, 32);
+            this.txtExportQualifier.TabIndex = 39;
+            this.txtExportQualifier.Text = "\"";
+            // 
+            // lblExportQualifier
+            // 
+            this.lblExportQualifier.AutoSize = true;
+            this.lblExportQualifier.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblExportQualifier.Location = new System.Drawing.Point(139, 28);
+            this.lblExportQualifier.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblExportQualifier.Name = "lblExportQualifier";
+            this.lblExportQualifier.Size = new System.Drawing.Size(120, 25);
+            this.lblExportQualifier.TabIndex = 38;
+            this.lblExportQualifier.Text = "Kvalifikaator:";
+            // 
+            // txtExportDelimiter
+            // 
+            this.txtExportDelimiter.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtExportDelimiter.Location = new System.Drawing.Point(96, 24);
+            this.txtExportDelimiter.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.txtExportDelimiter.MaxLength = 1;
+            this.txtExportDelimiter.Name = "txtExportDelimiter";
+            this.txtExportDelimiter.Size = new System.Drawing.Size(39, 32);
+            this.txtExportDelimiter.TabIndex = 37;
+            this.txtExportDelimiter.Text = ";";
+            // 
+            // lblExportDelimiter
+            // 
+            this.lblExportDelimiter.AutoSize = true;
+            this.lblExportDelimiter.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblExportDelimiter.Location = new System.Drawing.Point(11, 27);
+            this.lblExportDelimiter.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblExportDelimiter.Name = "lblExportDelimiter";
+            this.lblExportDelimiter.Size = new System.Drawing.Size(81, 25);
+            this.lblExportDelimiter.TabIndex = 37;
+            this.lblExportDelimiter.Text = "Eraldaja:";
             // 
             // Kasutajaliides
             // 

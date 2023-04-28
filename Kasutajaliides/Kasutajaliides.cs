@@ -30,14 +30,7 @@ namespace Kasutajaliides
         Font Bigger = new Font("Impact", 16);
         // 
 
-        //List<DateTime> priceTimeRange = new List<DateTime>();
-        //List<double> priceCostRange = new List<double>();
-
-        //List<double> packageCost = new List<double>(); // paketi hinna punktide jaoks
-
         VecT userData = new VecT();
-        string fileContents, packageFileContents;
-
         VecT priceData = new VecT();
 
         private AndmePyydja.IAP AP = new AndmePyydja.CAP();
@@ -54,12 +47,9 @@ namespace Kasutajaliides
         bool state = true;
         bool state2 = true; // DARK MODE BUTTON TOGGLE
         bool state3 = false; // graafiku vajutamisega suurendamise jaoks
-        bool packageState = false;
+        bool isPackageSelected = false;
 
         double averagePrice;
-
-        Series packageSeries = new Series();
-        string packageName;
 
         // Keskmise hinna joon graafikul
         HorizontalLineAnnotation averagePriceLine = new HorizontalLineAnnotation();
@@ -124,11 +114,11 @@ namespace Kasutajaliides
             chartPrice.Series["Tarbimine"].Enabled = showUsage && (VK.getUserDataTimeRange().Count > 0);
             chartPrice.Series["Elektrihind"].Enabled = showStock;
 
-            if (showUsage)
+            if (this.showUsage)
             {
                 chartPrice.Series["Tarbimine"].Points.DataBindXY(VK.getUserDataTimeRange(), VK.getUserDataUsageRange());
             }
-            if (showStock)
+            if (this.showStock)
             {
                 chartPrice.Series["Elektrihind"].Points.DataBindXY(VK.getPriceTimeRange(), VK.getPriceCostRange());
             }
@@ -195,11 +185,11 @@ namespace Kasutajaliides
             txtDebug.AppendText(line2);
 
 
-            if (packageState)
+            if (isPackageSelected)
             {
                 for (int i = 0; i < tablePackages.SelectedRows.Count; ++i)
                 {
-                    packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString();
+                    string packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString();
                     var packageCost = new List<double>();
                     foreach (var item in VK.getPriceTimeRange())
                     {
@@ -354,6 +344,7 @@ namespace Kasutajaliides
         private bool openCSVUserData()
         {
             bool ret = true;
+            string fileContents = "";
             if (!AP.readUserDataFile(ref fileContents))
             {
                 ret = false;
@@ -438,6 +429,7 @@ namespace Kasutajaliides
                 else
                 {
                     var skwh = Double.Parse(tbMonthlyPrice.Text);
+                    // Teisendab sentidest eurodesse
                     price = time * power * skwh / 100.0;
                 }
                 if (smRet != 0)
@@ -485,9 +477,9 @@ namespace Kasutajaliides
             // Proovib avada CSV
             AS.loadFile();
 
-            var items = AS.getUseCases();
+            var useCases = AS.getUseCases();
             cbKasutusmall.Items.Clear();
-            foreach (var i in items)
+            foreach (var i in useCases)
             {
                 cbKasutusmall.Items.Add(i.Key);
             }
@@ -500,7 +492,12 @@ namespace Kasutajaliides
             bool isPackage = openCSVPackage();
             if (!isUserData || !isPackage)
             {
-                MessageBox.Show("Lugemine ebaõnnestus!");
+                MessageBox.Show(
+                    "CSV Lugemine ebaõnnestus!",
+                    this.Name,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
 
             // akna elementide mõõtmete vaikeväärtuste määramine
@@ -1034,6 +1031,7 @@ namespace Kasutajaliides
         private bool openCSVPackage()
         {
             bool ret = true;
+            string packageFileContents = "";
             if (!AP.readPackageFile(ref packageFileContents))
             {
                 ret = false;
@@ -1103,7 +1101,7 @@ namespace Kasutajaliides
         private void tablePackages_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             //MessageBox.Show("It works!");
-            packageState = tablePackages.SelectedRows.Count != 0;
+            isPackageSelected = tablePackages.SelectedRows.Count != 0;
 
 
             List<Series> removables = new List<Series>();
@@ -1141,7 +1139,7 @@ namespace Kasutajaliides
             // Lisab uued, mis on valitud
             for (int i = 0; i < tablePackages.SelectedRows.Count; ++i)
             {
-                packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString();
+                string packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString();
                 if (chartPrice.Series.FindByName(packageName) != null)
                 {
                     continue;

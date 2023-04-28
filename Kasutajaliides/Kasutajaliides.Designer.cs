@@ -562,14 +562,15 @@ namespace Kasutajaliides
             this.NightPrice,
             this.IsStockPackage,
             this.IsGreenPackage});
-            this.tablePackages.Location = new System.Drawing.Point(3, 672);
+            this.tablePackages.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tablePackages.Location = new System.Drawing.Point(0, 675);
             this.tablePackages.Name = "tablePackages";
             this.tablePackages.ReadOnly = true;
             this.tablePackages.RowHeadersWidth = 51;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tablePackages.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.tablePackages.RowTemplate.Height = 24;
-            this.tablePackages.Size = new System.Drawing.Size(1063, 191);
+            this.tablePackages.Size = new System.Drawing.Size(1067, 191);
             this.tablePackages.TabIndex = 34;
             this.tablePackages.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tablePackages_RowHeaderMouseClick);
             this.tablePackages.RowHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tablePackages_RowHeaderMouseDoubleClick);

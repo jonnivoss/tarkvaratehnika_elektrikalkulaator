@@ -50,9 +50,7 @@ namespace Kasutajaliides
             this.txtHind = new System.Windows.Forms.TextBox();
             this.btnAvaCSV = new System.Windows.Forms.Button();
             this.txtDebug = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.dateStartTime = new System.Windows.Forms.DateTimePicker();
-            this.label2 = new System.Windows.Forms.Label();
             this.dateStopTime = new System.Windows.Forms.DateTimePicker();
             this.cbShowPrice = new System.Windows.Forms.CheckBox();
             this.cbShowTabel = new System.Windows.Forms.CheckBox();
@@ -64,7 +62,6 @@ namespace Kasutajaliides
             this.tablePrice = new System.Windows.Forms.DataGridView();
             this.Aeg = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Hind = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lblEur = new System.Windows.Forms.Label();
             this.btnChangeSize = new System.Windows.Forms.Button();
             this.lblBeginning = new System.Windows.Forms.Label();
             this.lblEnd = new System.Windows.Forms.Label();
@@ -149,7 +146,7 @@ namespace Kasutajaliides
             this.cbKasutusmall.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbKasutusmall.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbKasutusmall.FormattingEnabled = true;
-            this.cbKasutusmall.Location = new System.Drawing.Point(11, 68);
+            this.cbKasutusmall.Location = new System.Drawing.Point(12, 47);
             this.cbKasutusmall.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbKasutusmall.Name = "cbKasutusmall";
             this.cbKasutusmall.Size = new System.Drawing.Size(240, 33);
@@ -160,7 +157,7 @@ namespace Kasutajaliides
             // 
             this.lblKasutusmall.AutoSize = true;
             this.lblKasutusmall.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblKasutusmall.Location = new System.Drawing.Point(10, 34);
+            this.lblKasutusmall.Location = new System.Drawing.Point(11, 13);
             this.lblKasutusmall.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblKasutusmall.Name = "lblKasutusmall";
             this.lblKasutusmall.Size = new System.Drawing.Size(160, 25);
@@ -171,7 +168,7 @@ namespace Kasutajaliides
             // 
             this.lblAeg.AutoSize = true;
             this.lblAeg.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAeg.Location = new System.Drawing.Point(11, 108);
+            this.lblAeg.Location = new System.Drawing.Point(12, 87);
             this.lblAeg.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblAeg.Name = "lblAeg";
             this.lblAeg.Size = new System.Drawing.Size(76, 25);
@@ -181,7 +178,7 @@ namespace Kasutajaliides
             // txtAjakulu
             // 
             this.txtAjakulu.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAjakulu.Location = new System.Drawing.Point(14, 140);
+            this.txtAjakulu.Location = new System.Drawing.Point(15, 119);
             this.txtAjakulu.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtAjakulu.Name = "txtAjakulu";
             this.txtAjakulu.Size = new System.Drawing.Size(183, 32);
@@ -193,7 +190,7 @@ namespace Kasutajaliides
             // 
             this.lblTund.AutoSize = true;
             this.lblTund.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTund.Location = new System.Drawing.Point(201, 143);
+            this.lblTund.Location = new System.Drawing.Point(202, 122);
             this.lblTund.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTund.Name = "lblTund";
             this.lblTund.Size = new System.Drawing.Size(53, 25);
@@ -204,7 +201,7 @@ namespace Kasutajaliides
             // 
             this.lblVoimsus.AutoSize = true;
             this.lblVoimsus.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVoimsus.Location = new System.Drawing.Point(11, 189);
+            this.lblVoimsus.Location = new System.Drawing.Point(12, 168);
             this.lblVoimsus.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblVoimsus.Name = "lblVoimsus";
             this.lblVoimsus.Size = new System.Drawing.Size(126, 25);
@@ -214,7 +211,7 @@ namespace Kasutajaliides
             // txtVoimsus
             // 
             this.txtVoimsus.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtVoimsus.Location = new System.Drawing.Point(14, 221);
+            this.txtVoimsus.Location = new System.Drawing.Point(15, 200);
             this.txtVoimsus.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtVoimsus.Name = "txtVoimsus";
             this.txtVoimsus.Size = new System.Drawing.Size(183, 32);
@@ -226,7 +223,7 @@ namespace Kasutajaliides
             // 
             this.lblkW.AutoSize = true;
             this.lblkW.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblkW.Location = new System.Drawing.Point(201, 222);
+            this.lblkW.Location = new System.Drawing.Point(202, 201);
             this.lblkW.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblkW.Name = "lblkW";
             this.lblkW.Size = new System.Drawing.Size(38, 25);
@@ -237,7 +234,7 @@ namespace Kasutajaliides
             // 
             this.lblHind.AutoSize = true;
             this.lblHind.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHind.Location = new System.Drawing.Point(10, 268);
+            this.lblHind.Location = new System.Drawing.Point(11, 247);
             this.lblHind.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblHind.Name = "lblHind";
             this.lblHind.Size = new System.Drawing.Size(52, 25);
@@ -248,7 +245,7 @@ namespace Kasutajaliides
             // 
             this.txtHind.Enabled = false;
             this.txtHind.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtHind.Location = new System.Drawing.Point(14, 296);
+            this.txtHind.Location = new System.Drawing.Point(15, 275);
             this.txtHind.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtHind.Name = "txtHind";
             this.txtHind.ReadOnly = true;
@@ -258,7 +255,7 @@ namespace Kasutajaliides
             // btnAvaCSV
             // 
             this.btnAvaCSV.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAvaCSV.Location = new System.Drawing.Point(11, 476);
+            this.btnAvaCSV.Location = new System.Drawing.Point(12, 455);
             this.btnAvaCSV.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btnAvaCSV.Name = "btnAvaCSV";
             this.btnAvaCSV.Size = new System.Drawing.Size(130, 41);
@@ -269,20 +266,13 @@ namespace Kasutajaliides
             // 
             // txtDebug
             // 
-            this.txtDebug.Location = new System.Drawing.Point(11, 409);
+            this.txtDebug.Location = new System.Drawing.Point(12, 388);
             this.txtDebug.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtDebug.Multiline = true;
             this.txtDebug.Name = "txtDebug";
             this.txtDebug.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtDebug.Size = new System.Drawing.Size(254, 58);
             this.txtDebug.TabIndex = 13;
-            // 
-            // label1
-            // 
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 23);
-            this.label1.TabIndex = 25;
             // 
             // dateStartTime
             // 
@@ -295,13 +285,6 @@ namespace Kasutajaliides
             this.dateStartTime.TabIndex = 15;
             this.dateStartTime.CloseUp += new System.EventHandler(this.dateStartTime_CloseUp);
             this.dateStartTime.DropDown += new System.EventHandler(this.dateStartTime_DropDown);
-            // 
-            // label2
-            // 
-            this.label2.Location = new System.Drawing.Point(0, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(100, 23);
-            this.label2.TabIndex = 24;
             // 
             // dateStopTime
             // 
@@ -320,7 +303,7 @@ namespace Kasutajaliides
             this.cbShowPrice.Checked = true;
             this.cbShowPrice.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbShowPrice.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbShowPrice.Location = new System.Drawing.Point(11, 530);
+            this.cbShowPrice.Location = new System.Drawing.Point(11, 513);
             this.cbShowPrice.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbShowPrice.Name = "cbShowPrice";
             this.cbShowPrice.Size = new System.Drawing.Size(166, 29);
@@ -333,7 +316,7 @@ namespace Kasutajaliides
             // 
             this.cbShowTabel.AutoSize = true;
             this.cbShowTabel.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbShowTabel.Location = new System.Drawing.Point(11, 600);
+            this.cbShowTabel.Location = new System.Drawing.Point(11, 583);
             this.cbShowTabel.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbShowTabel.Name = "cbShowTabel";
             this.cbShowTabel.Size = new System.Drawing.Size(119, 29);
@@ -392,7 +375,7 @@ namespace Kasutajaliides
             this.groupPriceType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.groupPriceType.Name = "groupPriceType";
             this.groupPriceType.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.groupPriceType.Size = new System.Drawing.Size(382, 136);
+            this.groupPriceType.Size = new System.Drawing.Size(382, 118);
             this.groupPriceType.TabIndex = 23;
             this.groupPriceType.TabStop = false;
             this.groupPriceType.Text = "Hinnatüüp";
@@ -442,13 +425,6 @@ namespace Kasutajaliides
             this.Hind.ReadOnly = true;
             this.Hind.Width = 350;
             // 
-            // lblEur
-            // 
-            this.lblEur.Location = new System.Drawing.Point(0, 0);
-            this.lblEur.Name = "lblEur";
-            this.lblEur.Size = new System.Drawing.Size(100, 23);
-            this.lblEur.TabIndex = 0;
-            // 
             // btnChangeSize
             // 
             this.btnChangeSize.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -486,7 +462,7 @@ namespace Kasutajaliides
             // 
             this.lblAndresEek.AutoSize = true;
             this.lblAndresEek.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAndresEek.Location = new System.Drawing.Point(201, 299);
+            this.lblAndresEek.Location = new System.Drawing.Point(202, 278);
             this.lblAndresEek.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblAndresEek.Name = "lblAndresEek";
             this.lblAndresEek.Size = new System.Drawing.Size(23, 25);
@@ -499,7 +475,7 @@ namespace Kasutajaliides
             this.cbShowUsage.Checked = true;
             this.cbShowUsage.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbShowUsage.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbShowUsage.Location = new System.Drawing.Point(11, 565);
+            this.cbShowUsage.Location = new System.Drawing.Point(11, 548);
             this.cbShowUsage.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbShowUsage.Name = "cbShowUsage";
             this.cbShowUsage.Size = new System.Drawing.Size(156, 29);
@@ -512,7 +488,7 @@ namespace Kasutajaliides
             // 
             this.lblCostNow.AutoSize = true;
             this.lblCostNow.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCostNow.Location = new System.Drawing.Point(11, 655);
+            this.lblCostNow.Location = new System.Drawing.Point(12, 633);
             this.lblCostNow.Name = "lblCostNow";
             this.lblCostNow.Size = new System.Drawing.Size(113, 25);
             this.lblCostNow.TabIndex = 29;
@@ -521,7 +497,7 @@ namespace Kasutajaliides
             // txtCostNow
             // 
             this.txtCostNow.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCostNow.Location = new System.Drawing.Point(146, 652);
+            this.txtCostNow.Location = new System.Drawing.Point(147, 630);
             this.txtCostNow.Name = "txtCostNow";
             this.txtCostNow.ReadOnly = true;
             this.txtCostNow.Size = new System.Drawing.Size(78, 32);
@@ -531,7 +507,7 @@ namespace Kasutajaliides
             // 
             this.lblSKwh2.AutoSize = true;
             this.lblSKwh2.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSKwh2.Location = new System.Drawing.Point(224, 656);
+            this.lblSKwh2.Location = new System.Drawing.Point(225, 634);
             this.lblSKwh2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSKwh2.Name = "lblSKwh2";
             this.lblSKwh2.Size = new System.Drawing.Size(65, 25);
@@ -542,7 +518,7 @@ namespace Kasutajaliides
             // 
             this.lblTarbimisAeg.AutoSize = true;
             this.lblTarbimisAeg.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTarbimisAeg.Location = new System.Drawing.Point(11, 339);
+            this.lblTarbimisAeg.Location = new System.Drawing.Point(12, 318);
             this.lblTarbimisAeg.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTarbimisAeg.Name = "lblTarbimisAeg";
             this.lblTarbimisAeg.Size = new System.Drawing.Size(187, 25);
@@ -553,7 +529,7 @@ namespace Kasutajaliides
             // 
             this.txtTarbimisAeg.Enabled = false;
             this.txtTarbimisAeg.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTarbimisAeg.Location = new System.Drawing.Point(11, 367);
+            this.txtTarbimisAeg.Location = new System.Drawing.Point(12, 346);
             this.txtTarbimisAeg.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtTarbimisAeg.Name = "txtTarbimisAeg";
             this.txtTarbimisAeg.ReadOnly = true;
@@ -586,14 +562,15 @@ namespace Kasutajaliides
             this.NightPrice,
             this.IsStockPackage,
             this.IsGreenPackage});
-            this.tablePackages.Location = new System.Drawing.Point(3, 690);
+            this.tablePackages.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tablePackages.Location = new System.Drawing.Point(0, 675);
             this.tablePackages.Name = "tablePackages";
             this.tablePackages.ReadOnly = true;
             this.tablePackages.RowHeadersWidth = 51;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tablePackages.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.tablePackages.RowTemplate.Height = 24;
-            this.tablePackages.Size = new System.Drawing.Size(1063, 173);
+            this.tablePackages.Size = new System.Drawing.Size(1067, 191);
             this.tablePackages.TabIndex = 34;
             this.tablePackages.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tablePackages_RowHeaderMouseClick);
             this.tablePackages.RowHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tablePackages_RowHeaderMouseDoubleClick);
@@ -706,14 +683,11 @@ namespace Kasutajaliides
             this.Controls.Add(this.lblEnd);
             this.Controls.Add(this.lblBeginning);
             this.Controls.Add(this.btnChangeSize);
-            this.Controls.Add(this.lblEur);
             this.Controls.Add(this.groupPriceType);
             this.Controls.Add(this.cbShowTabel);
             this.Controls.Add(this.cbShowPrice);
             this.Controls.Add(this.dateStopTime);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.dateStartTime);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.txtDebug);
             this.Controls.Add(this.btnAvaCSV);
             this.Controls.Add(this.txtHind);
@@ -761,9 +735,7 @@ namespace Kasutajaliides
         private System.Windows.Forms.TextBox txtHind;
         private System.Windows.Forms.Button btnAvaCSV;
         private System.Windows.Forms.TextBox txtDebug;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DateTimePicker dateStartTime;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker dateStopTime;
         private System.Windows.Forms.CheckBox cbShowPrice;
         private System.Windows.Forms.CheckBox cbShowTabel;
@@ -773,7 +745,6 @@ namespace Kasutajaliides
         private System.Windows.Forms.GroupBox groupPriceType;
         private System.Windows.Forms.DataGridView tablePrice;
         private System.Windows.Forms.Label lblRate;
-        private System.Windows.Forms.Label lblEur;
         private System.Windows.Forms.Button btnChangeSize;
         private System.Windows.Forms.Label lblBeginning;
         private System.Windows.Forms.Label lblEnd;

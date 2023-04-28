@@ -780,6 +780,8 @@ namespace Kasutajaliides
                 tablePackages.ColumnHeadersDefaultCellStyle.Font = Bigger;
                 tablePackages.RowsDefaultCellStyle.Font = Bigger;
                 btnOpenPackages.Font = Bigger;
+                btnChangeSize.Font = Bigger;
+                btnDarkMode.Font = Bigger;
                 state = false;
             }
             else
@@ -828,6 +830,8 @@ namespace Kasutajaliides
                 tablePackages.ColumnHeadersDefaultCellStyle.Font = Normal;
                 tablePackages.RowsDefaultCellStyle.Font = Normal;
                 btnOpenPackages.Font = Normal;
+                btnChangeSize.Font = Normal;
+                btnDarkMode.Font = Normal;
                 state = true;
             }
         }

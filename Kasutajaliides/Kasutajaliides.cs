@@ -1341,8 +1341,10 @@ namespace Kasutajaliides
             }
             if (txtExportQualifier.Text == "")
             {
-                errorStr += "Eksporditava CSV sõne kvalifikaatorit pole valitud!\n";
+                errorStr += "Eksporditava CSV sõne kvalifikaatorit pole valitud!";
             }
+            // Eemaldab üleliigse newline'i
+            errorStr.Trim('\n');
 
             if (errorStr.Length > 0)
             {

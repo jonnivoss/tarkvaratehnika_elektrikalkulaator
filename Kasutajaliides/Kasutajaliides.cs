@@ -416,7 +416,7 @@ namespace Kasutajaliides
                     DateTime bestDate = beg;
 
                     smRet = AR.smallestIntegral(
-                        this.priceData,
+                        this.VK.getPriceRange(),
                         power,
                         time,
                         beg,
@@ -445,6 +445,9 @@ namespace Kasutajaliides
                     // arvutab tarbimishinna keskmise hinnaga
                     price = time * power * this.averagePrice / 100.0;
                 }
+
+                // Arvutab korrektse lõpphinna, lisab käibemaksu
+                price *= 1.2;
 
                 // Ümardab 3 komakohani ja ümardab üles
                 txtHind.Text = Math.Round(price + 0.0005, 3).ToString();

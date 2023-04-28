@@ -87,6 +87,18 @@ namespace Kasutajaliides
         Rectangle originalButtonDarkMode;
         Rectangle originalBtnOpenPackages;
 
+        Rectangle originalGroupExport;
+        Rectangle originalLabelExportDelimiter;
+        Rectangle originalTextExportDelimiter;
+        Rectangle originalLabelExportQualifier;
+        Rectangle originalTextExportQualifier;
+        Rectangle originalCheckBoxExportAppend;
+        Rectangle originalButtonExportSave;
+        Rectangle originalButtonExportOpen;
+        Rectangle originalLabelExportPath;
+        Rectangle originalTextExportPath;
+
+
         private void updateGraph()
         {
             // Uuenda graafikut
@@ -526,6 +538,17 @@ namespace Kasutajaliides
             originalLabelSKwh2 = new Rectangle(lblSKwh2.Location.X, lblSKwh2.Location.Y, lblSKwh2.Size.Width, lblSKwh2.Size.Height);
             originalButtonDarkMode = new Rectangle(btnDarkMode.Location.X, btnDarkMode.Location.Y, btnDarkMode.Size.Width, btnDarkMode.Size.Height);
             originalBtnOpenPackages = new Rectangle(btnOpenPackages.Location.X, btnOpenPackages.Location.Y, btnOpenPackages.Size.Width, btnOpenPackages.Size.Height);
+
+            originalGroupExport = new Rectangle(groupExport.Location.X, groupExport.Location.Y, groupExport.Size.Width, groupExport.Size.Height);
+            originalLabelExportDelimiter = new Rectangle(lblExportDelimiter.Location.X, lblExportDelimiter.Location.Y, lblExportDelimiter.Size.Width, lblExportDelimiter.Size.Height);
+            originalTextExportDelimiter = new Rectangle(txtExportDelimiter.Location.X, txtExportDelimiter.Location.Y, txtExportDelimiter.Size.Width, txtExportDelimiter.Size.Height);
+            originalLabelExportQualifier = new Rectangle(lblExportQualifier.Location.X, lblExportQualifier.Location.Y, lblExportQualifier.Size.Width, lblExportQualifier.Size.Height);
+            originalTextExportQualifier = new Rectangle(txtExportQualifier.Location.X, txtExportQualifier.Location.Y, txtExportQualifier.Size.Width, txtExportQualifier.Size.Height);
+            originalCheckBoxExportAppend = new Rectangle(cbExportAppend.Location.X, cbExportAppend.Location.Y, cbExportAppend.Size.Width, cbExportAppend.Size.Height);
+            originalButtonExportSave = new Rectangle(btnExportSave.Location.X, btnExportSave.Location.Y, btnExportSave.Size.Width, btnExportSave.Size.Height);
+            originalButtonExportOpen = new Rectangle(btnExportOpen.Location.X, btnExportOpen.Location.Y, btnExportOpen.Size.Width, btnExportOpen.Size.Height);
+            originalLabelExportPath = new Rectangle(lblExportPath.Location.X, lblExportPath.Location.Y, lblExportPath.Size.Width, lblExportPath.Size.Height);
+            originalTextExportPath = new Rectangle(txtExportPath.Location.X, txtExportPath.Location.Y, txtExportPath.Size.Width, txtExportPath.Size.Height);
         }
 
 
@@ -782,6 +805,18 @@ namespace Kasutajaliides
                 btnOpenPackages.Font = Bigger;
                 btnChangeSize.Font = Bigger;
                 btnDarkMode.Font = Bigger;
+                 
+                groupExport.Font = new Font("Impact", 12);
+                lblExportDelimiter.Font = Bigger;
+                txtExportDelimiter.Font = Bigger;
+                lblExportQualifier.Font = Bigger;
+                txtExportQualifier.Font = Bigger;
+                cbExportAppend.Font = Bigger;
+                btnExportSave.Font = Bigger;
+                btnExportOpen.Font = Bigger;
+                lblExportPath.Font = Bigger;
+                txtExportPath.Font = Bigger;
+
                 state = false;
             }
             else
@@ -832,6 +867,17 @@ namespace Kasutajaliides
                 btnOpenPackages.Font = Normal;
                 btnChangeSize.Font = Normal;
                 btnDarkMode.Font = Normal;
+
+                groupExport.Font = new Font("Impact", 9);
+                lblExportDelimiter.Font = Normal;
+                txtExportDelimiter.Font = Normal;
+                lblExportQualifier.Font = Normal;
+                txtExportQualifier.Font = Normal;
+                cbExportAppend.Font = Normal;
+                btnExportSave.Font = Normal;
+                btnExportOpen.Font = Normal;
+                lblExportPath.Font = Normal;
+                txtExportPath.Font = Normal;
                 state = true;
             }
         }
@@ -938,6 +984,22 @@ namespace Kasutajaliides
                 tbMonthlyPrice.ForeColor = chalkWhite;
                 groupPriceType.ForeColor = chalkWhite;
 
+                groupExport.ForeColor = chalkWhite;
+                lblExportDelimiter.ForeColor = chalkWhite;
+                txtExportDelimiter.ForeColor = chalkWhite;
+                txtExportDelimiter.BackColor = midGrey;
+                lblExportQualifier.ForeColor = chalkWhite;
+                txtExportQualifier.ForeColor = chalkWhite;
+                txtExportQualifier.BackColor = midGrey;
+                cbExportAppend.ForeColor = chalkWhite;
+                btnExportSave.ForeColor = chalkWhite;
+                btnExportSave.BackColor = midGrey;
+                btnExportOpen.ForeColor = chalkWhite;
+                btnExportOpen.BackColor = midGrey;
+                lblExportPath.ForeColor = chalkWhite;
+                txtExportPath.ForeColor = chalkWhite;
+                txtExportPath.BackColor = midGrey;
+
                 btnOpenPackages.ForeColor = chalkWhite;
                 btnOpenPackages.BackColor = midGrey;
 
@@ -999,6 +1061,22 @@ namespace Kasutajaliides
                 tbMonthlyPrice.BackColor = SystemColors.Control;
                 tbMonthlyPrice.ForeColor = Color.Black;
                 groupPriceType.ForeColor = Color.Black;
+
+                groupExport.ForeColor = Color.Black;
+                lblExportDelimiter.ForeColor = Color.Black;
+                txtExportDelimiter.ForeColor = Color.Black;
+                txtExportDelimiter.BackColor = Color.White;
+                lblExportQualifier.ForeColor = Color.Black;
+                txtExportQualifier.ForeColor = Color.Black;
+                txtExportQualifier.BackColor = Color.White;
+                cbExportAppend.ForeColor = Color.Black;
+                btnExportSave.ForeColor = Color.Black;
+                btnExportSave.BackColor = SystemColors.Control;
+                btnExportOpen.ForeColor = Color.Black;
+                btnExportOpen.BackColor = SystemColors.Control;
+                lblExportPath.ForeColor = Color.Black;
+                txtExportPath.ForeColor = Color.Black;
+                txtExportPath.BackColor = Color.White;
 
                 btnOpenPackages.BackColor = SystemColors.Control;
                 btnOpenPackages.ForeColor = Color.Black;
@@ -1091,6 +1169,18 @@ namespace Kasutajaliides
             resizeGuiElement(originalLabelSKwh2, lblSKwh2);
             resizeGuiElement(originalButtonDarkMode, btnDarkMode);
             resizeGuiElement(originalBtnOpenPackages, btnOpenPackages);
+
+            resizeGuiElement(originalGroupExport, groupExport);
+            resizeGuiElement(originalLabelExportDelimiter, lblExportDelimiter);
+            resizeGuiElement(originalTextExportDelimiter, txtExportDelimiter);
+            resizeGuiElement(originalLabelExportQualifier, lblExportQualifier);
+            resizeGuiElement(originalTextExportQualifier, txtExportQualifier);
+            resizeGuiElement(originalCheckBoxExportAppend, cbExportAppend);
+            resizeGuiElement(originalButtonExportSave, btnExportSave);
+            resizeGuiElement(originalButtonExportOpen, btnExportOpen);
+            resizeGuiElement(originalLabelExportPath, lblExportPath);
+            resizeGuiElement(originalTextExportPath, txtExportPath);
+
             Refresh(); // vajalik et ei tekiks "render glitche" (nt. ComboBox ei suurene korraks jms.)
         }
 

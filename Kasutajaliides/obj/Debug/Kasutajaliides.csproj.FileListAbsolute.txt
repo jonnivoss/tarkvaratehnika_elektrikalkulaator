@@ -172,3 +172,6 @@ C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER7\Kasut
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\CSVExporterDNF.dll
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\VaheKiht.dll
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\VaheKiht.pdb
+C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\CSVExporterDNF.dll
+C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\VaheKiht.dll
+C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Kasutajaliides\bin\Debug\VaheKiht.pdb

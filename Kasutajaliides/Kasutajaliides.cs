@@ -48,6 +48,7 @@ namespace Kasutajaliides
         bool state2 = true; // DARK MODE BUTTON TOGGLE
         bool state3 = false; // graafiku vajutamisega suurendamise jaoks
         bool isPackageSelected = false;
+        bool ret = false;
 
         // Keskmise hinna joon graafikul
         HorizontalLineAnnotation averagePriceLine = new HorizontalLineAnnotation();
@@ -188,6 +189,20 @@ namespace Kasutajaliides
                         packageCost.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[3].Value));
                     }
                     chartPrice.Series[packageName].Points.DataBindXY(VK.getPriceTimeRange(), packageCost);
+                }
+
+                if (showUsage && ret)
+                {
+                    for (int i = 0; i < tablePackages.SelectedRows.Count; ++i)
+                    {
+                        string packageNameUsage = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString() + " tarbimisel";
+                        var packageCostUsage = new List<double>();
+                        foreach (var item in VK.getUserDataUsageRange())
+                        {
+                            packageCostUsage.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[5].Value) * item);
+                        }
+                        chartPrice.Series[packageNameUsage].Points.DataBindXY(VK.getUserDataTimeRange(), packageCostUsage);
+                    }
                 }
             }
 
@@ -335,7 +350,7 @@ namespace Kasutajaliides
         }
         private bool openCSVUserData()
         {
-            bool ret = true;
+            ret = true;
             string fileContents = "";
             if (!AP.readUserDataFile(ref fileContents))
             {
@@ -1026,7 +1041,7 @@ namespace Kasutajaliides
 
         private bool openCSVPackage()
         {
-            bool ret = true;
+            ret = true;
             string packageFileContents = "";
             if (!AP.readPackageFile(ref packageFileContents))
             {
@@ -1113,7 +1128,8 @@ namespace Kasutajaliides
                 for (int j = 0; j < tablePackages.SelectedRows.Count; ++j)
                 {
                     string seriesName = tablePackages.SelectedRows[j].Index.ToString() + ": " + tablePackages.SelectedRows[j].Cells[2].Value.ToString();
-                    if (seriesName == series.Name)
+                    string seriesNameUsage = tablePackages.SelectedRows[j].Index.ToString() + ": " + tablePackages.SelectedRows[j].Cells[2].Value.ToString() + " tarbimisel";
+                    if (seriesName == series.Name || seriesNameUsage == series.Name)
                     {
                         removeItem = false;
                         break;
@@ -1157,6 +1173,36 @@ namespace Kasutajaliides
                 }
                 chartPrice.Series[packageName].Points.DataBindXY(VK.getPriceTimeRange(), packageCost);
             }
+
+            // Kui tarbimine on valitud, siis lisab paketi graafiku selle põhjal
+            if (showUsage && ret)
+            {
+                for (int i = 0; i < tablePackages.SelectedRows.Count; ++i)
+                {
+                    string packageNameUsage = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString() + " tarbimisel";
+                    if (chartPrice.Series.FindByName(packageNameUsage) != null)
+                    {
+                        continue;
+                    }
+
+                    Random r = new Random();
+
+                    chartPrice.Series.Add(packageNameUsage);
+                    chartPrice.Series[packageNameUsage].ChartArea = "ChartArea1";
+                    chartPrice.Series[packageNameUsage].YAxisType = AxisType.Secondary;
+                    chartPrice.Series[packageNameUsage].Color = Color.FromArgb(r.Next(256), r.Next(256), r.Next(256));
+                    chartPrice.Series[packageNameUsage].Legend = "Legend1";
+                    chartPrice.Series[packageNameUsage].ChartType = SeriesChartType.Line;
+
+                    var packageCostUsage = new List<double>();
+                    foreach (var item in VK.getUserDataUsageRange())
+                    {
+                        packageCostUsage.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[5].Value) * item);
+                    }
+                    chartPrice.Series[packageNameUsage].Points.DataBindXY(VK.getUserDataTimeRange(), packageCostUsage);
+                }
+            }
+
             updateGraph();
         }
 

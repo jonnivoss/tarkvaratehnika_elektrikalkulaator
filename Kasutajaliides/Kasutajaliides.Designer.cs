@@ -688,9 +688,9 @@ namespace Kasutajaliides
             this.groupExport.Controls.Add(this.txtExportDelimiter);
             this.groupExport.Controls.Add(this.lblExportDelimiter);
             this.groupExport.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupExport.Location = new System.Drawing.Point(0, 677);
+            this.groupExport.Location = new System.Drawing.Point(0, 672);
             this.groupExport.Name = "groupExport";
-            this.groupExport.Size = new System.Drawing.Size(1067, 67);
+            this.groupExport.Size = new System.Drawing.Size(1067, 72);
             this.groupExport.TabIndex = 36;
             this.groupExport.TabStop = false;
             this.groupExport.Text = "CSV eksport";
@@ -699,7 +699,7 @@ namespace Kasutajaliides
             // 
             this.lblExportDelimiter.AutoSize = true;
             this.lblExportDelimiter.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExportDelimiter.Location = new System.Drawing.Point(11, 20);
+            this.lblExportDelimiter.Location = new System.Drawing.Point(11, 27);
             this.lblExportDelimiter.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblExportDelimiter.Name = "lblExportDelimiter";
             this.lblExportDelimiter.Size = new System.Drawing.Size(81, 25);
@@ -709,7 +709,7 @@ namespace Kasutajaliides
             // txtExportDelimiter
             // 
             this.txtExportDelimiter.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtExportDelimiter.Location = new System.Drawing.Point(96, 17);
+            this.txtExportDelimiter.Location = new System.Drawing.Point(96, 24);
             this.txtExportDelimiter.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtExportDelimiter.MaxLength = 1;
             this.txtExportDelimiter.Name = "txtExportDelimiter";
@@ -720,7 +720,7 @@ namespace Kasutajaliides
             // 
             this.lblExportQualifier.AutoSize = true;
             this.lblExportQualifier.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExportQualifier.Location = new System.Drawing.Point(139, 20);
+            this.lblExportQualifier.Location = new System.Drawing.Point(139, 28);
             this.lblExportQualifier.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblExportQualifier.Name = "lblExportQualifier";
             this.lblExportQualifier.Size = new System.Drawing.Size(120, 25);
@@ -730,7 +730,7 @@ namespace Kasutajaliides
             // txtExportQualifier
             // 
             this.txtExportQualifier.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtExportQualifier.Location = new System.Drawing.Point(263, 17);
+            this.txtExportQualifier.Location = new System.Drawing.Point(264, 24);
             this.txtExportQualifier.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtExportQualifier.MaxLength = 1;
             this.txtExportQualifier.Name = "txtExportQualifier";
@@ -741,7 +741,7 @@ namespace Kasutajaliides
             // 
             this.lblExportPath.AutoSize = true;
             this.lblExportPath.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExportPath.Location = new System.Drawing.Point(590, 20);
+            this.lblExportPath.Location = new System.Drawing.Point(590, 28);
             this.lblExportPath.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblExportPath.Name = "lblExportPath";
             this.lblExportPath.Size = new System.Drawing.Size(98, 25);
@@ -752,7 +752,7 @@ namespace Kasutajaliides
             // 
             this.txtExportPath.Enabled = false;
             this.txtExportPath.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtExportPath.Location = new System.Drawing.Point(695, 17);
+            this.txtExportPath.Location = new System.Drawing.Point(695, 25);
             this.txtExportPath.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtExportPath.MaxLength = 1;
             this.txtExportPath.Name = "txtExportPath";
@@ -763,7 +763,7 @@ namespace Kasutajaliides
             // 
             this.cbExportAppend.AutoSize = true;
             this.cbExportAppend.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbExportAppend.Location = new System.Drawing.Point(307, 19);
+            this.cbExportAppend.Location = new System.Drawing.Point(307, 27);
             this.cbExportAppend.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbExportAppend.Name = "cbExportAppend";
             this.cbExportAppend.Size = new System.Drawing.Size(115, 29);
@@ -774,7 +774,7 @@ namespace Kasutajaliides
             // btnExportOpen
             // 
             this.btnExportOpen.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExportOpen.Location = new System.Drawing.Point(481, 12);
+            this.btnExportOpen.Location = new System.Drawing.Point(481, 19);
             this.btnExportOpen.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btnExportOpen.Name = "btnExportOpen";
             this.btnExportOpen.Size = new System.Drawing.Size(105, 41);
@@ -785,7 +785,7 @@ namespace Kasutajaliides
             // btnExportSave
             // 
             this.btnExportSave.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExportSave.Location = new System.Drawing.Point(426, 12);
+            this.btnExportSave.Location = new System.Drawing.Point(426, 19);
             this.btnExportSave.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btnExportSave.Name = "btnExportSave";
             this.btnExportSave.Size = new System.Drawing.Size(51, 41);

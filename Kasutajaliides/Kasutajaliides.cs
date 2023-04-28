@@ -30,14 +30,7 @@ namespace Kasutajaliides
         Font Bigger = new Font("Impact", 16);
         // 
 
-        //List<DateTime> priceTimeRange = new List<DateTime>();
-        //List<double> priceCostRange = new List<double>();
-
-        //List<double> packageCost = new List<double>(); // paketi hinna punktide jaoks
-
         VecT userData = new VecT();
-        string fileContents, packageFileContents;
-
         VecT priceData = new VecT();
 
         private AndmePyydja.IAP AP = new AndmePyydja.CAP();
@@ -54,12 +47,7 @@ namespace Kasutajaliides
         bool state = true;
         bool state2 = true; // DARK MODE BUTTON TOGGLE
         bool state3 = false; // graafiku vajutamisega suurendamise jaoks
-        bool packageState = false;
-
-        double averagePrice;
-
-        Series packageSeries = new Series();
-        string packageName;
+        bool isPackageSelected = false;
 
         // Keskmise hinna joon graafikul
         HorizontalLineAnnotation averagePriceLine = new HorizontalLineAnnotation();
@@ -102,7 +90,7 @@ namespace Kasutajaliides
         private void updateGraph()
         {
             // Uuenda graafikut
-            // Tarbimise andmed
+            //Console.WriteLine("updateGraph!!!!");
 
             var start = dateStartTime.Value;
             var stop  = dateStopTime.Value;
@@ -124,11 +112,11 @@ namespace Kasutajaliides
             chartPrice.Series["Tarbimine"].Enabled = showUsage && (VK.getUserDataTimeRange().Count > 0);
             chartPrice.Series["Elektrihind"].Enabled = showStock;
 
-            if (showUsage)
+            if (this.showUsage)
             {
                 chartPrice.Series["Tarbimine"].Points.DataBindXY(VK.getUserDataTimeRange(), VK.getUserDataUsageRange());
             }
-            if (showStock)
+            if (this.showStock)
             {
                 chartPrice.Series["Elektrihind"].Points.DataBindXY(VK.getPriceTimeRange(), VK.getPriceCostRange());
             }
@@ -138,22 +126,16 @@ namespace Kasutajaliides
             var priceCost = VK.getPriceCostRange();
 
             tablePrice.Rows.Clear();
-            averagePrice = 0.0;
             for (int i = 0; i < priceTime.Count; ++i)
             {
                 tablePrice.Rows.Add(priceTime[i], priceCost[i]);
-
-                // Keskmise hinna arvutamiseks hindade kokku liitmine
-                averagePrice += priceCost[i]; // s/kWh
             }
-            // Jagab kokkuliidetud hinnad hindade arvuga ==> keskmine hind
-            averagePrice /= priceCost.Count;
 
             for (int i = 0; i < priceCost.Count; i++) // Käib valitud ajaintervalli hinnad läbi
             {
                 if (i != priceCost.Count - 1) // Kui ei ole tegemist viimase hinnaga
                 {
-                    if (priceCost[i] < averagePrice) // Väiksem kui keskmine hind ==> roheline
+                    if (priceCost[i] < VK.getAveragePrice()) // Väiksem kui keskmine hind ==> roheline
                     {
                         chartPrice.Series["Elektrihind"].Points[i + 1].Color = Color.Green;
                     }
@@ -164,7 +146,7 @@ namespace Kasutajaliides
                 }
                 else // Kui on tegemist viimase hinnaga
                 {
-                    if (priceCost[i] < averagePrice) // Väiksem kui keskmine hind ==> roheline
+                    if (priceCost[i] < VK.getAveragePrice()) // Väiksem kui keskmine hind ==> roheline
                     {
                         chartPrice.Series["Elektrihind"].Points[i].Color = Color.Green;
                     }
@@ -180,7 +162,7 @@ namespace Kasutajaliides
             chartPrice.Annotations.Remove(averagePriceLine);
             averagePriceLine.AxisY = chartPrice.ChartAreas["ChartArea1"].AxisY2;
             averagePriceLine.IsSizeAlwaysRelative = false;
-            averagePriceLine.AnchorY = averagePrice;
+            averagePriceLine.AnchorY = VK.getAveragePrice();
             averagePriceLine.IsInfinitive = true;
             averagePriceLine.ClipToChartArea = chartPrice.ChartAreas["ChartArea1"].Name;
             averagePriceLine.LineColor = Color.BlueViolet;
@@ -188,18 +170,18 @@ namespace Kasutajaliides
             averagePriceLine.Name = "priceLine";
             chartPrice.Annotations.Add(averagePriceLine);
 
-            string line = "Keskmine hind: " + averagePrice.ToString();
+            string line = "Keskmine hind: " + VK.getAveragePrice().ToString();
             string line2 = "Max: " + chartPrice.ChartAreas["ChartArea1"].AxisY2.Maximum.ToString();
             txtDebug.AppendText(Environment.NewLine);
             txtDebug.AppendText(line);
             txtDebug.AppendText(line2);
 
 
-            if (packageState)
+            if (isPackageSelected)
             {
                 for (int i = 0; i < tablePackages.SelectedRows.Count; ++i)
                 {
-                    packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString();
+                    string packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString();
                     var packageCost = new List<double>();
                     foreach (var item in VK.getPriceTimeRange())
                     {
@@ -354,6 +336,7 @@ namespace Kasutajaliides
         private bool openCSVUserData()
         {
             bool ret = true;
+            string fileContents = "";
             if (!AP.readUserDataFile(ref fileContents))
             {
                 ret = false;
@@ -438,12 +421,13 @@ namespace Kasutajaliides
                 else
                 {
                     var skwh = Double.Parse(tbMonthlyPrice.Text);
+                    // Teisendab sentidest eurodesse
                     price = time * power * skwh / 100.0;
                 }
                 if (smRet != 0)
                 {
                     // arvutab tarbimishinna keskmise hinnaga
-                    price = time * power * this.averagePrice / 100.0;
+                    price = time * power * VK.getAveragePrice() / 100.0;
                 }
 
                 // Arvutab korrektse lõpphinna, lisab käibemaksu
@@ -485,9 +469,9 @@ namespace Kasutajaliides
             // Proovib avada CSV
             AS.loadFile();
 
-            var items = AS.getUseCases();
+            var useCases = AS.getUseCases();
             cbKasutusmall.Items.Clear();
-            foreach (var i in items)
+            foreach (var i in useCases)
             {
                 cbKasutusmall.Items.Add(i.Key);
             }
@@ -500,7 +484,12 @@ namespace Kasutajaliides
             bool isPackage = openCSVPackage();
             if (!isUserData || !isPackage)
             {
-                MessageBox.Show("Lugemine ebaõnnestus!");
+                MessageBox.Show(
+                    "CSV Lugemine ebaõnnestus!",
+                    this.Name,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
 
             // akna elementide mõõtmete vaikeväärtuste määramine
@@ -1034,6 +1023,7 @@ namespace Kasutajaliides
         private bool openCSVPackage()
         {
             bool ret = true;
+            string packageFileContents = "";
             if (!AP.readPackageFile(ref packageFileContents))
             {
                 ret = false;
@@ -1103,7 +1093,7 @@ namespace Kasutajaliides
         private void tablePackages_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             //MessageBox.Show("It works!");
-            packageState = tablePackages.SelectedRows.Count != 0;
+            isPackageSelected = tablePackages.SelectedRows.Count != 0;
 
 
             List<Series> removables = new List<Series>();
@@ -1141,7 +1131,7 @@ namespace Kasutajaliides
             // Lisab uued, mis on valitud
             for (int i = 0; i < tablePackages.SelectedRows.Count; ++i)
             {
-                packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString();
+                string packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString();
                 if (chartPrice.Series.FindByName(packageName) != null)
                 {
                     continue;

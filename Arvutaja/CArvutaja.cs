@@ -160,7 +160,7 @@ namespace Arvutaja
             return 0;
         }
 
-        private static bool isDailyRate(DateTime time)
+        public bool isDailyRate(DateTime time)
         {
             // https://xn--riigiphad-v9a.ee/
             DateTime[] riigiPyhad =

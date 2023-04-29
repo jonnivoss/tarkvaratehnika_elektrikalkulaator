@@ -805,7 +805,7 @@ namespace Kasutajaliides
             // 
             // EndPrice
             // 
-            this.EndPrice.HeaderText = "Lõpphind (€)";
+            this.EndPrice.HeaderText = "Lõpphind (s/kWh)";
             this.EndPrice.MinimumWidth = 6;
             this.EndPrice.Name = "EndPrice";
             this.EndPrice.ReadOnly = true;

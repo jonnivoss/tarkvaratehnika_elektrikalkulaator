@@ -214,9 +214,9 @@ namespace Kasutajaliides
                         {
                             usageTime.Add(item);
                         }
-                        DateTime startTime = usageTime.First();
-                        DateTime endTime = usageTime.Last();
-                        VK.createStockRange(stockCost, startTime, endTime);
+                        //DateTime startTime = usageTime.First();
+                        //DateTime endTime = usageTime.Last();
+                        VK.createStockRange(stockCost, start, stop);
 
                         // kui tegemist on börsipaketiga
                         
@@ -237,7 +237,7 @@ namespace Kasutajaliides
                                 packageStockUsageCost.Add(uc.Usage * uc.Cost);
                             }
 
-                            chartPrice.Series[packageNameUsage].Points.DataBindXY(VK.getUserDataTimeRange(), packageStockUsageCost);
+                            chartPrice.Series[packageNameUsage].Points.DataBindXY(usageTime, packageStockUsageCost);
                         }
                         else // kui ei ole tegemist börsipaketiga
                         {
@@ -1299,7 +1299,11 @@ namespace Kasutajaliides
                     }
                     else
                     {
-                        if(tablePackages.SelectedRows[i].Cells[6].Value.ToString() == "-")
+                        foreach (var item in VK.getUserDataTimeRange())
+                        {
+                            usageTimeAgain.Add(item);
+                        }
+                        if (tablePackages.SelectedRows[i].Cells[6].Value.ToString() == "-")
                         {
                             foreach (var item in VK.getUserDataUsageRange())
                             {

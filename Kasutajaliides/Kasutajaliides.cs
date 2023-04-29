@@ -213,12 +213,20 @@ namespace Kasutajaliides
                     {
                         string packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString();
                         string packageNameUsage = packageName + " tarbimisel";
+                        
 
                         var costPerKwh = new List<double>();
                         var packageUsageCost = new List<double>();
                         if (VK.userDataTimeRange.Count == 0)
                         {
-                            chartPrice.Series[packageNameUsage].Enabled = false;
+                            try
+                            {
+                                chartPrice.Series[packageNameUsage].Enabled = false;
+                            }
+                            catch (Exception)
+                            {
+
+                            }
                             continue;
                         }
 
@@ -292,6 +300,15 @@ namespace Kasutajaliides
                             chartPrice.Series[packageName].Points.DataBindXY(VK.priceTimeRange, costPerKwh);
                             chartPrice.Series[packageNameUsage].Points.DataBindXY(VK.userDataTimeRange, packageUsageCost);
                             chartPrice.Series[packageNameUsage].Enabled = true;
+
+                            txtDebug.AppendText("Alustan tabelisse lisamist");
+                            tablePrice.Rows.Clear();
+                            for (int c = 0; c < VK.userDataTimeRange.Count; ++c)
+                            {
+                                tablePrice.Rows.Add(VK.priceTimeRange[c], VK.priceCostRange[c], packageUsageCost[c]);
+                                //tablePrice.Rows.Add(costPerKwh[i], packageUsageCost[i]);
+                            }
+                            txtDebug.AppendText("Tabelisse lisatud");
                         }
                         catch (Exception)
                         {
@@ -1298,6 +1315,7 @@ namespace Kasutajaliides
 
 
             List<Series> removables = new List<Series>();
+            List<DataGridViewColumn> removableColumns = new List<DataGridViewColumn>();
             // Eemaldab vanad, mida enam pole valitud
             foreach (var series in chartPrice.Series)
             {
@@ -1323,12 +1341,41 @@ namespace Kasutajaliides
                     removables.Add(series);
                 }
             }
+
+            foreach (DataGridViewColumn column in tablePrice.Columns)
+            {
+                if (column.Equals(Aeg) || column.Equals(Hind))
+                {
+                    continue;
+                }
+
+                bool removeItem = true;
+                for (int j = 0; j < tablePackages.SelectedRows.Count; ++j)
+                {
+                    string seriesName = tablePackages.SelectedRows[j].Index.ToString() + ": " + tablePackages.SelectedRows[j].Cells[2].Value.ToString();
+                    //string seriesNameUsage = tablePackages.SelectedRows[j].Index.ToString() + ": " + tablePackages.SelectedRows[j].Cells[2].Value.ToString() + " tarbimisel";
+                    if (column.Equals(seriesName))
+                    {
+                        removeItem = false;
+                        break;
+                    }
+                }
+                if (removeItem)
+                {
+                    removableColumns.Add(column);
+                }
+            }
+
             foreach (var removable in removables)
             {
                 chartPrice.Series.Remove(removable);
             }
             removables.Clear();
 
+            foreach(DataGridViewColumn column in removableColumns)
+            {
+                tablePrice.Columns.Remove(column);
+            }
 
             // Lisab uued, mis on valitud
             for (int i = 0; i < tablePackages.SelectedRows.Count; ++i)
@@ -1356,6 +1403,8 @@ namespace Kasutajaliides
                 chartPrice.Series[packageName].Points.DataBindXY(VK.priceTimeRange, packageCost);
             }
 
+            
+
             // Kui tarbimine on valitud, siis lisab paketi graafiku selle põhjal
             if (showUsage && ret)
             {
@@ -1381,7 +1430,15 @@ namespace Kasutajaliides
                     chartPrice.Series[packageNameUsage].Color = Color.FromArgb(r.Next(256), r.Next(256), r.Next(256));
                     chartPrice.Series[packageNameUsage].Legend = "Legend1";
                     chartPrice.Series[packageNameUsage].ChartType = SeriesChartType.Line;
+
+                    var newColumn = new DataGridViewTextBoxColumn();
+                    newColumn.HeaderText = packageNameUsage;
+                    newColumn.Name = packageNameUsage;
+
+                    tablePrice.Columns.Add(newColumn);
                 }
+
+                
             }
 
             updateGraph();

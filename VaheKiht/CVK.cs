@@ -13,13 +13,13 @@ namespace VaheKiht
     {
         public List<DateTime> userDataTimeRange { get; } = new List<DateTime>();
         public List<double> userDataUsageRange { get; } = new List<double>();
-        public VecT userDataRange { get; } = new VecT();
+        // Peab olema private setter, sest muidu muutub võimatuks initsialiseerimine = märgiga
+        public VecT userDataRange { get; private set; } = new VecT();
 
         public List<DateTime> priceTimeRange { get; } = new List<DateTime>();
         public List<double> priceCostRange { get; } = new List<double>();
-        public VecT priceRange { get; } = new VecT();
+        public VecT priceRange { get; private set; } = new VecT();
 
-        // Peab olema private setter, sest muidu muutub võimatuks initsialiseerimine 0.0'ks tagasi
         public double averagePrice { get; private set; } = 0.0;
 
 
@@ -53,13 +53,13 @@ namespace VaheKiht
                 return false;
             }
 
-            userTimeRange.Clear();
-            userUsageRange.Clear();
-            userRange = this.createRange(inData, start, stop);
+            userDataTimeRange.Clear();
+            userDataUsageRange.Clear();
+            userDataRange = this.createRange(inData, start, stop);
 
             try
             {
-                foreach (var item in this.userRange)
+                foreach (var item in this.userDataRange)
                 {
                     userDataTimeRange.Add(item.Item1);
                     userDataUsageRange.Add(item.Item2);

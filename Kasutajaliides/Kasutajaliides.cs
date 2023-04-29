@@ -32,6 +32,7 @@ namespace Kasutajaliides
 
         VecT userData = new VecT();
         VecT priceData = new VecT();
+        PackageT packageInfo = new PackageT();
 
         private AndmePyydja.IAP AP = new AndmePyydja.CAP();
         private AndmeSalvestaja.IAS AS = new AndmeSalvestaja.CAS("settings.json");
@@ -369,6 +370,7 @@ namespace Kasutajaliides
                     if (VK.priceTimeRange[i].Hour == s.Hour && VK.priceTimeRange[i].Date == s.Date)
                     {
                         y = VK.priceCostRange[i];
+                        this.updatePakettideHinnad(VK.priceTimeRange[i]);
                         break;
                     }
                 }
@@ -1208,11 +1210,11 @@ namespace Kasutajaliides
             }
             else
             {
-                var packageData = AP.parsePackage(packageFileContents);
+                this.packageInfo = AP.parsePackage(packageFileContents);
 
                 tablePackages.Rows.Clear();
                 int i = 0;
-                foreach (var item in packageData)
+                foreach (var item in this.packageInfo)
                 {
                     tablePackages.Rows.Add(
                         i,
@@ -1537,6 +1539,17 @@ namespace Kasutajaliides
             }
             updateGraph();
             calcPrice();
+        }
+
+        private void updatePakettideHinnad(DateTime time)
+        {
+            for (int i = 0; i < tablePackages.Rows.Count; ++i)
+            {
+                double stockPrice = VK.priceRange.Find(Tuple => Tuple.Item1 == time).Item2;
+                double price = AR.finalPrice(stockPrice, this.packageInfo[i], time);
+
+                tablePackages.Rows[i].Cells[9].Value = price.ToString("0.000");
+            }
         }
 
     }

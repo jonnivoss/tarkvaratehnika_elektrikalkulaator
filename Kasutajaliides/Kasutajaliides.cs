@@ -1343,17 +1343,20 @@ namespace Kasutajaliides
             var isAppend = cbExportAppend.Checked;
 
             List<string[]> exportStrings = new List<string[]>();
-            exportStrings.Add(new string[]{ "testparam1", "testparam2", "3" });
-            exportStrings.Add(new string[]{ "rida2", "rida2param2", "mingiparam3" });
+            // Tabeli header
+            exportStrings.Add(new string[] { "Aeg", "Börsihind (s/kWh)" });
+            foreach (var item in VK.priceRange)
+            {
+                exportStrings.Add(new string[] { item.Item1.ToString(), item.Item2.ToString("0.000") });
+            }
 
-            // Teeb 2-dimensionaalse array, mis hoiab exportString.Count * 3 stringi
-            var exportData = Array.CreateInstance(typeof(string), exportStrings.Count, 3);
+            // Teeb 2-dimensionaalse array, mis hoiab exportString.Count * 2 stringi
+            var exportData = Array.CreateInstance(typeof(string), exportStrings.Count, 2);
             // Täidab selle array
             for (int i = 0; i < exportStrings.Count; ++i)
             {
                 exportData.SetValue(exportStrings[i][0], i, 0);
                 exportData.SetValue(exportStrings[i][1], i, 1);
-                exportData.SetValue(exportStrings[i][2], i, 2);
             }
 
             CSV.delimiter = txtExportDelimiter.Text;

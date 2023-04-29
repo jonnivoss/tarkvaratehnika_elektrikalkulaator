@@ -85,10 +85,21 @@ namespace Kasutajaliides
             this.IsGreenPackage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnOpenPackages = new System.Windows.Forms.Button();
             this.tmrCostNow = new System.Windows.Forms.Timer(this.components);
+            this.groupExport = new System.Windows.Forms.GroupBox();
+            this.btnExportSave = new System.Windows.Forms.Button();
+            this.btnExportOpen = new System.Windows.Forms.Button();
+            this.cbExportAppend = new System.Windows.Forms.CheckBox();
+            this.txtExportPath = new System.Windows.Forms.TextBox();
+            this.lblExportPath = new System.Windows.Forms.Label();
+            this.txtExportQualifier = new System.Windows.Forms.TextBox();
+            this.lblExportQualifier = new System.Windows.Forms.Label();
+            this.txtExportDelimiter = new System.Windows.Forms.TextBox();
+            this.lblExportDelimiter = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chartPrice)).BeginInit();
             this.groupPriceType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablePrice)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tablePackages)).BeginInit();
+            this.groupExport.SuspendLayout();
             this.SuspendLayout();
             // 
             // chartPrice
@@ -563,7 +574,7 @@ namespace Kasutajaliides
             this.IsStockPackage,
             this.IsGreenPackage});
             this.tablePackages.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tablePackages.Location = new System.Drawing.Point(0, 675);
+            this.tablePackages.Location = new System.Drawing.Point(0, 744);
             this.tablePackages.Name = "tablePackages";
             this.tablePackages.ReadOnly = true;
             this.tablePackages.RowHeadersWidth = 51;
@@ -665,11 +676,133 @@ namespace Kasutajaliides
             this.tmrCostNow.Interval = 60000;
             this.tmrCostNow.Tick += new System.EventHandler(this.tmrCostNow_Tick);
             // 
+            // groupExport
+            // 
+            this.groupExport.Controls.Add(this.btnExportSave);
+            this.groupExport.Controls.Add(this.btnExportOpen);
+            this.groupExport.Controls.Add(this.cbExportAppend);
+            this.groupExport.Controls.Add(this.txtExportPath);
+            this.groupExport.Controls.Add(this.lblExportPath);
+            this.groupExport.Controls.Add(this.txtExportQualifier);
+            this.groupExport.Controls.Add(this.lblExportQualifier);
+            this.groupExport.Controls.Add(this.txtExportDelimiter);
+            this.groupExport.Controls.Add(this.lblExportDelimiter);
+            this.groupExport.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.groupExport.Location = new System.Drawing.Point(0, 672);
+            this.groupExport.Name = "groupExport";
+            this.groupExport.Size = new System.Drawing.Size(1067, 72);
+            this.groupExport.TabIndex = 36;
+            this.groupExport.TabStop = false;
+            this.groupExport.Text = "CSV eksport";
+            // 
+            // btnExportSave
+            // 
+            this.btnExportSave.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExportSave.Location = new System.Drawing.Point(426, 19);
+            this.btnExportSave.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.btnExportSave.Name = "btnExportSave";
+            this.btnExportSave.Size = new System.Drawing.Size(51, 41);
+            this.btnExportSave.TabIndex = 42;
+            this.btnExportSave.Text = "💾";
+            this.btnExportSave.UseVisualStyleBackColor = true;
+            this.btnExportSave.Click += new System.EventHandler(this.btnExportSave_Click);
+            // 
+            // btnExportOpen
+            // 
+            this.btnExportOpen.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExportOpen.Location = new System.Drawing.Point(481, 19);
+            this.btnExportOpen.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.btnExportOpen.Name = "btnExportOpen";
+            this.btnExportOpen.Size = new System.Drawing.Size(105, 41);
+            this.btnExportOpen.TabIndex = 37;
+            this.btnExportOpen.Text = "Vali fail";
+            this.btnExportOpen.UseVisualStyleBackColor = true;
+            this.btnExportOpen.Click += new System.EventHandler(this.btnExportOpen_Click);
+            // 
+            // cbExportAppend
+            // 
+            this.cbExportAppend.AutoSize = true;
+            this.cbExportAppend.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbExportAppend.Location = new System.Drawing.Point(307, 27);
+            this.cbExportAppend.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.cbExportAppend.Name = "cbExportAppend";
+            this.cbExportAppend.Size = new System.Drawing.Size(115, 29);
+            this.cbExportAppend.TabIndex = 37;
+            this.cbExportAppend.Text = "Lisa lõppu";
+            this.cbExportAppend.UseVisualStyleBackColor = true;
+            // 
+            // txtExportPath
+            // 
+            this.txtExportPath.Enabled = false;
+            this.txtExportPath.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtExportPath.Location = new System.Drawing.Point(695, 25);
+            this.txtExportPath.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.txtExportPath.MaxLength = 1;
+            this.txtExportPath.Name = "txtExportPath";
+            this.txtExportPath.Size = new System.Drawing.Size(361, 32);
+            this.txtExportPath.TabIndex = 41;
+            // 
+            // lblExportPath
+            // 
+            this.lblExportPath.AutoSize = true;
+            this.lblExportPath.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblExportPath.Location = new System.Drawing.Point(590, 28);
+            this.lblExportPath.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblExportPath.Name = "lblExportPath";
+            this.lblExportPath.Size = new System.Drawing.Size(98, 25);
+            this.lblExportPath.TabIndex = 40;
+            this.lblExportPath.Text = "Kaustatee:";
+            // 
+            // txtExportQualifier
+            // 
+            this.txtExportQualifier.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtExportQualifier.Location = new System.Drawing.Point(264, 24);
+            this.txtExportQualifier.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.txtExportQualifier.MaxLength = 1;
+            this.txtExportQualifier.Name = "txtExportQualifier";
+            this.txtExportQualifier.Size = new System.Drawing.Size(39, 32);
+            this.txtExportQualifier.TabIndex = 39;
+            this.txtExportQualifier.Text = "\"";
+            // 
+            // lblExportQualifier
+            // 
+            this.lblExportQualifier.AutoSize = true;
+            this.lblExportQualifier.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblExportQualifier.Location = new System.Drawing.Point(139, 28);
+            this.lblExportQualifier.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblExportQualifier.Name = "lblExportQualifier";
+            this.lblExportQualifier.Size = new System.Drawing.Size(120, 25);
+            this.lblExportQualifier.TabIndex = 38;
+            this.lblExportQualifier.Text = "Kvalifikaator:";
+            // 
+            // txtExportDelimiter
+            // 
+            this.txtExportDelimiter.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtExportDelimiter.Location = new System.Drawing.Point(96, 24);
+            this.txtExportDelimiter.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.txtExportDelimiter.MaxLength = 1;
+            this.txtExportDelimiter.Name = "txtExportDelimiter";
+            this.txtExportDelimiter.Size = new System.Drawing.Size(39, 32);
+            this.txtExportDelimiter.TabIndex = 37;
+            this.txtExportDelimiter.Text = ";";
+            // 
+            // lblExportDelimiter
+            // 
+            this.lblExportDelimiter.AutoSize = true;
+            this.lblExportDelimiter.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblExportDelimiter.Location = new System.Drawing.Point(11, 27);
+            this.lblExportDelimiter.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblExportDelimiter.Name = "lblExportDelimiter";
+            this.lblExportDelimiter.Size = new System.Drawing.Size(81, 25);
+            this.lblExportDelimiter.TabIndex = 37;
+            this.lblExportDelimiter.Text = "Eraldaja:";
+            // 
             // Kasutajaliides
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1067, 866);
+            this.ClientSize = new System.Drawing.Size(1067, 935);
+            this.Controls.Add(this.groupExport);
             this.Controls.Add(this.btnOpenPackages);
             this.Controls.Add(this.tablePackages);
             this.Controls.Add(this.btnDarkMode);
@@ -715,6 +848,8 @@ namespace Kasutajaliides
             this.groupPriceType.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablePrice)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tablePackages)).EndInit();
+            this.groupExport.ResumeLayout(false);
+            this.groupExport.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -770,5 +905,15 @@ namespace Kasutajaliides
         private System.Windows.Forms.DataGridViewTextBoxColumn IsStockPackage;
         private System.Windows.Forms.DataGridViewTextBoxColumn IsGreenPackage;
         private System.Windows.Forms.Timer tmrCostNow;
+        private System.Windows.Forms.GroupBox groupExport;
+        private System.Windows.Forms.TextBox txtExportPath;
+        private System.Windows.Forms.Label lblExportPath;
+        private System.Windows.Forms.TextBox txtExportQualifier;
+        private System.Windows.Forms.Label lblExportQualifier;
+        private System.Windows.Forms.TextBox txtExportDelimiter;
+        private System.Windows.Forms.Label lblExportDelimiter;
+        private System.Windows.Forms.CheckBox cbExportAppend;
+        private System.Windows.Forms.Button btnExportSave;
+        private System.Windows.Forms.Button btnExportOpen;
     }
 }

@@ -87,6 +87,18 @@ namespace Kasutajaliides
         Rectangle originalButtonDarkMode;
         Rectangle originalBtnOpenPackages;
 
+        Rectangle originalGroupExport;
+        Rectangle originalLabelExportDelimiter;
+        Rectangle originalTextExportDelimiter;
+        Rectangle originalLabelExportQualifier;
+        Rectangle originalTextExportQualifier;
+        Rectangle originalCheckBoxExportAppend;
+        Rectangle originalButtonExportSave;
+        Rectangle originalButtonExportOpen;
+        Rectangle originalLabelExportPath;
+        Rectangle originalTextExportPath;
+
+
         private void updateGraph()
         {
             // Uuenda graafikut
@@ -109,33 +121,30 @@ namespace Kasutajaliides
             VK.addLastPoints();
 
 
-            chartPrice.Series["Tarbimine"].Enabled = showUsage && (VK.getUserDataTimeRange().Count > 0);
+            chartPrice.Series["Tarbimine"].Enabled = showUsage && (VK.userDataTimeRange.Count > 0);
             chartPrice.Series["Elektrihind"].Enabled = showStock;
 
             if (this.showUsage)
             {
-                chartPrice.Series["Tarbimine"].Points.DataBindXY(VK.getUserDataTimeRange(), VK.getUserDataUsageRange());
+                chartPrice.Series["Tarbimine"].Points.DataBindXY(VK.userDataTimeRange, VK.userDataUsageRange);
             }
             if (this.showStock)
             {
-                chartPrice.Series["Elektrihind"].Points.DataBindXY(VK.getPriceTimeRange(), VK.getPriceCostRange());
+                chartPrice.Series["Elektrihind"].Points.DataBindXY(VK.priceTimeRange, VK.priceCostRange);
             }
 
-
-            var priceTime = VK.getPriceTimeRange();
-            var priceCost = VK.getPriceCostRange();
 
             tablePrice.Rows.Clear();
-            for (int i = 0; i < priceTime.Count; ++i)
+            for (int i = 0; i < VK.priceTimeRange.Count; ++i)
             {
-                tablePrice.Rows.Add(priceTime[i], priceCost[i]);
+                tablePrice.Rows.Add(VK.priceTimeRange[i], VK.priceCostRange[i]);
             }
 
-            for (int i = 0; i < priceCost.Count; i++) // Käib valitud ajaintervalli hinnad läbi
+            for (int i = 0; i < VK.priceCostRange.Count; i++) // Käib valitud ajaintervalli hinnad läbi
             {
-                if (i != priceCost.Count - 1) // Kui ei ole tegemist viimase hinnaga
+                if (i != VK.priceCostRange.Count - 1) // Kui ei ole tegemist viimase hinnaga
                 {
-                    if (priceCost[i] < VK.getAveragePrice()) // Väiksem kui keskmine hind ==> roheline
+                    if (VK.priceCostRange[i] < VK.averagePrice) // Väiksem kui keskmine hind ==> roheline
                     {
                         chartPrice.Series["Elektrihind"].Points[i + 1].Color = Color.Green;
                     }
@@ -146,7 +155,7 @@ namespace Kasutajaliides
                 }
                 else // Kui on tegemist viimase hinnaga
                 {
-                    if (priceCost[i] < VK.getAveragePrice()) // Väiksem kui keskmine hind ==> roheline
+                    if (VK.priceCostRange[i] < VK.averagePrice) // Väiksem kui keskmine hind ==> roheline
                     {
                         chartPrice.Series["Elektrihind"].Points[i].Color = Color.Green;
                     }
@@ -162,7 +171,7 @@ namespace Kasutajaliides
             chartPrice.Annotations.Remove(averagePriceLine);
             averagePriceLine.AxisY = chartPrice.ChartAreas["ChartArea1"].AxisY2;
             averagePriceLine.IsSizeAlwaysRelative = false;
-            averagePriceLine.AnchorY = VK.getAveragePrice();
+            averagePriceLine.AnchorY = VK.averagePrice;
             averagePriceLine.IsInfinitive = true;
             averagePriceLine.ClipToChartArea = chartPrice.ChartAreas["ChartArea1"].Name;
             averagePriceLine.LineColor = Color.BlueViolet;
@@ -170,7 +179,7 @@ namespace Kasutajaliides
             averagePriceLine.Name = "priceLine";
             chartPrice.Annotations.Add(averagePriceLine);
 
-            string line = "Keskmine hind: " + VK.getAveragePrice().ToString();
+            string line = "Keskmine hind: " + VK.averagePrice.ToString();
             string line2 = "Max: " + chartPrice.ChartAreas["ChartArea1"].AxisY2.Maximum.ToString();
             txtDebug.AppendText(Environment.NewLine);
             txtDebug.AppendText(line);
@@ -183,11 +192,11 @@ namespace Kasutajaliides
                 {
                     string packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString();
                     var packageCost = new List<double>();
-                    foreach (var item in VK.getPriceTimeRange())
+                    foreach (var item in VK.priceTimeRange)
                     {
                         packageCost.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[3].Value));
                     }
-                    chartPrice.Series[packageName].Points.DataBindXY(VK.getPriceTimeRange(), packageCost);
+                    chartPrice.Series[packageName].Points.DataBindXY(VK.priceTimeRange, packageCost);
                 }
             }
 
@@ -254,13 +263,11 @@ namespace Kasutajaliides
                 
                 //leia punkt millele x vastab ja salvesta selle y kordinaat
                 DateTime s = DateTime.FromOADate(x);
-                var timeRange = VK.getPriceTimeRange();
-                var costRange = VK.getPriceCostRange();
-                for (int i = 0; i < timeRange.Count; ++i)
+                for (int i = 0; i < VK.priceTimeRange.Count; ++i)
                 {
-                    if (timeRange[i].Hour == s.Hour && timeRange[i].Date == s.Date)
+                    if (VK.priceTimeRange[i].Hour == s.Hour && VK.priceTimeRange[i].Date == s.Date)
                     {
-                        y = costRange[i];
+                        y = VK.priceCostRange[i];
                         break;
                     }
                 }
@@ -329,7 +336,7 @@ namespace Kasutajaliides
         {
             if (AP.chooseFileUserData())//ei
             {
-                AS.changeSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed, AP.getUserDataFileName());
+                AS.changeSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed, AP.userDataFileName);
                 this.openCSVUserData();
             }
         }
@@ -399,7 +406,7 @@ namespace Kasutajaliides
                     DateTime bestDate = beg;
 
                     smRet = AR.smallestIntegral(
-                        this.VK.getPriceRange(),
+                        this.VK.priceRange,
                         power,
                         time,
                         beg,
@@ -427,7 +434,7 @@ namespace Kasutajaliides
                 if (smRet != 0)
                 {
                     // arvutab tarbimishinna keskmise hinnaga
-                    price = time * power * VK.getAveragePrice() / 100.0;
+                    price = time * power * VK.averagePrice / 100.0;
                 }
 
                 // Arvutab korrektse lõpphinna, lisab käibemaksu
@@ -476,8 +483,8 @@ namespace Kasutajaliides
                 cbKasutusmall.Items.Add(i.Key);
             }
 
-            AP.setUserDataFileName(AS.getSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed));
-            AP.setPackageFileName(AS.getSetting(AndmeSalvestaja.ASSetting.paketiAndmed));
+            AP.userDataFileName = AS.getSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed);
+            AP.packageFileName = AS.getSetting(AndmeSalvestaja.ASSetting.paketiAndmed);
             //priceData = AP.HindAegInternet(DateTime.Now.Date.AddDays(-60), DateTime.Now);
             //MessageBox.Show(priceTimeRange.Last().ToString());
             bool isUserData = openCSVUserData();
@@ -526,6 +533,17 @@ namespace Kasutajaliides
             originalLabelSKwh2 = new Rectangle(lblSKwh2.Location.X, lblSKwh2.Location.Y, lblSKwh2.Size.Width, lblSKwh2.Size.Height);
             originalButtonDarkMode = new Rectangle(btnDarkMode.Location.X, btnDarkMode.Location.Y, btnDarkMode.Size.Width, btnDarkMode.Size.Height);
             originalBtnOpenPackages = new Rectangle(btnOpenPackages.Location.X, btnOpenPackages.Location.Y, btnOpenPackages.Size.Width, btnOpenPackages.Size.Height);
+
+            originalGroupExport = new Rectangle(groupExport.Location.X, groupExport.Location.Y, groupExport.Size.Width, groupExport.Size.Height);
+            originalLabelExportDelimiter = new Rectangle(lblExportDelimiter.Location.X, lblExportDelimiter.Location.Y, lblExportDelimiter.Size.Width, lblExportDelimiter.Size.Height);
+            originalTextExportDelimiter = new Rectangle(txtExportDelimiter.Location.X, txtExportDelimiter.Location.Y, txtExportDelimiter.Size.Width, txtExportDelimiter.Size.Height);
+            originalLabelExportQualifier = new Rectangle(lblExportQualifier.Location.X, lblExportQualifier.Location.Y, lblExportQualifier.Size.Width, lblExportQualifier.Size.Height);
+            originalTextExportQualifier = new Rectangle(txtExportQualifier.Location.X, txtExportQualifier.Location.Y, txtExportQualifier.Size.Width, txtExportQualifier.Size.Height);
+            originalCheckBoxExportAppend = new Rectangle(cbExportAppend.Location.X, cbExportAppend.Location.Y, cbExportAppend.Size.Width, cbExportAppend.Size.Height);
+            originalButtonExportSave = new Rectangle(btnExportSave.Location.X, btnExportSave.Location.Y, btnExportSave.Size.Width, btnExportSave.Size.Height);
+            originalButtonExportOpen = new Rectangle(btnExportOpen.Location.X, btnExportOpen.Location.Y, btnExportOpen.Size.Width, btnExportOpen.Size.Height);
+            originalLabelExportPath = new Rectangle(lblExportPath.Location.X, lblExportPath.Location.Y, lblExportPath.Size.Width, lblExportPath.Size.Height);
+            originalTextExportPath = new Rectangle(txtExportPath.Location.X, txtExportPath.Location.Y, txtExportPath.Size.Width, txtExportPath.Size.Height);
         }
 
 
@@ -782,6 +800,18 @@ namespace Kasutajaliides
                 btnOpenPackages.Font = Bigger;
                 btnChangeSize.Font = Bigger;
                 btnDarkMode.Font = Bigger;
+                 
+                groupExport.Font = new Font("Impact", 12);
+                lblExportDelimiter.Font = Bigger;
+                txtExportDelimiter.Font = Bigger;
+                lblExportQualifier.Font = Bigger;
+                txtExportQualifier.Font = Bigger;
+                cbExportAppend.Font = Bigger;
+                btnExportSave.Font = Bigger;
+                btnExportOpen.Font = Bigger;
+                lblExportPath.Font = Bigger;
+                txtExportPath.Font = Bigger;
+
                 state = false;
             }
             else
@@ -832,6 +862,17 @@ namespace Kasutajaliides
                 btnOpenPackages.Font = Normal;
                 btnChangeSize.Font = Normal;
                 btnDarkMode.Font = Normal;
+
+                groupExport.Font = new Font("Impact", 9);
+                lblExportDelimiter.Font = Normal;
+                txtExportDelimiter.Font = Normal;
+                lblExportQualifier.Font = Normal;
+                txtExportQualifier.Font = Normal;
+                cbExportAppend.Font = Normal;
+                btnExportSave.Font = Normal;
+                btnExportOpen.Font = Normal;
+                lblExportPath.Font = Normal;
+                txtExportPath.Font = Normal;
                 state = true;
             }
         }
@@ -938,6 +979,22 @@ namespace Kasutajaliides
                 tbMonthlyPrice.ForeColor = chalkWhite;
                 groupPriceType.ForeColor = chalkWhite;
 
+                groupExport.ForeColor = chalkWhite;
+                lblExportDelimiter.ForeColor = chalkWhite;
+                txtExportDelimiter.ForeColor = chalkWhite;
+                txtExportDelimiter.BackColor = midGrey;
+                lblExportQualifier.ForeColor = chalkWhite;
+                txtExportQualifier.ForeColor = chalkWhite;
+                txtExportQualifier.BackColor = midGrey;
+                cbExportAppend.ForeColor = chalkWhite;
+                btnExportSave.ForeColor = chalkWhite;
+                btnExportSave.BackColor = midGrey;
+                btnExportOpen.ForeColor = chalkWhite;
+                btnExportOpen.BackColor = midGrey;
+                lblExportPath.ForeColor = chalkWhite;
+                txtExportPath.ForeColor = chalkWhite;
+                txtExportPath.BackColor = midGrey;
+
                 btnOpenPackages.ForeColor = chalkWhite;
                 btnOpenPackages.BackColor = midGrey;
 
@@ -1000,6 +1057,22 @@ namespace Kasutajaliides
                 tbMonthlyPrice.ForeColor = Color.Black;
                 groupPriceType.ForeColor = Color.Black;
 
+                groupExport.ForeColor = Color.Black;
+                lblExportDelimiter.ForeColor = Color.Black;
+                txtExportDelimiter.ForeColor = Color.Black;
+                txtExportDelimiter.BackColor = Color.White;
+                lblExportQualifier.ForeColor = Color.Black;
+                txtExportQualifier.ForeColor = Color.Black;
+                txtExportQualifier.BackColor = Color.White;
+                cbExportAppend.ForeColor = Color.Black;
+                btnExportSave.ForeColor = Color.Black;
+                btnExportSave.BackColor = SystemColors.Control;
+                btnExportOpen.ForeColor = Color.Black;
+                btnExportOpen.BackColor = SystemColors.Control;
+                lblExportPath.ForeColor = Color.Black;
+                txtExportPath.ForeColor = Color.Black;
+                txtExportPath.BackColor = Color.White;
+
                 btnOpenPackages.BackColor = SystemColors.Control;
                 btnOpenPackages.ForeColor = Color.Black;
 
@@ -1019,7 +1092,7 @@ namespace Kasutajaliides
         {
             if (AP.chooseFilePackages())
             {
-                AS.changeSetting(AndmeSalvestaja.ASSetting.paketiAndmed, AP.getPackageFileName());
+                AS.changeSetting(AndmeSalvestaja.ASSetting.paketiAndmed, AP.packageFileName);
                 this.openCSVPackage();
             }
         }
@@ -1091,6 +1164,18 @@ namespace Kasutajaliides
             resizeGuiElement(originalLabelSKwh2, lblSKwh2);
             resizeGuiElement(originalButtonDarkMode, btnDarkMode);
             resizeGuiElement(originalBtnOpenPackages, btnOpenPackages);
+
+            resizeGuiElement(originalGroupExport, groupExport);
+            resizeGuiElement(originalLabelExportDelimiter, lblExportDelimiter);
+            resizeGuiElement(originalTextExportDelimiter, txtExportDelimiter);
+            resizeGuiElement(originalLabelExportQualifier, lblExportQualifier);
+            resizeGuiElement(originalTextExportQualifier, txtExportQualifier);
+            resizeGuiElement(originalCheckBoxExportAppend, cbExportAppend);
+            resizeGuiElement(originalButtonExportSave, btnExportSave);
+            resizeGuiElement(originalButtonExportOpen, btnExportOpen);
+            resizeGuiElement(originalLabelExportPath, lblExportPath);
+            resizeGuiElement(originalTextExportPath, txtExportPath);
+
             Refresh(); // vajalik et ei tekiks "render glitche" (nt. ComboBox ei suurene korraks jms.)
         }
 
@@ -1151,11 +1236,11 @@ namespace Kasutajaliides
                 chartPrice.Series[packageName].ChartType = SeriesChartType.Line;
 
                 var packageCost = new List<double>();
-                foreach (var item in VK.getPriceTimeRange())
+                foreach (var item in VK.priceTimeRange)
                 {
                     packageCost.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[3].Value));
                 }
-                chartPrice.Series[packageName].Points.DataBindXY(VK.getPriceTimeRange(), packageCost);
+                chartPrice.Series[packageName].Points.DataBindXY(VK.priceTimeRange, packageCost);
             }
             updateGraph();
         }
@@ -1223,6 +1308,72 @@ namespace Kasutajaliides
                 zoomStartTime = zoomStartTime.AddMilliseconds(-(zoomStartTime.Millisecond + 1000*zoomStartTime.Second + 60000*zoomStartTime.Minute));
             }
         }
+
+        private void btnExportSave_Click(object sender, EventArgs e)
+        {
+            if (txtExportPath.Text.Length == 0)
+            {
+                btnExportOpen_Click(sender, e);
+            }
+            if (txtExportPath.Text.Length == 0)
+            {
+                MessageBox.Show("Faili pole valitud!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string errorStr = "";
+            if (txtExportDelimiter.Text == "")
+            {
+                errorStr += "Eksporditava CSV eraldajat pole valitud!\n";
+            }
+            if (txtExportQualifier.Text == "")
+            {
+                errorStr += "Eksporditava CSV sõne kvalifikaatorit pole valitud!";
+            }
+            // Eemaldab üleliigse newline'i
+            errorStr.Trim('\n');
+
+            if (errorStr.Length > 0)
+            {
+                MessageBox.Show(errorStr, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Proovib kirjutada faili tabeli andmed
+            var isAppend = cbExportAppend.Checked;
+
+            List<string[]> exportStrings = new List<string[]>();
+            // Tabeli header
+            exportStrings.Add(new string[] { "Aeg", "Börsihind (s/kWh)" });
+            foreach (var item in VK.priceRange)
+            {
+                exportStrings.Add(new string[] { item.Item1.ToString(), item.Item2.ToString("0.000") });
+            }
+
+            // Teeb 2-dimensionaalse array, mis hoiab exportString.Count * 2 stringi
+            var exportData = Array.CreateInstance(typeof(string), exportStrings.Count, 2);
+            // Täidab selle array
+            for (int i = 0; i < exportStrings.Count; ++i)
+            {
+                exportData.SetValue(exportStrings[i][0], i, 0);
+                exportData.SetValue(exportStrings[i][1], i, 1);
+            }
+
+            CSV.delimiter = txtExportDelimiter.Text;
+            CSV.textQualifier = txtExportQualifier.Text;
+            int numLines = (int)CSV.saveDataToCsv(ref exportData, isAppend);
+
+            if (numLines != exportStrings.Count)
+            {
+                MessageBox.Show("Faili kirjutamine nurjus! Kirjutati " + numLines.ToString() + " rida.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnExportOpen_Click(object sender, EventArgs e)
+        {
+            txtExportPath.Text = (string)CSV.setFileToSave();
+        }
+
         void priceChart_MouseUp(object sender, MouseEventArgs e)
         {
             if (state3) // vasak hiireklahv ALLA

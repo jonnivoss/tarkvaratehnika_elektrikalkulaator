@@ -218,7 +218,14 @@ namespace Kasutajaliides
                         var packageUsageCost = new List<double>();
                         if (VK.userDataTimeRange.Count == 0)
                         {
-                            chartPrice.Series[packageNameUsage].Enabled = false;
+                            try
+                            {
+                                chartPrice.Series[packageNameUsage].Enabled = false;
+                            }
+                            catch (Exception)
+                            {
+
+                            }
                             continue;
                         }
 

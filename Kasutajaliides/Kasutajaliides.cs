@@ -203,39 +203,26 @@ namespace Kasutajaliides
                     {
                         string packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString();
                         string packageNameUsage = packageName + " tarbimisel";
-                        /*if (chartPrice.Series.FindByName(packageName) != null)
-                        {
-                            continue;
-                        }*/
 
-                        var usageRange = new List<double>();
-                        var packageUsageCost = new List<double>();
-                        var usageTimeAgain = new List<DateTime>();
-                        VecT stockCost = new VecT();
-                        List<double> stockCostWithMarginals = new List<double>();
                         var costPerKwh = new List<double>();
-                        /*foreach (var item in VK.getUserDataTimeRange())
-                        {
-                            usageTime.Add(item);
-                        }*/
-                        //DateTime startTime = usageTime.First();
-                        //DateTime endTime = usageTime.Last();
+                        var packageUsageCost = new List<double>();
                         if (VK.getUserDataTimeRange().Count == 0)
                         {
+                            chartPrice.Series[packageNameUsage].Enabled = false;
                             continue;
                         }
-                        stockCost = VK.createRange(this.priceData, VK.getUserDataTimeRange().First(), VK.getUserDataTimeRange().Last());
 
                         // kui tegemist on börsipaketiga
                         if (tablePackages.SelectedRows[i].Cells[7].Value.ToString() == "Jah")
                         {
+                            var stockCost = VK.createRange(this.priceData, VK.getUserDataTimeRange().First(), VK.getUserDataTimeRange().Last());
                             Console.WriteLine("It is JAH!!!!");
                             foreach (var item in VK.getPriceRange())
                             {
                                 costPerKwh.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[4].Value) + item.Item2);
-                                //usageTimeAgain.Add(item.Item1);
                             }
-                            
+
+                            List<double> stockCostWithMarginals = new List<double>();
                             foreach (var item in stockCost)
                             {
                                 double newPrice = item.Item2 + Convert.ToDouble(tablePackages.SelectedRows[i].Cells[4].Value);
@@ -259,23 +246,17 @@ namespace Kasutajaliides
                         }
                         else // kui ei ole tegemist börsipaketiga
                         {
-                            
+                            // Kui on ainult päevane hind
                             if (tablePackages.SelectedRows[i].Cells[6].Value.ToString() == "-")
                             {
                                 for (int j = 0; j < VK.getPriceTimeRange().Count; ++j)
                                 {
                                     costPerKwh.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[5].Value) + Convert.ToDouble(tablePackages.SelectedRows[i].Cells[4].Value));
                                 }
-
-                                /*foreach (var item in VK.getUserDataUsageRange())
-                                {
-                                    costPerKwh.Add((Convert.ToDouble(tablePackages.SelectedRows[i].Cells[5].Value) + Convert.ToDouble(tablePackages.SelectedRows[i].Cells[4].Value)) * item);
-                                }*/
                                 foreach (var item in VK.getUserDataUsageRange())
                                 {
                                     packageUsageCost.Add(item * costPerKwh.First());
                                 }
-                                //chartPrice.Series[packageNameUsage].Points.DataBindXY(VK.getUserDataTimeRange(), costPerKwh);
                             }
                             else
                             {
@@ -294,16 +275,16 @@ namespace Kasutajaliides
                                 {
                                     packageUsageCost.Add(VK.getUserDataUsageRange()[j] * costPerKwh[j]);
                                 }
-                                //chartPrice.Series[packageNameUsage].Points.DataBindXY(VK.getUserDataTimeRange(), costPerKwh);
                             }
-                            try
-                            {
-                                chartPrice.Series[packageName].Points.DataBindXY(VK.getPriceTimeRange(), costPerKwh);
-                                chartPrice.Series[packageNameUsage].Points.DataBindXY(VK.getUserDataTimeRange(), packageUsageCost);
-                            }
-                            catch (Exception)
-                            {
-                            }
+                        }
+                        try
+                        {
+                            chartPrice.Series[packageName].Points.DataBindXY(VK.getPriceTimeRange(), costPerKwh);
+                            chartPrice.Series[packageNameUsage].Points.DataBindXY(VK.getUserDataTimeRange(), packageUsageCost);
+                            chartPrice.Series[packageNameUsage].Enabled = true;
+                        }
+                        catch (Exception)
+                        {
                         }
 
 

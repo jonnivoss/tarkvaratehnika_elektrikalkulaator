@@ -55,6 +55,25 @@ namespace Arvutaja
             }
             return 0;
         }
+
+        public VecT generateUsageData(
+             System.DateTime start,
+             double usageLength,
+             double power
+        )
+        {
+            VecT usageData = new VecT();
+            // Generate usage data
+            for (DateTime date = start, tempend = (start + TimeSpan.FromHours(usageLength)); date < tempend; date = date.AddHours(1))
+            {
+                // Maksimaalne samm on 1 tund
+                var hrs = Math.Min((tempend - date).TotalHours, 1.0);
+                //Console.WriteLine("asd: " + date.ToString() + "; " + (power * hrs).ToString());
+                usageData.Add(Tuple.Create(date, power * hrs));
+            }
+            return usageData;
+        }
+
         public int smallestIntegral(
             VecT priceData,
             double power,
@@ -76,15 +95,7 @@ namespace Arvutaja
 
             while (usageEnd <= stop)
             {
-                VecT tempUsageData = new VecT();
-                // Generate usage data
-                for (DateTime date = start, tempend = (start + TimeSpan.FromHours(usageLength)); date < tempend; date = date.AddHours(1))
-                {
-                    // Maksimaalne samm on 1 tund
-                    var hrs = Math.Min((tempend - date).TotalHours, 1.0);
-                    //Console.WriteLine("asd: " + date.ToString() + "; " + (power * hrs).ToString());
-                    tempUsageData.Add(Tuple.Create(date, power * hrs));
-                }
+                VecT tempUsageData = this.generateUsageData(start, usageLength, power);
 
                 // Integreerib
                 if (tempUsageData.Count == 0)

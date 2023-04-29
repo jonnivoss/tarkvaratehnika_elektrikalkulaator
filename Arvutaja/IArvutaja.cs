@@ -12,6 +12,12 @@ namespace Arvutaja
     {
         int integral(VecT andmed1, VecT andmed2, System.DateTime alumine, System.DateTime ylemine, ref double integraal);
 
+        VecT generateUsageData(
+             System.DateTime start,
+             double usageLength,
+             double power
+        );
+
         int smallestIntegral(
             VecT priceData,
             double power,

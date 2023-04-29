@@ -74,15 +74,6 @@ namespace Kasutajaliides
             this.txtTarbimisAeg = new System.Windows.Forms.TextBox();
             this.btnDarkMode = new System.Windows.Forms.Button();
             this.tablePackages = new System.Windows.Forms.DataGridView();
-            this.Indeks = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ProviderName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Pakett = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MonthlyPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SellerMarginal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BasePrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NightPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IsStockPackage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IsGreenPackage = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnOpenPackages = new System.Windows.Forms.Button();
             this.tmrCostNow = new System.Windows.Forms.Timer(this.components);
             this.groupExport = new System.Windows.Forms.GroupBox();
@@ -95,6 +86,18 @@ namespace Kasutajaliides
             this.lblExportQualifier = new System.Windows.Forms.Label();
             this.txtExportDelimiter = new System.Windows.Forms.TextBox();
             this.lblExportDelimiter = new System.Windows.Forms.Label();
+            this.Indeks = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ProviderName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Pakett = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MonthlyPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SellerMarginal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BasePrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NightPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IsStockPackage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IsGreenPackage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EndPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UsageCost = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TemplateCost = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.chartPrice)).BeginInit();
             this.groupPriceType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablePrice)).BeginInit();
@@ -572,7 +575,10 @@ namespace Kasutajaliides
             this.BasePrice,
             this.NightPrice,
             this.IsStockPackage,
-            this.IsGreenPackage});
+            this.IsGreenPackage,
+            this.EndPrice,
+            this.UsageCost,
+            this.TemplateCost});
             this.tablePackages.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tablePackages.Location = new System.Drawing.Point(0, 744);
             this.tablePackages.Name = "tablePackages";
@@ -585,78 +591,6 @@ namespace Kasutajaliides
             this.tablePackages.TabIndex = 34;
             this.tablePackages.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tablePackages_RowHeaderMouseClick);
             this.tablePackages.RowHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tablePackages_RowHeaderMouseDoubleClick);
-            // 
-            // Indeks
-            // 
-            this.Indeks.HeaderText = "#";
-            this.Indeks.MinimumWidth = 6;
-            this.Indeks.Name = "Indeks";
-            this.Indeks.ReadOnly = true;
-            this.Indeks.Width = 6;
-            // 
-            // ProviderName
-            // 
-            this.ProviderName.HeaderText = "Ülepakkuja";
-            this.ProviderName.MinimumWidth = 6;
-            this.ProviderName.Name = "ProviderName";
-            this.ProviderName.ReadOnly = true;
-            this.ProviderName.Width = 220;
-            // 
-            // Pakett
-            // 
-            this.Pakett.HeaderText = "Pakett";
-            this.Pakett.MinimumWidth = 6;
-            this.Pakett.Name = "Pakett";
-            this.Pakett.ReadOnly = true;
-            this.Pakett.Width = 125;
-            // 
-            // MonthlyPrice
-            // 
-            this.MonthlyPrice.HeaderText = "Kuutasu (€)";
-            this.MonthlyPrice.MinimumWidth = 6;
-            this.MonthlyPrice.Name = "MonthlyPrice";
-            this.MonthlyPrice.ReadOnly = true;
-            this.MonthlyPrice.Width = 125;
-            // 
-            // SellerMarginal
-            // 
-            this.SellerMarginal.HeaderText = "Marginaal (s/kWh)";
-            this.SellerMarginal.MinimumWidth = 6;
-            this.SellerMarginal.Name = "SellerMarginal";
-            this.SellerMarginal.ReadOnly = true;
-            this.SellerMarginal.Width = 125;
-            // 
-            // BasePrice
-            // 
-            this.BasePrice.HeaderText = "Baashind/päevane (s/kWh)";
-            this.BasePrice.MinimumWidth = 6;
-            this.BasePrice.Name = "BasePrice";
-            this.BasePrice.ReadOnly = true;
-            this.BasePrice.Width = 140;
-            // 
-            // NightPrice
-            // 
-            this.NightPrice.HeaderText = "Öine hind (s/kWh)";
-            this.NightPrice.MinimumWidth = 6;
-            this.NightPrice.Name = "NightPrice";
-            this.NightPrice.ReadOnly = true;
-            this.NightPrice.Width = 90;
-            // 
-            // IsStockPackage
-            // 
-            this.IsStockPackage.HeaderText = "Börsipakett?";
-            this.IsStockPackage.MinimumWidth = 6;
-            this.IsStockPackage.Name = "IsStockPackage";
-            this.IsStockPackage.ReadOnly = true;
-            this.IsStockPackage.Width = 150;
-            // 
-            // IsGreenPackage
-            // 
-            this.IsGreenPackage.HeaderText = "Roheline?";
-            this.IsGreenPackage.MinimumWidth = 6;
-            this.IsGreenPackage.Name = "IsGreenPackage";
-            this.IsGreenPackage.ReadOnly = true;
-            this.IsGreenPackage.Width = 80;
             // 
             // btnOpenPackages
             // 
@@ -797,6 +731,102 @@ namespace Kasutajaliides
             this.lblExportDelimiter.TabIndex = 37;
             this.lblExportDelimiter.Text = "Eraldaja:";
             // 
+            // Indeks
+            // 
+            this.Indeks.HeaderText = "#";
+            this.Indeks.MinimumWidth = 6;
+            this.Indeks.Name = "Indeks";
+            this.Indeks.ReadOnly = true;
+            this.Indeks.Width = 6;
+            // 
+            // ProviderName
+            // 
+            this.ProviderName.HeaderText = "Ülepakkuja";
+            this.ProviderName.MinimumWidth = 6;
+            this.ProviderName.Name = "ProviderName";
+            this.ProviderName.ReadOnly = true;
+            this.ProviderName.Width = 220;
+            // 
+            // Pakett
+            // 
+            this.Pakett.HeaderText = "Pakett";
+            this.Pakett.MinimumWidth = 6;
+            this.Pakett.Name = "Pakett";
+            this.Pakett.ReadOnly = true;
+            this.Pakett.Width = 125;
+            // 
+            // MonthlyPrice
+            // 
+            this.MonthlyPrice.HeaderText = "Kuutasu (€)";
+            this.MonthlyPrice.MinimumWidth = 6;
+            this.MonthlyPrice.Name = "MonthlyPrice";
+            this.MonthlyPrice.ReadOnly = true;
+            this.MonthlyPrice.Width = 125;
+            // 
+            // SellerMarginal
+            // 
+            this.SellerMarginal.HeaderText = "Marginaal (s/kWh)";
+            this.SellerMarginal.MinimumWidth = 6;
+            this.SellerMarginal.Name = "SellerMarginal";
+            this.SellerMarginal.ReadOnly = true;
+            this.SellerMarginal.Width = 125;
+            // 
+            // BasePrice
+            // 
+            this.BasePrice.HeaderText = "Baashind/päevane (s/kWh)";
+            this.BasePrice.MinimumWidth = 6;
+            this.BasePrice.Name = "BasePrice";
+            this.BasePrice.ReadOnly = true;
+            this.BasePrice.Width = 140;
+            // 
+            // NightPrice
+            // 
+            this.NightPrice.HeaderText = "Öine hind (s/kWh)";
+            this.NightPrice.MinimumWidth = 6;
+            this.NightPrice.Name = "NightPrice";
+            this.NightPrice.ReadOnly = true;
+            this.NightPrice.Width = 90;
+            // 
+            // IsStockPackage
+            // 
+            this.IsStockPackage.HeaderText = "Börsipakett?";
+            this.IsStockPackage.MinimumWidth = 6;
+            this.IsStockPackage.Name = "IsStockPackage";
+            this.IsStockPackage.ReadOnly = true;
+            this.IsStockPackage.Width = 150;
+            // 
+            // IsGreenPackage
+            // 
+            this.IsGreenPackage.HeaderText = "Roheline?";
+            this.IsGreenPackage.MinimumWidth = 6;
+            this.IsGreenPackage.Name = "IsGreenPackage";
+            this.IsGreenPackage.ReadOnly = true;
+            this.IsGreenPackage.Width = 80;
+            // 
+            // EndPrice
+            // 
+            this.EndPrice.HeaderText = "Lõpphind (s/kWh)";
+            this.EndPrice.MinimumWidth = 6;
+            this.EndPrice.Name = "EndPrice";
+            this.EndPrice.ReadOnly = true;
+            this.EndPrice.Width = 125;
+            // 
+            // UsageCost
+            // 
+            this.UsageCost.HeaderText = "Tarbimishind (€)";
+            this.UsageCost.MinimumWidth = 6;
+            this.UsageCost.Name = "UsageCost";
+            this.UsageCost.ReadOnly = true;
+            this.UsageCost.Width = 125;
+            // 
+            // TemplateCost
+            // 
+            this.TemplateCost.HeaderText = "Mallihind (€)";
+            this.TemplateCost.MinimumWidth = 6;
+            this.TemplateCost.Name = "TemplateCost";
+            this.TemplateCost.ReadOnly = true;
+            this.TemplateCost.Width = 125;
+            // 
             // Kasutajaliides
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 15F);
@@ -895,15 +925,6 @@ namespace Kasutajaliides
         private System.Windows.Forms.Button btnDarkMode;
         private System.Windows.Forms.DataGridView tablePackages;
         private System.Windows.Forms.Button btnOpenPackages;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Indeks;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ProviderName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Pakett;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MonthlyPrice;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SellerMarginal;
-        private System.Windows.Forms.DataGridViewTextBoxColumn BasePrice;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NightPrice;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IsStockPackage;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IsGreenPackage;
         private System.Windows.Forms.Timer tmrCostNow;
         private System.Windows.Forms.GroupBox groupExport;
         private System.Windows.Forms.TextBox txtExportPath;
@@ -915,5 +936,17 @@ namespace Kasutajaliides
         private System.Windows.Forms.CheckBox cbExportAppend;
         private System.Windows.Forms.Button btnExportSave;
         private System.Windows.Forms.Button btnExportOpen;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Indeks;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ProviderName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Pakett;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MonthlyPrice;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SellerMarginal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BasePrice;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NightPrice;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IsStockPackage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IsGreenPackage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EndPrice;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UsageCost;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TemplateCost;
     }
 }

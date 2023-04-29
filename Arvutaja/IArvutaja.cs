@@ -30,6 +30,8 @@ namespace Arvutaja
         );
 
         double finalPrice(double stockPrice, AndmePyydja.PackageInfo package, DateTime time);
+
+        bool isDailyRate(DateTime time);
     }
 
 }

@@ -1326,14 +1326,6 @@ namespace Kasutajaliides
                 return;
             }
 
-            var isAppend = cbExportAppend.Checked;
-
-            List< string > exportStrings = new List<string>();
-            exportStrings.Add("asdf");
-
-            Array exportData = exportStrings.ToArray();
-
-
             string errorStr = "";
             if (txtExportDelimiter.Text == "")
             {
@@ -1353,14 +1345,29 @@ namespace Kasutajaliides
             }
 
             // Proovib kirjutada faili
-            
+            var isAppend = cbExportAppend.Checked;
+
+            List<string[]> exportStrings = new List<string[]>();
+            exportStrings.Add(new string[]{ "testparam1", "testparam2", "3" });
+            exportStrings.Add(new string[]{ "rida2", "rida2param2", "mingiparam3" });
+
+            // Teeb 2-dimensionaalse array, mis hoiab exportString.Count * 3 stringi
+            var exportData = Array.CreateInstance(typeof(string), exportStrings.Count, 3);
+            // Täidab selle array
+            for (int i = 0; i < exportStrings.Count; ++i)
+            {
+                exportData.SetValue(exportStrings[i][0], i, 0);
+                exportData.SetValue(exportStrings[i][1], i, 1);
+                exportData.SetValue(exportStrings[i][2], i, 2);
+            }
+
             CSV.delimiter = txtExportDelimiter.Text;
             CSV.textQualifier = txtExportQualifier.Text;
             int numLines = (int)CSV.saveDataToCsv(ref exportData, isAppend);
 
-            if (numLines != exportData.Length)
+            if (numLines != exportStrings.Count)
             {
-                MessageBox.Show("Faili kirjutamine nurjus!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Faili kirjutamine nurjus! Kirjutati " + numLines.ToString() + " rida.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

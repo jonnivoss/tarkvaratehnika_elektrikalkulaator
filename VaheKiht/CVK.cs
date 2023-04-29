@@ -21,7 +21,31 @@ namespace VaheKiht
 
         double averagePrice = 0.0;
 
-        public bool createUserDataRange(VecT data, DateTime start, DateTime stop)
+
+        public VecT createRange(VecT inData, DateTime start, DateTime stop)
+        {
+            if (start > stop)
+            {
+                return null;
+            }
+            VecT data = new VecT();
+            try
+            {
+                foreach (var item in inData)
+                {
+                    if (item.Item1 >= start && item.Item1 <= stop)
+                    {
+                        data.Add(item);
+                    }
+                }
+                return data;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        public bool createUserDataRange(VecT inData, DateTime start, DateTime stop)
         {
             if (start > stop)
             {
@@ -30,18 +54,14 @@ namespace VaheKiht
 
             userTimeRange.Clear();
             userUsageRange.Clear();
-            userRange.Clear();
+            userRange = this.createRange(inData, start, stop);
 
             try
             {
-                foreach (var item in data)
+                foreach (var item in this.userRange)
                 {
-                    if (item.Item1 >= start && item.Item1 <= stop)
-                    {
-                        userRange.Add(item);
-                        userTimeRange.Add(item.Item1);
-                        userUsageRange.Add(item.Item2);
-                    }
+                    userTimeRange.Add(item.Item1);
+                    userUsageRange.Add(item.Item2);
                 }
                 return true;
             }
@@ -51,7 +71,7 @@ namespace VaheKiht
                 return false;
             }
         }
-        public bool createStockRange(VecT data, DateTime start, DateTime stop)
+        public bool createStockRange(VecT inData, DateTime start, DateTime stop)
         {
             if (start > stop)
             {
@@ -60,24 +80,20 @@ namespace VaheKiht
 
             priceTimeRange.Clear();
             priceCostRange.Clear();
-            priceRange.Clear();
+            this.priceRange = this.createRange(inData, start, stop);
             averagePrice = 0.0;
 
             try
             {
-                foreach (var item in data)
+                foreach (var item in this.priceRange)
                 {
-                    if (item.Item1 >= start && item.Item1 <= stop)
-                    {
-                        priceRange.Add(item);
-                        priceTimeRange.Add(item.Item1);
-                        priceCostRange.Add(item.Item2);
-                        // Keskmise hinna arvutamiseks hindade kokku liitmine
-                        averagePrice += item.Item2; // s/kWh
-                    }
+                    priceTimeRange.Add(item.Item1);
+                    priceCostRange.Add(item.Item2);
+                    // Keskmise hinna arvutamiseks hindade kokku liitmine
+                    averagePrice += item.Item2; // s/kWh
                 }
                 // Jagab kokkuliidetud hinnad hindade arvuga ==> keskmine hind
-                averagePrice /= priceCostRange.Count;
+                averagePrice /= this.priceRange.Count;
 
                 return true;
             }

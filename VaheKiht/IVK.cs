@@ -10,8 +10,10 @@ namespace VaheKiht
 {
     public interface IVK
     {
-        bool createUserDataRange(VecT data, DateTime start, DateTime stop);
-        bool createStockRange(VecT data, DateTime start, DateTime stop);
+        VecT createRange(VecT inData, DateTime start, DateTime stop);
+
+        bool createUserDataRange(VecT inData, DateTime start, DateTime stop);
+        bool createStockRange(VecT inData, DateTime start, DateTime stop);
         void addLastPoints();
 
         List<DateTime> getUserDataTimeRange();

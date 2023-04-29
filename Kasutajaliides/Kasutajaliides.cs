@@ -1628,6 +1628,10 @@ namespace Kasutajaliides
                 }
             }
         }
+        private void updatePakettideTarbimishind()
+        {
+
+        }
 
     }
 }

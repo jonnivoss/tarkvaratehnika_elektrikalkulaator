@@ -255,7 +255,7 @@ namespace Kasutajaliides
                                 packageUsageCost.Add(uc.Usage * uc.Cost);
                                 tarbimisHind += uc.Usage * uc.Cost;
                             }
-                            tarbimisHind = tarbimisHind / 100 * 1.2;
+                            tarbimisHind = tarbimisHind / 100 * 1.2 + Convert.ToDouble(tablePackages.SelectedRows[i].Cells[3].Value);
 
                             /*Console.WriteLine("mingi hind");
                             foreach (var cost in packageUsageCost)
@@ -278,7 +278,7 @@ namespace Kasutajaliides
                                     packageUsageCost.Add(item * costPerKwh.First());
                                     tarbimisHind += item * costPerKwh.First();
                                 }
-                                tarbimisHind = tarbimisHind / 100 * 1.2;
+                                tarbimisHind = tarbimisHind / 100 * 1.2 + Convert.ToDouble(tablePackages.SelectedRows[i].Cells[3].Value);
                             }
                             else
                             {
@@ -298,7 +298,7 @@ namespace Kasutajaliides
                                     packageUsageCost.Add(VK.userDataUsageRange[j] * costPerKwh[j]);
                                     tarbimisHind += VK.userDataUsageRange[j] * costPerKwh[j];
                                 }
-                                tarbimisHind = tarbimisHind / 100 * 1.2;
+                                tarbimisHind = tarbimisHind / 100 * 1.2 + Convert.ToDouble(tablePackages.SelectedRows[i].Cells[3].Value);
                             }
                         }
                         try

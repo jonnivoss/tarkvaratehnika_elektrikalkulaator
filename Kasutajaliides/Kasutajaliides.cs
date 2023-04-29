@@ -419,6 +419,7 @@ namespace Kasutajaliides
                 //kustuta tt ja joon
                 chart.Annotations.Remove(mouseTimeHover);
                 toolTip.Hide(chart);
+                this.updatePakettideHinnad(default(DateTime));
             }
         }
 
@@ -485,7 +486,9 @@ namespace Kasutajaliides
 
         private void calcPrice()
         {
-            double time, power, price;
+            double time = 0.0, power = 0.0, price;
+            DateTime bestDate = default(DateTime);
+
             try
             {
                 time  = Double.Parse(txtAjakulu.Text);
@@ -506,7 +509,7 @@ namespace Kasutajaliides
 
 
                     double bestIntegral = Double.PositiveInfinity;
-                    DateTime bestDate = beg;
+                    bestDate = beg;
 
                     smRet = AR.smallestIntegral(
                         this.VK.priceRange,
@@ -530,6 +533,7 @@ namespace Kasutajaliides
                 }
                 else
                 {
+                    bestDate = dateStartTime.Value;
                     var skwh = Double.Parse(tbMonthlyPrice.Text);
                     // Teisendab sentidest eurodesse
                     price = time * power * skwh / 100.0;
@@ -549,6 +553,8 @@ namespace Kasutajaliides
             catch (Exception)
             {
             }
+
+            this.updatePakettideMallid(bestDate, time, power);
         }
 
         private void Kasutajaliides_Load(object sender, EventArgs e)
@@ -1543,12 +1549,83 @@ namespace Kasutajaliides
 
         private void updatePakettideHinnad(DateTime time)
         {
-            for (int i = 0; i < tablePackages.Rows.Count; ++i)
+            if (time == default(DateTime))
             {
-                double stockPrice = VK.priceRange.Find(Tuple => Tuple.Item1 == time).Item2;
-                double price = AR.finalPrice(stockPrice, this.packageInfo[i], time);
+                for (int i = 0; i < tablePackages.Rows.Count; ++i)
+                {
+                    tablePackages.Rows[i].Cells[9].Value = "-";
+                }
+            }
+            else
+            {
+                for (int i = 0; i < tablePackages.Rows.Count; ++i)
+                {
+                    double stockPrice = VK.priceRange.Find(Tuple => Tuple.Item1 == time).Item2;
+                    double price = AR.finalPrice(stockPrice, this.packageInfo[i], time);
 
-                tablePackages.Rows[i].Cells[9].Value = price.ToString("0.000");
+                    tablePackages.Rows[i].Cells[9].Value = price.ToString("0.000");
+                }
+            }
+        }
+        private void updatePakettideMallid(DateTime startTime, double usageLength, double power)
+        {
+            if (startTime == default(DateTime))
+            {
+                for (int i = 0; i < tablePackages.Rows.Count; ++i)
+                {
+                    tablePackages.Rows[i].Cells[11].Value = "-";
+                }
+            }
+            else
+            {
+                System.DateTime stopTime = startTime + TimeSpan.FromHours(Math.Ceiling(usageLength) - 1);
+                // stopp-argument on aeg, kust algab viimane tund
+                var stockRange = VK.createRange(this.priceData, startTime, stopTime);
+                var usageRange = AR.generateUsageData(startTime, usageLength, power);
+
+                if (stockRange.Count != usageRange.Count)
+                {
+                    Console.WriteLine("Ei ole võrdsed!!: " + stockRange.Count.ToString() + " ja " + usageRange.Count.ToString());
+                }
+                else
+                {
+                    for (int i = 0; i < stockRange.Count; ++i)
+                    {
+                        Console.WriteLine(stockRange[i].Item2.ToString() + ": " + usageRange[i].Item2.ToString() + " kW");
+                    }
+                }
+
+                for (int i = 0; i < tablePackages.Rows.Count; ++i)
+                {
+                    // Genereerib hinna-andmed
+                    VecT stockRangeWithMargins = new VecT();
+                    foreach (var item in stockRange)
+                    {
+                        double stockPrice = item.Item2;
+                        double price = AR.finalPrice(stockPrice, this.packageInfo[i], item.Item1);
+
+                        stockRangeWithMargins.Add(Tuple.Create(item.Item1, price));
+                    }
+
+                    // Leiab integraali
+                    double integral = 0.0;
+                    int iRet = AR.integral(
+                        usageRange,
+                        stockRangeWithMargins,
+                        startTime,
+                        stopTime,
+                        ref integral
+                    );
+
+                    if (iRet != 0)
+                    {
+                        tablePackages.Rows[i].Cells[11].Value = "Error!";
+                        continue;
+                    }
+
+                    // Ümardab 3 komakohani üles, sendid ==> eurodeks
+                    tablePackages.Rows[i].Cells[11].Value = Math.Round(integral / 100.0 + 0.0005, 3).ToString();
+                }
             }
         }
 

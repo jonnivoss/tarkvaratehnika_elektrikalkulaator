@@ -91,38 +91,41 @@ namespace AndmePyydja
     {
         // Erinevad failiavamisdialoogid kasutajaandmete ja paketiandmete jaoks, sest kui need asuvad
         // erinevates kaustades, siis on väga frustreeriv, kui ühe valimisel unustatakse ära teise kaust
-        private OpenFileDialog ofdUserData = new OpenFileDialog(), ofdPackage = new OpenFileDialog();
-        private string fileNameUserData = "";
-        private string fileNamePackage = "";
+        private OpenFileDialog ofdUserData = new OpenFileDialog();
+        private OpenFileDialog ofdPackage = new OpenFileDialog();
+
+        public string userDataFileName { get; set; } = "";
+        public string packageFileName { get; set; } = "";
+        
 
         public bool chooseFileUserData()
         {
-            DialogResult result = ofdUserData.ShowDialog();
+            DialogResult result = this.ofdUserData.ShowDialog();
             if (result != DialogResult.OK)
             {
                 return false;
             }
 
-            fileNameUserData = ofdUserData.FileName;
+            this.userDataFileName = this.ofdUserData.FileName;
 
             return true;
         }
         public bool chooseFilePackages()
         {
-            DialogResult result = ofdPackage.ShowDialog();
+            DialogResult result = this.ofdPackage.ShowDialog();
             if (result != DialogResult.OK)
             {
                 return false;
             }
 
-            fileNamePackage = ofdPackage.FileName;
+            this.packageFileName = this.ofdPackage.FileName;
 
             return true;
         }
 
         public bool readUserDataFile(ref string contents)
         {
-            if (this.fileNameUserData == "")
+            if (this.userDataFileName == "")
             {
                 // Failinime pole valitud
                 return false;
@@ -130,7 +133,7 @@ namespace AndmePyydja
             try
             {
                 // Proovib failist lugeda
-                contents = File.ReadAllText(this.fileNameUserData, Encoding.UTF8);
+                contents = File.ReadAllText(this.userDataFileName, Encoding.UTF8);
                 // Kui fail oli tühi, siis see on automaatselt *fail*
                 return (contents != "");
             }
@@ -142,7 +145,7 @@ namespace AndmePyydja
         }
         public bool readPackageFile(ref string contents)
         {
-            if (this.fileNamePackage == "")
+            if (this.packageFileName == "")
             {
                 // Failinime pole valitud
                 return false;
@@ -150,7 +153,7 @@ namespace AndmePyydja
             try
             {
                 // Proovib failist lugeda
-                contents = File.ReadAllText(this.fileNamePackage, Encoding.UTF8);
+                contents = File.ReadAllText(this.packageFileName, Encoding.UTF8);
                 // Kui fail oli tühi, siis see on automaatselt *fail*
                 return (contents != "");
             }
@@ -162,14 +165,14 @@ namespace AndmePyydja
         }
         public bool writePackageFile(string contents)
         {
-            if (this.fileNamePackage == "")
+            if (this.packageFileName == "")
             {
                 // Failinime pole valitud
                 return false;
             }
             try
             {
-                File.WriteAllText(this.fileNamePackage, contents, Encoding.UTF8);
+                File.WriteAllText(this.packageFileName, contents, Encoding.UTF8);
                 return true;
             }
             catch (Exception)
@@ -209,15 +212,6 @@ namespace AndmePyydja
                 return null;
             }
             return new DatePriceT(d, num);
-        }
-
-        public string getUserDataFileName()
-        {
-            return this.fileNameUserData;
-        }
-        public void setUserDataFileName(string filename)
-        {
-            this.fileNameUserData = filename;
         }
 
         private static VecT parseCSVUserData(
@@ -271,15 +265,6 @@ namespace AndmePyydja
             );
         }
 
-
-        public string getPackageFileName()
-        {
-            return this.fileNamePackage;
-        }
-        public void setPackageFileName(string fileName)
-        {
-            this.fileNamePackage = fileName;
-        }
 
         private static PackageInfo parseCSVPackageDataLine(ParseCSVDataLineT arguments)
         {

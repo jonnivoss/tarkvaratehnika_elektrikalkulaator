@@ -23,12 +23,11 @@ namespace AndmePyydja
         bool writePackageFile(string contents);
 
 
-        string getUserDataFileName();
-        void setUserDataFileName(string filename);
+        string userDataFileName { get; set; }
         VecT parseUserData(string contents);
 
-        string getPackageFileName();
-        void setPackageFileName(string fileName);
+
+        string packageFileName { get; set; }
         PackageT parsePackage(string contents);
 
         string createPackageCSV(PackageT pack);

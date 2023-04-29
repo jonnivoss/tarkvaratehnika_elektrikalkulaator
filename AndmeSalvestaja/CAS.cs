@@ -18,7 +18,7 @@ namespace AndmeSalvestaja
         };
         public VecT marketData = new VecT { };
         // Default kasutusmallid
-        public VecUCT useCases = new VecUCT
+        public VecUCT useCases { get; } = new VecUCT
         {
             { "",             Tuple.Create(0.0, 0.0) },
             { "Röster",       Tuple.Create(1200.0, 10.0) },

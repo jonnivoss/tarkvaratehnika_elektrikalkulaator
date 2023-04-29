@@ -10,19 +10,20 @@ namespace VaheKiht
 {
     public interface IVK
     {
+        List<DateTime> userDataTimeRange { get; }
+        List<double> userDataUsageRange { get; }
+        VecT userDataRange { get; }
+
+        List<DateTime> priceTimeRange { get; }
+        List<double> priceCostRange { get; }
+        VecT priceRange { get; }
+        double averagePrice { get; }
+
+
         VecT createRange(VecT inData, DateTime start, DateTime stop);
 
         bool createUserDataRange(VecT inData, DateTime start, DateTime stop);
         bool createStockRange(VecT inData, DateTime start, DateTime stop);
         void addLastPoints();
-
-        List<DateTime> getUserDataTimeRange();
-        List<double> getUserDataUsageRange();
-        VecT getUserDataRange();
-
-        List<DateTime> getPriceTimeRange();
-        List<double> getPriceCostRange();
-        VecT getPriceRange();
-        double getAveragePrice();
     }
 }

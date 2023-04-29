@@ -19,7 +19,8 @@ namespace VaheKiht
         public List<double> priceCostRange { get; } = new List<double>();
         public VecT priceRange { get; } = new VecT();
 
-        public double averagePrice { get; } = 0.0;
+        // Peab olema private setter, sest muidu muutub võimatuks initsialiseerimine 0.0'ks tagasi
+        public double averagePrice { get; private set; } = 0.0;
 
         public bool createUserDataRange(VecT data, DateTime start, DateTime stop)
         {

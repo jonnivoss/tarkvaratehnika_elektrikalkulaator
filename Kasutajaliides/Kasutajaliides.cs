@@ -121,33 +121,30 @@ namespace Kasutajaliides
             VK.addLastPoints();
 
 
-            chartPrice.Series["Tarbimine"].Enabled = showUsage && (VK.getUserDataTimeRange().Count > 0);
+            chartPrice.Series["Tarbimine"].Enabled = showUsage && (VK.userDataTimeRange.Count > 0);
             chartPrice.Series["Elektrihind"].Enabled = showStock;
 
             if (this.showUsage)
             {
-                chartPrice.Series["Tarbimine"].Points.DataBindXY(VK.getUserDataTimeRange(), VK.getUserDataUsageRange());
+                chartPrice.Series["Tarbimine"].Points.DataBindXY(VK.userDataTimeRange, VK.userDataUsageRange);
             }
             if (this.showStock)
             {
-                chartPrice.Series["Elektrihind"].Points.DataBindXY(VK.getPriceTimeRange(), VK.getPriceCostRange());
+                chartPrice.Series["Elektrihind"].Points.DataBindXY(VK.priceTimeRange, VK.priceCostRange);
             }
 
-
-            var priceTime = VK.getPriceTimeRange();
-            var priceCost = VK.getPriceCostRange();
 
             tablePrice.Rows.Clear();
-            for (int i = 0; i < priceTime.Count; ++i)
+            for (int i = 0; i < VK.priceTimeRange.Count; ++i)
             {
-                tablePrice.Rows.Add(priceTime[i], priceCost[i]);
+                tablePrice.Rows.Add(VK.priceTimeRange[i], VK.priceCostRange[i]);
             }
 
-            for (int i = 0; i < priceCost.Count; i++) // Käib valitud ajaintervalli hinnad läbi
+            for (int i = 0; i < VK.priceCostRange.Count; i++) // Käib valitud ajaintervalli hinnad läbi
             {
-                if (i != priceCost.Count - 1) // Kui ei ole tegemist viimase hinnaga
+                if (i != VK.priceCostRange.Count - 1) // Kui ei ole tegemist viimase hinnaga
                 {
-                    if (priceCost[i] < VK.getAveragePrice()) // Väiksem kui keskmine hind ==> roheline
+                    if (VK.priceCostRange[i] < VK.averagePrice) // Väiksem kui keskmine hind ==> roheline
                     {
                         chartPrice.Series["Elektrihind"].Points[i + 1].Color = Color.Green;
                     }
@@ -158,7 +155,7 @@ namespace Kasutajaliides
                 }
                 else // Kui on tegemist viimase hinnaga
                 {
-                    if (priceCost[i] < VK.getAveragePrice()) // Väiksem kui keskmine hind ==> roheline
+                    if (VK.priceCostRange[i] < VK.averagePrice) // Väiksem kui keskmine hind ==> roheline
                     {
                         chartPrice.Series["Elektrihind"].Points[i].Color = Color.Green;
                     }
@@ -174,7 +171,7 @@ namespace Kasutajaliides
             chartPrice.Annotations.Remove(averagePriceLine);
             averagePriceLine.AxisY = chartPrice.ChartAreas["ChartArea1"].AxisY2;
             averagePriceLine.IsSizeAlwaysRelative = false;
-            averagePriceLine.AnchorY = VK.getAveragePrice();
+            averagePriceLine.AnchorY = VK.averagePrice;
             averagePriceLine.IsInfinitive = true;
             averagePriceLine.ClipToChartArea = chartPrice.ChartAreas["ChartArea1"].Name;
             averagePriceLine.LineColor = Color.BlueViolet;
@@ -182,7 +179,7 @@ namespace Kasutajaliides
             averagePriceLine.Name = "priceLine";
             chartPrice.Annotations.Add(averagePriceLine);
 
-            string line = "Keskmine hind: " + VK.getAveragePrice().ToString();
+            string line = "Keskmine hind: " + VK.averagePrice.ToString();
             string line2 = "Max: " + chartPrice.ChartAreas["ChartArea1"].AxisY2.Maximum.ToString();
             txtDebug.AppendText(Environment.NewLine);
             txtDebug.AppendText(line);
@@ -195,11 +192,11 @@ namespace Kasutajaliides
                 {
                     string packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString();
                     var packageCost = new List<double>();
-                    foreach (var item in VK.getPriceTimeRange())
+                    foreach (var item in VK.priceTimeRange)
                     {
                         packageCost.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[3].Value));
                     }
-                    chartPrice.Series[packageName].Points.DataBindXY(VK.getPriceTimeRange(), packageCost);
+                    chartPrice.Series[packageName].Points.DataBindXY(VK.priceTimeRange, packageCost);
                 }
             }
 
@@ -266,13 +263,11 @@ namespace Kasutajaliides
                 
                 //leia punkt millele x vastab ja salvesta selle y kordinaat
                 DateTime s = DateTime.FromOADate(x);
-                var timeRange = VK.getPriceTimeRange();
-                var costRange = VK.getPriceCostRange();
-                for (int i = 0; i < timeRange.Count; ++i)
+                for (int i = 0; i < VK.priceTimeRange.Count; ++i)
                 {
-                    if (timeRange[i].Hour == s.Hour && timeRange[i].Date == s.Date)
+                    if (VK.priceTimeRange[i].Hour == s.Hour && VK.priceTimeRange[i].Date == s.Date)
                     {
-                        y = costRange[i];
+                        y = VK.priceCostRange[i];
                         break;
                     }
                 }
@@ -411,7 +406,7 @@ namespace Kasutajaliides
                     DateTime bestDate = beg;
 
                     smRet = AR.smallestIntegral(
-                        this.VK.getPriceRange(),
+                        this.VK.priceRange,
                         power,
                         time,
                         beg,
@@ -439,7 +434,7 @@ namespace Kasutajaliides
                 if (smRet != 0)
                 {
                     // arvutab tarbimishinna keskmise hinnaga
-                    price = time * power * VK.getAveragePrice() / 100.0;
+                    price = time * power * VK.averagePrice / 100.0;
                 }
 
                 // Arvutab korrektse lõpphinna, lisab käibemaksu
@@ -1241,11 +1236,11 @@ namespace Kasutajaliides
                 chartPrice.Series[packageName].ChartType = SeriesChartType.Line;
 
                 var packageCost = new List<double>();
-                foreach (var item in VK.getPriceTimeRange())
+                foreach (var item in VK.priceTimeRange)
                 {
                     packageCost.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[3].Value));
                 }
-                chartPrice.Series[packageName].Points.DataBindXY(VK.getPriceTimeRange(), packageCost);
+                chartPrice.Series[packageName].Points.DataBindXY(VK.priceTimeRange, packageCost);
             }
             updateGraph();
         }

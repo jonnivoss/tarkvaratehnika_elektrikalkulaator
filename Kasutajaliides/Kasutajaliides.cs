@@ -1223,7 +1223,10 @@ namespace Kasutajaliides
                         item.isStockPackage ? "-" : item.basePrice.ToString("0.000"),
                         (!item.isDayNight || item.isStockPackage) ? "-" : item.nightPrice.ToString("0.000"),
                         item.isStockPackage ? "Jah" : "Ei",
-                        item.isGreenPackage ? "Jah" : "Ei"
+                        item.isGreenPackage ? "Jah" : "Ei",
+                        "-",
+                        "-",
+                        "-"
                     );
                     ++i;
                 }

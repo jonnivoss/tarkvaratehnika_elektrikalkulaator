@@ -1344,7 +1344,7 @@ namespace Kasutajaliides
                 return;
             }
 
-            // Proovib kirjutada faili
+            // Proovib kirjutada faili tabeli andmed
             var isAppend = cbExportAppend.Checked;
 
             List<string[]> exportStrings = new List<string[]>();

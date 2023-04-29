@@ -11,15 +11,15 @@ namespace VaheKiht
 {
     public class CVK : VaheKiht.IVK
     {
-        List<DateTime> userTimeRange = new List<DateTime>();
-        List<double> userUsageRange = new List<double>();
-        VecT userRange = new VecT();
+        public List<DateTime> userDataTimeRange { get; } = new List<DateTime>();
+        public List<double> userDataUsageRange { get; } = new List<double>();
+        public VecT userDataRange { get; } = new VecT();
 
-        List<DateTime> priceTimeRange = new List<DateTime>();
-        List<double> priceCostRange = new List<double>();
-        VecT priceRange = new VecT();
+        public List<DateTime> priceTimeRange { get; } = new List<DateTime>();
+        public List<double> priceCostRange { get; } = new List<double>();
+        public VecT priceRange { get; } = new VecT();
 
-        double averagePrice = 0.0;
+        public double averagePrice { get; } = 0.0;
 
         public bool createUserDataRange(VecT data, DateTime start, DateTime stop)
         {
@@ -28,9 +28,9 @@ namespace VaheKiht
                 return false;
             }
 
-            userTimeRange.Clear();
-            userUsageRange.Clear();
-            userRange.Clear();
+            userDataTimeRange.Clear();
+            userDataUsageRange.Clear();
+            userDataRange.Clear();
 
             try
             {
@@ -38,9 +38,9 @@ namespace VaheKiht
                 {
                     if (item.Item1 >= start && item.Item1 <= stop)
                     {
-                        userRange.Add(item);
-                        userTimeRange.Add(item.Item1);
-                        userUsageRange.Add(item.Item2);
+                        userDataRange.Add(item);
+                        userDataTimeRange.Add(item.Item1);
+                        userDataUsageRange.Add(item.Item2);
                     }
                 }
                 return true;
@@ -90,11 +90,11 @@ namespace VaheKiht
 
         public void addLastPoints()
         {
-            if (this.userTimeRange.Count > 0)
+            if (this.userDataTimeRange.Count > 0)
             {
-                this.userTimeRange.Add(this.userTimeRange.Last().AddHours(1));
-                this.userUsageRange.Add(this.userUsageRange.Last());
-                this.userRange.Add(Tuple.Create(this.userTimeRange.Last(), this.userUsageRange.Last()));
+                this.userDataTimeRange.Add(this.userDataTimeRange.Last().AddHours(1));
+                this.userDataUsageRange.Add(this.userDataUsageRange.Last());
+                this.userDataRange.Add(Tuple.Create(this.userDataTimeRange.Last(), this.userDataUsageRange.Last()));
             }
 
             if (this.priceTimeRange.Count > 0)
@@ -103,36 +103,6 @@ namespace VaheKiht
                 this.priceCostRange.Add(this.priceCostRange.Last());
                 this.priceRange.Add(Tuple.Create(this.priceTimeRange.Last(), this.priceCostRange.Last()));
             }
-        }
-
-        public List<DateTime> getUserDataTimeRange()
-        {
-            return this.userTimeRange;
-        }
-        public List<double> getUserDataUsageRange()
-        {
-            return this.userUsageRange;
-        }
-        public VecT getUserDataRange()
-        {
-            return this.userRange;
-        }
-
-        public List<DateTime> getPriceTimeRange()
-        {
-            return this.priceTimeRange;
-        }
-        public List<double> getPriceCostRange()
-        {
-            return this.priceCostRange;
-        }
-        public VecT getPriceRange()
-        {
-            return this.priceRange;
-        }
-        public double getAveragePrice()
-        {
-            return this.averagePrice;
         }
     }
 }

@@ -1751,6 +1751,13 @@ namespace Kasutajaliides
                     tablePackages.Rows[i].Cells[11].Value = "-";
                 }
             }
+            else if ((usageLength == 0.0) || (usageLength >= 1e6))
+            {
+                for (int i = 0; i < tablePackages.Rows.Count; ++i)
+                {
+                    tablePackages.Rows[i].Cells[11].Value = "Error!";
+                }
+            }
             else
             {
                 // stopp-aeg on 1 tunni võrra väiksem, sest VK.createRange võtab viimase andmepunkti lõpuajaga kaasa-arvatud

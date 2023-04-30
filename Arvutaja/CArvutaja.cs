@@ -63,7 +63,8 @@ namespace Arvutaja
         )
         {
             VecT usageData = new VecT();
-            // Generate usage data
+            // Genereerimisel arvestab seda, et kui on komaga arv tunde, siis kohtleb
+            // seda olukorda nagu oleks täisarv tunde, aga viimases tunnis on keskmine võimsus siis väiksem
             for (DateTime date = start, tempend = (start + TimeSpan.FromHours(usageLength)); date < tempend; date = date.AddHours(1))
             {
                 // Maksimaalne samm on 1 tund
@@ -93,6 +94,8 @@ namespace Arvutaja
             DateTime bestDate = start;
             DateTime usageEnd = start + TimeSpan.FromHours(Math.Ceiling(usageLength));
 
+            // Proovib sobitada kasutusmalli hinnaandmete graafikule ja seda nii, et
+            // kumbki dataset ei läheks üksteise piiridest välja
             while (usageEnd <= stop)
             {
                 VecT tempUsageData = this.generateUsageData(start, usageLength, power);
@@ -117,6 +120,7 @@ namespace Arvutaja
                 usageEnd = usageEnd.AddHours(1);
             }
 
+            // while loop tõenäoliselt ei käivitunudki või oli integreerimisega probleem :/
             if (bestIntegral == double.PositiveInfinity)
             {
                 return 2;
@@ -159,8 +163,10 @@ namespace Arvutaja
             for (int idx = begIdx; idx <= endIdx; ++idx)
             {
                 avg += andmed[idx].Item2;
+                // hoiab for loopis liidetavate arvu meeles
                 ++items;
             }
+            // andmeid polnudki :(
             if (items == 0)
             {
                 return 3;

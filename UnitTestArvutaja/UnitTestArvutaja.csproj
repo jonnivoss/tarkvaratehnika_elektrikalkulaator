@@ -53,6 +53,7 @@
     <Compile Include="UnitTestArvutajaFinalPrice.cs" />
     <Compile Include="UnitTestArvutajaAverage.cs" />
     <Compile Include="UnitTestArvutajaIntegral.cs" />
+    <Compile Include="UnitTestArvutajaIsDailyRate.cs" />
     <Compile Include="UnitTestArvutajaSmallestIntegral.cs" />
   </ItemGroup>
   <ItemGroup>

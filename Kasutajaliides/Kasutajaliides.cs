@@ -28,7 +28,16 @@ namespace Kasutajaliides
         // kasutajaliidese tekstifondid
         Font Normal = new Font("Impact", 12);
         Font Bigger = new Font("Impact", 16);
-        // 
+
+        // kasutajaliidese värvid
+        // VÄRVID (RGB hex.)
+        Color chalkWhite = ColorTranslator.FromHtml("#BBBBBB");
+        Color midGrey = ColorTranslator.FromHtml("#202020");
+        Color darkGrey = ColorTranslator.FromHtml("#090909");
+        Color xtraDarkGrey = ColorTranslator.FromHtml("#050505");
+        Color subtleGreen = ColorTranslator.FromHtml("#ddffdd");
+        Color xtraDarkGreen = ColorTranslator.FromHtml("#054505");
+        Color semiDarkRed = ColorTranslator.FromHtml("#bb2200");
 
         VecT userData = new VecT();
         VecT priceData = new VecT();
@@ -46,7 +55,7 @@ namespace Kasutajaliides
         DateTime zoomStartTime, zoomStopTime;
         bool showStock = true, showUsage = true;
         bool state = true;
-        bool state2 = true; // DARK MODE BUTTON TOGGLE
+        bool isNotDarkMode = true; // DARK MODE BUTTON TOGGLE
         bool state3 = false; // graafiku vajutamisega suurendamise jaoks
         bool isPackageSelected = false;
         bool ret = false;
@@ -104,7 +113,7 @@ namespace Kasutajaliides
         private void updateGraph()
         {
             // Uuenda graafikut
-            Console.WriteLine("updateGraph!!!!");
+            //Console.WriteLine("updateGraph!!!!");
 
             var start = dateStartTime.Value;
             var stop  = dateStopTime.Value;
@@ -194,27 +203,63 @@ namespace Kasutajaliides
             // pakettide graafikud
             if (isPackageSelected)
             {
+                /*for (int i = 0; i < tablePackages.SelectedRows.Count; ++i)
+                {
+                    string packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString();
+                    //var packageCost = new List<double>();
+                    /*foreach (var item in VK.priceTimeRange)
+                    {
+                        packageCost.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[3].Value));
+                    }*/
+                //chartPrice.Series[packageName].Points.DataBindXY(VK.priceTimeRange, packageCost);
+                //}
+
+
                 for (int i = 0; i < tablePackages.SelectedRows.Count; ++i)
                 {
                     string packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString();
-                    var packageCost = new List<double>();
-                    foreach (var item in VK.priceTimeRange)
+                    var costPerKwh = new List<double>();
+
+                    if (tablePackages.SelectedRows[i].Cells[7].Value.ToString() == "Jah")
                     {
-                        packageCost.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[3].Value));
+                        foreach (var item in VK.priceRange)
+                        {
+                            costPerKwh.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[4].Value) + item.Item2);
+                        }
                     }
-                    chartPrice.Series[packageName].Points.DataBindXY(VK.priceTimeRange, packageCost);
-                }
-
-                // pakettide graafikud hind-tarbimine
-                if (showUsage && ret)
-                {
-                    for (int i = 0; i < tablePackages.SelectedRows.Count; ++i)
+                    else // kui ei ole tegemist börsipaketiga
                     {
-                        string packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString();
-                        string packageNameUsage = packageName + " tarbimisel";
-                        
+                        // Kui on ainult päevane hind
+                        if (tablePackages.SelectedRows[i].Cells[6].Value.ToString() == "-")
+                        {
+                            for (int j = 0; j < VK.priceTimeRange.Count; ++j)
+                            {
+                                costPerKwh.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[5].Value) + Convert.ToDouble(tablePackages.SelectedRows[i].Cells[4].Value));
+                            }
+                        }
+                        else
+                        {
+                            for (int j = 0; j < VK.priceTimeRange.Count; ++j)
+                            {
+                                if (AR.isDailyRate(VK.priceTimeRange[j]))
+                                {
+                                    costPerKwh.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[5].Value) + Convert.ToDouble(tablePackages.SelectedRows[i].Cells[4].Value));
+                                }
+                                else
+                                {
+                                    costPerKwh.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[6].Value) + Convert.ToDouble(tablePackages.SelectedRows[i].Cells[4].Value));
+                                }
+                            }
+                        }
+                    }
+                    chartPrice.Series[packageName].Points.DataBindXY(VK.priceTimeRange, costPerKwh);
 
-                        var costPerKwh = new List<double>();
+                    // pakettide graafikud hind-tarbimine
+                    if (showUsage && ret)
+                    {
+                        string packageNameUsage = packageName + " tarbimisel";
+
+
                         var packageUsageCost = new List<double>();
                         if (VK.userDataTimeRange.Count == 0)
                         {
@@ -233,12 +278,6 @@ namespace Kasutajaliides
                         if (tablePackages.SelectedRows[i].Cells[7].Value.ToString() == "Jah")
                         {
                             var stockCost = VK.createRange(this.priceData, VK.userDataTimeRange.First(), VK.userDataTimeRange.Last());
-                            Console.WriteLine("It is JAH!!!!");
-                            foreach (var item in VK.priceRange)
-                            {
-                                costPerKwh.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[4].Value) + item.Item2);
-                            }
-
                             List<double> stockCostWithMarginals = new List<double>();
                             foreach (var item in stockCost)
                             {
@@ -246,30 +285,18 @@ namespace Kasutajaliides
 
                                 stockCostWithMarginals.Add(newPrice);
                             }
-                            
 
                             var stockUsageCost = VK.userDataUsageRange.Zip(stockCostWithMarginals, (u, c) => new { Usage = u, Cost = c });
                             foreach (var uc in stockUsageCost)
                             {
                                 packageUsageCost.Add(uc.Usage * uc.Cost);
                             }
-
-                            /*Console.WriteLine("mingi hind");
-                            foreach (var cost in packageUsageCost)
-                            {
-                                Console.WriteLine(cost.ToString() + "; ");
-                            }*/
-
                         }
                         else // kui ei ole tegemist börsipaketiga
                         {
                             // Kui on ainult päevane hind
                             if (tablePackages.SelectedRows[i].Cells[6].Value.ToString() == "-")
                             {
-                                for (int j = 0; j < VK.priceTimeRange.Count; ++j)
-                                {
-                                    costPerKwh.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[5].Value) + Convert.ToDouble(tablePackages.SelectedRows[i].Cells[4].Value));
-                                }
                                 foreach (var item in VK.userDataUsageRange)
                                 {
                                     packageUsageCost.Add(item * costPerKwh.First());
@@ -277,17 +304,6 @@ namespace Kasutajaliides
                             }
                             else
                             {
-                                for (int j = 0; j < VK.priceTimeRange.Count; ++j)
-                                {
-                                    if (AR.isDailyRate(VK.priceTimeRange[j]))
-                                    {
-                                        costPerKwh.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[5].Value) + Convert.ToDouble(tablePackages.SelectedRows[i].Cells[4].Value));
-                                    }
-                                    else
-                                    {
-                                        costPerKwh.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[6].Value) + Convert.ToDouble(tablePackages.SelectedRows[i].Cells[4].Value));
-                                    }
-                                }
                                 for (int j = 0; j < VK.userDataUsageRange.Count; ++j)
                                 {
                                     packageUsageCost.Add(VK.userDataUsageRange[j] * costPerKwh[j]);
@@ -296,7 +312,6 @@ namespace Kasutajaliides
                         }
                         try
                         {
-                            chartPrice.Series[packageName].Points.DataBindXY(VK.priceTimeRange, costPerKwh);
                             chartPrice.Series[packageNameUsage].Points.DataBindXY(VK.userDataTimeRange, packageUsageCost);
                             chartPrice.Series[packageNameUsage].Enabled = true;
                             txtDebug.AppendText("Alustan tabelisse lisamist");
@@ -311,8 +326,6 @@ namespace Kasutajaliides
                         catch (Exception)
                         {
                         }
-
-
                     }
                 }
             }
@@ -356,7 +369,7 @@ namespace Kasutajaliides
         {
             //font ja värv
             Font f  = (state)?  Normal       : Bigger;
-            Brush b = (state2)? Brushes.Black : Brushes.White;
+            Brush b = (isNotDarkMode)? Brushes.Black : Brushes.White;
             e.DrawBackground();
             e.DrawBorder();
             e.Graphics.DrawString(tooltipText, f, b, new Point(2, 2));
@@ -434,7 +447,7 @@ namespace Kasutajaliides
                 //kustuta tt ja joon
                 chart.Annotations.Remove(mouseTimeHover);
                 toolTip.Hide(chart);
-                this.updatePakettideHinnad(default(DateTime));
+                //this.updatePakettideHinnad(default(DateTime));
             }
         }
 
@@ -1064,13 +1077,9 @@ namespace Kasutajaliides
 
         private void btnDarkMode_Click(object sender, EventArgs e)
         {
-            state2 = !state2;
-            // VÄRVID (RGB hex.)
-            var chalkWhite = ColorTranslator.FromHtml("#BBBBBB");
-            var midGrey = ColorTranslator.FromHtml("#202020");
-            var darkGrey = ColorTranslator.FromHtml("#090909");
-            var xtraDarkGrey = ColorTranslator.FromHtml("#050505");
-            if (!state2)
+            isNotDarkMode = !isNotDarkMode;
+
+            if (!isNotDarkMode)
             {
                 btnDarkMode.Text = "L";
                 // värvide varieerimine "DARK MODE" jaoks
@@ -1231,6 +1240,9 @@ namespace Kasutajaliides
                 chartPrice.ChartAreas["ChartArea1"].AxisY.TitleForeColor = Color.Black;
                 chartPrice.ChartAreas["ChartArea1"].AxisY2.TitleForeColor = Color.Black;
             }
+
+            this.drawGreenPacketColumn(ref tablePackages, 8);
+            this.updatePakettideVarvid();
         }
 
         
@@ -1302,6 +1314,8 @@ namespace Kasutajaliides
 
                 }
                
+
+                this.drawGreenPacketColumn(ref tablePackages, 8);
             }
             return ret;
         }
@@ -1651,28 +1665,129 @@ namespace Kasutajaliides
             calcPrice();
         }
 
+        void drawGreenPacketColumn(ref DataGridView table, int greenPacketRow)
+        {
+            for (int i = 0; i < table.Rows.Count; ++i)
+            {
+                // Kui reas on vähem celle, siis väldib out-of-bounds viga
+                if (table.Rows[i].Cells.Count <= greenPacketRow)
+                {
+                    break;
+                }
+
+                if (table.Rows[i].Cells[greenPacketRow].Value.ToString() == "Jah")
+                {
+                    // Värvib vastavalt värviskeemile rohepaketid roheliseks
+                    table.Rows[i].Cells[greenPacketRow].Style.BackColor = isNotDarkMode ? subtleGreen : xtraDarkGreen;
+                }
+                else
+                {
+                    // tundub, et lihtsaim viis stiili resettimiseks
+                    table.Rows[i].Cells[greenPacketRow].Style = null;
+                }
+            }
+        }
+        void resetRowColor(ref DataGridView table, int rowIdx, int skipRow)
+        {
+            for (int i = 0; i < table.Rows[rowIdx].Cells.Count; ++i)
+            {
+                // Jätab rohepaketi tulba vahele
+                if (i == skipRow)
+                {
+                    continue;
+                }
+                table.Rows[rowIdx].Cells[i].Style = null;
+            }
+        }
+        void setRowColor(ref DataGridView table, int rowIdx, Color foreColor, Color backColor, int skipRow)
+        {
+            for (int i = 0; i < table.Rows[rowIdx].Cells.Count; ++i)
+            {
+                // Jätab rohepaketi tulba vahele
+                if (i == skipRow)
+                {
+                    continue;
+                }
+                // Seab uue värvi ainult siis kui värv tõesti muutuks, väldib mõttetuid uuesti joonistamisi
+                if (table.Rows[rowIdx].Cells[i].Style.ForeColor != foreColor)
+                {
+                    table.Rows[rowIdx].Cells[i].Style.ForeColor = foreColor;
+                }
+                if (table.Rows[rowIdx].Cells[i].Style.BackColor != backColor)
+                {
+                    table.Rows[rowIdx].Cells[i].Style.BackColor = backColor;
+                }
+            }
+        }
+
+        private void updatePakettideVarvid()
+        {
+            // Leiab minimaalse ja maksimaalse hetkehinnaga müüja
+            Tuple<int, double> minRida = Tuple.Create(0, Double.PositiveInfinity), maxRida = Tuple.Create(0, Double.NegativeInfinity);
+            for (int i = 0; i < tablePackages.Rows.Count; ++i)
+            {
+                var price = Double.Parse(tablePackages.Rows[i].Cells[9].Value.ToString());
+
+                if (price < minRida.Item2)
+                {
+                    minRida = Tuple.Create(i, price);
+                }
+                if (price > maxRida.Item1)
+                {
+                    maxRida = Tuple.Create(i, price);
+                }
+            }
+            // Teeb kõik minimaalse ja maksimaalse hinnaga müüjad vastavalt roheliseks/punaseks,
+            // Käib kogu tabeli läbi, sest võib eksisteerida mitu sama hinnaga müüjat
+            for (int i = 0; i < tablePackages.Rows.Count; ++i)
+            {
+                if (Math.Abs(Double.Parse(tablePackages.Rows[i].Cells[9].Value.ToString()) - minRida.Item2) < 0.0005)
+                {
+                    this.setRowColor(ref tablePackages, i, isNotDarkMode ? chalkWhite : Color.Black, isNotDarkMode ? Color.DarkGreen : Color.LightGreen, 8);
+                    //Console.WriteLine("Pakett " + i.ToString() + " on odavaim!");
+                }
+                else if (Math.Abs(Double.Parse(tablePackages.Rows[i].Cells[9].Value.ToString()) - maxRida.Item2) < 0.0005)
+                {
+                    this.setRowColor(ref tablePackages, i, isNotDarkMode ? Color.White : Color.Black, isNotDarkMode ? semiDarkRed : Color.Red, 8);
+                    //Console.WriteLine("Pakett " + i.ToString() + " on kalleim!");
+                }
+                else
+                {
+
+                    this.resetRowColor(ref tablePackages, i, 8);
+                }
+            }
+        }
+
         private void updatePakettideHinnad(DateTime time)
         {
+            // Kui tahetakse hetkehinna näitu eemaldada
             if (time == default(DateTime))
             {
                 for (int i = 0; i < tablePackages.Rows.Count; ++i)
                 {
                     tablePackages.Rows[i].Cells[9].Value = "-";
+                    this.resetRowColor(ref tablePackages, i, 8);
                 }
             }
             else
             {
                 for (int i = 0; i < tablePackages.Rows.Count; ++i)
                 {
+                    // Leitakse valitud ajahetkele vastav börsihind
                     double stockPrice = VK.priceRange.Find(Tuple => Tuple.Item1 == time).Item2;
+                    // Arvutatakse paketti arvestades tarbija lõpphind
                     double price = AR.finalPrice(stockPrice, this.packageInfo[i], time);
 
                     tablePackages.Rows[i].Cells[9].Value = price.ToString("0.000");
                 }
+                // Uuendatakse tabeli odavaimate/kalleimate hindade värve
+                this.updatePakettideVarvid();
             }
         }
         private void updatePakettideMallid(DateTime startTime, double usageLength, double power)
         {
+            // Kui tahetakse tarbimismalli maksumust kõrvaldada
             if (startTime == default(DateTime))
             {
                 for (int i = 0; i < tablePackages.Rows.Count; ++i)
@@ -1682,13 +1797,15 @@ namespace Kasutajaliides
             }
             else
             {
+                // stopp-aeg on 1 tunni võrra väiksem, sest VK.createRange võtab viimase andmepunkti lõpuajaga kaasa-arvatud
                 System.DateTime stopTime = startTime + TimeSpan.FromHours(Math.Ceiling(usageLength) - 1);
                 // stopp-argument on aeg, kust algab viimane tund
                 var stockRange = VK.createRange(this.priceData, startTime, stopTime);
                 var usageRange = AR.generateUsageData(startTime, usageLength, power);
 
-                if (stockRange.Count != usageRange.Count)
+                /*if (stockRange.Count != usageRange.Count)
                 {
+                    // Midagi on katki :/
                     Console.WriteLine("Ei ole võrdsed!!: " + stockRange.Count.ToString() + " ja " + usageRange.Count.ToString());
                 }
                 else
@@ -1697,7 +1814,7 @@ namespace Kasutajaliides
                     {
                         Console.WriteLine(stockRange[i].Item2.ToString() + ": " + usageRange[i].Item2.ToString() + " kW");
                     }
-                }
+                }*/
 
                 for (int i = 0; i < tablePackages.Rows.Count; ++i)
                 {
@@ -1705,10 +1822,10 @@ namespace Kasutajaliides
                     VecT stockRangeWithMargins = new VecT();
                     foreach (var item in stockRange)
                     {
-                        double stockPrice = item.Item2;
-                        double price = AR.finalPrice(stockPrice, this.packageInfo[i], item.Item1);
+                        // Arvutab vastavalt paketile lõpphinna
+                        double endPrice = AR.finalPrice(item.Item2, this.packageInfo[i], item.Item1);
 
-                        stockRangeWithMargins.Add(Tuple.Create(item.Item1, price));
+                        stockRangeWithMargins.Add(Tuple.Create(item.Item1, endPrice));
                     }
 
                     // Leiab integraali

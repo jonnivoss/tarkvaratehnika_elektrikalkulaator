@@ -63,7 +63,8 @@ namespace Arvutaja
         )
         {
             VecT usageData = new VecT();
-            // Generate usage data
+            // Genereerimisel arvestab seda, et kui on komaga arv tunde, siis kohtleb
+            // seda olukorda nagu oleks täisarv tunde, aga viimases tunnis on keskmine võimsus siis väiksem
             for (DateTime date = start, tempend = (start + TimeSpan.FromHours(usageLength)); date < tempend; date = date.AddHours(1))
             {
                 // Maksimaalne samm on 1 tund
@@ -93,6 +94,8 @@ namespace Arvutaja
             DateTime bestDate = start;
             DateTime usageEnd = start + TimeSpan.FromHours(Math.Ceiling(usageLength));
 
+            // Proovib sobitada kasutusmalli hinnaandmete graafikule ja seda nii, et
+            // kumbki dataset ei läheks üksteise piiridest välja
             while (usageEnd <= stop)
             {
                 VecT tempUsageData = this.generateUsageData(start, usageLength, power);
@@ -117,6 +120,7 @@ namespace Arvutaja
                 usageEnd = usageEnd.AddHours(1);
             }
 
+            // while loop tõenäoliselt ei käivitunudki või oli integreerimisega probleem :/
             if (bestIntegral == double.PositiveInfinity)
             {
                 return 2;
@@ -159,8 +163,10 @@ namespace Arvutaja
             for (int idx = begIdx; idx <= endIdx; ++idx)
             {
                 avg += andmed[idx].Item2;
+                // hoiab for loopis liidetavate arvu meeles
                 ++items;
             }
+            // andmeid polnudki :(
             if (items == 0)
             {
                 return 3;
@@ -173,21 +179,25 @@ namespace Arvutaja
 
         public bool isDailyRate(DateTime time)
         {
+            // Quantize time to date and hours
+            var clock = time.TimeOfDay;
+            time = time.Date + TimeSpan.FromHours(time.Hour);
+
             // https://xn--riigiphad-v9a.ee/
             DateTime[] riigiPyhad =
             {
-                new DateTime(2023,  4,  7),  // suur reede 2023
-                new DateTime(2023,  4,  9),  // ülestõusmispühade 1. püha 2023
-                new DateTime(2023,  5, 28), // nelipühade 1. püha 2023
-                new DateTime(2023,  1,  1),
-                new DateTime(2023,  2, 24),
-                new DateTime(2023,  5,  1),
-                new DateTime(2023,  6, 23),
-                new DateTime(2023,  6, 24),
-                new DateTime(2023,  8, 20),
-                new DateTime(2023, 12, 24),
-                new DateTime(2023, 12, 25),
-                new DateTime(2023, 12, 26)
+                new DateTime(time.Year,  4,  7),  // suur reede 2023
+                new DateTime(time.Year,  4,  9),  // ülestõusmispühade 1. püha 2023
+                new DateTime(time.Year,  5, 28), // nelipühade 1. püha 2023
+                new DateTime(time.Year,  1,  1),
+                new DateTime(time.Year,  2, 24),
+                new DateTime(time.Year,  5,  1),
+                new DateTime(time.Year,  6, 23),
+                new DateTime(time.Year,  6, 24),
+                new DateTime(time.Year,  8, 20),
+                new DateTime(time.Year, 12, 24),
+                new DateTime(time.Year, 12, 25),
+                new DateTime(time.Year, 12, 26)
             };
 
             // Add suur reede
@@ -218,18 +228,17 @@ namespace Arvutaja
                     break;
             }
 
-            var clock = time.TimeOfDay;
 
             // Riigipühadel on öötariif
             // https://raha.geenius.ee/rubriik/uudis/eesti-energia-muudab-oma-tuuptingimusi/
-            if (riigiPyhad.Contains(time))
+            if (riigiPyhad.Contains(time.Date))
             {
                 return false;
             }
             else
             {
                 // Kella check, 7-22 on päevatariif
-                if ((clock.Hours >= 7) && (clock.Hours <= 22))
+                if ((clock >= new TimeSpan(7, 0, 0)) && (clock <= new TimeSpan(22, 0, 0)))
                 {
                     return true;
                 }

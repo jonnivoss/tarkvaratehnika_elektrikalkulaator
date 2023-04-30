@@ -173,21 +173,25 @@ namespace Arvutaja
 
         public bool isDailyRate(DateTime time)
         {
+            // Quantize time to date and hours
+            var clock = time.TimeOfDay;
+            time = time.Date + TimeSpan.FromHours(time.Hour);
+
             // https://xn--riigiphad-v9a.ee/
             DateTime[] riigiPyhad =
             {
-                new DateTime(2023,  4,  7),  // suur reede 2023
-                new DateTime(2023,  4,  9),  // ülestõusmispühade 1. püha 2023
-                new DateTime(2023,  5, 28), // nelipühade 1. püha 2023
-                new DateTime(2023,  1,  1),
-                new DateTime(2023,  2, 24),
-                new DateTime(2023,  5,  1),
-                new DateTime(2023,  6, 23),
-                new DateTime(2023,  6, 24),
-                new DateTime(2023,  8, 20),
-                new DateTime(2023, 12, 24),
-                new DateTime(2023, 12, 25),
-                new DateTime(2023, 12, 26)
+                new DateTime(time.Year,  4,  7),  // suur reede 2023
+                new DateTime(time.Year,  4,  9),  // ülestõusmispühade 1. püha 2023
+                new DateTime(time.Year,  5, 28), // nelipühade 1. püha 2023
+                new DateTime(time.Year,  1,  1),
+                new DateTime(time.Year,  2, 24),
+                new DateTime(time.Year,  5,  1),
+                new DateTime(time.Year,  6, 23),
+                new DateTime(time.Year,  6, 24),
+                new DateTime(time.Year,  8, 20),
+                new DateTime(time.Year, 12, 24),
+                new DateTime(time.Year, 12, 25),
+                new DateTime(time.Year, 12, 26)
             };
 
             // Add suur reede
@@ -218,18 +222,17 @@ namespace Arvutaja
                     break;
             }
 
-            var clock = time.TimeOfDay;
 
             // Riigipühadel on öötariif
             // https://raha.geenius.ee/rubriik/uudis/eesti-energia-muudab-oma-tuuptingimusi/
-            if (riigiPyhad.Contains(time))
+            if (riigiPyhad.Contains(time.Date))
             {
                 return false;
             }
             else
             {
                 // Kella check, 7-22 on päevatariif
-                if ((clock.Hours >= 7) && (clock.Hours <= 22))
+                if ((clock >= new TimeSpan(7, 0, 0)) && (clock <= new TimeSpan(22, 0, 0)))
                 {
                     return true;
                 }

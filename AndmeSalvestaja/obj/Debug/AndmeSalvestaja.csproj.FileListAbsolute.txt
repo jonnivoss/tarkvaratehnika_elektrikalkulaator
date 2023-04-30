@@ -76,3 +76,6 @@ C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER7\Andme
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER7\AndmeSalvestaja\obj\Debug\AndmeSalvestaja.csproj.CopyComplete
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER7\AndmeSalvestaja\obj\Debug\AndmeSalvestaja.dll
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator-MASTER7\AndmeSalvestaja\obj\Debug\AndmeSalvestaja.pdb
+C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\bin\Debug\Newtonsoft.Json.dll
+C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\bin\Debug\Newtonsoft.Json.xml
+C:\Users\aneem\Source\Repos\Tarkvaratehnika-elektrikalkulaator\AndmeSalvestaja\obj\Debug\AndmeSalvestaja.csproj.CopyComplete

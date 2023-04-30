@@ -314,7 +314,6 @@ namespace Kasutajaliides
                         {
                             chartPrice.Series[packageNameUsage].Points.DataBindXY(VK.userDataTimeRange, packageUsageCost);
                             chartPrice.Series[packageNameUsage].Enabled = true;
-
                             txtDebug.AppendText("Alustan tabelisse lisamist");
                             tablePrice.Rows.Clear();
                             for (int c = 0; c < VK.userDataTimeRange.Count; ++c)
@@ -330,6 +329,8 @@ namespace Kasutajaliides
                     }
                 }
             }
+
+            this.updatePakettideTarbimishind();
 
             chartPrice.Invalidate();
             tablePrice.Invalidate();
@@ -509,6 +510,8 @@ namespace Kasutajaliides
                 dateStopTime.Value = this.userData.Last().Item1;
                 this.priceData = AP.HindAegInternet(this.userData.First().Item1.AddDays(-30), endOfDayDate);
             }
+            
+
             updateGraph();
             return ret;
         }
@@ -1266,6 +1269,7 @@ namespace Kasutajaliides
                     );
                     ++i;
                 }
+                this.updatePakettideTarbimishind();
 
                 this.drawGreenPacketColumn(ref tablePackages, 8);
             }
@@ -1803,7 +1807,38 @@ namespace Kasutajaliides
         }
         private void updatePakettideTarbimishind()
         {
-
+            var stockCost = VK.createRange(this.priceData, VK.userDataTimeRange.First(), VK.userDataTimeRange.Last()); // Börsihinna väärtuste loomine
+            var start = dateStartTime.Value;
+            var stop = dateStopTime.Value;
+            try
+            {
+                for (int c = 0; c < tablePackages.Rows.Count; ++c) // Loop läbi tabeli kõikide ridade
+                {
+                    List<double> packageUsageCost = new List<double>();
+                    double cost = 0.0;
+                    var usageCost = VK.userDataUsageRange.Zip(stockCost, (u, s) => new { Usage = u, Stock = s }); // Kahest listist pannakse kokku üks
+                    foreach (var us in usageCost)
+                    {
+                        if (us.Stock.Item1 < start)
+                        {
+                            continue;
+                        }
+                        else if (us.Stock.Item1 > stop)
+                        {
+                            break;
+                        }
+                        packageUsageCost.Add(us.Usage * AR.finalPrice(us.Stock.Item2, packageInfo[c], us.Stock.Item1)); // Arvutab iga tunni hinna ja lisb listi
+                    }
+                    foreach (var item in packageUsageCost)
+                    {
+                        cost += item; // Liidab tunnihinnad 
+                    }
+                    tablePackages.Rows[c].Cells[10].Value = ((cost + Convert.ToDouble(tablePackages.Rows[c].Cells[3].Value)) / 100).ToString("0.00"); // Lisab saadud hinna pakettide tabelisse 
+                }
+            }
+            catch (Exception)
+            {
+            }
         }
 
     }

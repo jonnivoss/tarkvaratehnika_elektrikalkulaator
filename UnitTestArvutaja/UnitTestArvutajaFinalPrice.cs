@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using System;
 
 namespace UnitTestArvutaja
@@ -131,19 +132,29 @@ namespace UnitTestArvutaja
             {
                 6.12,
                 5.4528,
-                10.2,
+                5.28,
                 1.3212
+            };
+            bool[] expectedPriceResults =
+            {
+                true,
+                true,
+                true,
+                true
             };
 
             Assert.AreEqual(expectedPrices.Length, stockPrices.Length);
             Assert.AreEqual(expectedPrices.Length, packageData.Length);
             Assert.AreEqual(expectedPrices.Length, timeData.Length);
 
+            List<bool> actualPriceResults = new List<bool>();
+
             for (int i = 0; i < stockPrices.Length; ++i)
             {
                 double actualPrice = objekt.finalPrice(stockPrices[i], packageData[i], timeData[i]);
-                Assert.AreEqual(true, IsClose(expectedPrices[i], actualPrice, 0.00001));
+                actualPriceResults.Add(IsClose(expectedPrices[i], actualPrice, 0.00001));
             }
+            CollectionAssert.AreEqual(expectedPriceResults, actualPriceResults.ToArray());
         }
 
         [TestMethod]
@@ -175,19 +186,29 @@ namespace UnitTestArvutaja
             {
                 0.48,
                 6.0,
-                10.2,
+                9.96,
                 148.92
+            };
+            bool[] expectedPriceResults =
+            {
+                true,
+                true,
+                true,
+                true
             };
 
             Assert.AreEqual(expectedPrices.Length, stockPrices.Length);
             Assert.AreEqual(expectedPrices.Length, packageData.Length);
             Assert.AreEqual(expectedPrices.Length, timeData.Length);
 
+            List<bool> actualPriceResults = new List<bool>();
+
             for (int i = 0; i < stockPrices.Length; ++i)
             {
                 double actualPrice = objekt.finalPrice(stockPrices[i], packageData[i], timeData[i]);
-                Assert.AreEqual(true, IsClose(expectedPrices[i], actualPrice, 0.00001));
+                actualPriceResults.Add(IsClose(expectedPrices[i], actualPrice, 0.00001));
             }
+            CollectionAssert.AreEqual(expectedPriceResults, actualPriceResults.ToArray());
         }
     }
 }

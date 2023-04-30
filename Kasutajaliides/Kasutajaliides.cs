@@ -113,7 +113,7 @@ namespace Kasutajaliides
         private void updateGraph()
         {
             // Uuenda graafikut
-            Console.WriteLine("updateGraph!!!!");
+            //Console.WriteLine("updateGraph!!!!");
 
             var start = dateStartTime.Value;
             var stop  = dateStopTime.Value;
@@ -1621,6 +1621,7 @@ namespace Kasutajaliides
         {
             for (int i = 0; i < table.Rows.Count; ++i)
             {
+                // Kui reas on vähem celle, siis väldib out-of-bounds viga
                 if (table.Rows[i].Cells.Count <= greenPacketRow)
                 {
                     break;
@@ -1628,10 +1629,12 @@ namespace Kasutajaliides
 
                 if (table.Rows[i].Cells[greenPacketRow].Value.ToString() == "Jah")
                 {
+                    // Värvib vastavalt värviskeemile rohepaketid roheliseks
                     table.Rows[i].Cells[greenPacketRow].Style.BackColor = isNotDarkMode ? subtleGreen : xtraDarkGreen;
                 }
                 else
                 {
+                    // tundub, et lihtsaim viis stiili resettimiseks
                     table.Rows[i].Cells[greenPacketRow].Style = null;
                 }
             }
@@ -1657,6 +1660,7 @@ namespace Kasutajaliides
                 {
                     continue;
                 }
+                // Seab uue värvi ainult siis kui värv tõesti muutuks, väldib mõttetuid uuesti joonistamisi
                 if (table.Rows[rowIdx].Cells[i].Style.ForeColor != foreColor)
                 {
                     table.Rows[rowIdx].Cells[i].Style.ForeColor = foreColor;
@@ -1670,6 +1674,7 @@ namespace Kasutajaliides
 
         private void updatePakettideVarvid()
         {
+            // Leiab minimaalse ja maksimaalse hetkehinnaga müüja
             Tuple<int, double> minRida = Tuple.Create(0, Double.PositiveInfinity), maxRida = Tuple.Create(0, Double.NegativeInfinity);
             for (int i = 0; i < tablePackages.Rows.Count; ++i)
             {
@@ -1684,6 +1689,8 @@ namespace Kasutajaliides
                     maxRida = Tuple.Create(i, price);
                 }
             }
+            // Teeb kõik minimaalse ja maksimaalse hinnaga müüjad vastavalt roheliseks/punaseks,
+            // Käib kogu tabeli läbi, sest võib eksisteerida mitu sama hinnaga müüjat
             for (int i = 0; i < tablePackages.Rows.Count; ++i)
             {
                 if (Math.Abs(Double.Parse(tablePackages.Rows[i].Cells[9].Value.ToString()) - minRida.Item2) < 0.0005)
@@ -1698,6 +1705,7 @@ namespace Kasutajaliides
                 }
                 else
                 {
+
                     this.resetRowColor(ref tablePackages, i, 8);
                 }
             }
@@ -1705,6 +1713,7 @@ namespace Kasutajaliides
 
         private void updatePakettideHinnad(DateTime time)
         {
+            // Kui tahetakse hetkehinna näitu eemaldada
             if (time == default(DateTime))
             {
                 for (int i = 0; i < tablePackages.Rows.Count; ++i)
@@ -1715,19 +1724,22 @@ namespace Kasutajaliides
             }
             else
             {
-
                 for (int i = 0; i < tablePackages.Rows.Count; ++i)
                 {
+                    // Leitakse valitud ajahetkele vastav börsihind
                     double stockPrice = VK.priceRange.Find(Tuple => Tuple.Item1 == time).Item2;
+                    // Arvutatakse paketti arvestades tarbija lõpphind
                     double price = AR.finalPrice(stockPrice, this.packageInfo[i], time);
 
                     tablePackages.Rows[i].Cells[9].Value = price.ToString("0.000");
                 }
+                // Uuendatakse tabeli odavaimate/kalleimate hindade värve
                 this.updatePakettideVarvid();
             }
         }
         private void updatePakettideMallid(DateTime startTime, double usageLength, double power)
         {
+            // Kui tahetakse tarbimismalli maksumust kõrvaldada
             if (startTime == default(DateTime))
             {
                 for (int i = 0; i < tablePackages.Rows.Count; ++i)
@@ -1737,13 +1749,15 @@ namespace Kasutajaliides
             }
             else
             {
+                // stopp-aeg on 1 tunni võrra väiksem, sest VK.createRange võtab viimase andmepunkti lõpuajaga kaasa-arvatud
                 System.DateTime stopTime = startTime + TimeSpan.FromHours(Math.Ceiling(usageLength) - 1);
                 // stopp-argument on aeg, kust algab viimane tund
                 var stockRange = VK.createRange(this.priceData, startTime, stopTime);
                 var usageRange = AR.generateUsageData(startTime, usageLength, power);
 
-                if (stockRange.Count != usageRange.Count)
+                /*if (stockRange.Count != usageRange.Count)
                 {
+                    // Midagi on katki :/
                     Console.WriteLine("Ei ole võrdsed!!: " + stockRange.Count.ToString() + " ja " + usageRange.Count.ToString());
                 }
                 else
@@ -1752,7 +1766,7 @@ namespace Kasutajaliides
                     {
                         Console.WriteLine(stockRange[i].Item2.ToString() + ": " + usageRange[i].Item2.ToString() + " kW");
                     }
-                }
+                }*/
 
                 for (int i = 0; i < tablePackages.Rows.Count; ++i)
                 {
@@ -1760,10 +1774,10 @@ namespace Kasutajaliides
                     VecT stockRangeWithMargins = new VecT();
                     foreach (var item in stockRange)
                     {
-                        double stockPrice = item.Item2;
-                        double price = AR.finalPrice(stockPrice, this.packageInfo[i], item.Item1);
+                        // Arvutab vastavalt paketile lõpphinna
+                        double endPrice = AR.finalPrice(item.Item2, this.packageInfo[i], item.Item1);
 
-                        stockRangeWithMargins.Add(Tuple.Create(item.Item1, price));
+                        stockRangeWithMargins.Add(Tuple.Create(item.Item1, endPrice));
                     }
 
                     // Leiab integraali

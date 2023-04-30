@@ -1807,6 +1807,10 @@ namespace Kasutajaliides
         }
         private void updatePakettideTarbimishind()
         {
+            if (VK.userDataTimeRange.Count == 0)
+            {
+                return;
+            }
             var stockCost = VK.createRange(this.priceData, VK.userDataTimeRange.First(), VK.userDataTimeRange.Last()); // Börsihinna väärtuste loomine
             var start = dateStartTime.Value;
             var stop = dateStopTime.Value;

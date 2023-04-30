@@ -1254,21 +1254,30 @@ namespace Kasutajaliides
                     ++i;
                 }
                 var stockCost = VK.createRange(this.priceData, VK.userDataTimeRange.First(), VK.userDataTimeRange.Last()); // Börsihinna väärtuste loomine
-                for (int c = 0; c < tablePackages.Rows.Count; ++c) // Loop läbi tabeli kõikide ridade
+                try
                 {
-                    List<double> packageUsageCost = new List<double>();
-                    double cost = 0.0;
-                    var usageCost = VK.userDataUsageRange.Zip(stockCost, (u, s) => new { Usage = u, Stock = s }); // Kahest listist pannakse kokku üks
-                    foreach (var us in usageCost)
+                    for (int c = 0; c < tablePackages.Rows.Count; ++c) // Loop läbi tabeli kõikide ridade
                     {
-                        packageUsageCost.Add(us.Usage * AR.finalPrice(us.Stock.Item2, packageInfo[c], us.Stock.Item1)); // Arvutab iga tunni hinna ja lisb listi
-                    } 
-                    foreach(var item in packageUsageCost)
-                    {
-                        cost += item; // Liidab tunnihinnad 
+                        List<double> packageUsageCost = new List<double>();
+                        double cost = 0.0;
+                        var usageCost = VK.userDataUsageRange.Zip(stockCost, (u, s) => new { Usage = u, Stock = s }); // Kahest listist pannakse kokku üks
+                        foreach (var us in usageCost)
+                        {
+                            packageUsageCost.Add(us.Usage * AR.finalPrice(us.Stock.Item2, packageInfo[c], us.Stock.Item1)); // Arvutab iga tunni hinna ja lisb listi
+                        }
+                        foreach (var item in packageUsageCost)
+                        {
+                            cost += item; // Liidab tunnihinnad 
+                        }
+                        tablePackages.Rows[c].Cells[10].Value = ((cost + Convert.ToDouble(tablePackages.Rows[c].Cells[3].Value)) / 100).ToString("0.00"); // Lisab saadud hinna pakettide tabelisse 
+
                     }
-                    tablePackages.Rows[c].Cells[10].Value = ((cost + Convert.ToDouble(tablePackages.Rows[c].Cells[3].Value)) / 100).ToString("0.00"); // Lisab saadud hinna pakettide tabelisse 
                 }
+                catch (Exception)
+                {
+
+                }
+               
             }
             return ret;
         }

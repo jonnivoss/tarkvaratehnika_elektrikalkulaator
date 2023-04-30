@@ -28,7 +28,15 @@ namespace Kasutajaliides
         // kasutajaliidese tekstifondid
         Font Normal = new Font("Impact", 12);
         Font Bigger = new Font("Impact", 16);
-        // 
+
+        // kasutajaliidese värvid
+        // VÄRVID (RGB hex.)
+        Color chalkWhite = ColorTranslator.FromHtml("#BBBBBB");
+        Color midGrey = ColorTranslator.FromHtml("#202020");
+        Color darkGrey = ColorTranslator.FromHtml("#090909");
+        Color xtraDarkGrey = ColorTranslator.FromHtml("#050505");
+        Color subtleGreen = ColorTranslator.FromHtml("#ddffdd");
+        Color xtraDarkGreen = ColorTranslator.FromHtml("#054505");
 
         VecT userData = new VecT();
         VecT priceData = new VecT();
@@ -46,7 +54,7 @@ namespace Kasutajaliides
         DateTime zoomStartTime, zoomStopTime;
         bool showStock = true, showUsage = true;
         bool state = true;
-        bool state2 = true; // DARK MODE BUTTON TOGGLE
+        bool isNotDarkMode = true; // DARK MODE BUTTON TOGGLE
         bool state3 = false; // graafiku vajutamisega suurendamise jaoks
         bool isPackageSelected = false;
         bool ret = false;
@@ -358,7 +366,7 @@ namespace Kasutajaliides
         {
             //font ja värv
             Font f  = (state)?  Normal       : Bigger;
-            Brush b = (state2)? Brushes.Black : Brushes.White;
+            Brush b = (isNotDarkMode)? Brushes.Black : Brushes.White;
             e.DrawBackground();
             e.DrawBorder();
             e.Graphics.DrawString(tooltipText, f, b, new Point(2, 2));
@@ -436,7 +444,7 @@ namespace Kasutajaliides
                 //kustuta tt ja joon
                 chart.Annotations.Remove(mouseTimeHover);
                 toolTip.Hide(chart);
-                this.updatePakettideHinnad(default(DateTime));
+                //this.updatePakettideHinnad(default(DateTime));
             }
         }
 
@@ -1042,13 +1050,9 @@ namespace Kasutajaliides
 
         private void btnDarkMode_Click(object sender, EventArgs e)
         {
-            state2 = !state2;
-            // VÄRVID (RGB hex.)
-            var chalkWhite = ColorTranslator.FromHtml("#BBBBBB");
-            var midGrey = ColorTranslator.FromHtml("#202020");
-            var darkGrey = ColorTranslator.FromHtml("#090909");
-            var xtraDarkGrey = ColorTranslator.FromHtml("#050505");
-            if (!state2)
+            isNotDarkMode = !isNotDarkMode;
+
+            if (!isNotDarkMode)
             {
                 btnDarkMode.Text = "L";
                 // värvide varieerimine "DARK MODE" jaoks
@@ -1209,6 +1213,8 @@ namespace Kasutajaliides
                 chartPrice.ChartAreas["ChartArea1"].AxisY.TitleForeColor = Color.Black;
                 chartPrice.ChartAreas["ChartArea1"].AxisY2.TitleForeColor = Color.Black;
             }
+
+            this.drawGreenPacketColumn(ref tablePackages, 8);
         }
 
         
@@ -1255,6 +1261,8 @@ namespace Kasutajaliides
                     );
                     ++i;
                 }
+
+                this.drawGreenPacketColumn(ref tablePackages, 8);
             }
             return ret;
         }
@@ -1604,6 +1612,57 @@ namespace Kasutajaliides
             calcPrice();
         }
 
+        void drawGreenPacketColumn(ref DataGridView table, int greenPacketRow)
+        {
+            for (int i = 0; i < table.Rows.Count; ++i)
+            {
+                if (table.Rows[i].Cells.Count <= greenPacketRow)
+                {
+                    break;
+                }
+
+                if (table.Rows[i].Cells[greenPacketRow].Value.ToString() == "Jah")
+                {
+                    table.Rows[i].Cells[greenPacketRow].Style.BackColor = isNotDarkMode ? subtleGreen : xtraDarkGreen;
+                }
+                else
+                {
+                    table.Rows[i].Cells[greenPacketRow].Style = null;
+                }
+            }
+        }
+        void resetRowColor(ref DataGridView table, int rowIdx, int skipRow)
+        {
+            for (int i = 0; i < table.Rows[rowIdx].Cells.Count; ++i)
+            {
+                // Jätab rohepaketi tulba vahele
+                if (i == skipRow)
+                {
+                    continue;
+                }
+                table.Rows[rowIdx].Cells[i].Style = null;
+            }
+        }
+        void setRowColor(ref DataGridView table, int rowIdx, Color foreColor, Color backColor, int skipRow)
+        {
+            for (int i = 0; i < table.Rows[rowIdx].Cells.Count; ++i)
+            {
+                // Jätab rohepaketi tulba vahele
+                if (i == skipRow)
+                {
+                    continue;
+                }
+                if (table.Rows[rowIdx].Cells[i].Style.ForeColor != foreColor)
+                {
+                    table.Rows[rowIdx].Cells[i].Style.ForeColor = foreColor;
+                }
+                if (table.Rows[rowIdx].Cells[i].Style.BackColor != backColor)
+                {
+                    table.Rows[rowIdx].Cells[i].Style.BackColor = backColor;
+                }
+            }
+        }
+
         private void updatePakettideHinnad(DateTime time)
         {
             if (time == default(DateTime))
@@ -1611,16 +1670,48 @@ namespace Kasutajaliides
                 for (int i = 0; i < tablePackages.Rows.Count; ++i)
                 {
                     tablePackages.Rows[i].Cells[9].Value = "-";
+                    this.resetRowColor(ref tablePackages, i, 8);
                 }
             }
             else
             {
+                Tuple<int, double> minRida = Tuple.Create(0, Double.PositiveInfinity), maxRida = Tuple.Create(0, Double.NegativeInfinity);
+
                 for (int i = 0; i < tablePackages.Rows.Count; ++i)
                 {
                     double stockPrice = VK.priceRange.Find(Tuple => Tuple.Item1 == time).Item2;
                     double price = AR.finalPrice(stockPrice, this.packageInfo[i], time);
 
-                    tablePackages.Rows[i].Cells[9].Value = price.ToString("0.000");
+                    var priceString = price.ToString("0.000");
+                    tablePackages.Rows[i].Cells[9].Value = priceString;
+                    // Konverteerib tagasi 3 komakohaga stringist, et pärast oleks lihtsam võrrelda 3-komakohaliste arvudega
+                    price = Double.Parse(priceString);
+
+                    if (price < minRida.Item2)
+                    {
+                        minRida = Tuple.Create(i, price);
+                    }
+                    if (price > maxRida.Item1)
+                    {
+                        maxRida = Tuple.Create(i, price);
+                    }
+                }
+                for (int i = 0; i < tablePackages.Rows.Count; ++i)
+                {
+                    if (Math.Abs(Double.Parse(tablePackages.Rows[i].Cells[9].Value.ToString()) - minRida.Item2) < 0.0005)
+                    {
+                        this.setRowColor(ref tablePackages, i, Color.Black, Color.LightGreen, 8);
+                        Console.WriteLine("Pakett " + i.ToString() + " on odavaim!");
+                    }
+                    else if (Math.Abs(Double.Parse(tablePackages.Rows[i].Cells[9].Value.ToString()) - maxRida.Item2) < 0.0005)
+                    {
+                        this.setRowColor(ref tablePackages, i, chalkWhite, Color.DarkRed, 8);
+                        Console.WriteLine("Pakett " + i.ToString() + " on kalleim!");
+                    }
+                    else
+                    {
+                        this.resetRowColor(ref tablePackages, i, 8);
+                    }
                 }
             }
         }

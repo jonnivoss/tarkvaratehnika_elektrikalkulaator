@@ -37,6 +37,7 @@ namespace Kasutajaliides
         Color xtraDarkGrey = ColorTranslator.FromHtml("#050505");
         Color subtleGreen = ColorTranslator.FromHtml("#ddffdd");
         Color xtraDarkGreen = ColorTranslator.FromHtml("#054505");
+        Color semiDarkRed = ColorTranslator.FromHtml("#bb2200");
 
         VecT userData = new VecT();
         VecT priceData = new VecT();
@@ -1218,6 +1219,7 @@ namespace Kasutajaliides
             }
 
             this.drawGreenPacketColumn(ref tablePackages, 8);
+            this.updatePakettideVarvid();
         }
 
         
@@ -1666,6 +1668,41 @@ namespace Kasutajaliides
             }
         }
 
+        private void updatePakettideVarvid()
+        {
+            Tuple<int, double> minRida = Tuple.Create(0, Double.PositiveInfinity), maxRida = Tuple.Create(0, Double.NegativeInfinity);
+            for (int i = 0; i < tablePackages.Rows.Count; ++i)
+            {
+                var price = Double.Parse(tablePackages.Rows[i].Cells[9].Value.ToString());
+
+                if (price < minRida.Item2)
+                {
+                    minRida = Tuple.Create(i, price);
+                }
+                if (price > maxRida.Item1)
+                {
+                    maxRida = Tuple.Create(i, price);
+                }
+            }
+            for (int i = 0; i < tablePackages.Rows.Count; ++i)
+            {
+                if (Math.Abs(Double.Parse(tablePackages.Rows[i].Cells[9].Value.ToString()) - minRida.Item2) < 0.0005)
+                {
+                    this.setRowColor(ref tablePackages, i, isNotDarkMode ? chalkWhite : Color.Black, isNotDarkMode ? Color.DarkGreen : Color.LightGreen, 8);
+                    //Console.WriteLine("Pakett " + i.ToString() + " on odavaim!");
+                }
+                else if (Math.Abs(Double.Parse(tablePackages.Rows[i].Cells[9].Value.ToString()) - maxRida.Item2) < 0.0005)
+                {
+                    this.setRowColor(ref tablePackages, i, isNotDarkMode ? Color.White : Color.Black, isNotDarkMode ? semiDarkRed : Color.Red, 8);
+                    //Console.WriteLine("Pakett " + i.ToString() + " on kalleim!");
+                }
+                else
+                {
+                    this.resetRowColor(ref tablePackages, i, 8);
+                }
+            }
+        }
+
         private void updatePakettideHinnad(DateTime time)
         {
             if (time == default(DateTime))
@@ -1678,44 +1715,15 @@ namespace Kasutajaliides
             }
             else
             {
-                Tuple<int, double> minRida = Tuple.Create(0, Double.PositiveInfinity), maxRida = Tuple.Create(0, Double.NegativeInfinity);
 
                 for (int i = 0; i < tablePackages.Rows.Count; ++i)
                 {
                     double stockPrice = VK.priceRange.Find(Tuple => Tuple.Item1 == time).Item2;
                     double price = AR.finalPrice(stockPrice, this.packageInfo[i], time);
 
-                    var priceString = price.ToString("0.000");
-                    tablePackages.Rows[i].Cells[9].Value = priceString;
-                    // Konverteerib tagasi 3 komakohaga stringist, et pärast oleks lihtsam võrrelda 3-komakohaliste arvudega
-                    price = Double.Parse(priceString);
-
-                    if (price < minRida.Item2)
-                    {
-                        minRida = Tuple.Create(i, price);
-                    }
-                    if (price > maxRida.Item1)
-                    {
-                        maxRida = Tuple.Create(i, price);
-                    }
+                    tablePackages.Rows[i].Cells[9].Value = price.ToString("0.000");
                 }
-                for (int i = 0; i < tablePackages.Rows.Count; ++i)
-                {
-                    if (Math.Abs(Double.Parse(tablePackages.Rows[i].Cells[9].Value.ToString()) - minRida.Item2) < 0.0005)
-                    {
-                        this.setRowColor(ref tablePackages, i, Color.Black, Color.LightGreen, 8);
-                        Console.WriteLine("Pakett " + i.ToString() + " on odavaim!");
-                    }
-                    else if (Math.Abs(Double.Parse(tablePackages.Rows[i].Cells[9].Value.ToString()) - maxRida.Item2) < 0.0005)
-                    {
-                        this.setRowColor(ref tablePackages, i, chalkWhite, Color.DarkRed, 8);
-                        Console.WriteLine("Pakett " + i.ToString() + " on kalleim!");
-                    }
-                    else
-                    {
-                        this.resetRowColor(ref tablePackages, i, 8);
-                    }
-                }
+                this.updatePakettideVarvid();
             }
         }
         private void updatePakettideMallid(DateTime startTime, double usageLength, double power)

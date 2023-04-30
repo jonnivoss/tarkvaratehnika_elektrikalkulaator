@@ -205,7 +205,6 @@ namespace Kasutajaliides
                     chartPrice.Series[packageName].Points.DataBindXY(VK.priceTimeRange, packageCost);
                 }
 
-                double tarbimisHind = 0.0;
                 // pakettide graafikud hind-tarbimine
                 if (showUsage && ret)
                 {
@@ -253,9 +252,7 @@ namespace Kasutajaliides
                             foreach (var uc in stockUsageCost)
                             {
                                 packageUsageCost.Add(uc.Usage * uc.Cost);
-                                tarbimisHind += uc.Usage * uc.Cost;
                             }
-                            tarbimisHind = tarbimisHind / 100 * 1.2 + Convert.ToDouble(tablePackages.SelectedRows[i].Cells[3].Value);
 
                             /*Console.WriteLine("mingi hind");
                             foreach (var cost in packageUsageCost)
@@ -276,9 +273,7 @@ namespace Kasutajaliides
                                 foreach (var item in VK.userDataUsageRange)
                                 {
                                     packageUsageCost.Add(item * costPerKwh.First());
-                                    tarbimisHind += item * costPerKwh.First();
                                 }
-                                tarbimisHind = tarbimisHind / 100 * 1.2 + Convert.ToDouble(tablePackages.SelectedRows[i].Cells[3].Value);
                             }
                             else
                             {
@@ -296,9 +291,7 @@ namespace Kasutajaliides
                                 for (int j = 0; j < VK.userDataUsageRange.Count; ++j)
                                 {
                                     packageUsageCost.Add(VK.userDataUsageRange[j] * costPerKwh[j]);
-                                    tarbimisHind += VK.userDataUsageRange[j] * costPerKwh[j];
                                 }
-                                tarbimisHind = tarbimisHind / 100 * 1.2 + Convert.ToDouble(tablePackages.SelectedRows[i].Cells[3].Value);
                             }
                         }
                         try
@@ -306,7 +299,6 @@ namespace Kasutajaliides
                             chartPrice.Series[packageName].Points.DataBindXY(VK.priceTimeRange, costPerKwh);
                             chartPrice.Series[packageNameUsage].Points.DataBindXY(VK.userDataTimeRange, packageUsageCost);
                             chartPrice.Series[packageNameUsage].Enabled = true;
-                            tablePackages.SelectedRows[i].Cells[10].Value = tarbimisHind;
                             txtDebug.AppendText("Alustan tabelisse lisamist");
                             tablePrice.Rows.Clear();
                             for (int c = 0; c < VK.userDataTimeRange.Count; ++c)
@@ -1260,6 +1252,22 @@ namespace Kasutajaliides
                         "-"
                     );
                     ++i;
+                }
+                var stockCost = VK.createRange(this.priceData, VK.userDataTimeRange.First(), VK.userDataTimeRange.Last()); // Börsihinna väärtuste loomine
+                for (int c = 0; c < tablePackages.Rows.Count; ++c) // Loop läbi tabeli kõikide ridade
+                {
+                    List<double> packageUsageCost = new List<double>();
+                    double cost = 0.0;
+                    var usageCost = VK.userDataUsageRange.Zip(stockCost, (u, s) => new { Usage = u, Stock = s }); // Kahest listist pannakse kokku üks
+                    foreach (var us in usageCost)
+                    {
+                        packageUsageCost.Add(us.Usage * AR.finalPrice(us.Stock.Item2, packageInfo[c], us.Stock.Item1)); // Arvutab iga tunni hinna ja lisb listi
+                    } 
+                    foreach(var item in packageUsageCost)
+                    {
+                        cost += item; // Liidab tunnihinnad 
+                    }
+                    tablePackages.Rows[c].Cells[10].Value = ((cost + Convert.ToDouble(tablePackages.Rows[c].Cells[3].Value)) / 100).ToString("0.00"); // Lisab saadud hinna pakettide tabelisse 
                 }
             }
             return ret;

@@ -575,7 +575,7 @@ namespace Kasutajaliides
                 else
                 {
                     bestDate = dateStartTime.Value;
-                    var skwh = Double.Parse(tbMonthlyPrice.Text);
+                    var skwh = Double.Parse(txtMonthlyPrice.Text);
                     // Teisendab sentidest eurodesse
                     price = time * power * skwh / 100.0;
                 }
@@ -730,31 +730,27 @@ namespace Kasutajaliides
             }
         }
 
-        int handleNumberBoxKeyPress(string text, KeyPressEventArgs e, double maxLimit = Double.PositiveInfinity)
+        bool handleNumberBoxKeyPress(string text, KeyPressEventArgs e)
         {
             double parsedValue;
             bool isParsed = double.TryParse(text + e.KeyChar, out parsedValue);
-            if ((isParsed && (parsedValue > maxLimit)) || (!isParsed && !numberBoxValidChars.Contains(e.KeyChar)))
+            if (!isParsed && !numberBoxValidChars.Contains(e.KeyChar))
             {
                 e.Handled = true;
-                if (!isParsed)
-                {
-                    MessageBox.Show("Palun sisestage ainult numbreid!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return 2;
-                }
-                return 1;
+                MessageBox.Show("Palun sisestage ainult numbreid!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
-            return 0;
+            return true;
         }
 
         private void txtAjakulu_KeyPress(object sender, KeyPressEventArgs e)
         {
-            this.handleNumberBoxKeyPress(txtAjakulu.Text, e, 1e6);
+            this.handleNumberBoxKeyPress(txtAjakulu.Text, e/*, 1e6*/);
         }
 
         private void txtVoimsus_KeyPress(object sender, KeyPressEventArgs e)
         {
-            this.handleNumberBoxKeyPress(txtVoimsus.Text, e, 1e4);
+            this.handleNumberBoxKeyPress(txtVoimsus.Text, e/*, 1e4*/);
         }
 
         private void dateStartTime_ValueChanged(object sender, EventArgs e)
@@ -863,11 +859,11 @@ namespace Kasutajaliides
             var state = rbStockPrice.Checked;
             if (state)
             {
-                tbMonthlyPrice.Enabled = false;
+                txtMonthlyPrice.Enabled = false;
             }
             else
             {
-                tbMonthlyPrice.Enabled = true;
+                txtMonthlyPrice.Enabled = true;
             }
             calcPrice();
         }
@@ -876,9 +872,11 @@ namespace Kasutajaliides
         {
             try
             {
-                var item = AS.getUseCases()[cbKasutusmall.SelectedItem.ToString()];
-                txtVoimsus.Text = Math.Round(item.Item1 / 1000.0, 3).ToString();
-                txtAjakulu.Text = Math.Round(item.Item2 / 60.0, 3).ToString();
+                var userCase = AS.getUseCases()[cbKasutusmall.SelectedItem.ToString()];
+                // Vatid kilovattideks
+                txtVoimsus.Text = Math.Round(userCase.Item1 / 1000.0, 3).ToString();
+                // Minutid tundideks
+                txtAjakulu.Text = Math.Round(userCase.Item2 / 60.0, 3).ToString();
 
                 // Calculate price
                 calcPrice();
@@ -888,18 +886,26 @@ namespace Kasutajaliides
             }
         }
 
+        void handleNumberBoxChanged(string str, double maxLimit = Double.PositiveInfinity)
+        {
+            Console.WriteLine("Text: " + str);
+        }
+
         private void txtAjakulu_TextChanged(object sender, EventArgs e)
         {
+            this.handleNumberBoxChanged(txtAjakulu.Text);
             calcPrice();
         }
 
         private void txtVoimsus_TextChanged(object sender, EventArgs e)
         {
+            this.handleNumberBoxChanged(txtVoimsus.Text);
             calcPrice();
         }
 
-        private void tbMonthlyPrice_TextChanged(object sender, EventArgs e)
+        private void txtMonthlyPrice_TextChanged(object sender, EventArgs e)
         {
+            this.handleNumberBoxChanged(txtMonthlyPrice.Text);
             if (rbMonthlyCost.Checked)
             {
                 calcPrice();
@@ -936,7 +942,7 @@ namespace Kasutajaliides
                 dateStartTime.Font = Bigger;
                 dateStopTime.Font = Bigger;
                 btnChangeSize.Font = Bigger;
-                tbMonthlyPrice.Font = Bigger;
+                txtMonthlyPrice.Font = Bigger;
                 lblRate.Font = Bigger;
                 lblTarbimisAeg.Font = Bigger;
                 txtTarbimisAeg.Font = Bigger;
@@ -998,7 +1004,7 @@ namespace Kasutajaliides
                 dateStartTime.Font = Normal;
                 dateStopTime.Font = Normal;
                 btnChangeSize.Font = Normal;
-                tbMonthlyPrice.Font = Normal;
+                txtMonthlyPrice.Font = Normal;
                 lblRate.Font = Normal;
                 lblTarbimisAeg.Font = Normal;
                 txtTarbimisAeg.Font = Normal;
@@ -1046,9 +1052,9 @@ namespace Kasutajaliides
             updateGraph();
         }
 
-        private void tbMonthlyPrice_KeyPress(object sender, KeyPressEventArgs e)
+        private void txtMonthlyPrice_KeyPress(object sender, KeyPressEventArgs e)
         {
-            this.handleNumberBoxKeyPress(tbMonthlyPrice.Text, e, 1e4);
+            this.handleNumberBoxKeyPress(txtMonthlyPrice.Text, e/*, 1e4*/);
         }
 
         private void resizeGuiElement(Rectangle nelinurk, Control element)
@@ -1121,8 +1127,8 @@ namespace Kasutajaliides
                 btnChangeSize.ForeColor = chalkWhite;
                 btnDarkMode.BackColor = midGrey;
                 btnDarkMode.ForeColor = chalkWhite;
-                tbMonthlyPrice.BackColor = midGrey;
-                tbMonthlyPrice.ForeColor = chalkWhite;
+                txtMonthlyPrice.BackColor = midGrey;
+                txtMonthlyPrice.ForeColor = chalkWhite;
                 groupPriceType.ForeColor = chalkWhite;
 
                 groupExport.ForeColor = chalkWhite;
@@ -1199,8 +1205,8 @@ namespace Kasutajaliides
                 btnChangeSize.ForeColor = Color.Black;
                 btnDarkMode.BackColor = SystemColors.Control;
                 btnDarkMode.ForeColor = Color.Black;
-                tbMonthlyPrice.BackColor = SystemColors.Control;
-                tbMonthlyPrice.ForeColor = Color.Black;
+                txtMonthlyPrice.BackColor = SystemColors.Control;
+                txtMonthlyPrice.ForeColor = Color.Black;
                 groupPriceType.ForeColor = Color.Black;
 
                 groupExport.ForeColor = Color.Black;

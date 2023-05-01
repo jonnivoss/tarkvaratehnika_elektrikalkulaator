@@ -56,7 +56,7 @@ namespace Kasutajaliides
             this.cbShowTabel = new System.Windows.Forms.CheckBox();
             this.rbStockPrice = new System.Windows.Forms.RadioButton();
             this.rbMonthlyCost = new System.Windows.Forms.RadioButton();
-            this.tbMonthlyPrice = new System.Windows.Forms.TextBox();
+            this.txtMonthlyPrice = new System.Windows.Forms.TextBox();
             this.groupPriceType = new System.Windows.Forms.GroupBox();
             this.lblRate = new System.Windows.Forms.Label();
             this.tablePrice = new System.Windows.Forms.DataGridView();
@@ -368,23 +368,23 @@ namespace Kasutajaliides
             this.rbMonthlyCost.Text = "Kuutasu";
             this.rbMonthlyCost.UseVisualStyleBackColor = true;
             // 
-            // tbMonthlyPrice
+            // txtMonthlyPrice
             // 
-            this.tbMonthlyPrice.Enabled = false;
-            this.tbMonthlyPrice.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.tbMonthlyPrice.Location = new System.Drawing.Point(126, 74);
-            this.tbMonthlyPrice.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.tbMonthlyPrice.MaxLength = 128;
-            this.tbMonthlyPrice.Name = "tbMonthlyPrice";
-            this.tbMonthlyPrice.Size = new System.Drawing.Size(169, 32);
-            this.tbMonthlyPrice.TabIndex = 22;
-            this.tbMonthlyPrice.TextChanged += new System.EventHandler(this.tbMonthlyPrice_TextChanged);
-            this.tbMonthlyPrice.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbMonthlyPrice_KeyPress);
+            this.txtMonthlyPrice.Enabled = false;
+            this.txtMonthlyPrice.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.txtMonthlyPrice.Location = new System.Drawing.Point(126, 74);
+            this.txtMonthlyPrice.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.txtMonthlyPrice.MaxLength = 128;
+            this.txtMonthlyPrice.Name = "txtMonthlyPrice";
+            this.txtMonthlyPrice.Size = new System.Drawing.Size(169, 32);
+            this.txtMonthlyPrice.TabIndex = 22;
+            this.txtMonthlyPrice.TextChanged += new System.EventHandler(this.txtMonthlyPrice_TextChanged);
+            this.txtMonthlyPrice.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtMonthlyPrice_KeyPress);
             // 
             // groupPriceType
             // 
             this.groupPriceType.Controls.Add(this.lblRate);
-            this.groupPriceType.Controls.Add(this.tbMonthlyPrice);
+            this.groupPriceType.Controls.Add(this.txtMonthlyPrice);
             this.groupPriceType.Controls.Add(this.rbMonthlyCost);
             this.groupPriceType.Controls.Add(this.rbStockPrice);
             this.groupPriceType.Font = new System.Drawing.Font("Impact", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
@@ -909,7 +909,7 @@ namespace Kasutajaliides
         private System.Windows.Forms.CheckBox cbShowTabel;
         private System.Windows.Forms.RadioButton rbStockPrice;
         private System.Windows.Forms.RadioButton rbMonthlyCost;
-        private System.Windows.Forms.TextBox tbMonthlyPrice;
+        private System.Windows.Forms.TextBox txtMonthlyPrice;
         private System.Windows.Forms.GroupBox groupPriceType;
         private System.Windows.Forms.DataGridView tablePrice;
         private System.Windows.Forms.Label lblRate;

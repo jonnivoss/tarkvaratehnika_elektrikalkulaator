@@ -898,14 +898,49 @@ namespace Kasutajaliides
 
         void handleNumberBoxChanged(ref TextBox box, double maxLimit = Double.PositiveInfinity)
         {
+            string str = box.Text;
+
             double parsedValue;
-            var isParsed = double.TryParse(box.Text, out parsedValue);
+            var isParsed = double.TryParse(str, out parsedValue);
             if (isParsed && parsedValue > maxLimit)
             {
                 box.Text = maxLimit.ToString();
             }
+            else if (!isParsed)
+            {
+                // Esmalt jätab alles ainult numbrid/komad/punktid
+                char[] nums =
+                {
+                    '0',
+                    '1',
+                    '2',
+                    '3',
+                    '4',
+                    '5',
+                    '6',
+                    '7',
+                    '8',
+                    '9',
+                    '.',
+                    ','
+                };
 
-            Console.WriteLine("Text: " + box.Text);
+                string tempString = "";
+                foreach (var ch in str)
+                {
+                    if (nums.Contains(ch))
+                    {
+                        tempString += ch;
+                    }
+                }
+                str = tempString;
+                // Eemaldab lõpust tähti senikaua, kuni on parsitav
+                while ((str.Length > 0) && !double.TryParse(str, out parsedValue))
+                {
+                    str = str.Remove(str.Length - 1);
+                }
+                box.Text = str;
+            }
         }
 
         private void txtAjakulu_TextChanged(object sender, EventArgs e)

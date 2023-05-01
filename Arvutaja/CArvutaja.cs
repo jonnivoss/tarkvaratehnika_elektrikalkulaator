@@ -42,7 +42,8 @@ namespace Arvutaja
             if (alumine > ylemine)
             {
                 // VIGA! RAJAD ON SUURUSE POOLEST VAHETUSES!
-                return 2;
+                integraal = 0.0;
+                return 3;
             }
             // alumisele ja ülemisele rajale vastavate indekside määramine
             int alumineIndeks = andmed1.FindIndex(Tuple => Tuple.Item1 == alumine);
@@ -52,6 +53,7 @@ namespace Arvutaja
             if (!(alumineIndeks >= 0 && ylemineIndeks >= 0 && alumineIndeks2 >= 0 && ylemineIndeks2 >= 0))
             {
                 // VIGA! VÄHEMALT ÜKS SOOVITUD INTEGREERIMISRAJADEST PUUDUB ANDMETE HULGAS!
+                integraal = 0.0;
                 return 1;
             }
             // INTEGREERIMINE
@@ -118,6 +120,8 @@ namespace Arvutaja
         {
             if (start > stop)
             {
+                outSmallestIntegral = 0.0;
+                outOptimalDate = default(System.DateTime);
                 return 1;
             }
             
@@ -134,11 +138,13 @@ namespace Arvutaja
                 // Integreerib
                 if (tempUsageData.Count == 0)
                 {
+                    outSmallestIntegral = 0.0;
+                    outOptimalDate = default(System.DateTime);
                     return 2;
                 }
 
-                double integral = 0.0;
-                if (this.integral(tempUsageData, priceData, tempUsageData.First().Item1, tempUsageData.Last().Item1, ref integral) == 0)
+                double integral;
+                if (this.integral(tempUsageData, priceData, tempUsageData.First().Item1, tempUsageData.Last().Item1, out integral) == 0)
                 {
                     if (integral < bestIntegral)
                     {
@@ -154,6 +160,8 @@ namespace Arvutaja
             // while loop tõenäoliselt ei käivitunudki või oli integreerimisega probleem :/
             if (bestIntegral == double.PositiveInfinity)
             {
+                outSmallestIntegral = 0.0;
+                outOptimalDate = default(System.DateTime);
                 return 2;
             }
 
@@ -163,11 +171,17 @@ namespace Arvutaja
             return 0;
         }
 
-        public int average(VecT andmed, System.DateTime alumine, System.DateTime ylemine, ref double avg)
+        public int average(
+            VecT andmed,
+            System.DateTime alumine,
+            System.DateTime ylemine,
+            out double avg
+        )
         {
             if (alumine > ylemine)
             {
                 // Rajad vahetuses
+                avg = 0.0;
                 return 1;
             }
 
@@ -176,6 +190,7 @@ namespace Arvutaja
             if (!((begIdx >= 0) && (endIdx >= 0) && (endIdx >= begIdx)))
             {
                 // Kuupäevasid andmetes ei leidunud
+                avg = 0.0;
                 return 2;
             }
 
@@ -190,6 +205,7 @@ namespace Arvutaja
             // andmeid polnudki :(
             if (items == 0)
             {
+                avg = 0.0;
                 return 3;
             }
 

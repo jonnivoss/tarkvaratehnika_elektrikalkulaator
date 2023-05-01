@@ -38,7 +38,7 @@ namespace UnitTestArvutaja
             double integraal = 0.0;
             System.DateTime optimalDate = alumineRaja;
 
-            int reaalne1 = objekt.smallestIntegral(andmed, 1.0, 4.1, alumineRaja, ylemineRaja, ref integraal, ref optimalDate);
+            int reaalne1 = objekt.smallestIntegral(andmed, 1.0, 4.1, alumineRaja, ylemineRaja, out integraal, out optimalDate);
             int oodatud1 = 0;
             double reaalne2 = integraal;
             double oodatud2 = 7.328;
@@ -62,10 +62,10 @@ namespace UnitTestArvutaja
             System.DateTime alumineRaja = d;
             System.DateTime ylemineRaja = d.AddHours(2);
 
-            double integraal = 0.0;
-            System.DateTime optimalDate = alumineRaja;
+            double integraal;
+            System.DateTime optimalDate;
 
-            int reaalne1 = objekt.smallestIntegral(andmed, 1.0, 1.1, alumineRaja, ylemineRaja, ref integraal, ref optimalDate);
+            int reaalne1 = objekt.smallestIntegral(andmed, 1.0, 1.1, alumineRaja, ylemineRaja, out integraal, out optimalDate);
             int oodatud1 = 0;
             double reaalne2 = integraal;
             double oodatud2 = 8.661;
@@ -89,10 +89,10 @@ namespace UnitTestArvutaja
             System.DateTime alumineRaja = d;
             System.DateTime ylemineRaja = d;
 
-            double integraal = 0.0;
-            System.DateTime optimalDate = alumineRaja;
+            double integraal;
+            System.DateTime optimalDate;
 
-            int reaalne1 = objekt.smallestIntegral(andmed, 1.0, 1.0, alumineRaja, ylemineRaja, ref integraal, ref optimalDate);
+            int reaalne1 = objekt.smallestIntegral(andmed, 1.0, 1.0, alumineRaja, ylemineRaja, out integraal, out optimalDate);
             int oodatud1 = 2;
             double reaalne2 = integraal;
             double oodatud2 = 0.0;
@@ -109,10 +109,10 @@ namespace UnitTestArvutaja
             System.DateTime alumineRaja = new System.DateTime(2022, 03, 10, 8, 15, 0);
             System.DateTime ylemineRaja = new System.DateTime(2022, 03, 10, 9, 15, 0);
             
-            double integraal = 0.0;
-            System.DateTime optimalDate = alumineRaja;
+            double integraal;
+            System.DateTime optimalDate;
             
-            int reaalne1 = objekt.smallestIntegral(andmed, 0.0, 0.0, alumineRaja, ylemineRaja, ref integraal, ref optimalDate);
+            int reaalne1 = objekt.smallestIntegral(andmed, 0.0, 0.0, alumineRaja, ylemineRaja, out integraal, out optimalDate);
             int oodatud1 = 2;
             double reaalne2 = integraal;
             double oodatud2 = 0.0;
@@ -134,10 +134,10 @@ namespace UnitTestArvutaja
             System.DateTime alumineRaja = new System.DateTime(2023, 03, 10, 7, 0, 0);
             System.DateTime ylemineRaja = new System.DateTime(2023, 03, 10, 11, 0, 0);
 
-            double integraal = 0.0;
-            System.DateTime optimalDate = alumineRaja;
+            double integraal;
+            System.DateTime optimalDate;
 
-            int reaalne1 = objekt.smallestIntegral(andmed, 0.0, 0.0, alumineRaja, ylemineRaja, ref integraal, ref optimalDate);
+            int reaalne1 = objekt.smallestIntegral(andmed, 0.0, 0.0, alumineRaja, ylemineRaja, out integraal, out optimalDate);
             int oodatud1 = 2;
             double reaalne2 = integraal;
             double oodatud2 = 0.0;
@@ -159,10 +159,10 @@ namespace UnitTestArvutaja
             System.DateTime alumineRaja = new System.DateTime(2023, 03, 10, 8, 0, 0);
             System.DateTime ylemineRaja = new System.DateTime(2023, 03, 10, 13, 0, 0);
 
-            double integraal = 0.0;
-            System.DateTime optimalDate = alumineRaja;
+            double integraal;
+            System.DateTime optimalDate;
 
-            int reaalne1 = objekt.smallestIntegral(andmed, 0.0, 0.0, alumineRaja, ylemineRaja, ref integraal, ref optimalDate);
+            int reaalne1 = objekt.smallestIntegral(andmed, 0.0, 0.0, alumineRaja, ylemineRaja, out integraal, out optimalDate);
             int oodatud1 = 2;
             double reaalne2 = integraal;
             double oodatud2 = 0.0;
@@ -184,10 +184,10 @@ namespace UnitTestArvutaja
             System.DateTime alumineRaja = new System.DateTime(2023, 03, 10, 12, 0, 0);
             System.DateTime ylemineRaja = new System.DateTime(2023, 03, 10, 8, 0, 0);
 
-            double integraal = 0.0;
-            System.DateTime optimalDate = alumineRaja;
+            double integraal;
+            System.DateTime optimalDate;
 
-            int reaalne1 = objekt.smallestIntegral(andmed, 0.0, 0.0, alumineRaja, ylemineRaja, ref integraal, ref optimalDate);
+            int reaalne1 = objekt.smallestIntegral(andmed, 0.0, 0.0, alumineRaja, ylemineRaja, out integraal, out optimalDate);
             int oodatud1 = 1;
             double reaalne2 = integraal;
             double oodatud2 = 0.0;
@@ -207,10 +207,10 @@ namespace UnitTestArvutaja
             System.DateTime alumineRaja = d;
             System.DateTime ylemineRaja = d.AddHours(2);
 
-            double integraal = 0.0;
-            System.DateTime optimalDate = alumineRaja;
+            double integraal;
+            System.DateTime optimalDate;
 
-            int reaalne1 = objekt.smallestIntegral(andmed, 1.0, 2.1, alumineRaja, ylemineRaja, ref integraal, ref optimalDate);
+            int reaalne1 = objekt.smallestIntegral(andmed, 1.0, 2.1, alumineRaja, ylemineRaja, out integraal, out optimalDate);
             int oodatud1 = 2;
             double reaalne2 = integraal;
             double oodatud2 = 0;

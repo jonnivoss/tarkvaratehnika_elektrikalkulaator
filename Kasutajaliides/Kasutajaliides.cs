@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
 using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
-using PackageT = System.Collections.Generic.List<AndmePyydja.PackageInfo>;
+using PackageT = System.Collections.Generic.List<AndmePyydja.IPackageInfo>;
 
 namespace Kasutajaliides
 {
@@ -1335,7 +1335,7 @@ namespace Kasutajaliides
                         item.providerName,
                         item.packageName,
                         item.monthlyPrice.ToString("0.00"),
-                        item.sellerMarginal.ToString("0.000"),
+                        item.sellerMargins.ToString("0.000"),
                         item.isStockPackage ? "-" : item.basePrice.ToString("0.000"),
                         (!item.isDayNight || item.isStockPackage) ? "-" : item.nightPrice.ToString("0.000"),
                         item.isStockPackage ? "Jah" : "Ei",

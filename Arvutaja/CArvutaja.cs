@@ -285,7 +285,7 @@ namespace Arvutaja
             }
         }
 
-        public double finalPrice(double stockPrice, AndmePyydja.PackageInfo package, DateTime time)
+        public double finalPrice(double stockPrice, AndmePyydja.IPackageInfo package, DateTime time)
         {
             // Käibemaks
             const double tax = 0.2;
@@ -293,21 +293,21 @@ namespace Arvutaja
             double price;
             if (package.isStockPackage)
             {
-                price = stockPrice + package.sellerMarginal;
+                price = stockPrice + package.sellerMargins;
             }
             else if (!package.isDayNight)
             {
-                price = package.basePrice + package.sellerMarginal;
+                price = package.basePrice + package.sellerMargins;
             }
             else
             {
                 if (isDailyRate(time))
                 {
-                    price = package.dayPrice + package.sellerMarginal;
+                    price = package.dayPrice + package.sellerMargins;
                 }
                 else
                 {
-                    price = package.nightPrice + package.sellerMarginal;
+                    price = package.nightPrice + package.sellerMargins;
                 }
             }
 

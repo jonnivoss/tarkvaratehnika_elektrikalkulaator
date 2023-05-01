@@ -16,21 +16,28 @@ using DatePriceT = System.Tuple<System.DateTime, double>;
 using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
 using ParseCSVDataLineT = System.Tuple<string, char>;
 
-using PackageT = System.Collections.Generic.List<AndmePyydja.PackageInfo>;
+using PackageT = System.Collections.Generic.List<AndmePyydja.IPackageInfo>;
 
 namespace AndmePyydja
 {
-    public class PackageInfo
+    public class CPackageInfo : AndmePyydja.IPackageInfo
     {
-        public string providerName, packageName;
-        public double monthlyPrice, sellerMarginal, basePrice, dayPrice, nightPrice;
-        public bool isDayNight, isStockPackage, isGreenPackage;
+        public string providerName { get; set; } = "";
+        public string packageName { get; set; } = "";
+        public double monthlyPrice { get; set; } = 0.0;
+        public double sellerMargins { get; set; } = 0.0;
+        public double basePrice { get; set; } = 0.0;
+        public double dayPrice { get; set; } = 0.0;
+        public double nightPrice { get; set; } = 0.0;
+        public bool isDayNight { get; set; } = false;
+        public bool isStockPackage { get; set; } = false;
+        public bool isGreenPackage { get; set; } = false;
 
-        public PackageInfo()
+        public CPackageInfo()
         {
 
         }
-        public PackageInfo(
+        public CPackageInfo(
             string providerName, string packageName,
             double monthlyPrice, double sellerMarginal, double basePrice, double nightPrice,
             bool isStockPackage, bool isGreenPackage
@@ -39,7 +46,7 @@ namespace AndmePyydja
             this.providerName   = providerName;
             this.packageName    = packageName;
             this.monthlyPrice   = monthlyPrice;
-            this.sellerMarginal = sellerMarginal;
+            this.sellerMargins = sellerMarginal;
             this.basePrice      = basePrice;
             this.dayPrice       = this.basePrice;
             this.nightPrice     = nightPrice;
@@ -59,7 +66,7 @@ namespace AndmePyydja
             s += "; ";
             s += this.monthlyPrice.ToString();
             s += "; ";
-            s += this.sellerMarginal.ToString();
+            s += this.sellerMargins.ToString();
             s += "; ";
             s += this.basePrice.ToString();
             s += "; ";
@@ -73,13 +80,13 @@ namespace AndmePyydja
         }
         public override bool Equals(object obj)
         {
-            var other = (PackageInfo)obj;
+            var other = (CPackageInfo)obj;
 
             // Kontrollib, kas üksikud elemendid on võrdsed
             return this.providerName   == other.providerName &&
                    this.packageName    == other.packageName &&
                    this.monthlyPrice   == other.monthlyPrice &&
-                   this.sellerMarginal == other.sellerMarginal &&
+                   this.sellerMargins == other.sellerMargins &&
                    this.basePrice      == other.basePrice &&
                    this.nightPrice     == other.nightPrice &&
                    this.isStockPackage == other.isStockPackage &&
@@ -266,7 +273,7 @@ namespace AndmePyydja
         }
 
 
-        private static PackageInfo parseCSVPackageDataLine(ParseCSVDataLineT arguments)
+        private static CPackageInfo parseCSVPackageDataLine(ParseCSVDataLineT arguments)
         {
             // ParseCSVDataLineT.Item1 on rida
             // ParseCSVDataLineT.Item2 on delimiter
@@ -278,13 +285,13 @@ namespace AndmePyydja
                 return null;
             }
 
-            var info = new PackageInfo();
+            var info = new CPackageInfo();
             try//-hard
             {
                 info.providerName   = rida[0].Trim();
                 info.packageName    = rida[1].Trim();
                 info.monthlyPrice   = Convert.ToDouble(rida[2]);
-                info.sellerMarginal = Convert.ToDouble(rida[3]);
+                info.sellerMargins = Convert.ToDouble(rida[3]);
                 info.basePrice      = Convert.ToDouble(rida[4]);
                 info.dayPrice       = info.basePrice;
                 info.nightPrice     = Convert.ToDouble(rida[5]);

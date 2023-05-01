@@ -35,8 +35,8 @@ namespace AndmePyydja
         bool chooseFileUserData();
         bool chooseFilePackages();
 
-        bool readUserDataFile(ref string contents);
-        bool readPackageFile(ref string contents);
+        bool readUserDataFile(out string contents);
+        bool readPackageFile(out string contents);
         bool writePackageFile(string contents);
 
 

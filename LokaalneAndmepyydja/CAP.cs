@@ -130,11 +130,12 @@ namespace AndmePyydja
             return true;
         }
 
-        public bool readUserDataFile(ref string contents)
+        public bool readUserDataFile(out string contents)
         {
             if (this.userDataFileName == "")
             {
                 // Failinime pole valitud
+                contents = "";
                 return false;
             }
             try
@@ -147,14 +148,16 @@ namespace AndmePyydja
             catch (Exception)
             {
                 // Faili lugemine ebaõnnestus
+                contents = "";
                 return false;
             }
         }
-        public bool readPackageFile(ref string contents)
+        public bool readPackageFile(out string contents)
         {
             if (this.packageFileName == "")
             {
                 // Failinime pole valitud
+                contents = "";
                 return false;
             }
             try
@@ -167,6 +170,7 @@ namespace AndmePyydja
             catch (Exception)
             {
                 // Faili lugemine ebaõnnestus
+                contents = "";
                 return false;
             }
         }
@@ -377,10 +381,10 @@ namespace AndmePyydja
 
 
         //muuda unix standard time DateTimeiks
-        public DateTime UnixToDateTime(string a)
+        public DateTime UnixToDateTime(string unixTimeStr)
         {
             // long sest 64 bitti
-            long unixTime = long.Parse(a);
+            long unixTime = long.Parse(unixTimeStr);
             DateTimeOffset systemTime = DateTimeOffset.FromUnixTimeSeconds(unixTime);
             DateTime utcTime = systemTime.UtcDateTime;
             return utcTime.AddHours(2);

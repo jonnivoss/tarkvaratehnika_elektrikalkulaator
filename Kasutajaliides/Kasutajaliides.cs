@@ -492,8 +492,8 @@ namespace Kasutajaliides
         private bool openCSVUserData()
         {
             ret = true;
-            string fileContents = "";
-            if (!AP.readUserDataFile(ref fileContents))
+            string fileContents;
+            if (!AP.readUserDataFile(out fileContents))
             {
                 ret = false;
             }
@@ -1317,8 +1317,8 @@ namespace Kasutajaliides
         private bool openCSVPackage()
         {
             bool ret = true;
-            string packageFileContents = "";
-            if (!AP.readPackageFile(ref packageFileContents))
+            string packageFileContents;
+            if (!AP.readPackageFile(out packageFileContents))
             {
                 ret = false;
             }

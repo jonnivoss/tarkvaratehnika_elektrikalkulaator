@@ -904,7 +904,9 @@ namespace Kasutajaliides
             var isParsed = double.TryParse(str, out parsedValue);
             if (isParsed && parsedValue > maxLimit)
             {
+                var curpos = box.SelectionStart;
                 box.Text = maxLimit.ToString();
+                box.Select(Math.Min(curpos, box.Text.Length), 0);
             }
             else if (!isParsed)
             {
@@ -939,7 +941,9 @@ namespace Kasutajaliides
                 {
                     str = str.Remove(str.Length - 1);
                 }
+                var curpos = box.SelectionStart;
                 box.Text = str;
+                box.Select(Math.Min(curpos, box.Text.Length), 0);
             }
         }
 

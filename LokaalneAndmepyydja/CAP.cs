@@ -39,14 +39,14 @@ namespace AndmePyydja
         }
         public CPackageInfo(
             string providerName, string packageName,
-            double monthlyPrice, double sellerMarginal, double basePrice, double nightPrice,
+            double monthlyPrice, double sellerMargins, double basePrice, double nightPrice,
             bool isStockPackage, bool isGreenPackage
         )
         {
             this.providerName   = providerName;
             this.packageName    = packageName;
             this.monthlyPrice   = monthlyPrice;
-            this.sellerMargins = sellerMarginal;
+            this.sellerMargins  = sellerMargins;
             this.basePrice      = basePrice;
             this.dayPrice       = this.basePrice;
             this.nightPrice     = nightPrice;

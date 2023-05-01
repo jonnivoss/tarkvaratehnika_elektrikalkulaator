@@ -8,7 +8,7 @@ using VecUCT = System.Collections.Generic.Dictionary<string, System.Tuple<double
 
 namespace AndmeSalvestaja
 {
-    public class CSerializable : AndmeSalvestaja.ISerializable
+    class CSerializable : AndmeSalvestaja.ISerializable
     {
         public Dictionary<ASSetting, string> setMap { get; set; } = new Dictionary<ASSetting, string>
         {

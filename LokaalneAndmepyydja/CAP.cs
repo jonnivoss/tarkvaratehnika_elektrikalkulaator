@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Globalization;
 using System.Net.Http;
-using System.Net;
-
 
 //https://dashboard.elering.ee/assets/api-doc.html#/balance-controller/getAllUsingGET
 
@@ -49,6 +46,22 @@ namespace AndmePyydja
             this.isDayNight     = this.nightPrice != 0 ? true : false;
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         public override string ToString()
         {
             string s;
@@ -71,6 +84,23 @@ namespace AndmePyydja
 
             return s;
         }
+
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         public override bool Equals(object obj)
         {
             var other = (PackageInfo)obj;
@@ -96,8 +126,23 @@ namespace AndmePyydja
 
         public string userDataFileName { get; set; } = "";
         public string packageFileName { get; set; } = "";
-        
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         public bool chooseFileUserData()
         {
             DialogResult result = this.ofdUserData.ShowDialog();
@@ -110,6 +155,23 @@ namespace AndmePyydja
 
             return true;
         }
+
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         public bool chooseFilePackages()
         {
             DialogResult result = this.ofdPackage.ShowDialog();
@@ -123,6 +185,22 @@ namespace AndmePyydja
             return true;
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         public bool readUserDataFile(ref string contents)
         {
             if (this.userDataFileName == "")
@@ -143,6 +221,23 @@ namespace AndmePyydja
                 return false;
             }
         }
+
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         public bool readPackageFile(ref string contents)
         {
             if (this.packageFileName == "")
@@ -163,6 +258,23 @@ namespace AndmePyydja
                 return false;
             }
         }
+
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         public bool writePackageFile(string contents)
         {
             if (this.packageFileName == "")
@@ -182,6 +294,22 @@ namespace AndmePyydja
             }
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private static DatePriceT parseCSVUserDataLine(ParseCSVDataLineT arguments)
         {
             // ParseCSVDataLineT.Item1 on rida
@@ -214,6 +342,22 @@ namespace AndmePyydja
             return new DatePriceT(d, num);
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private static VecT parseCSVUserData(
             string contents,
             string tableBeginToken,
@@ -256,6 +400,22 @@ namespace AndmePyydja
             return v;
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         public VecT parseUserData(string contents)
         {
             return CAP.parseCSVUserData(
@@ -265,7 +425,22 @@ namespace AndmePyydja
             );
         }
 
-
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private static PackageInfo parseCSVPackageDataLine(ParseCSVDataLineT arguments)
         {
             // ParseCSVDataLineT.Item1 on rida
@@ -303,6 +478,22 @@ namespace AndmePyydja
             return info;
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private static PackageT parseCSVPackageData(
             string contents,
             string tableBeginToken,
@@ -345,6 +536,23 @@ namespace AndmePyydja
 
             return v;
         }
+
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         public PackageT parsePackage(string contents)
         {
             return CAP.parseCSVPackageData(
@@ -354,6 +562,22 @@ namespace AndmePyydja
             );
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         // I'll be package CSV
         public string createPackageCSV(PackageT package)
         {
@@ -368,7 +592,22 @@ namespace AndmePyydja
 
         //siit algab neti otsimine
 
-
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         //muuda unix standard time DateTimeiks
         public DateTime UnixToDateTime(string a)
         {
@@ -379,6 +618,22 @@ namespace AndmePyydja
             return utcTime.AddHours(2);
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         //tagastab vect DatePrice 
         public VecT HindAegInternet(DateTime algus1, DateTime lopp1)
         {

@@ -47,6 +47,22 @@ namespace AndmeSalvestaja
             this.path = savepath;
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         public bool loadFile()
         {
             // Kui sätetefaili asukohta pole valitud
@@ -66,6 +82,23 @@ namespace AndmeSalvestaja
                 return false;
             }
         }
+
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         public bool saveFile()
         {
             try
@@ -81,6 +114,22 @@ namespace AndmeSalvestaja
             
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         public bool changeSetting(ASSetting setting, string value)
         {
             // Kui valitud sätte indeks on piirkonnast väljas
@@ -100,6 +149,22 @@ namespace AndmeSalvestaja
             }
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         public string getSetting(ASSetting setting)
         {
             // Kui soovitud sätte indeks on piirkonnast väljas
@@ -111,15 +176,64 @@ namespace AndmeSalvestaja
             return this.data.setMap[setting];
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         public void setMarketData(VecT data)
         {
             this.data.marketData = data;
         }
+
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         public VecT getMarketData()
         {
             return this.data.marketData;
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         public VecUCT getUseCases()
         {
             return this.data.useCases;

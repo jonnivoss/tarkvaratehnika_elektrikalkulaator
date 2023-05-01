@@ -63,6 +63,8 @@ namespace Kasutajaliides
 
         DateTime endOfDayDate = DateTime.Now.Date.AddHours(48); // vastab järgmise päeva lõpule (24:00)
         DateTime zoomStartTime, zoomStopTime;
+        private DateTime lastUpdated;
+
         bool showStock = true, showUsage = true;
         bool state = true;
         bool isNotDarkMode = true; // DARK MODE BUTTON TOGGLE
@@ -124,15 +126,20 @@ namespace Kasutajaliides
         Rectangle originalLabelExportPath;
         Rectangle originalTextExportPath;
 
-
+        // GRAAFIKU UUENDAMISE FUNKTSIOON
+        /* Funktsioon 
+         * 
+         * PARAMEETRID:
+         * -
+         * 
+         * TAGASTUSVÄÄRTUSED:
+         * -
+         */
         private void updateGraph()
         {
-            // Uuenda graafikut
-            //Console.WriteLine("updateGraph!!!!");
-
             var start = dateStartTime.Value;
             var stop  = dateStopTime.Value;
-
+            // KUI KANKEL TRIGERIB, SIIS OSTA OP-MÄLU JUURDE...
             if (showUsage && !VK.createUserDataRange(this.userData, start, stop))
             {
                 MessageBox.Show("kankel!");
@@ -146,7 +153,6 @@ namespace Kasutajaliides
             // Lisab lõppu ühe punkti juurde, et saada "ilusat" joont
             VK.addLastPoints();
 
-
             chartPrice.Series["Tarbimine"].Enabled = showUsage && (VK.userDataTimeRange.Count > 0);
             chartPrice.Series["Elektrihind"].Enabled = showStock;
 
@@ -158,7 +164,6 @@ namespace Kasutajaliides
             {
                 chartPrice.Series["Elektrihind"].Points.DataBindXY(VK.priceTimeRange, VK.priceCostRange);
             }
-
 
             tablePrice.Rows.Clear();
             for (int i = 0; i < VK.priceTimeRange.Count; ++i)
@@ -218,18 +223,6 @@ namespace Kasutajaliides
             // pakettide graafikud
             if (isPackageSelected)
             {
-                /*for (int i = 0; i < tablePackages.SelectedRows.Count; ++i)
-                {
-                    string packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString();
-                    //var packageCost = new List<double>();
-                    /*foreach (var item in VK.priceTimeRange)
-                    {
-                        packageCost.Add(Convert.ToDouble(tablePackages.SelectedRows[i].Cells[3].Value));
-                    }*/
-                //chartPrice.Series[packageName].Points.DataBindXY(VK.priceTimeRange, packageCost);
-                //}
-
-
                 for (int i = 0; i < tablePackages.SelectedRows.Count; ++i)
                 {
                     string packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString();
@@ -353,6 +346,22 @@ namespace Kasutajaliides
             changeInterval(Convert.ToInt32((stop - start).TotalHours));
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         //arvutab ristküllikuid
         //https://stackoverflow.com/questions/9647666/finding-the-value-of-the-points-in-a-chart
         //arvutab charti pindala
@@ -376,12 +385,44 @@ namespace Kasutajaliides
                                     pw * IPP.Width, ph * IPP.Height);
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         void toolTip_Popup(object sender, PopupEventArgs e)
         {
             Font f = (state) ? Normal : Bigger;
             e.ToolTipSize = TextRenderer.MeasureText(tooltipText, f);
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void toolTip_Draw(object sender, DrawToolTipEventArgs e)
         {
             //font ja värv
@@ -392,6 +433,22 @@ namespace Kasutajaliides
             e.Graphics.DrawString(tooltipText, f, b, new Point(2, 2));
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void chartPrice_MouseMove(object sender, MouseEventArgs e)
         {
             Chart chart = (Chart)sender;
@@ -468,6 +525,22 @@ namespace Kasutajaliides
             }
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         // Muudab graafiku X-teljele kantavate jaotiste tihedust (time scale density)
         private void changeInterval(int count)
         {
@@ -481,6 +554,22 @@ namespace Kasutajaliides
             chartPrice.ChartAreas["ChartArea1"].AxisX.IsMarginVisible = false;
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void btnAvaCSV_Click(object sender, EventArgs e)
         {
             if (AP.chooseFileUserData())//ei
@@ -489,6 +578,23 @@ namespace Kasutajaliides
                 this.openCSVUserData();
             }
         }
+
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private bool openCSVUserData()
         {
             ret = true;
@@ -531,6 +637,22 @@ namespace Kasutajaliides
             return ret;
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void calcPrice()
         {
             double time = 0.0, power = 0.0, price;
@@ -603,6 +725,22 @@ namespace Kasutajaliides
             this.updatePakettideMallid(bestDate, time, power);
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void Kasutajaliides_Load(object sender, EventArgs e)
         {
             // "MOUSE SCROLL" suurendus. EI KUSTUTA KURAT, kui vaja siis commenti välja!
@@ -654,60 +792,74 @@ namespace Kasutajaliides
                 );
             }
 
-            // akna elementide mõõtmete vaikeväärtuste määramine
-            originalWindowSize = new Rectangle(this.Location.X, this.Location.Y, this.Size.Width, this.Size.Height);
-            originalChartPriceSize = new Rectangle(chartPrice.Location.X, chartPrice.Location.Y, chartPrice.Size.Width, chartPrice.Size.Height);
-            originalTablePriceSize = new Rectangle(tablePrice.Location.X, tablePrice.Location.Y, tablePrice.Size.Width, tablePrice.Size.Height);
-            originalTablePackagesSize = new Rectangle(tablePackages.Location.X, tablePackages.Location.Y, tablePackages.Size.Width, tablePackages.Size.Height);
-            originalButtonChangeSize = new Rectangle(btnChangeSize.Location.X, btnChangeSize.Location.Y, btnChangeSize.Size.Width, btnChangeSize.Size.Height);
-            originalLabelKasutusmall = new Rectangle(lblKasutusmall.Location.X, lblKasutusmall.Location.Y, lblKasutusmall.Size.Width, lblKasutusmall.Size.Height);
-            originalComboBoxKasutusmall = new Rectangle(cbKasutusmall.Location.X, cbKasutusmall.Location.Y, cbKasutusmall.Size.Width, cbKasutusmall.Size.Height);
-            originalLabelAeg = new Rectangle(lblAeg.Location.X, lblAeg.Location.Y, lblAeg.Size.Width, lblAeg.Size.Height);
-            originalTextAjakulu = new Rectangle(txtAjakulu.Location.X, txtAjakulu.Location.Y, txtAjakulu.Size.Width, txtAjakulu.Size.Height);
-            originalLabelTund = new Rectangle(lblTund.Location.X, lblTund.Location.Y, lblTund.Size.Width, lblTund.Size.Height);
-            originalLabelV6imsus = new Rectangle(lblVoimsus.Location.X, lblVoimsus.Location.Y, lblVoimsus.Size.Width, lblVoimsus.Size.Height);
-            originalTextV6imsus = new Rectangle(txtVoimsus.Location.X, txtVoimsus.Location.Y, txtVoimsus.Size.Width, txtVoimsus.Size.Height);
-            originalLabelkW = new Rectangle(lblkW.Location.X, lblkW.Location.Y, lblkW.Size.Width, lblkW.Size.Height);
-            originalLabelHind = new Rectangle(lblHind.Location.X, lblHind.Location.Y, lblHind.Size.Width, lblHind.Size.Height);
-            originalTextHind = new Rectangle(txtHind.Location.X, txtHind.Location.Y, txtHind.Size.Width, txtHind.Size.Height);
-            originalLabelAndresEek = new Rectangle(lblAndresEek.Location.X, lblAndresEek.Location.Y, lblAndresEek.Size.Width, lblAndresEek.Size.Height);
-            originalTextDebug = new Rectangle(txtDebug.Location.X, txtDebug.Location.Y, txtDebug.Size.Width, txtDebug.Size.Height);
-            originalButtonAvaCsv = new Rectangle(btnAvaCSV.Location.X, btnAvaCSV.Location.Y, btnAvaCSV.Size.Width, btnAvaCSV.Size.Height);
-            originalCheckBoxShowPrice = new Rectangle(cbShowPrice.Location.X, cbShowPrice.Location.Y, cbShowPrice.Size.Width, cbShowPrice.Size.Height);
-            originalCheckBoxShowUsage = new Rectangle(cbShowUsage.Location.X, cbShowUsage.Location.Y, cbShowUsage.Size.Width, cbShowUsage.Size.Height);
-            originalCheckBoxShowTable = new Rectangle(cbShowTabel.Location.X, cbShowTabel.Location.Y, cbShowTabel.Size.Width, cbShowTabel.Size.Height);
-            originalLabelBeginning = new Rectangle(lblBeginning.Location.X, lblBeginning.Location.Y, lblBeginning.Size.Width, lblBeginning.Size.Height);
-            originalDateStartTimePicker = new Rectangle(dateStartTime.Location.X, dateStartTime.Location.Y, dateStartTime.Size.Width, dateStartTime.Size.Height);
-            originalLabelEnd = new Rectangle(lblEnd.Location.X, lblEnd.Location.Y, lblEnd.Size.Width, lblEnd.Size.Height);
-            originalDateStopTimePicker = new Rectangle(dateStopTime.Location.X, dateStopTime.Location.Y, dateStopTime.Size.Width, dateStopTime.Size.Height);
-            originalGroupBoxGroupTypePrice = new Rectangle(groupPriceType.Location.X, groupPriceType.Location.Y, groupPriceType.Size.Width, groupPriceType.Size.Height);
-            originalLabelTarbimisAeg = new Rectangle(lblTarbimisAeg.Location.X, lblTarbimisAeg.Location.Y, lblTarbimisAeg.Size.Width, lblTarbimisAeg.Size.Height);
-            originalTextTarbimisAeg = new Rectangle(txtTarbimisAeg.Location.X, txtTarbimisAeg.Location.Y, txtTarbimisAeg.Size.Width, txtTarbimisAeg.Size.Height);
-            originalLabelCostNow = new Rectangle(lblCostNow.Location.X, lblCostNow.Location.Y, lblCostNow.Size.Width, lblCostNow.Size.Height);
-            originalTextCostNow = new Rectangle(txtCostNow.Location.X, txtCostNow.Location.Y, txtCostNow.Size.Width, txtCostNow.Size.Height);
-            originalLabelSKwh2 = new Rectangle(lblSKwh2.Location.X, lblSKwh2.Location.Y, lblSKwh2.Size.Width, lblSKwh2.Size.Height);
-            originalButtonDarkMode = new Rectangle(btnDarkMode.Location.X, btnDarkMode.Location.Y, btnDarkMode.Size.Width, btnDarkMode.Size.Height);
-            originalBtnOpenPackages = new Rectangle(btnOpenPackages.Location.X, btnOpenPackages.Location.Y, btnOpenPackages.Size.Width, btnOpenPackages.Size.Height);
-
-            originalRadioStockPrice = new Rectangle(rbStockPrice.Location.X, rbStockPrice.Location.Y, rbStockPrice.Size.Width, rbStockPrice.Size.Height);
-            originalRadioMonthlyCost = new Rectangle(rbMonthlyCost.Location.X, rbMonthlyCost.Location.Y, rbMonthlyCost.Size.Width, rbMonthlyCost.Size.Height);
-            originalTextMonthlyPrice = new Rectangle(txtMonthlyPrice.Location.X, txtMonthlyPrice.Location.Y, txtMonthlyPrice.Size.Width, txtMonthlyPrice.Size.Height);
-            originalLabelRate = new Rectangle(lblRate.Location.X, lblRate.Location.Y, lblRate.Size.Width, lblRate.Size.Height);
-
-            originalGroupExport = new Rectangle(groupExport.Location.X, groupExport.Location.Y, groupExport.Size.Width, groupExport.Size.Height);
-            originalLabelExportDelimiter = new Rectangle(lblExportDelimiter.Location.X, lblExportDelimiter.Location.Y, lblExportDelimiter.Size.Width, lblExportDelimiter.Size.Height);
-            originalTextExportDelimiter = new Rectangle(txtExportDelimiter.Location.X, txtExportDelimiter.Location.Y, txtExportDelimiter.Size.Width, txtExportDelimiter.Size.Height);
-            originalLabelExportQualifier = new Rectangle(lblExportQualifier.Location.X, lblExportQualifier.Location.Y, lblExportQualifier.Size.Width, lblExportQualifier.Size.Height);
-            originalTextExportQualifier = new Rectangle(txtExportQualifier.Location.X, txtExportQualifier.Location.Y, txtExportQualifier.Size.Width, txtExportQualifier.Size.Height);
-            originalCheckBoxExportAppend = new Rectangle(cbExportAppend.Location.X, cbExportAppend.Location.Y, cbExportAppend.Size.Width, cbExportAppend.Size.Height);
-            originalButtonExportSave = new Rectangle(btnExportSave.Location.X, btnExportSave.Location.Y, btnExportSave.Size.Width, btnExportSave.Size.Height);
-            originalButtonExportOpen = new Rectangle(btnExportOpen.Location.X, btnExportOpen.Location.Y, btnExportOpen.Size.Width, btnExportOpen.Size.Height);
-            originalLabelExportPath = new Rectangle(lblExportPath.Location.X, lblExportPath.Location.Y, lblExportPath.Size.Width, lblExportPath.Size.Height);
-            originalTextExportPath = new Rectangle(txtExportPath.Location.X, txtExportPath.Location.Y, txtExportPath.Size.Width, txtExportPath.Size.Height);
+            {
+                // akna elementide mõõtmete vaikeväärtuste määramine
+                originalWindowSize = new Rectangle(this.Location.X, this.Location.Y, this.Size.Width, this.Size.Height);
+                originalChartPriceSize = new Rectangle(chartPrice.Location.X, chartPrice.Location.Y, chartPrice.Size.Width, chartPrice.Size.Height);
+                originalTablePriceSize = new Rectangle(tablePrice.Location.X, tablePrice.Location.Y, tablePrice.Size.Width, tablePrice.Size.Height);
+                originalTablePackagesSize = new Rectangle(tablePackages.Location.X, tablePackages.Location.Y, tablePackages.Size.Width, tablePackages.Size.Height);
+                originalButtonChangeSize = new Rectangle(btnChangeSize.Location.X, btnChangeSize.Location.Y, btnChangeSize.Size.Width, btnChangeSize.Size.Height);
+                originalLabelKasutusmall = new Rectangle(lblKasutusmall.Location.X, lblKasutusmall.Location.Y, lblKasutusmall.Size.Width, lblKasutusmall.Size.Height);
+                originalComboBoxKasutusmall = new Rectangle(cbKasutusmall.Location.X, cbKasutusmall.Location.Y, cbKasutusmall.Size.Width, cbKasutusmall.Size.Height);
+                originalLabelAeg = new Rectangle(lblAeg.Location.X, lblAeg.Location.Y, lblAeg.Size.Width, lblAeg.Size.Height);
+                originalTextAjakulu = new Rectangle(txtAjakulu.Location.X, txtAjakulu.Location.Y, txtAjakulu.Size.Width, txtAjakulu.Size.Height);
+                originalLabelTund = new Rectangle(lblTund.Location.X, lblTund.Location.Y, lblTund.Size.Width, lblTund.Size.Height);
+                originalLabelV6imsus = new Rectangle(lblVoimsus.Location.X, lblVoimsus.Location.Y, lblVoimsus.Size.Width, lblVoimsus.Size.Height);
+                originalTextV6imsus = new Rectangle(txtVoimsus.Location.X, txtVoimsus.Location.Y, txtVoimsus.Size.Width, txtVoimsus.Size.Height);
+                originalLabelkW = new Rectangle(lblkW.Location.X, lblkW.Location.Y, lblkW.Size.Width, lblkW.Size.Height);
+                originalLabelHind = new Rectangle(lblHind.Location.X, lblHind.Location.Y, lblHind.Size.Width, lblHind.Size.Height);
+                originalTextHind = new Rectangle(txtHind.Location.X, txtHind.Location.Y, txtHind.Size.Width, txtHind.Size.Height);
+                originalLabelAndresEek = new Rectangle(lblAndresEek.Location.X, lblAndresEek.Location.Y, lblAndresEek.Size.Width, lblAndresEek.Size.Height);
+                originalTextDebug = new Rectangle(txtDebug.Location.X, txtDebug.Location.Y, txtDebug.Size.Width, txtDebug.Size.Height);
+                originalButtonAvaCsv = new Rectangle(btnAvaCSV.Location.X, btnAvaCSV.Location.Y, btnAvaCSV.Size.Width, btnAvaCSV.Size.Height);
+                originalCheckBoxShowPrice = new Rectangle(cbShowPrice.Location.X, cbShowPrice.Location.Y, cbShowPrice.Size.Width, cbShowPrice.Size.Height);
+                originalCheckBoxShowUsage = new Rectangle(cbShowUsage.Location.X, cbShowUsage.Location.Y, cbShowUsage.Size.Width, cbShowUsage.Size.Height);
+                originalCheckBoxShowTable = new Rectangle(cbShowTabel.Location.X, cbShowTabel.Location.Y, cbShowTabel.Size.Width, cbShowTabel.Size.Height);
+                originalLabelBeginning = new Rectangle(lblBeginning.Location.X, lblBeginning.Location.Y, lblBeginning.Size.Width, lblBeginning.Size.Height);
+                originalDateStartTimePicker = new Rectangle(dateStartTime.Location.X, dateStartTime.Location.Y, dateStartTime.Size.Width, dateStartTime.Size.Height);
+                originalLabelEnd = new Rectangle(lblEnd.Location.X, lblEnd.Location.Y, lblEnd.Size.Width, lblEnd.Size.Height);
+                originalDateStopTimePicker = new Rectangle(dateStopTime.Location.X, dateStopTime.Location.Y, dateStopTime.Size.Width, dateStopTime.Size.Height);
+                originalGroupBoxGroupTypePrice = new Rectangle(groupPriceType.Location.X, groupPriceType.Location.Y, groupPriceType.Size.Width, groupPriceType.Size.Height);
+                originalLabelTarbimisAeg = new Rectangle(lblTarbimisAeg.Location.X, lblTarbimisAeg.Location.Y, lblTarbimisAeg.Size.Width, lblTarbimisAeg.Size.Height);
+                originalTextTarbimisAeg = new Rectangle(txtTarbimisAeg.Location.X, txtTarbimisAeg.Location.Y, txtTarbimisAeg.Size.Width, txtTarbimisAeg.Size.Height);
+                originalLabelCostNow = new Rectangle(lblCostNow.Location.X, lblCostNow.Location.Y, lblCostNow.Size.Width, lblCostNow.Size.Height);
+                originalTextCostNow = new Rectangle(txtCostNow.Location.X, txtCostNow.Location.Y, txtCostNow.Size.Width, txtCostNow.Size.Height);
+                originalLabelSKwh2 = new Rectangle(lblSKwh2.Location.X, lblSKwh2.Location.Y, lblSKwh2.Size.Width, lblSKwh2.Size.Height);
+                originalButtonDarkMode = new Rectangle(btnDarkMode.Location.X, btnDarkMode.Location.Y, btnDarkMode.Size.Width, btnDarkMode.Size.Height);
+                originalBtnOpenPackages = new Rectangle(btnOpenPackages.Location.X, btnOpenPackages.Location.Y, btnOpenPackages.Size.Width, btnOpenPackages.Size.Height);
+                originalRadioStockPrice = new Rectangle(rbStockPrice.Location.X, rbStockPrice.Location.Y, rbStockPrice.Size.Width, rbStockPrice.Size.Height);
+                originalRadioMonthlyCost = new Rectangle(rbMonthlyCost.Location.X, rbMonthlyCost.Location.Y, rbMonthlyCost.Size.Width, rbMonthlyCost.Size.Height);
+                originalTextMonthlyPrice = new Rectangle(txtMonthlyPrice.Location.X, txtMonthlyPrice.Location.Y, txtMonthlyPrice.Size.Width, txtMonthlyPrice.Size.Height);
+                originalLabelRate = new Rectangle(lblRate.Location.X, lblRate.Location.Y, lblRate.Size.Width, lblRate.Size.Height);
+                originalGroupExport = new Rectangle(groupExport.Location.X, groupExport.Location.Y, groupExport.Size.Width, groupExport.Size.Height);
+                originalLabelExportDelimiter = new Rectangle(lblExportDelimiter.Location.X, lblExportDelimiter.Location.Y, lblExportDelimiter.Size.Width, lblExportDelimiter.Size.Height);
+                originalTextExportDelimiter = new Rectangle(txtExportDelimiter.Location.X, txtExportDelimiter.Location.Y, txtExportDelimiter.Size.Width, txtExportDelimiter.Size.Height);
+                originalLabelExportQualifier = new Rectangle(lblExportQualifier.Location.X, lblExportQualifier.Location.Y, lblExportQualifier.Size.Width, lblExportQualifier.Size.Height);
+                originalTextExportQualifier = new Rectangle(txtExportQualifier.Location.X, txtExportQualifier.Location.Y, txtExportQualifier.Size.Width, txtExportQualifier.Size.Height);
+                originalCheckBoxExportAppend = new Rectangle(cbExportAppend.Location.X, cbExportAppend.Location.Y, cbExportAppend.Size.Width, cbExportAppend.Size.Height);
+                originalButtonExportSave = new Rectangle(btnExportSave.Location.X, btnExportSave.Location.Y, btnExportSave.Size.Width, btnExportSave.Size.Height);
+                originalButtonExportOpen = new Rectangle(btnExportOpen.Location.X, btnExportOpen.Location.Y, btnExportOpen.Size.Width, btnExportOpen.Size.Height);
+                originalLabelExportPath = new Rectangle(lblExportPath.Location.X, lblExportPath.Location.Y, lblExportPath.Size.Width, lblExportPath.Size.Height);
+                originalTextExportPath = new Rectangle(txtExportPath.Location.X, txtExportPath.Location.Y, txtExportPath.Size.Width, txtExportPath.Size.Height);
+            }
         }
 
-
-        private DateTime lastUpdated;
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void updateCostNow()
         {
             var time = DateTime.Now;
@@ -740,6 +892,22 @@ namespace Kasutajaliides
             }
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         bool handleNumberBoxKeyPress(string text, KeyPressEventArgs e)
         {
             double parsedValue;
@@ -753,16 +921,64 @@ namespace Kasutajaliides
             return true;
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void txtAjakulu_KeyPress(object sender, KeyPressEventArgs e)
         {
             this.handleNumberBoxKeyPress(txtAjakulu.Text, e);
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void txtVoimsus_KeyPress(object sender, KeyPressEventArgs e)
         {
             this.handleNumberBoxKeyPress(txtVoimsus.Text, e);
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void dateStartTime_ValueChanged(object sender, EventArgs e)
         {
             txtDebug.AppendText("; date: " + sender.ToString());
@@ -785,15 +1001,64 @@ namespace Kasutajaliides
             calcPrice();
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void dateStartTime_DropDown(object sender, EventArgs e)
         {
             dateStartTime.ValueChanged += dateStartTime_ValueChanged;
         }
+
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void dateStartTime_CloseUp(object sender, EventArgs e)
         {
             dateStartTime.ValueChanged -= dateStartTime_ValueChanged;
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void dateStopTime_ValueChanged(object sender, EventArgs e)
         {
             txtDebug.AppendText("date2: " + sender.ToString());
@@ -814,15 +1079,65 @@ namespace Kasutajaliides
             priceChart_zoom(dateStartTime.Value, dateStopTime.Value); // uuendab ja suurendab graafikut!
             calcPrice();
         }
+
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void dateStopTime_DropDown(object sender, EventArgs e)
         {
             dateStopTime.ValueChanged += dateStopTime_ValueChanged;
         }
+
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void dateStopTime_CloseUp(object sender, EventArgs e)
         {
             dateStopTime.ValueChanged -= dateStopTime_ValueChanged;
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void cbShowPrice_CheckedChanged(object sender, EventArgs e)
         {
             var state = cbShowPrice.Checked;
@@ -840,6 +1155,22 @@ namespace Kasutajaliides
             }
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void cbShowTabel_CheckedChanged(object sender, EventArgs e)
         {
             var state = cbShowTabel.Checked;
@@ -858,12 +1189,44 @@ namespace Kasutajaliides
             updateGraph();
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void Kasutajaliides_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Salvestab sätted
             AS.saveFile();
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void rbStockPrice_CheckedChanged(object sender, EventArgs e)
         {
             var state = rbStockPrice.Checked;
@@ -878,6 +1241,22 @@ namespace Kasutajaliides
             calcPrice();
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void cbKasutusmall_SelectedValueChanged(object sender, EventArgs e)
         {
             try
@@ -896,6 +1275,22 @@ namespace Kasutajaliides
             }
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         void handleNumberBoxChanged(ref TextBox box, double maxLimit = Double.PositiveInfinity)
         {
             string str = box.Text;
@@ -953,18 +1348,66 @@ namespace Kasutajaliides
             }
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void txtAjakulu_TextChanged(object sender, EventArgs e)
         {
             this.handleNumberBoxChanged(ref txtAjakulu, 1e6);
             calcPrice();
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void txtVoimsus_TextChanged(object sender, EventArgs e)
         {
             this.handleNumberBoxChanged(ref txtVoimsus, 1e4);
             calcPrice();
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void txtMonthlyPrice_TextChanged(object sender, EventArgs e)
         {
             this.handleNumberBoxChanged(ref txtMonthlyPrice, 1e4);
@@ -973,6 +1416,23 @@ namespace Kasutajaliides
                 calcPrice();
             }
         }
+
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void btnNormalSize_Click(object sender, EventArgs e)
         {
             if (state)
@@ -1023,7 +1483,6 @@ namespace Kasutajaliides
                 btnOpenPackages.Font = Bigger;
                 btnChangeSize.Font = Bigger;
                 btnDarkMode.Font = Bigger;
-                 
                 groupExport.Font = new Font("Impact", 12);
                 lblExportDelimiter.Font = Bigger;
                 txtExportDelimiter.Font = Bigger;
@@ -1034,7 +1493,6 @@ namespace Kasutajaliides
                 btnExportOpen.Font = Bigger;
                 lblExportPath.Font = Bigger;
                 txtExportPath.Font = Bigger;
-
                 state = false;
             }
             else
@@ -1085,7 +1543,6 @@ namespace Kasutajaliides
                 btnOpenPackages.Font = Normal;
                 btnChangeSize.Font = Normal;
                 btnDarkMode.Font = Normal;
-
                 groupExport.Font = new Font("Impact", 9);
                 lblExportDelimiter.Font = Normal;
                 txtExportDelimiter.Font = Normal;
@@ -1100,6 +1557,22 @@ namespace Kasutajaliides
             }
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void cbShowUsage_CheckedChanged(object sender, EventArgs e)
         {
             var state = cbShowUsage.Checked;
@@ -1114,11 +1587,43 @@ namespace Kasutajaliides
             updateGraph();
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void txtMonthlyPrice_KeyPress(object sender, KeyPressEventArgs e)
         {
             this.handleNumberBoxKeyPress(txtMonthlyPrice.Text, e);
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void resizeGuiElement(Rectangle nelinurk, Control element)
         {
             // kui suure osa moodustavad uued mõõtmed ja koordinaadid esialgsetest
@@ -1132,6 +1637,22 @@ namespace Kasutajaliides
             element.Size = new Size(uusXlaius, uusYk6rgus);
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void btnDarkMode_Click(object sender, EventArgs e)
         {
             isNotDarkMode = !isNotDarkMode;
@@ -1302,9 +1823,24 @@ namespace Kasutajaliides
             this.updatePakettideVarvid();
         }
 
-        
 
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void btnOpenPackages_Click(object sender, EventArgs e)
         {
             if (AP.chooseFilePackages())
@@ -1314,6 +1850,22 @@ namespace Kasutajaliides
             }
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private bool openCSVPackage()
         {
             bool ret = true;
@@ -1353,6 +1905,22 @@ namespace Kasutajaliides
             return ret;
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void Kasutajaliides_Resize(object sender, EventArgs e)
         {
             resizeGuiElement(originalChartPriceSize, chartPrice);
@@ -1407,6 +1975,22 @@ namespace Kasutajaliides
             Refresh(); // vajalik et ei tekiks "render glitche" (nt. ComboBox ei suurene korraks jms.)
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void tablePackages_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             //MessageBox.Show("It works!");
@@ -1543,6 +2127,22 @@ namespace Kasutajaliides
             updateGraph();
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void tablePackages_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             var index = e.RowIndex;
@@ -1553,6 +2153,20 @@ namespace Kasutajaliides
             tablePackages_RowHeaderMouseClick(sender, e);
         }
 
+        // GRAAFIKU HIIRERULLIGA SUURENDAMISE FUNKTSIOON
+        /* Funktsioon kasutab chartPrice lahtris hiire asukohta, mille põhjal leitakse pointeri asukoht ajaskaalal
+         * (x-teljel). Graafiku alg- ja lõpuajast kui rajadest lähtudes implementeeritakse graafiku suurendamine. Kui hiir
+         * paikneb sektsioonis chartPrice ja selle x-koordinaat jääb ajaskaalal algus- ja lõpuaja vahele, siis arvutatakse
+         * hiire asukoha põhjal graafiku skaleerimise saavutamiseks uus algus- ja lõppaeg. Seejärel kutsutakse välja funktsioon
+         * priceChart_zoom(), mis ajad uuendab ja graafiku värskendab.
+         * 
+         * PARAMEETRID (SISEND):
+         *      sender: objekt mille kohta sündmused kehtivad
+         *      e: hiire sündmustele vastavad argumendid (MouseEventArgs tüüpi)
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * -
+         */
         // https://stackoverflow.com/questions/47463926/how-to-get-pixel-position-from-datetime-value-on-x-axis 
         // https://stackoverflow.com/questions/11955866/retrieving-datetime-x-axis-value-from-chart-control 
         void chartPrice_zooming(object sender, MouseEventArgs e)
@@ -1590,6 +2204,22 @@ namespace Kasutajaliides
             }
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void tmrCostNow_Tick(object sender, EventArgs e)
         {
             this.updateCostNow();
@@ -1597,6 +2227,22 @@ namespace Kasutajaliides
             //txtDebug.AppendText(Environment.NewLine);
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         void priceChart_MouseDown(object sender, MouseEventArgs e)
         {
             state3 = true;
@@ -1607,6 +2253,22 @@ namespace Kasutajaliides
             }
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void btnExportSave_Click(object sender, EventArgs e)
         {
             if (txtExportPath.Text.Length == 0)
@@ -1667,11 +2329,43 @@ namespace Kasutajaliides
             }
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void btnExportOpen_Click(object sender, EventArgs e)
         {
             txtExportPath.Text = (string)CSV.setFileToSave();
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         void priceChart_MouseUp(object sender, MouseEventArgs e)
         {
             if (state3) // vasak hiireklahv ALLA
@@ -1691,6 +2385,23 @@ namespace Kasutajaliides
             }
             state3 = false;
         }
+
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         void priceChart_zoom(DateTime start, DateTime stop)
         {
             dateStartTime.Value = start;
@@ -1703,6 +2414,22 @@ namespace Kasutajaliides
             calcPrice();
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         void drawGreenPacketColumn(ref DataGridView table, int greenPacketRow)
         {
             for (int i = 0; i < table.Rows.Count; ++i)
@@ -1725,6 +2452,23 @@ namespace Kasutajaliides
                 }
             }
         }
+
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         void resetRowColor(ref DataGridView table, int rowIdx, int skipRow)
         {
             for (int i = 0; i < table.Rows[rowIdx].Cells.Count; ++i)
@@ -1737,6 +2481,23 @@ namespace Kasutajaliides
                 table.Rows[rowIdx].Cells[i].Style = null;
             }
         }
+
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         void setRowColor(ref DataGridView table, int rowIdx, Color foreColor, Color backColor, int skipRow)
         {
             for (int i = 0; i < table.Rows[rowIdx].Cells.Count; ++i)
@@ -1758,6 +2519,22 @@ namespace Kasutajaliides
             }
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void updatePakettideVarvid()
         {
             // Leiab minimaalse ja maksimaalse hetkehinnaga müüja
@@ -1797,6 +2574,22 @@ namespace Kasutajaliides
             }
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void updatePakettideHinnad(DateTime time)
         {
             // Kui tahetakse hetkehinna näitu eemaldada
@@ -1823,6 +2616,23 @@ namespace Kasutajaliides
                 this.updatePakettideVarvid();
             }
         }
+
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void updatePakettideMallid(DateTime startTime, double usageLength, double power)
         {
             // Kui tahetakse tarbimismalli maksumust kõrvaldada
@@ -1847,19 +2657,6 @@ namespace Kasutajaliides
                 // stopp-argument on aeg, kust algab viimane tund
                 var stockRange = VK.createRange(this.priceData, startTime, stopTime);
                 var usageRange = AR.generateUsageData(startTime, usageLength, power);
-
-                /*if (stockRange.Count != usageRange.Count)
-                {
-                    // Midagi on katki :/
-                    Console.WriteLine("Ei ole võrdsed!!: " + stockRange.Count.ToString() + " ja " + usageRange.Count.ToString());
-                }
-                else
-                {
-                    for (int i = 0; i < stockRange.Count; ++i)
-                    {
-                        Console.WriteLine(stockRange[i].Item2.ToString() + ": " + usageRange[i].Item2.ToString() + " kW");
-                    }
-                }*/
 
                 for (int i = 0; i < tablePackages.Rows.Count; ++i)
                 {
@@ -1894,6 +2691,23 @@ namespace Kasutajaliides
                 }
             }
         }
+
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         private void updatePakettideTarbimishind()
         {
             if (VK.userDataTimeRange.Count == 0)

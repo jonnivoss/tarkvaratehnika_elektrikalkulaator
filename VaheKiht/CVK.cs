@@ -22,7 +22,22 @@ namespace VaheKiht
 
         public double averagePrice { get; private set; } = 0.0;
 
-
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         public VecT createRange(VecT inData, DateTime start, DateTime stop)
         {
             if (start > stop)
@@ -46,6 +61,23 @@ namespace VaheKiht
                 return null;
             }
         }
+
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         public bool createUserDataRange(VecT inData, DateTime start, DateTime stop)
         {
             if (start > stop)
@@ -72,6 +104,23 @@ namespace VaheKiht
                 return false;
             }
         }
+
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         public bool createStockRange(VecT inData, DateTime start, DateTime stop)
         {
             if (start > stop)
@@ -105,6 +154,22 @@ namespace VaheKiht
             }
         }
 
+        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        /* Funktsiooni kirjeldus siia!
+         * 
+         * PARAMEETRID (SISEND):
+         *      a
+         *      b
+         *      c
+         *      
+         * PARAMEETRID (VÄLJUND):
+         *      d
+         *      e
+         *      f
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * 
+         */
         public void addLastPoints()
         {
             if (this.userDataTimeRange.Count > 0)

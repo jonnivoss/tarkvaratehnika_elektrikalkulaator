@@ -37,7 +37,7 @@ namespace Arvutaja
          *      1: vähemalt üks integreerimisrajadest puudub andmete hulgas
          *      2: integreerimisrajad on vahetuses
          */
-        public int integral(VecT andmed1, VecT andmed2, System.DateTime alumine, System.DateTime ylemine, ref double integraal)
+        public int integral(VecT andmed1, VecT andmed2, System.DateTime alumine, System.DateTime ylemine, out double integraal)
         {
             if (alumine > ylemine)
             {
@@ -116,7 +116,7 @@ namespace Arvutaja
          *      1: viga - algusaja väärtus on suurem lõppaja väärtusest
          *      2: võimalik viga integreerimisel
          */
-        public int smallestIntegral(VecT priceData, double power, double usageLength, System.DateTime start, System.DateTime stop, ref double outSmallestIntegral, ref System.DateTime outOptimalDate)
+        public int smallestIntegral(VecT priceData, double power, double usageLength, System.DateTime start, System.DateTime stop, out double outSmallestIntegral, out System.DateTime outOptimalDate)
         {
             if (start > stop)
             {

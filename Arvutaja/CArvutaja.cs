@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
 
 namespace Arvutaja
 {
-    /*
-     * KLASS ARVUTAJA (Class Arvutaja -> CArvutaja)
+    /* KLASS ARVUTAJA (Class Arvutaja -> CArvutaja)
      * Tegu on klassiga, mis defineerib projekti "Tarkvaratehnika-elektrikalkulaator"
-     * jaoks põhilised matemaatilised meetodid nagu integreerija (integrator) ja 
-     * diferentseerija (differentiator).
+     * jaoks põhilised matemaatilised meetodid nagu integreerija (integral), keskmise
+     * hinna leidja (average)
      */
     public class CArvutaja : Arvutaja.IArvutaja
     {
@@ -21,11 +16,27 @@ namespace Arvutaja
         protected System.DateTime ylemineRaja;
         protected System.DateTime samm;
 
+
         // #### MEETODID ####
 
         // KAHE FUNKTSIOONI KORRUTISE INTEGRAATOR
-        // andmed1: esimene funktsioon
-        // andmed2: teine funktsioon
+        /* Funktsioon võtab parameetriteks tarbimisandmed ja elektrihinna, kuupäevade kujul alumise ja
+         * ülemise raja, ning veel ujukomaarvulise muutuja viida integraali väärtuse salvestamiseks.
+         * Funktsioon leiab nõutud vahemikus sisendfunktsioonide korrutise integraali ja tagastab selle
+         * väärtuse viida vahendusel.
+         * 
+         * PARAMEETRID (SISENDID):
+         *      andmed1: esimene funktsioon tarbimisandmete näol (VecT tüüpi andmestruktuur)
+         *      andmed2: teine funktsioon elektrihinna näol (VecT tüüpi andmestruktuur)
+         *      alumine: alumine raja (DateTime tüüpi)
+         *      ylemine: ülemine raja (DateTime tüüpi)
+         *      integraal: integraali tagastusväärtuse viit (ref double)
+         * 
+         * TÄISARVULISED TAGASTUSVÄÄRTUSED:
+         *      0: integraal arvutati edukalt
+         *      1: vähemalt üks integreerimisrajadest puudub andmete hulgas
+         *      2: integreerimisrajad on vahetuses
+         */
         public int integral(VecT andmed1, VecT andmed2, System.DateTime alumine, System.DateTime ylemine, out double integraal)
         {
             if (alumine > ylemine)
@@ -58,11 +69,19 @@ namespace Arvutaja
             return 0;
         }
 
-        public VecT generateUsageData(
-             System.DateTime start,
-             double usageLength,
-             double power
-        )
+        // TARBIMISMALLI ANDMETE GENERAATOR
+        /* Funktsioon võtab argumendiks algusaja, kodumasina kasutuskestuse ja tarbimisvõimsuse,
+         * seejärel teisendab ta kasutusmalli tarbimisandmed integraatori jaoks sobivale kujule (täisarvudeks)
+         * 
+         * PARAMEETRID (SISENDID):
+         *      start: algusaeg (DateTime tüüpi)
+         *      usageLength: tarbimisaeg tundides (double)
+         *      power: tarbimisvõimsus kilovattides (double)
+         * 
+         * ANDMESTRUKTUURI TÜÜPI TAGASTUSVÄÄRTUSED:
+         *      ...
+         */
+        public VecT generateUsageData(System.DateTime start, double usageLength, double power)
         {
             VecT usageData = new VecT();
             // Genereerimisel arvestab seda, et kui on komaga arv tunde, siis kohtleb
@@ -77,15 +96,27 @@ namespace Arvutaja
             return usageData;
         }
 
-        public int smallestIntegral(
-            VecT priceData,
-            double power,
-            double usageLength,
-            System.DateTime start,
-            System.DateTime stop,
-            out double outSmallestIntegral,
-            out System.DateTime outOptimalDate
-        )
+        // VÄHIMA TARBIMISHINNA LEIDMISEKS VÄHIMA INTEGRAALI ARVUTAJA
+        /* Funktsioon võtab parameetriteks elektrihinna andmestruktuuri, kodumasina tarbimisvõimsuse, tarbimisaja,
+         * vaadeldava ajavahemiku algusaja ja lõppaja ning viidad minimaalse tarbimishinna ja vastava soovitatud 
+         * algusaja tagastamiseks. Valitud tarbimismalli järgi arvutatakse, millal oleks odavaim antud kodumasinat kasutada
+         * leitakse ja tagastatakse vastav hind ning tarbimise algusaeg.
+         * 
+         * PARAMEETRID (SISENDID):
+         *      priceData: elektrihind (VecT tüüpi andmestruktuur)
+         *      power: tarbimisvõimsus kilovattides (double)
+         *      usageLength: kasutusaeg tundides (double)
+         *      start: vaadeldava ajavahemiku algusaeg (DateTime tüüpi)
+         *      stop: vaadeldava ajavahemiku lõppaeg (DateTime tüüpi)
+         *      outSmallestIntegral: viit minimaalse hinna tagastamiseks (ref double)
+         *      outOptimalDate: viit optimaalse algusaja tagastamiseks (ref DateTime)
+         * 
+         * TÄISARVULISED TAGASTUSVÄÄRTUSED:
+         *      0: funktsiooni töö kulges edukalt
+         *      1: viga - algusaja väärtus on suurem lõppaja väärtusest
+         *      2: võimalik viga integreerimisel
+         */
+        public int smallestIntegral(VecT priceData, double power, double usageLength, System.DateTime start, System.DateTime stop, out double outSmallestIntegral, out System.DateTime outOptimalDate)
         {
             if (start > stop)
             {
@@ -137,11 +168,6 @@ namespace Arvutaja
             outSmallestIntegral = bestIntegral;
             outOptimalDate      = bestDate;
 
-            return 0;
-        }
-
-        public int diferentseerija()
-        {
             return 0;
         }
 
@@ -238,7 +264,6 @@ namespace Arvutaja
                     riigiPyhad[2] = new DateTime(2027, 5, 16);
                     break;
             }
-
 
             // Riigipühadel on öötariif
             // https://raha.geenius.ee/rubriik/uudis/eesti-energia-muudab-oma-tuuptingimusi/

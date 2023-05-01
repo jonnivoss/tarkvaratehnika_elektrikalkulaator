@@ -61,3 +61,6 @@ C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\bin\Debu
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\bin\Debug\Andmepyydja.pdb
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\obj\Debug\Arvutaja.csproj.AssemblyReference.cache
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\obj\Debug\Arvutaja.csproj.CopyComplete
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\bin\Debug\Andmepyydja.dll
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\bin\Debug\Andmepyydja.pdb
+C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\Arvutaja\obj\Debug\Arvutaja.csproj.CopyComplete

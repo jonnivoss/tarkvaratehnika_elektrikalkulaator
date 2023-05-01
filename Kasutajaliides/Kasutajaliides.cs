@@ -755,12 +755,12 @@ namespace Kasutajaliides
 
         private void txtAjakulu_KeyPress(object sender, KeyPressEventArgs e)
         {
-            this.handleNumberBoxKeyPress(txtAjakulu.Text, e/*, 1e6*/);
+            this.handleNumberBoxKeyPress(txtAjakulu.Text, e);
         }
 
         private void txtVoimsus_KeyPress(object sender, KeyPressEventArgs e)
         {
-            this.handleNumberBoxKeyPress(txtVoimsus.Text, e/*, 1e4*/);
+            this.handleNumberBoxKeyPress(txtVoimsus.Text, e);
         }
 
         private void dateStartTime_ValueChanged(object sender, EventArgs e)
@@ -896,26 +896,33 @@ namespace Kasutajaliides
             }
         }
 
-        void handleNumberBoxChanged(string str, double maxLimit = Double.PositiveInfinity)
+        void handleNumberBoxChanged(ref TextBox box, double maxLimit = Double.PositiveInfinity)
         {
-            Console.WriteLine("Text: " + str);
+            double parsedValue;
+            var isParsed = double.TryParse(box.Text, out parsedValue);
+            if (isParsed && parsedValue > maxLimit)
+            {
+                box.Text = maxLimit.ToString();
+            }
+
+            Console.WriteLine("Text: " + box.Text);
         }
 
         private void txtAjakulu_TextChanged(object sender, EventArgs e)
         {
-            this.handleNumberBoxChanged(txtAjakulu.Text);
+            this.handleNumberBoxChanged(ref txtAjakulu, 1e6);
             calcPrice();
         }
 
         private void txtVoimsus_TextChanged(object sender, EventArgs e)
         {
-            this.handleNumberBoxChanged(txtVoimsus.Text);
+            this.handleNumberBoxChanged(ref txtVoimsus, 1e4);
             calcPrice();
         }
 
         private void txtMonthlyPrice_TextChanged(object sender, EventArgs e)
         {
-            this.handleNumberBoxChanged(txtMonthlyPrice.Text);
+            this.handleNumberBoxChanged(ref txtMonthlyPrice, 1e4);
             if (rbMonthlyCost.Checked)
             {
                 calcPrice();
@@ -1064,7 +1071,7 @@ namespace Kasutajaliides
 
         private void txtMonthlyPrice_KeyPress(object sender, KeyPressEventArgs e)
         {
-            this.handleNumberBoxKeyPress(txtMonthlyPrice.Text, e/*, 1e4*/);
+            this.handleNumberBoxKeyPress(txtMonthlyPrice.Text, e);
         }
 
         private void resizeGuiElement(Rectangle nelinurk, Control element)

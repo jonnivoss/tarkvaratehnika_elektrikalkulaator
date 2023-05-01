@@ -30,6 +30,7 @@ namespace Arvutaja
          *      andmed2: teine funktsioon elektrihinna näol (VecT tüüpi andmestruktuur)
          *      alumine: alumine raja (DateTime tüüpi)
          *      ylemine: ülemine raja (DateTime tüüpi)
+         * PARAMEETRID (VÄLJUNDID):
          *      integraal: integraali tagastusväärtuse viit (ref double)
          * 
          * TÄISARVULISED TAGASTUSVÄÄRTUSED:
@@ -108,6 +109,7 @@ namespace Arvutaja
          *      usageLength: kasutusaeg tundides (double)
          *      start: vaadeldava ajavahemiku algusaeg (DateTime tüüpi)
          *      stop: vaadeldava ajavahemiku lõppaeg (DateTime tüüpi)
+         * PARAMEETRID (VÄLJUNDID):
          *      outSmallestIntegral: viit minimaalse hinna tagastamiseks (ref double)
          *      outOptimalDate: viit optimaalse algusaja tagastamiseks (ref DateTime)
          * 
@@ -171,12 +173,23 @@ namespace Arvutaja
             return 0;
         }
 
-        public int average(
-            VecT andmed,
-            System.DateTime alumine,
-            System.DateTime ylemine,
-            out double avg
-        )
+        // KESKMISE VÄÄRTUSE LEIDJA (ARITMEETILINE KESKMINE ELEKTRIHIND VÕI TARBIMINE)
+        /* Funktsioon võtab parameetriteks
+         * 
+         * PARAMEETRID (SISENDID):
+         *      andmed: sisendandmed (elektrihind/tarbimine) (VecT tüüpi andmestruktuur)
+         *      alumine: vaadeldava ajavahemiku algusaeg (DateTime tüüpi)
+         *      ylemine: vaadeldava ajavahemiku lõppaeg (DateTime tüüpi)
+         * PARAMEETRID (VÄLJUNDID):
+         *      avg: viit keskmise hinna tagastamiseks (ref double)
+         * 
+         * TÄISARVULISED TAGASTUSVÄÄRTUSED:
+         *      0: funktsiooni töö kulges edukalt
+         *      1: alumine ja ülemine raja vahetuses
+         *      2: andmetes puudusid antud kuupäevad
+         *      3: andmed puuduvad
+         */
+        public int average(VecT andmed, System.DateTime alumine, System.DateTime ylemine, out double avg)
         {
             if (alumine > ylemine)
             {
@@ -214,6 +227,17 @@ namespace Arvutaja
             return 0;
         }
 
+        // PÄEVASE JA ÖISE TARBIMISAJA ÜLE OTSUSTAJA
+        /* Funktsioon võtab parameetriks aja ning kontrollib, kas see kuulub elektri tarbimise mõistes
+         * päevase või öise tariifi juurde. Riigipühad loetakse öise tariifi juurde.
+         * 
+         * PARAMEETRID (SISENDID):
+         *      time: aeg (DateTime tüüpi)
+         * 
+         * TÕEVÄÄRTUSLIKUD TAGASTUSVÄÄRTUSED:
+         *      true: kuupäev ja kellaaeg vastavad päevasele tariifile
+         *      false: kuupäev ja kellaaeg vastavad öisele tariifile või riigipühale
+         */
         public bool isDailyRate(DateTime time)
         {
             // Quantize time to date and hours
@@ -285,6 +309,18 @@ namespace Arvutaja
             }
         }
 
+        // TARBIJA JAOKS LÕPPHINNA ARVUTAMINE
+        /* Funktsioon võtab parameetriteks börsihinna [€ senti/kWh], uuritava börsipaketi ja aja.
+         * Tagastatavaks väärtuseks leitakse antud ajahetkel kehtiv lõpphind (börsihind + marginaal + käibemaks).
+         * 
+         * PARAMEETRID (SISENDID):
+         *      stockPrice: börsihind [€ senti/kWh]
+         *      package: börsipakett (PackageInfo tüüpi andmestruktuur)
+         *      time: aeg (DateTime tüüpi)
+         * 
+         * REAALARVULISED TAGASTUSVÄÄRTUSED:
+         *      ...
+         */
         public double finalPrice(double stockPrice, AndmePyydja.IPackageInfo package, DateTime time)
         {
             // Käibemaks

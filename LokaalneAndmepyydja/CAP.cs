@@ -130,11 +130,12 @@ namespace AndmePyydja
             return true;
         }
 
-        public bool readUserDataFile(ref string contents)
+        public bool readUserDataFile(out string contents)
         {
             if (this.userDataFileName == "")
             {
                 // Failinime pole valitud
+                contents = "";
                 return false;
             }
             try
@@ -147,14 +148,16 @@ namespace AndmePyydja
             catch (Exception)
             {
                 // Faili lugemine ebaõnnestus
+                contents = "";
                 return false;
             }
         }
-        public bool readPackageFile(ref string contents)
+        public bool readPackageFile(out string contents)
         {
             if (this.packageFileName == "")
             {
                 // Failinime pole valitud
+                contents = "";
                 return false;
             }
             try
@@ -167,6 +170,7 @@ namespace AndmePyydja
             catch (Exception)
             {
                 // Faili lugemine ebaõnnestus
+                contents = "";
                 return false;
             }
         }

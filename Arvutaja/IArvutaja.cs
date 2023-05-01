@@ -35,7 +35,7 @@ namespace Arvutaja
             out double avg
         );
 
-        double finalPrice(double stockPrice, AndmePyydja.PackageInfo package, DateTime time);
+        double finalPrice(double stockPrice, AndmePyydja.IPackageInfo package, DateTime time);
 
         bool isDailyRate(DateTime time);
     }

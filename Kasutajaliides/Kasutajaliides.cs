@@ -39,6 +39,16 @@ namespace Kasutajaliides
         Color xtraDarkGreen = ColorTranslator.FromHtml("#054505");
         Color semiDarkRed = ColorTranslator.FromHtml("#bb2200");
 
+        // Lubatud tähed, mida peale numbrite kirjutada tohib numbrikasti
+        int[] numberBoxValidChars =
+        {
+             8, // Backspace
+             1, // Ctrl+A
+             3, // Ctrl+C
+            22, // Ctrl+V
+            13, // Enter
+        };
+
         VecT userData = new VecT();
         VecT priceData = new VecT();
         PackageT packageInfo = new PackageT();
@@ -721,26 +731,31 @@ namespace Kasutajaliides
             }
         }
 
-        private void txtAjakulu_KeyPress(object sender, KeyPressEventArgs e)
+        int handleNumberBoxKeyPress(string text, KeyPressEventArgs e, double maxLimit = Double.PositiveInfinity)
         {
             double parsedValue;
-            if (!double.TryParse(txtAjakulu.Text + e.KeyChar, out parsedValue) && e.KeyChar != 8 && e.KeyChar != 46)
+            bool isParsed = double.TryParse(text + e.KeyChar, out parsedValue);
+            if ((isParsed && (parsedValue > maxLimit)) || (!isParsed && !numberBoxValidChars.Contains(e.KeyChar)))
             {
-                MessageBox.Show("Palun sisestage ainult numbreid!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Handled = true;
-                return;
+                if (!isParsed)
+                {
+                    MessageBox.Show("Palun sisestage ainult numbreid!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return 2;
+                }
+                return 1;
             }
+            return 0;
+        }
+
+        private void txtAjakulu_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            this.handleNumberBoxKeyPress(txtAjakulu.Text, e, 1e6);
         }
 
         private void txtVoimsus_KeyPress(object sender, KeyPressEventArgs e)
         {
-            double parsedValue;
-            if (!double.TryParse(txtVoimsus.Text + e.KeyChar, out parsedValue) && e.KeyChar != 8 && e.KeyChar != 46)
-            {
-                MessageBox.Show("Palun sisestage ainult numbreid!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                e.Handled = true;
-                return;
-            }
+            this.handleNumberBoxKeyPress(txtVoimsus.Text, e, 1e4);
         }
 
         private void dateStartTime_ValueChanged(object sender, EventArgs e)
@@ -1034,12 +1049,7 @@ namespace Kasutajaliides
 
         private void tbMonthlyPrice_KeyPress(object sender, KeyPressEventArgs e)
         {
-            double parsedValue;
-            if (!double.TryParse(tbMonthlyPrice.Text + e.KeyChar, out parsedValue) && e.KeyChar != 8 && e.KeyChar != 46)
-            {
-                MessageBox.Show("Palun sisestage ainult numbreid!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                e.Handled = true;
-            }
+            this.handleNumberBoxKeyPress(tbMonthlyPrice.Text, e, 1e4);
         }
 
         private void resizeGuiElement(Rectangle nelinurk, Control element)

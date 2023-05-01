@@ -550,8 +550,7 @@ namespace Kasutajaliides
                     //Console.WriteLine("Begin: " + beg.ToString() + "; end: " + end.ToString());
 
 
-                    double bestIntegral = Double.PositiveInfinity;
-                    bestDate = beg;
+                    double bestIntegral;
 
                     smRet = AR.smallestIntegral(
                         this.VK.priceRange,
@@ -559,8 +558,8 @@ namespace Kasutajaliides
                         time,
                         beg,
                         dateStopTime.Value,
-                        ref bestIntegral,
-                        ref bestDate
+                        out bestIntegral,
+                        out bestDate
                     );
 
                     price = bestIntegral / 100.0;
@@ -1802,13 +1801,13 @@ namespace Kasutajaliides
                     }
 
                     // Leiab integraali
-                    double integral = 0.0;
+                    double integral;
                     int iRet = AR.integral(
                         usageRange,
                         stockRangeWithMargins,
                         startTime,
                         stopTime,
-                        ref integral
+                        out integral
                     );
 
                     if (iRet != 0)

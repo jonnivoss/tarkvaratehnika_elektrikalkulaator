@@ -108,6 +108,11 @@ namespace Kasutajaliides
         Rectangle originalButtonDarkMode;
         Rectangle originalBtnOpenPackages;
 
+        Rectangle originalRadioStockPrice;
+        Rectangle originalRadioMonthlyCost;
+        Rectangle originalTextMonthlyPrice;
+        Rectangle originalLabelRate;
+
         Rectangle originalGroupExport;
         Rectangle originalLabelExportDelimiter;
         Rectangle originalTextExportDelimiter;
@@ -683,6 +688,11 @@ namespace Kasutajaliides
             originalLabelSKwh2 = new Rectangle(lblSKwh2.Location.X, lblSKwh2.Location.Y, lblSKwh2.Size.Width, lblSKwh2.Size.Height);
             originalButtonDarkMode = new Rectangle(btnDarkMode.Location.X, btnDarkMode.Location.Y, btnDarkMode.Size.Width, btnDarkMode.Size.Height);
             originalBtnOpenPackages = new Rectangle(btnOpenPackages.Location.X, btnOpenPackages.Location.Y, btnOpenPackages.Size.Width, btnOpenPackages.Size.Height);
+
+            originalRadioStockPrice = new Rectangle(rbStockPrice.Location.X, rbStockPrice.Location.Y, rbStockPrice.Size.Width, rbStockPrice.Size.Height);
+            originalRadioMonthlyCost = new Rectangle(rbMonthlyCost.Location.X, rbMonthlyCost.Location.Y, rbMonthlyCost.Size.Width, rbMonthlyCost.Size.Height);
+            originalTextMonthlyPrice = new Rectangle(txtMonthlyPrice.Location.X, txtMonthlyPrice.Location.Y, txtMonthlyPrice.Size.Width, txtMonthlyPrice.Size.Height);
+            originalLabelRate = new Rectangle(lblRate.Location.X, lblRate.Location.Y, lblRate.Size.Width, lblRate.Size.Height);
 
             originalGroupExport = new Rectangle(groupExport.Location.X, groupExport.Location.Y, groupExport.Size.Width, groupExport.Size.Height);
             originalLabelExportDelimiter = new Rectangle(lblExportDelimiter.Location.X, lblExportDelimiter.Location.Y, lblExportDelimiter.Size.Width, lblExportDelimiter.Size.Height);
@@ -1325,6 +1335,11 @@ namespace Kasutajaliides
             resizeGuiElement(originalLabelSKwh2, lblSKwh2);
             resizeGuiElement(originalButtonDarkMode, btnDarkMode);
             resizeGuiElement(originalBtnOpenPackages, btnOpenPackages);
+
+            resizeGuiElement(originalRadioStockPrice, rbStockPrice);
+            resizeGuiElement(originalRadioMonthlyCost, rbMonthlyCost);
+            resizeGuiElement(originalTextMonthlyPrice, txtMonthlyPrice);
+            resizeGuiElement(originalLabelRate, lblRate);
 
             resizeGuiElement(originalGroupExport, groupExport);
             resizeGuiElement(originalLabelExportDelimiter, lblExportDelimiter);

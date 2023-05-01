@@ -273,7 +273,7 @@ namespace AndmePyydja
         }
 
 
-        private static CPackageInfo parseCSVPackageDataLine(ParseCSVDataLineT arguments)
+        private static IPackageInfo parseCSVPackageDataLine(ParseCSVDataLineT arguments)
         {
             // ParseCSVDataLineT.Item1 on rida
             // ParseCSVDataLineT.Item2 on delimiter

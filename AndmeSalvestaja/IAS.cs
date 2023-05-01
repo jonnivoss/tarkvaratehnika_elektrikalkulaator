@@ -19,6 +19,13 @@ namespace AndmeSalvestaja
         size
     };
 
+    interface ISerializable
+    {
+        Dictionary<ASSetting, string> setMap { get; set; }
+        VecT marketData { get; set; }
+        VecUCT useCases { get; }
+    }
+
     public interface IAS
     {
         bool loadFile();

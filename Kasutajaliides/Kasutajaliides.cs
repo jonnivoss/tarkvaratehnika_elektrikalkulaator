@@ -39,6 +39,16 @@ namespace Kasutajaliides
         Color xtraDarkGreen = ColorTranslator.FromHtml("#054505");
         Color semiDarkRed = ColorTranslator.FromHtml("#bb2200");
 
+        // Lubatud tähed, mida peale numbrite kirjutada tohib numbrikasti
+        int[] numberBoxValidChars =
+        {
+             8, // Backspace
+             1, // Ctrl+A
+             3, // Ctrl+C
+            22, // Ctrl+V
+            13, // Enter
+        };
+
         VecT userData = new VecT();
         VecT priceData = new VecT();
         PackageT packageInfo = new PackageT();
@@ -97,6 +107,11 @@ namespace Kasutajaliides
         Rectangle originalLabelSKwh2;
         Rectangle originalButtonDarkMode;
         Rectangle originalBtnOpenPackages;
+
+        Rectangle originalRadioStockPrice;
+        Rectangle originalRadioMonthlyCost;
+        Rectangle originalTextMonthlyPrice;
+        Rectangle originalLabelRate;
 
         Rectangle originalGroupExport;
         Rectangle originalLabelExportDelimiter;
@@ -540,8 +555,7 @@ namespace Kasutajaliides
                     //Console.WriteLine("Begin: " + beg.ToString() + "; end: " + end.ToString());
 
 
-                    double bestIntegral = Double.PositiveInfinity;
-                    bestDate = beg;
+                    double bestIntegral;
 
                     smRet = AR.smallestIntegral(
                         this.VK.priceRange,
@@ -549,8 +563,8 @@ namespace Kasutajaliides
                         time,
                         beg,
                         dateStopTime.Value,
-                        ref bestIntegral,
-                        ref bestDate
+                        out bestIntegral,
+                        out bestDate
                     );
 
                     price = bestIntegral / 100.0;
@@ -566,7 +580,7 @@ namespace Kasutajaliides
                 else
                 {
                     bestDate = dateStartTime.Value;
-                    var skwh = Double.Parse(tbMonthlyPrice.Text);
+                    var skwh = Double.Parse(txtMonthlyPrice.Text);
                     // Teisendab sentidest eurodesse
                     price = time * power * skwh / 100.0;
                 }
@@ -675,6 +689,11 @@ namespace Kasutajaliides
             originalButtonDarkMode = new Rectangle(btnDarkMode.Location.X, btnDarkMode.Location.Y, btnDarkMode.Size.Width, btnDarkMode.Size.Height);
             originalBtnOpenPackages = new Rectangle(btnOpenPackages.Location.X, btnOpenPackages.Location.Y, btnOpenPackages.Size.Width, btnOpenPackages.Size.Height);
 
+            originalRadioStockPrice = new Rectangle(rbStockPrice.Location.X, rbStockPrice.Location.Y, rbStockPrice.Size.Width, rbStockPrice.Size.Height);
+            originalRadioMonthlyCost = new Rectangle(rbMonthlyCost.Location.X, rbMonthlyCost.Location.Y, rbMonthlyCost.Size.Width, rbMonthlyCost.Size.Height);
+            originalTextMonthlyPrice = new Rectangle(txtMonthlyPrice.Location.X, txtMonthlyPrice.Location.Y, txtMonthlyPrice.Size.Width, txtMonthlyPrice.Size.Height);
+            originalLabelRate = new Rectangle(lblRate.Location.X, lblRate.Location.Y, lblRate.Size.Width, lblRate.Size.Height);
+
             originalGroupExport = new Rectangle(groupExport.Location.X, groupExport.Location.Y, groupExport.Size.Width, groupExport.Size.Height);
             originalLabelExportDelimiter = new Rectangle(lblExportDelimiter.Location.X, lblExportDelimiter.Location.Y, lblExportDelimiter.Size.Width, lblExportDelimiter.Size.Height);
             originalTextExportDelimiter = new Rectangle(txtExportDelimiter.Location.X, txtExportDelimiter.Location.Y, txtExportDelimiter.Size.Width, txtExportDelimiter.Size.Height);
@@ -721,26 +740,27 @@ namespace Kasutajaliides
             }
         }
 
-        private void txtAjakulu_KeyPress(object sender, KeyPressEventArgs e)
+        bool handleNumberBoxKeyPress(string text, KeyPressEventArgs e)
         {
             double parsedValue;
-            if (!double.TryParse(txtAjakulu.Text + e.KeyChar, out parsedValue) && e.KeyChar != 8 && e.KeyChar != 46)
+            bool isParsed = double.TryParse(text + e.KeyChar, out parsedValue);
+            if (!isParsed && !numberBoxValidChars.Contains(e.KeyChar))
             {
-                MessageBox.Show("Palun sisestage ainult numbreid!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Handled = true;
-                return;
+                MessageBox.Show("Palun sisestage ainult numbreid!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
+            return true;
+        }
+
+        private void txtAjakulu_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            this.handleNumberBoxKeyPress(txtAjakulu.Text, e);
         }
 
         private void txtVoimsus_KeyPress(object sender, KeyPressEventArgs e)
         {
-            double parsedValue;
-            if (!double.TryParse(txtVoimsus.Text + e.KeyChar, out parsedValue) && e.KeyChar != 8 && e.KeyChar != 46)
-            {
-                MessageBox.Show("Palun sisestage ainult numbreid!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                e.Handled = true;
-                return;
-            }
+            this.handleNumberBoxKeyPress(txtVoimsus.Text, e);
         }
 
         private void dateStartTime_ValueChanged(object sender, EventArgs e)
@@ -849,11 +869,11 @@ namespace Kasutajaliides
             var state = rbStockPrice.Checked;
             if (state)
             {
-                tbMonthlyPrice.Enabled = false;
+                txtMonthlyPrice.Enabled = false;
             }
             else
             {
-                tbMonthlyPrice.Enabled = true;
+                txtMonthlyPrice.Enabled = true;
             }
             calcPrice();
         }
@@ -862,9 +882,11 @@ namespace Kasutajaliides
         {
             try
             {
-                var item = AS.getUseCases()[cbKasutusmall.SelectedItem.ToString()];
-                txtVoimsus.Text = Math.Round(item.Item1 / 1000.0, 3).ToString();
-                txtAjakulu.Text = Math.Round(item.Item2 / 60.0, 3).ToString();
+                var userCase = AS.getUseCases()[cbKasutusmall.SelectedItem.ToString()];
+                // Vatid kilovattideks
+                txtVoimsus.Text = Math.Round(userCase.Item1 / 1000.0, 3).ToString();
+                // Minutid tundideks
+                txtAjakulu.Text = Math.Round(userCase.Item2 / 60.0, 3).ToString();
 
                 // Calculate price
                 calcPrice();
@@ -874,18 +896,68 @@ namespace Kasutajaliides
             }
         }
 
+        void handleNumberBoxChanged(ref TextBox box, double maxLimit = Double.PositiveInfinity)
+        {
+            string str = box.Text;
+
+            double parsedValue;
+            var isParsed = double.TryParse(str, out parsedValue);
+            if (isParsed && parsedValue > maxLimit)
+            {
+                box.Text = maxLimit.ToString();
+            }
+            else if (!isParsed)
+            {
+                // Esmalt jätab alles ainult numbrid/komad/punktid
+                char[] nums =
+                {
+                    '0',
+                    '1',
+                    '2',
+                    '3',
+                    '4',
+                    '5',
+                    '6',
+                    '7',
+                    '8',
+                    '9',
+                    '.',
+                    ','
+                };
+
+                string tempString = "";
+                foreach (var ch in str)
+                {
+                    if (nums.Contains(ch))
+                    {
+                        tempString += ch;
+                    }
+                }
+                str = tempString;
+                // Eemaldab lõpust tähti senikaua, kuni on parsitav
+                while ((str.Length > 0) && !double.TryParse(str, out parsedValue))
+                {
+                    str = str.Remove(str.Length - 1);
+                }
+                box.Text = str;
+            }
+        }
+
         private void txtAjakulu_TextChanged(object sender, EventArgs e)
         {
+            this.handleNumberBoxChanged(ref txtAjakulu, 1e6);
             calcPrice();
         }
 
         private void txtVoimsus_TextChanged(object sender, EventArgs e)
         {
+            this.handleNumberBoxChanged(ref txtVoimsus, 1e4);
             calcPrice();
         }
 
-        private void tbMonthlyPrice_TextChanged(object sender, EventArgs e)
+        private void txtMonthlyPrice_TextChanged(object sender, EventArgs e)
         {
+            this.handleNumberBoxChanged(ref txtMonthlyPrice, 1e4);
             if (rbMonthlyCost.Checked)
             {
                 calcPrice();
@@ -922,7 +994,7 @@ namespace Kasutajaliides
                 dateStartTime.Font = Bigger;
                 dateStopTime.Font = Bigger;
                 btnChangeSize.Font = Bigger;
-                tbMonthlyPrice.Font = Bigger;
+                txtMonthlyPrice.Font = Bigger;
                 lblRate.Font = Bigger;
                 lblTarbimisAeg.Font = Bigger;
                 txtTarbimisAeg.Font = Bigger;
@@ -984,7 +1056,7 @@ namespace Kasutajaliides
                 dateStartTime.Font = Normal;
                 dateStopTime.Font = Normal;
                 btnChangeSize.Font = Normal;
-                tbMonthlyPrice.Font = Normal;
+                txtMonthlyPrice.Font = Normal;
                 lblRate.Font = Normal;
                 lblTarbimisAeg.Font = Normal;
                 txtTarbimisAeg.Font = Normal;
@@ -1032,14 +1104,9 @@ namespace Kasutajaliides
             updateGraph();
         }
 
-        private void tbMonthlyPrice_KeyPress(object sender, KeyPressEventArgs e)
+        private void txtMonthlyPrice_KeyPress(object sender, KeyPressEventArgs e)
         {
-            double parsedValue;
-            if (!double.TryParse(tbMonthlyPrice.Text + e.KeyChar, out parsedValue) && e.KeyChar != 8 && e.KeyChar != 46)
-            {
-                MessageBox.Show("Palun sisestage ainult numbreid!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                e.Handled = true;
-            }
+            this.handleNumberBoxKeyPress(txtMonthlyPrice.Text, e);
         }
 
         private void resizeGuiElement(Rectangle nelinurk, Control element)
@@ -1112,8 +1179,8 @@ namespace Kasutajaliides
                 btnChangeSize.ForeColor = chalkWhite;
                 btnDarkMode.BackColor = midGrey;
                 btnDarkMode.ForeColor = chalkWhite;
-                tbMonthlyPrice.BackColor = midGrey;
-                tbMonthlyPrice.ForeColor = chalkWhite;
+                txtMonthlyPrice.BackColor = midGrey;
+                txtMonthlyPrice.ForeColor = chalkWhite;
                 groupPriceType.ForeColor = chalkWhite;
 
                 groupExport.ForeColor = chalkWhite;
@@ -1190,8 +1257,8 @@ namespace Kasutajaliides
                 btnChangeSize.ForeColor = Color.Black;
                 btnDarkMode.BackColor = SystemColors.Control;
                 btnDarkMode.ForeColor = Color.Black;
-                tbMonthlyPrice.BackColor = SystemColors.Control;
-                tbMonthlyPrice.ForeColor = Color.Black;
+                txtMonthlyPrice.BackColor = SystemColors.Control;
+                txtMonthlyPrice.ForeColor = Color.Black;
                 groupPriceType.ForeColor = Color.Black;
 
                 groupExport.ForeColor = Color.Black;
@@ -1310,6 +1377,11 @@ namespace Kasutajaliides
             resizeGuiElement(originalLabelSKwh2, lblSKwh2);
             resizeGuiElement(originalButtonDarkMode, btnDarkMode);
             resizeGuiElement(originalBtnOpenPackages, btnOpenPackages);
+
+            resizeGuiElement(originalRadioStockPrice, rbStockPrice);
+            resizeGuiElement(originalRadioMonthlyCost, rbMonthlyCost);
+            resizeGuiElement(originalTextMonthlyPrice, txtMonthlyPrice);
+            resizeGuiElement(originalLabelRate, lblRate);
 
             resizeGuiElement(originalGroupExport, groupExport);
             resizeGuiElement(originalLabelExportDelimiter, lblExportDelimiter);
@@ -1792,13 +1864,13 @@ namespace Kasutajaliides
                     }
 
                     // Leiab integraali
-                    double integral = 0.0;
+                    double integral;
                     int iRet = AR.integral(
                         usageRange,
                         stockRangeWithMargins,
                         startTime,
                         stopTime,
-                        ref integral
+                        out integral
                     );
 
                     if (iRet != 0)

@@ -10,7 +10,7 @@ namespace Arvutaja
 {
     public interface IArvutaja
     {
-        int integral(VecT andmed1, VecT andmed2, System.DateTime alumine, System.DateTime ylemine, ref double integraal);
+        int integral(VecT andmed1, VecT andmed2, System.DateTime alumine, System.DateTime ylemine, out double integraal);
 
         VecT generateUsageData(
              System.DateTime start,
@@ -24,15 +24,15 @@ namespace Arvutaja
             double usageLength,
             System.DateTime start,
             System.DateTime stop,
-            ref double outSmallestIntegral,
-            ref System.DateTime outOptimalDate
+            out double outSmallestIntegral,
+            out System.DateTime outOptimalDate
         );
 
         int average(
             VecT andmed,
             System.DateTime alumine,
             System.DateTime ylemine,
-            ref double avg
+            out double avg
         );
 
         double finalPrice(double stockPrice, AndmePyydja.PackageInfo package, DateTime time);

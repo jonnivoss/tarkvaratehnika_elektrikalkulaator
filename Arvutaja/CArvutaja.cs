@@ -26,11 +26,12 @@ namespace Arvutaja
         // KAHE FUNKTSIOONI KORRUTISE INTEGRAATOR
         // andmed1: esimene funktsioon
         // andmed2: teine funktsioon
-        public int integral(VecT andmed1, VecT andmed2, System.DateTime alumine, System.DateTime ylemine, ref double integraal)
+        public int integral(VecT andmed1, VecT andmed2, System.DateTime alumine, System.DateTime ylemine, out double integraal)
         {
             if (alumine > ylemine)
             {
                 // VIGA! RAJAD ON SUURUSE POOLEST VAHETUSES!
+                integraal = 0.0;
                 return 3;
             }
             // alumisele ja ülemisele rajale vastavate indekside määramine
@@ -41,6 +42,7 @@ namespace Arvutaja
             if (!(alumineIndeks >= 0 && ylemineIndeks >= 0 && alumineIndeks2 >= 0 && ylemineIndeks2 >= 0))
             {
                 // VIGA! VÄHEMALT ÜKS SOOVITUD INTEGREERIMISRAJADEST PUUDUB ANDMETE HULGAS!
+                integraal = 0.0;
                 return 1;
             }
             // INTEGREERIMINE
@@ -81,12 +83,14 @@ namespace Arvutaja
             double usageLength,
             System.DateTime start,
             System.DateTime stop,
-            ref double outSmallestIntegral,
-            ref System.DateTime outOptimalDate
+            out double outSmallestIntegral,
+            out System.DateTime outOptimalDate
         )
         {
             if (start > stop)
             {
+                outSmallestIntegral = 0.0;
+                outOptimalDate = default(System.DateTime);
                 return 1;
             }
             
@@ -103,11 +107,13 @@ namespace Arvutaja
                 // Integreerib
                 if (tempUsageData.Count == 0)
                 {
+                    outSmallestIntegral = 0.0;
+                    outOptimalDate = default(System.DateTime);
                     return 2;
                 }
 
-                double integral = 0.0;
-                if (this.integral(tempUsageData, priceData, tempUsageData.First().Item1, tempUsageData.Last().Item1, ref integral) == 0)
+                double integral;
+                if (this.integral(tempUsageData, priceData, tempUsageData.First().Item1, tempUsageData.Last().Item1, out integral) == 0)
                 {
                     if (integral < bestIntegral)
                     {
@@ -123,6 +129,8 @@ namespace Arvutaja
             // while loop tõenäoliselt ei käivitunudki või oli integreerimisega probleem :/
             if (bestIntegral == double.PositiveInfinity)
             {
+                outSmallestIntegral = 0.0;
+                outOptimalDate = default(System.DateTime);
                 return 2;
             }
 
@@ -141,12 +149,13 @@ namespace Arvutaja
             VecT andmed,
             System.DateTime alumine,
             System.DateTime ylemine,
-            ref double avg
+            out double avg
         )
         {
             if (alumine > ylemine)
             {
                 // Rajad vahetuses
+                avg = 0.0;
                 return 1;
             }
 
@@ -155,6 +164,7 @@ namespace Arvutaja
             if (!((begIdx >= 0) && (endIdx >= 0) && (endIdx >= begIdx)))
             {
                 // Kuupäevasid andmetes ei leidunud
+                avg = 0.0;
                 return 2;
             }
 
@@ -169,6 +179,7 @@ namespace Arvutaja
             // andmeid polnudki :(
             if (items == 0)
             {
+                avg = 0.0;
                 return 3;
             }
 

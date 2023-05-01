@@ -8,30 +8,30 @@ using VecUCT = System.Collections.Generic.Dictionary<string, System.Tuple<double
 
 namespace AndmeSalvestaja
 {
-    public class Serializable
+    public class CSerializable : AndmeSalvestaja.ISerializable
     {
-        public Dictionary<ASSetting, string> setMap = new Dictionary<ASSetting, string>
+        public Dictionary<ASSetting, string> setMap { get; set; } = new Dictionary<ASSetting, string>
         {
             { ASSetting.tarbijaAndmed,    "" }, // tarbijaandmete CSV asukoht
             { ASSetting.paketiAndmed,     "" }, // paketiandmete CSV asukoht
             { ASSetting.suurendusLubatud, "0" } // mäletab kas suurendus on lubatud
         };
-        public VecT marketData = new VecT { };
+        public VecT marketData { get; set; } = new VecT { };
         // Default kasutusmallid
         public VecUCT useCases { get; } = new VecUCT
         {
-            { "",             Tuple.Create(0.0, 0.0) },
-            { "Röster",       Tuple.Create(1200.0, 10.0) },
-            { "Tolmuimeja",   Tuple.Create(2000.0, 30.0) },
-            { "Televiisor",   Tuple.Create(90.0, 120.0) },
-            { "Pesumasin",    Tuple.Create(900.0, 180.0) },
-            { "Veekeetja",    Tuple.Create(3000.0, 10.0) },
-            { "Elektripliit", Tuple.Create(3000.0, 60.0) },
-            { "Köögikombain", Tuple.Create(300.0, 15.0) },
-            { "Kohvimasin",   Tuple.Create(1500.0, 5.0) },
-            { "Raadio",       Tuple.Create(50.0, 120.0) },
-            { "Munakeetja",   Tuple.Create(1000.0, 6.0)  },
-            { "Föön",         Tuple.Create(2000.0, 10.0) },
+            { "",             Tuple.Create(   0.0,  0.0)  },
+            { "Röster",       Tuple.Create(1200.0,  10.0) },
+            { "Tolmuimeja",   Tuple.Create(2000.0,  30.0) },
+            { "Televiisor",   Tuple.Create(  90.0, 120.0) },
+            { "Pesumasin",    Tuple.Create( 900.0, 180.0) },
+            { "Veekeetja",    Tuple.Create(3000.0,  10.0) },
+            { "Elektripliit", Tuple.Create(3000.0,  60.0) },
+            { "Köögikombain", Tuple.Create( 300.0,  15.0) },
+            { "Kohvimasin",   Tuple.Create(1500.0,   5.0) },
+            { "Raadio",       Tuple.Create(  50.0, 120.0) },
+            { "Munakeetja",   Tuple.Create(1000.0,   6.0) },
+            { "Föön",         Tuple.Create(2000.0,  10.0) },
             { "Elektriauto",  Tuple.Create(7200.0, 420.0) }
         };
     }
@@ -39,7 +39,7 @@ namespace AndmeSalvestaja
     public class CAS : AndmeSalvestaja.IAS
     {
         private string path = "";
-        private Serializable data = new Serializable();
+        private ISerializable data = new CSerializable();
 
         public CAS(string savepath)
         {
@@ -58,7 +58,7 @@ namespace AndmeSalvestaja
             try
             {
                 var contents = File.ReadAllText(this.path);
-                this.data = JsonConvert.DeserializeObject<Serializable>(contents);
+                this.data = JsonConvert.DeserializeObject<CSerializable>(contents);
                 return true;
             }
             catch (Exception)

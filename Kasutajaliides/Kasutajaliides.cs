@@ -904,7 +904,12 @@ namespace Kasutajaliides
             var isParsed = double.TryParse(str, out parsedValue);
             if (isParsed && parsedValue > maxLimit)
             {
+                // Jätab praeguse kursori asukoha meelde
+                var curpos = box.SelectionStart;
                 box.Text = maxLimit.ToString();
+                // Läheb sinna tagasi, kus ta oli, tavaliselt pärast teksti muutmist surub Windows
+                // kursori teksti algusesse
+                box.Select(Math.Min(curpos, box.Text.Length), 0);
             }
             else if (!isParsed)
             {
@@ -939,7 +944,12 @@ namespace Kasutajaliides
                 {
                     str = str.Remove(str.Length - 1);
                 }
+                // Jätab praeguse kursori asukoha meelde
+                var curpos = box.SelectionStart;
                 box.Text = str;
+                // Läheb sinna tagasi, kus ta oli, tavaliselt pärast teksti muutmist surub Windows
+                // kursori teksti algusesse
+                box.Select(Math.Min(curpos, box.Text.Length), 0);
             }
         }
 

@@ -46,6 +46,7 @@ namespace Kasutajaliides
              1, // Ctrl+A
              3, // Ctrl+C
             22, // Ctrl+V
+            24, // Ctrl+X
             13, // Enter
         };
 

@@ -31,7 +31,7 @@ namespace Arvutaja
          *      alumine: alumine raja (DateTime tüüpi)
          *      ylemine: ülemine raja (DateTime tüüpi)
          * PARAMEETRID (VÄLJUNDID):
-         *      integraal: integraali tagastusväärtuse viit (ref double)
+         *      integraal: integraali tagastusväärtuse viit (out double)
          * 
          * TÄISARVULISED TAGASTUSVÄÄRTUSED:
          *      0: integraal arvutati edukalt
@@ -110,8 +110,8 @@ namespace Arvutaja
          *      start: vaadeldava ajavahemiku algusaeg (DateTime tüüpi)
          *      stop: vaadeldava ajavahemiku lõppaeg (DateTime tüüpi)
          * PARAMEETRID (VÄLJUNDID):
-         *      outSmallestIntegral: viit minimaalse hinna tagastamiseks (ref double)
-         *      outOptimalDate: viit optimaalse algusaja tagastamiseks (ref DateTime)
+         *      outSmallestIntegral: viit minimaalse hinna tagastamiseks (out double)
+         *      outOptimalDate: viit optimaalse algusaja tagastamiseks (out DateTime)
          * 
          * TÄISARVULISED TAGASTUSVÄÄRTUSED:
          *      0: funktsiooni töö kulges edukalt
@@ -181,7 +181,7 @@ namespace Arvutaja
          *      alumine: vaadeldava ajavahemiku algusaeg (DateTime tüüpi)
          *      ylemine: vaadeldava ajavahemiku lõppaeg (DateTime tüüpi)
          * PARAMEETRID (VÄLJUNDID):
-         *      avg: viit keskmise hinna tagastamiseks (ref double)
+         *      avg: viit keskmise hinna tagastamiseks (out double)
          * 
          * TÄISARVULISED TAGASTUSVÄÄRTUSED:
          *      0: funktsiooni töö kulges edukalt

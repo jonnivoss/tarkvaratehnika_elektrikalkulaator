@@ -128,7 +128,12 @@ namespace Kasutajaliides
         Rectangle originalTextExportPath;
 
         // GRAAFIKU UUENDAMISE FUNKTSIOON
-        /* Funktsioon 
+        /* Funktsioon uuendab börsiandmete ja tarbijaandmete graafikuid kui võimalik.
+         * Joonistab börsiandmete graafikule keskmise hinna joone ning värvib graafiku
+         * vastavalt keskmisest suurema ja väiksema hinnaga osades punaseks/roheliseks.
+         * Kui on valitud pakett/paketid, siis joonistab paketiandmete põhjal nii paketihinna
+         * graafiku kui ka simuleeritud tarbijaandmete hinnakulu graafiku. Uuendab ka graafikule
+         * vastavas hinnatabelis olevat informatsiooni
          * 
          * PARAMEETRID:
          * -
@@ -347,21 +352,16 @@ namespace Kasutajaliides
             changeInterval(Convert.ToInt32((stop - start).TotalHours));
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // GRAAFIKU KOORDINAATIDE TEISENDAJA KLIENTRAKENDUSE KOORDINAATIDEKS
+        /* Funktsioon võtab argumendiks graafiku ala ning leiab klientrakenduses vastavad
+         * koordinaadid.
          * 
-         * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         * PARAMEETRID:
+         *      chart: graafik, mille koordinaate on vaja leida (Chart)
+         *      CA: graafiku ala, mis sisaldab hiire positsiooni koordinaate (ChartArea)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      RectangleF: klientrakendusele vastavad graafiku koordinaadid
          */
         //arvutab ristküllikuid
         //https://stackoverflow.com/questions/9647666/finding-the-value-of-the-points-in-a-chart
@@ -386,20 +386,16 @@ namespace Kasutajaliides
                                     pw * IPP.Width, ph * IPP.Height);
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // TOOLTIPI HÜPIKU KUVAJA
+        /* Funktsioon kuvab korrektse suurusega tooltipi graafiku kohal kui
+         * hiirega graafiku peale minna.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: sündmuse saatja (object)
+         *      e: hüpiku sündmuse argumendid (PopupEventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
+         *      -
          * 
          */
         void toolTip_Popup(object sender, PopupEventArgs e)
@@ -408,21 +404,15 @@ namespace Kasutajaliides
             e.ToolTipSize = TextRenderer.MeasureText(tooltipText, f);
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // TOOLTIPI HÜPIKU JOONISTAJA
+        /* Funktsioon joonistab graafiku kohal kuvatava hüpik-tooltipi
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: sündmuse saatja (object)
+         *      e: joonistamisargumendid (DrawToolTipEventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      -
          */
         private void toolTip_Draw(object sender, DrawToolTipEventArgs e)
         {
@@ -434,21 +424,17 @@ namespace Kasutajaliides
             e.Graphics.DrawString(tooltipText, f, b, new Point(2, 2));
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // GRAAFIKUL HIIRELIIGUTUSTELE REAGEERIJA
+        /* Funktsioon reageerib hiireliigutustele graafikul, uuendab graafikule joonistatavat
+         * vertikaalset joont, mis tähistab valitud ajavahemiku. Samuti laseb joonistada
+         * korrektse aeg-hind infoga tooltip-tüüpi hüpiku.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: sündmuse saatja, kaart (object)
+         *      e: liigutussündmuse parameetrid (MouseEventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      -
          */
         private void chartPrice_MouseMove(object sender, MouseEventArgs e)
         {
@@ -526,23 +512,17 @@ namespace Kasutajaliides
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // ZOOMIMISINTERVALLI ARVUTAJA
+        /* Funktsioon arvutab graafiku zoomimisel korrektse ajaintervalli, mida
+         * x-teljel kuvada. Kuvab x-teljel korrektse formaadiga ning korrektse arvu punkte.
+         * Muudab x-teljele kantavate jaotiste tihedust.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      count: graafikul kuvatavate punktide arv (int)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      -
          */
-        // Muudab graafiku X-teljele kantavate jaotiste tihedust (time scale density)
         private void changeInterval(int count)
         {
             // DateTimeInterval: 6 = Hours; 5 = Days. ERGO'S ARROGANT OPINION - SHORT IS GOOOOOOOOD! :P (KVAASI-HARGNEMISTETA VERSIOON)
@@ -555,46 +535,38 @@ namespace Kasutajaliides
             chartPrice.ChartAreas["ChartArea1"].AxisX.IsMarginVisible = false;
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // TARBIJAANDMETE CSV AVAMISNUPU REAGEERIJA
+        /* Funktsioon reageerib tarbijaandmeid valida võimaldava nupu vajutustele.
+         * Kasutajal lastakse valida tarbijaandmeid sisaldav CSV fail ning need suunatakse
+         * töötlemisele. Tarbijaandmete faili asukoht salvestatakse sätetesse.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: sündmuse saatja, nupp ise (object)
+         *      e: sündmuse parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      -
          */
         private void btnAvaCSV_Click(object sender, EventArgs e)
         {
-            if (AP.chooseFileUserData())//ei
+            if (AP.chooseFileUserData())
             {
                 AS.changeSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed, AP.userDataFileName);
                 this.openCSVUserData();
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // CSV TARBIJAANDMETE TÖÖTLEJA
+        /* Funktsioon avab tarbijaandmete CSV faili ning töötleb selle sisu.
+         * Küsib internetist tarbijaandmete ajale vastavaid börsiandmeid.
+         * Pärast sisu töötlemist uuendab graafikut.
          * 
-         * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         * PARAMEETRID:
+         *      -
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      false: tarbijaandmete faili lugemine ebaõnnestus
+         *      true: tarbijaandmete lugemine oli edukas
          */
         private bool openCSVUserData()
         {
@@ -638,21 +610,17 @@ namespace Kasutajaliides
             return ret;
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // TARBIMISMALLI MAKSUMUSE ARVUTAJA
+        /* Funktsioon arvutab sisestatud tarbimismalli andmete põhjal ning valitud ajavahemiku
+         * põhjal optimaalse tarbimise alustamisaja ning hinnangulise maksumuse börsiandmete põhjal.
+         * Samuti laseb funktsioon arvutada tarbimismalli hinnangulise maksumuse iga elektripaketi kohta.
+         * Tarbimismalli maksumused pakettide kohta kuvatakse paketiandmete tabelisse.
          * 
-         * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         * PARAMEETRID:
+         *      -
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      -
          */
         private void calcPrice()
         {
@@ -726,21 +694,16 @@ namespace Kasutajaliides
             this.updatePakettideMallid(bestDate, time, power);
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // KASUTAJALIIDESE INITSIALISEERIJA/LAADUR
+        /* Funktsioon initsialiseerib kasutajaliidesele vajalikud elemendid programmi
+         * esmasel käitamisel.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: sündmuse saatja (object)
+         *      e: sündmuse parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      -
          */
         private void Kasutajaliides_Load(object sender, EventArgs e)
         {
@@ -845,21 +808,15 @@ namespace Kasutajaliides
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // HETKE BÖRSIHINNA UUENDAJA
+        /* Funktsioon uuendab kuvatavat hetkelist börsihinda. Uuendamine on
+         * vajaduspõhine, kontrollitakse kellaaja järgi, kas on mõtet uuendada
          * 
-         * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         * PARAMEETRID:
+         *      -
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      -
          */
         private void updateCostNow()
         {
@@ -893,21 +850,17 @@ namespace Kasutajaliides
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // NUMBRITE JAOKS MÕELDUD TEKSTIKASTI KLAHVIVAJUTUSE REAGEERIJA
+        /* Funktsioon reageerib klahvivajutustele, mis tehakse numbritele mõeldud
+         * tekstikastis. Funktsioon väldib tekstikasti mitte-numbrite sisestamist.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      text: hetkel tekstikastis olev tekst (string)
+         *      e: klahvivajutuse sündmuse parameetrid (KeyPressEventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      false: tekstikasti sisestati keelatud sümboleid
+         *      true: tekstikasti sisestati korrektne sümbol
          */
         bool handleNumberBoxKeyPress(string text, KeyPressEventArgs e)
         {
@@ -922,63 +875,48 @@ namespace Kasutajaliides
             return true;
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // AJAKULU TEKSTIKASTI KLAHVIVAJUTUSE SÜNDMUS
+        /* Funktsioon reageerib sündmusele kui vajutati mõnele klahvile tarbimismalli ajakulu
+         * tekstikastis
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: sündmuse saatja (object)
+         *      e: sündmuse parameetrid (KeyPressEventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      -
          */
         private void txtAjakulu_KeyPress(object sender, KeyPressEventArgs e)
         {
             this.handleNumberBoxKeyPress(txtAjakulu.Text, e);
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // VÕIMSUSE TEKSTIKASTI KLAHVIVAJUTUSE SÜNDMUS
+        /* Funktsioon reageerib sündmusele kui vajutati mõnele klahvile tarbimismalli võimsuse
+         * tekstikastis.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: sündmuse saatja (object)
+         *      e: sündmuse parameetrid (KeyPressEventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      -
          */
         private void txtVoimsus_KeyPress(object sender, KeyPressEventArgs e)
         {
             this.handleNumberBoxKeyPress(txtVoimsus.Text, e);
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // ALGUSAJA MUUTUSELE REAGEERIJA
+        /* Funktsioon reageerib sündmusele, kui keegi muutis analüüsi algusaega.
+         * Kui algusaeg on suurem kui lõpuaeg, siis uuendatakse ka lõpuaega.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: sündmuse saatja (object)
+         *      e: sündmuse parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      -
          */
         private void dateStartTime_ValueChanged(object sender, EventArgs e)
         {
@@ -1002,63 +940,46 @@ namespace Kasutajaliides
             calcPrice();
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // ALGUSAJA VALIJA AVAMISE REAGEERIJA
+        /* Funktsioon reageerib sellele, kui kasutaja avab algusaja valimise kalendri.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: sündmuse saatja (object)
+         *      e: sündmuse parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      -
          */
         private void dateStartTime_DropDown(object sender, EventArgs e)
         {
             dateStartTime.ValueChanged += dateStartTime_ValueChanged;
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // ALGUSAJA VALIJA SULGEMISE REAGEERIJA
+        /* Funktsioon reageerib sellele, kui kasutaja sulgeb algusaja valimise kalendri.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: sündmuse saatja (object)
+         *      e: sündmuse parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      -
          */
         private void dateStartTime_CloseUp(object sender, EventArgs e)
         {
             dateStartTime.ValueChanged -= dateStartTime_ValueChanged;
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // LÕPUAJA MUUTUSELE REAGEERIJA
+        /* Funktsioon reageerib sündmusele, kui keegi muutis analüüsi lõpuaega.
+         * Kui lõpuaeg on väiksem kui algusaeg, siis uuendatakse ka algusaega.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: sündmuse saatja (object)
+         *      e: sündmuse parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      -
          */
         private void dateStopTime_ValueChanged(object sender, EventArgs e)
         {
@@ -1081,63 +1002,46 @@ namespace Kasutajaliides
             calcPrice();
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // LÕPUAJA VALIJA AVAMISE REAGEERIJA
+        /* Funktsioon reageerib sellele, kui kasutaja avab lõpuaja valimise kalendri.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: sündmuse saatja (object)
+         *      e: sündmuse parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      -
          */
         private void dateStopTime_DropDown(object sender, EventArgs e)
         {
             dateStopTime.ValueChanged += dateStopTime_ValueChanged;
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // LÕPUAJA VALIJA SULGEMISE REAGEERIJA
+        /* Funktsioon reageerib sellele, kui kasutaja sulgeb lõpuaja valimise kalendri.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: sündmuse saatja (object)
+         *      e: sündmuse parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      -
          */
         private void dateStopTime_CloseUp(object sender, EventArgs e)
         {
             dateStopTime.ValueChanged -= dateStopTime_ValueChanged;
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // HINNAKUVAMISE LINNUKESELE REAGEERIJA
+        /* Funktsioon reageerib sündusele, kui kasutaja muudab börsihinna kuvamist
+         * tähistava linnukese-kasti olekut.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: sündmuse saatja (object)
+         *      e: sündmuse parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      -
          */
         private void cbShowPrice_CheckedChanged(object sender, EventArgs e)
         {
@@ -1156,21 +1060,16 @@ namespace Kasutajaliides
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // TABELIKUVAMISE LINNUKESELE REAGEERIJA
+        /* Funktsioon reageerib sündusele, kui kasutaja muudab tabeli kuvamist
+         * tähistava linnukese-kasti olekut.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: sündmuse saatja (object)
+         *      e: sündmuse parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      -
          */
         private void cbShowTabel_CheckedChanged(object sender, EventArgs e)
         {
@@ -1190,21 +1089,15 @@ namespace Kasutajaliides
             updateGraph();
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // KASUTAJALIIDESE SULGUR/DESTRUKTOR
+        /* Funktsioon salvestab enne rakenduse lõplikku sulgemist sätted sätetefaili.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: sündmuse saatja (object)
+         *      e: sündmuse parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      -
          */
         private void Kasutajaliides_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -1212,21 +1105,17 @@ namespace Kasutajaliides
             AS.saveFile();
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // BÖRSIHINDA VALIVA RAADIONUPU REAGEERIJA
+        /* Funktsioon reageerib börsihinda valiva raadionupu olekumuutustele.
+         * Selle põhjal valitakse, kas tarbimismalli simuleerimisel kastutatakse börsihinda
+         * või kasutaja poolt sisestatud fikshinda.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: sündmuse saatja (object)
+         *      e: sündmuse parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      -
          */
         private void rbStockPrice_CheckedChanged(object sender, EventArgs e)
         {
@@ -1242,21 +1131,16 @@ namespace Kasutajaliides
             calcPrice();
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // KASUTUSMALLI VALIVA RIPPMENÜÜ REAGEERIJA
+        /* Funktsioon reageerib sündmusele, kui kasutaja muudab valitud tüüpkasutusmalli.
+         * Uuendatakse automaatselt hinnaarvutusi.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: sündmuse saatja (object)
+         *      e: sündmuse parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      -
          */
         private void cbKasutusmall_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -1276,21 +1160,17 @@ namespace Kasutajaliides
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // NUMBRITE JAOKS MÕELDUD TEKSTIKASTI MUUDU KÄITLEJA
+        /* Funktsioon võtab parameetriteks tekstikasti ning maksimaalse väärtuse
+         * mida sinna sisestada võib. Kui väärtus ületab seatud piiri, siis surutakse väärtus
+         * väärtus tagasi maksimumväärtusele.
          * 
-         * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
-         *      
+         * PARAMEETRID:
+         *      box: vaatluse all olev tekstikast (ref TextBox)
+         *      maxLimit: maksimaalne aktsepteeritav arvväärtus, mida tekstikast tunnistab, vaikimisi piirangut pole (double)
+         *
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         void handleNumberBoxChanged(ref TextBox box, double maxLimit = Double.PositiveInfinity)
         {

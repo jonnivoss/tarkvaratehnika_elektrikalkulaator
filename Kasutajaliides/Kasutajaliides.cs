@@ -133,7 +133,7 @@ namespace Kasutajaliides
          * vastavalt keskmisest suurema ja väiksema hinnaga osades punaseks/roheliseks.
          * Kui on valitud pakett/paketid, siis joonistab paketiandmete põhjal nii paketihinna
          * graafiku kui ka simuleeritud tarbijaandmete hinnakulu graafiku. Uuendab ka graafikule
-         * vastavas hinnatabelis olevat informatsiooni
+         * vastavas hinnatabelis olevat informatsiooni.
          * 
          * PARAMEETRID:
          * -
@@ -353,8 +353,8 @@ namespace Kasutajaliides
         }
 
         // GRAAFIKU KOORDINAATIDE TEISENDAJA KLIENTRAKENDUSE KOORDINAATIDEKS
-        /* Funktsioon võtab argumendiks graafiku ala ning leiab klientrakenduses vastavad
-         * koordinaadid.
+        /* Funktsioon võtab argumendiks graafiku ala ning leiab graafiku
+         * koordinaatidest klientrakendusele vastavad koordinaadid.
          * 
          * PARAMEETRID:
          *      chart: graafik, mille koordinaate on vaja leida (Chart)
@@ -386,17 +386,17 @@ namespace Kasutajaliides
                                     pw * IPP.Width, ph * IPP.Height);
         }
 
-        // TOOLTIPI HÜPIKU KUVAJA
-        /* Funktsioon kuvab korrektse suurusega tooltipi graafiku kohal kui
-         * hiirega graafiku peale minna.
+        // TOOLTIPI HÜPIKU KUVAMINE
+        /* Funktsioon kuvab korrektse suuruse ja fondiga tooltipi graafiku kohal kui
+         * hiirega graafiku peale minna. Hüpiku suurus arvutatakse välja selle põhjal
+         * kui palju teksti on vaja kuvada.
          * 
          * PARAMEETRID (SISEND):
-         *      sender: sündmuse saatja (object)
+         *      sender: objekt, mille kohta sündmused kehtivad (object)
          *      e: hüpiku sündmuse argumendid (PopupEventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         *      -
-         * 
+         * -
          */
         void toolTip_Popup(object sender, PopupEventArgs e)
         {
@@ -405,14 +405,15 @@ namespace Kasutajaliides
         }
 
         // TOOLTIPI HÜPIKU JOONISTAJA
-        /* Funktsioon joonistab graafiku kohal kuvatava hüpik-tooltipi
+        /* Funktsioon joonistab graafiku kohal kuvatava hüpik-tooltipi. Kuvatakse
+         * börsihind, kellaaeg ning kuupäev.
          * 
          * PARAMEETRID (SISEND):
-         *      sender: sündmuse saatja (object)
-         *      e: joonistamisargumendid (DrawToolTipEventArgs)
+         *      sender: objekt, mille kohta sündmused kehtivad (object)
+         *      e: joonistamissündmustele vastavad argumendid (DrawToolTipEventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         *      -
+         * -
          */
         private void toolTip_Draw(object sender, DrawToolTipEventArgs e)
         {
@@ -427,14 +428,15 @@ namespace Kasutajaliides
         // GRAAFIKUL HIIRELIIGUTUSTELE REAGEERIJA
         /* Funktsioon reageerib hiireliigutustele graafikul, uuendab graafikule joonistatavat
          * vertikaalset joont, mis tähistab valitud ajavahemiku. Samuti laseb joonistada
-         * korrektse aeg-hind infoga tooltip-tüüpi hüpiku.
+         * korrektse aeg-hind infoga tooltip-tüüpi hüpiku. Lisaks uuendab pakettide tabelis
+         * olevaid pakettide tarbija lõpphindasid.
          * 
          * PARAMEETRID (SISEND):
-         *      sender: sündmuse saatja, kaart (object)
-         *      e: liigutussündmuse parameetrid (MouseEventArgs)
+         *      sender: objekt, mille kohta sündmused kehtivad (object)
+         *      e: hiiresündmustele vastavad parameetrid (MouseEventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         *      -
+         * -
          */
         private void chartPrice_MouseMove(object sender, MouseEventArgs e)
         {
@@ -514,14 +516,14 @@ namespace Kasutajaliides
 
         // ZOOMIMISINTERVALLI ARVUTAJA
         /* Funktsioon arvutab graafiku zoomimisel korrektse ajaintervalli, mida
-         * x-teljel kuvada. Kuvab x-teljel korrektse formaadiga ning korrektse arvu punkte.
+         * x-teljel kuvada. Kuvab x-teljel korrektse formaadiga ning korrektse arvu jaotisi.
          * Muudab x-teljele kantavate jaotiste tihedust.
          * 
          * PARAMEETRID (SISEND):
          *      count: graafikul kuvatavate punktide arv (int)
          *      
          * TAGASTUSVÄÄRTUSED:
-         *      -
+         * -
          */
         private void changeInterval(int count)
         {
@@ -538,14 +540,15 @@ namespace Kasutajaliides
         // TARBIJAANDMETE CSV AVAMISNUPU REAGEERIJA
         /* Funktsioon reageerib tarbijaandmeid valida võimaldava nupu vajutustele.
          * Kasutajal lastakse valida tarbijaandmeid sisaldav CSV fail ning need suunatakse
-         * töötlemisele. Tarbijaandmete faili asukoht salvestatakse sätetesse.
+         * töötlemisele. Tarbijaandmete faili asukoht salvestatakse AndmeSalvestaja kaudu sätetesse.
+         * Töödeldud tarbijaandmed kuvatakse graafikule.
          * 
          * PARAMEETRID (SISEND):
-         *      sender: sündmuse saatja, nupp ise (object)
-         *      e: sündmuse parameetrid (EventArgs)
+         *      sender: objekt, mille kohta sündmused kehtivad (object)
+         *      e: sündmustele vastavad parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         *      -
+         * -
          */
         private void btnAvaCSV_Click(object sender, EventArgs e)
         {
@@ -562,7 +565,7 @@ namespace Kasutajaliides
          * Pärast sisu töötlemist uuendab graafikut.
          * 
          * PARAMEETRID:
-         *      -
+         * -
          *      
          * TAGASTUSVÄÄRTUSED:
          *      false: tarbijaandmete faili lugemine ebaõnnestus
@@ -617,10 +620,10 @@ namespace Kasutajaliides
          * Tarbimismalli maksumused pakettide kohta kuvatakse paketiandmete tabelisse.
          * 
          * PARAMEETRID:
-         *      -
+         * -
          *      
          * TAGASTUSVÄÄRTUSED:
-         *      -
+         * -
          */
         private void calcPrice()
         {
@@ -694,16 +697,18 @@ namespace Kasutajaliides
             this.updatePakettideMallid(bestDate, time, power);
         }
 
-        // KASUTAJALIIDESE INITSIALISEERIJA/LAADUR
+        // KASUTAJALIIDESE LAADUR/INITSIALISEERIJA
         /* Funktsioon initsialiseerib kasutajaliidesele vajalikud elemendid programmi
-         * esmasel käitamisel.
+         * esmasel käitamisel. Nende hulka kuuluvad: graafiku hoverimise tooltip,
+         * graafiku reageerimine hiirerullikule, akna miinimumsuurus, graafik, hinnatabel,
+         * sätete laadimine, CSV andmete laadimine
          * 
          * PARAMEETRID (SISEND):
-         *      sender: sündmuse saatja (object)
-         *      e: sündmuse parameetrid (EventArgs)
+         *      sender: objekt, mille kohta sündmused kehtivad (object)
+         *      e: sündmustele vastavad parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         *      -
+         * -
          */
         private void Kasutajaliides_Load(object sender, EventArgs e)
         {
@@ -810,13 +815,14 @@ namespace Kasutajaliides
 
         // HETKE BÖRSIHINNA UUENDAJA
         /* Funktsioon uuendab kuvatavat hetkelist börsihinda. Uuendamine on
-         * vajaduspõhine, kontrollitakse kellaaja järgi, kas on mõtet uuendada
+         * vajaduspõhine, kontrollitakse kellaaja järgi, kas on mõtet hinda uuendada.
+         * Uuendamiseks kutsutakse välja Elering API, küsitakse andmeid praeguse tunni kohta.
          * 
          * PARAMEETRID:
-         *      -
+         * -
          *      
          * TAGASTUSVÄÄRTUSED:
-         *      -
+         * -
          */
         private void updateCostNow()
         {
@@ -856,7 +862,7 @@ namespace Kasutajaliides
          * 
          * PARAMEETRID (SISEND):
          *      text: hetkel tekstikastis olev tekst (string)
-         *      e: klahvivajutuse sündmuse parameetrid (KeyPressEventArgs)
+         *      e: klahvivajutuse sündmustele vastavad parameetrid (KeyPressEventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
          *      false: tekstikasti sisestati keelatud sümboleid
@@ -877,14 +883,14 @@ namespace Kasutajaliides
 
         // AJAKULU TEKSTIKASTI KLAHVIVAJUTUSE SÜNDMUS
         /* Funktsioon reageerib sündmusele kui vajutati mõnele klahvile tarbimismalli ajakulu
-         * tekstikastis
+         * tekstikastis. Lubab kirjutada tekstikasti ainult numbreid.
          * 
          * PARAMEETRID (SISEND):
-         *      sender: sündmuse saatja (object)
-         *      e: sündmuse parameetrid (KeyPressEventArgs)
+         *      sender: objekt, mille kohta sündmused kehtivad (object)
+         *      e: klahvivajutuse sündmustele vastavad parameetrid (KeyPressEventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         *      -
+         * -
          */
         private void txtAjakulu_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -893,14 +899,14 @@ namespace Kasutajaliides
 
         // VÕIMSUSE TEKSTIKASTI KLAHVIVAJUTUSE SÜNDMUS
         /* Funktsioon reageerib sündmusele kui vajutati mõnele klahvile tarbimismalli võimsuse
-         * tekstikastis.
+         * tekstikastis. Lubab kirjutada tekstikasti ainult numbreid.
          * 
          * PARAMEETRID (SISEND):
-         *      sender: sündmuse saatja (object)
-         *      e: sündmuse parameetrid (KeyPressEventArgs)
+         *      sender: objekt, mille kohta sündmused kehtivad (object)
+         *      e: klahvivajutuse sündmustele vastavad parameetrid (KeyPressEventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         *      -
+         * -
          */
         private void txtVoimsus_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -910,13 +916,14 @@ namespace Kasutajaliides
         // ALGUSAJA MUUTUSELE REAGEERIJA
         /* Funktsioon reageerib sündmusele, kui keegi muutis analüüsi algusaega.
          * Kui algusaeg on suurem kui lõpuaeg, siis uuendatakse ka lõpuaega.
+         * Arvutatakse tarbimismalli põhjal uus optimaalne tarbimisaeg ning hind.
          * 
          * PARAMEETRID (SISEND):
-         *      sender: sündmuse saatja (object)
-         *      e: sündmuse parameetrid (EventArgs)
+         *      sender: objekt, mille kohta sündmused kehtivad (object)
+         *      e: sündmustele vastavad parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         *      -
+         * -
          */
         private void dateStartTime_ValueChanged(object sender, EventArgs e)
         {
@@ -944,11 +951,11 @@ namespace Kasutajaliides
         /* Funktsioon reageerib sellele, kui kasutaja avab algusaja valimise kalendri.
          * 
          * PARAMEETRID (SISEND):
-         *      sender: sündmuse saatja (object)
-         *      e: sündmuse parameetrid (EventArgs)
+         *      sender: objekt, mille kohta sündmused kehtivad (object)
+         *      e: sündmustele vastavad parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         *      -
+         * -
          */
         private void dateStartTime_DropDown(object sender, EventArgs e)
         {
@@ -959,11 +966,11 @@ namespace Kasutajaliides
         /* Funktsioon reageerib sellele, kui kasutaja sulgeb algusaja valimise kalendri.
          * 
          * PARAMEETRID (SISEND):
-         *      sender: sündmuse saatja (object)
-         *      e: sündmuse parameetrid (EventArgs)
+         *      sender: objekt, mille kohta sündmused kehtivad (object)
+         *      e: sündmustele vastavad parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         *      -
+         * -
          */
         private void dateStartTime_CloseUp(object sender, EventArgs e)
         {
@@ -973,13 +980,14 @@ namespace Kasutajaliides
         // LÕPUAJA MUUTUSELE REAGEERIJA
         /* Funktsioon reageerib sündmusele, kui keegi muutis analüüsi lõpuaega.
          * Kui lõpuaeg on väiksem kui algusaeg, siis uuendatakse ka algusaega.
+         * Arvutatakse tarbimismalli põhjal uus optimaalne tarbimisaeg ning hind.
          * 
          * PARAMEETRID (SISEND):
-         *      sender: sündmuse saatja (object)
-         *      e: sündmuse parameetrid (EventArgs)
+         *      sender: objekt, mille kohta sündmused kehtivad (object)
+         *      e: sündmustele vastavad parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         *      -
+         * -
          */
         private void dateStopTime_ValueChanged(object sender, EventArgs e)
         {
@@ -1006,11 +1014,11 @@ namespace Kasutajaliides
         /* Funktsioon reageerib sellele, kui kasutaja avab lõpuaja valimise kalendri.
          * 
          * PARAMEETRID (SISEND):
-         *      sender: sündmuse saatja (object)
-         *      e: sündmuse parameetrid (EventArgs)
+         *      sender: objekt, mille kohta sündmused kehtivad (object)
+         *      e: sündmustele vastavad parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         *      -
+         * -
          */
         private void dateStopTime_DropDown(object sender, EventArgs e)
         {
@@ -1021,11 +1029,11 @@ namespace Kasutajaliides
         /* Funktsioon reageerib sellele, kui kasutaja sulgeb lõpuaja valimise kalendri.
          * 
          * PARAMEETRID (SISEND):
-         *      sender: sündmuse saatja (object)
-         *      e: sündmuse parameetrid (EventArgs)
+         *      sender: objekt, mille kohta sündmused kehtivad (object)
+         *      e: sündmustele vastavad parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         *      -
+         * -
          */
         private void dateStopTime_CloseUp(object sender, EventArgs e)
         {
@@ -1033,15 +1041,15 @@ namespace Kasutajaliides
         }
 
         // HINNAKUVAMISE LINNUKESELE REAGEERIJA
-        /* Funktsioon reageerib sündusele, kui kasutaja muudab börsihinna kuvamist
-         * tähistava linnukese-kasti olekut.
+        /* Funktsioon reageerib sündmusele, kui kasutaja muudab börsihinna kuvamist
+         * tähistava linnukese-kasti olekut. Uuendab graafikut.
          * 
          * PARAMEETRID (SISEND):
-         *      sender: sündmuse saatja (object)
-         *      e: sündmuse parameetrid (EventArgs)
+         *      sender: objekt, mille kohta sündmused kehtivad (object)
+         *      e: sündmustele vastavad parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         *      -
+         * -
          */
         private void cbShowPrice_CheckedChanged(object sender, EventArgs e)
         {
@@ -1061,15 +1069,15 @@ namespace Kasutajaliides
         }
 
         // TABELIKUVAMISE LINNUKESELE REAGEERIJA
-        /* Funktsioon reageerib sündusele, kui kasutaja muudab tabeli kuvamist
+        /* Funktsioon reageerib sündmusele, kui kasutaja muudab tabeli kuvamist
          * tähistava linnukese-kasti olekut.
          * 
          * PARAMEETRID (SISEND):
-         *      sender: sündmuse saatja (object)
-         *      e: sündmuse parameetrid (EventArgs)
+         *      sender: objekt, mille kohta sündmused kehtivad (object)
+         *      e: sündmustele vastavad parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         *      -
+         * -
          */
         private void cbShowTabel_CheckedChanged(object sender, EventArgs e)
         {
@@ -1093,11 +1101,11 @@ namespace Kasutajaliides
         /* Funktsioon salvestab enne rakenduse lõplikku sulgemist sätted sätetefaili.
          * 
          * PARAMEETRID (SISEND):
-         *      sender: sündmuse saatja (object)
-         *      e: sündmuse parameetrid (EventArgs)
+         *      sender: objekt, mille kohta sündmused kehtivad (object)
+         *      e: sündmustele vastavad parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         *      -
+         * -
          */
         private void Kasutajaliides_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -1108,14 +1116,14 @@ namespace Kasutajaliides
         // BÖRSIHINDA VALIVA RAADIONUPU REAGEERIJA
         /* Funktsioon reageerib börsihinda valiva raadionupu olekumuutustele.
          * Selle põhjal valitakse, kas tarbimismalli simuleerimisel kastutatakse börsihinda
-         * või kasutaja poolt sisestatud fikshinda.
+         * või kasutaja poolt sisestatud fikshinda. Uuendatakse automaatselt tarbimismalli hinnaarvutusi.
          * 
          * PARAMEETRID (SISEND):
-         *      sender: sündmuse saatja (object)
-         *      e: sündmuse parameetrid (EventArgs)
+         *      sender: objekt, mille kohta sündmused kehtivad (object)
+         *      e: sündmustele vastavad parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         *      -
+         * -
          */
         private void rbStockPrice_CheckedChanged(object sender, EventArgs e)
         {
@@ -1136,11 +1144,11 @@ namespace Kasutajaliides
          * Uuendatakse automaatselt hinnaarvutusi.
          * 
          * PARAMEETRID (SISEND):
-         *      sender: sündmuse saatja (object)
-         *      e: sündmuse parameetrid (EventArgs)
+         *      sender: objekt, mille kohta sündmused kehtivad (object)
+         *      e: sündmustele vastavad parameetrid (EventArgs)
          *      
          * TAGASTUSVÄÄRTUSED:
-         *      -
+         * -
          */
         private void cbKasutusmall_SelectedValueChanged(object sender, EventArgs e)
         {

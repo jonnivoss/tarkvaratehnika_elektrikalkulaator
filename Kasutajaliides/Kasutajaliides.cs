@@ -701,7 +701,7 @@ namespace Kasutajaliides
         /* Funktsioon initsialiseerib kasutajaliidesele vajalikud elemendid programmi
          * esmasel käitamisel. Nende hulka kuuluvad: graafiku hoverimise tooltip,
          * graafiku reageerimine hiirerullikule, akna miinimumsuurus, graafik, hinnatabel,
-         * sätete laadimine, CSV andmete laadimine
+         * sätete laadimine, CSV andmete laadimine.
          * 
          * PARAMEETRID (SISEND):
          *      sender: objekt, mille kohta sündmused kehtivad (object)

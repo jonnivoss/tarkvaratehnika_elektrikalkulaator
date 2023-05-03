@@ -1,6 +1,5 @@
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\VaheKiht\bin\Debug\VaheKiht.dll
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\VaheKiht\bin\Debug\VaheKiht.pdb
-C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\VaheKiht\obj\Debug\VaheKiht.csproj.AssemblyReference.cache
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\VaheKiht\obj\Debug\VaheKiht.csproj.CoreCompileInputs.cache
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\VaheKiht\obj\Debug\VaheKiht.dll
 C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\VaheKiht\obj\Debug\VaheKiht.pdb

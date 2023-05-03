@@ -57,4 +57,3 @@ C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndme
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\obj\Debug\AndmePyydja.csproj.CoreCompileInputs.cache
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\obj\Debug\Andmepyydja.dll
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\obj\Debug\Andmepyydja.pdb
-C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\LokaalneAndmepyydja\obj\Debug\AndmePyydja.csproj.AssemblyReference.cache

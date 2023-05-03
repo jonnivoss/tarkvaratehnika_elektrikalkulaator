@@ -214,11 +214,11 @@ namespace Kasutajaliides
             averagePriceLine.Name = "priceLine";
             chartPrice.Annotations.Add(averagePriceLine);
 
-            string line = "Keskmine hind: " + VK.averagePrice.ToString();
+            /*string line = "Keskmine hind: " + VK.averagePrice.ToString();
             string line2 = "Max: " + chartPrice.ChartAreas["ChartArea1"].AxisY2.Maximum.ToString();
             txtDebug.AppendText(Environment.NewLine);
             txtDebug.AppendText(line);
-            txtDebug.AppendText(line2);
+            txtDebug.AppendText(line2);*/
 
 
             // pakettide graafikud
@@ -2359,11 +2359,11 @@ namespace Kasutajaliides
             calcPrice();
         }
 
-        // ROHEPAKETTIDE ROHELISEKS VÄRVIMISEKS
-        /* Funktsioon värvib tabelis etteantud indeksiga rea roheliseks, et eristada rohepakette.
+        // ROHEPAKETTIDE ROHELISEKS VÄRVIMINE
+        /* Funktsioon värvib tabelis etteantud indeksiga rea rohepaketi tulba roheliseks, et eristada rohepakette.
          * 
          * PARAMEETRID (SISEND):
-         *      table: tabel, mille ridu värvitakse
+         *      table: tabel, mille tulpa värvitakse
          *      greenPacketRow: rohepaketi rea indeks
          *      
          * TAGASTUSVÄÄRTUSED:
@@ -2416,21 +2416,18 @@ namespace Kasutajaliides
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        // REA VÄRVIMINE
         /* Funktsiooni kirjeldus siia!
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      table: tabel, mille ridu värvitakse
+         *      rowIdx: rea indeks
+         *      foreColor: teksti värv 
+         *      backColor: tausta värv
+         *      skipRow: rohepaketi rea indeks
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         void setRowColor(ref DataGridView table, int rowIdx, Color foreColor, Color backColor, int skipRow)
         {
@@ -2453,21 +2450,13 @@ namespace Kasutajaliides
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
-         * 
-         * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+        // SUURIMA JA VÄIKSEMA HETKEHINNAGA PAKETTIDE VÄRVIMINE
+        /* Funktsioon käib läbi pakettide tabeli ning värvib punaseks kõrgeima hinnaga paketi rea ja roheliseks
+         * madalaima hinnaga paketi rea. Funktsioon kasutab seejuures funktsiooni setRowColor() ning värvide 
+         * taastamiseks funktsiooni resetRowColor().
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         private void updatePakettideVarvid()
         {
@@ -2508,21 +2497,16 @@ namespace Kasutajaliides
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // PAKETTIDE HINDADE UUENDAMINE
+        /* Funktsioonga saab uuendada pakettide tabelis olevaid hindasid. Hetkehindasid on võimalik eemaldada 
+         * ning lõpphindu uuesti arvutada. Juhul kui hetkehinnad arvutatakse uuesti, taastatakse rea värv ning 
+         * kui lõpphind arvutatakse uuesti, siis uuendatakse ridade värve.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      time: 
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         private void updatePakettideHinnad(DateTime time)
         {
@@ -2551,21 +2535,16 @@ namespace Kasutajaliides
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // PAKETTIDE TABELIS MALLI HINNA UUENDAMINE
+        /* Tablisse lisatakse/eemaldatakse pakettide lõpphinnad vastavalt valitud kasutusmallile.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      startTime: tarbimise algusaeg
+         *      usageLength: tarbimise kestus
+         *      power: tarbimisel kasutatav võimsus
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         private void updatePakettideMallid(DateTime startTime, double usageLength, double power)
         {
@@ -2626,27 +2605,18 @@ namespace Kasutajaliides
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
-         * 
-         * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+        // PAKETTIDE TARBIMISHINNA UUENDAMINE
+        /* Kui kasutaja on üles laadinud ning valinud huvi pakkuva ajaperioodi, kuvatakse tabelisse kõikide pakettide
+         * tarbimishinnad valitud ajaperioodil.
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         private void updatePakettideTarbimishind()
         {
-            if (VK.userDataTimeRange.Count == 0)
+            if (VK.userDataTimeRange.Count == 0) // Kui tarbimisandmed puuduvad
             {
-                return;
+                return; // Katkestab funktsiooni töö
             }
             var stockCost = VK.createRange(this.priceData, VK.userDataTimeRange.First(), VK.userDataTimeRange.Last()); // Börsihinna väärtuste loomine
             var start = dateStartTime.Value;

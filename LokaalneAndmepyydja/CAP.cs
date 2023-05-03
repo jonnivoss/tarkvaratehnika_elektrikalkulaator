@@ -53,21 +53,14 @@ namespace AndmePyydja
             this.isDayNight     = this.nightPrice != 0 ? true : false;
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // OBJEKT->SÕNE MUUNDUR
+        /* Funktsioon muundab objekti sisu CSV formaadile vastavaks sõneks.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      -
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      string: CSV-formaadis objekt sõnena
          */
         public override string ToString()
         {
@@ -92,21 +85,16 @@ namespace AndmePyydja
             return s;
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // OBJEKTI VENNAS-VÕRDLEJA
+        /* Funktsioon võrdleb ise-enda objekti mõne teise (eeldatavasti sama
+         * tüüpi) vennasobjektiga.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      obj: vennasobjekt, mis peaks olema CPackageInfo tüüpi (object)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      false: objektid ei ole võrdsed
+         *      true: objektid on võrdsed
          */
         public override bool Equals(object obj)
         {
@@ -116,7 +104,7 @@ namespace AndmePyydja
             return this.providerName   == other.providerName &&
                    this.packageName    == other.packageName &&
                    this.monthlyPrice   == other.monthlyPrice &&
-                   this.sellerMargins == other.sellerMargins &&
+                   this.sellerMargins  == other.sellerMargins &&
                    this.basePrice      == other.basePrice &&
                    this.nightPrice     == other.nightPrice &&
                    this.isStockPackage == other.isStockPackage &&
@@ -134,21 +122,16 @@ namespace AndmePyydja
         public string userDataFileName { get; set; } = "";
         public string packageFileName { get; set; } = "";
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // TARBIMISANDMETE VALIJA
+        /* Funktsioon laseb kasutajal valida tarbimismallide CSV faili kasutades
+         * selleks OpenFileDialog tüüpi hüpikut.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
-         *      
+         * -
+         *     
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      false: Tarbimisandmed CSV faili valimine ebaõnnestus
+         *      true: Tarbimisandmed CSV faili valimine oli edukas
          */
         public bool chooseFileUserData()
         {
@@ -163,21 +146,16 @@ namespace AndmePyydja
             return true;
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // PAKETIANDMETE VALIJA
+        /* Funktsioon laseb kasutajal valida paketiandmete CSV faili kasutades
+         * selleks OpenFileDialog tüüpi hüpikut.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         * -
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      false: Paketiandmete CSV faili valimine ei olnud edukas
+         *      true: Paketiandmete CSV faili valimine õnnestus
          */
         public bool chooseFilePackages()
         {
@@ -192,21 +170,15 @@ namespace AndmePyydja
             return true;
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // TARBIMISANDMETE LUGER
+        /* Funktsioon loeb tarbimisandmete CSV faili mällu.
          * 
-         * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
          * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      contents: mällu loetud faili sisu (out string)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      false: Tarbimisandmete failist lugemine ebaõnnestus
+         *      true: Tarbimisandmete failist lugemine õnnestus
          */
         public bool readUserDataFile(out string contents)
         {
@@ -231,21 +203,15 @@ namespace AndmePyydja
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // PAKETIANDMETE LUGER
+        /* Funktsioon loeb paketiandmete CSV faili mällu.
          * 
-         * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
          * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      contents: mällu loetud faili sisu (out string)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      false: Paketiandmete failist lugemine ebaõnnestus
+         *      true: Paketiandmete failist lugemine õnnestus
          */
         public bool readPackageFile(out string contents)
         {
@@ -270,21 +236,15 @@ namespace AndmePyydja
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // PAKETIANDMETE KIRJUTAJA
+        /* Funktsioon kirjutab paketiandmed CSV faili.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      contents: paketiandmete CSV faili sisu (string)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      false: Paketiandmete faili kirjutamine ebaõnnestus
+         *      true: Paketiandmete faili kirjutamine õnnestus
          */
         public bool writePackageFile(string contents)
         {
@@ -305,21 +265,16 @@ namespace AndmePyydja
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // TARBIMISANDMETE CSV REA PARSER
+        /* Funktsioon parsib tarbijaandmete CSV failist eraldatud ühe rea.
+         * Kontrollitakse real olevate tokenite arvu, saadakse kätte tarbimisele vastav
+         * tund ja tarbitud elektrikogus kWh-des.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      arguments: rea parsimise argumendid, sisaldab rida ning delimiteri, Item1 on rida, Item2 on delimiter (ParseCSVDataLineT)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      DatePriceT: Tuple tarbimisajast ja sellele vastavast tunnis tarbitud elektrikulust
          */
         private static DatePriceT parseCSVUserDataLine(ParseCSVDataLineT arguments)
         {
@@ -353,21 +308,16 @@ namespace AndmePyydja
             return new DatePriceT(d, num);
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // TARBIMISANDMETE CSV PARSER
+        /* Funktsioon parsib CSV tarbimisandmeid aeg/hind andmete massiiviks.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      contents: tarbimisandmete CSV failist loetud tekst (string)
+         *      tableBeginToken: sõne, mis tähistab CSV failis olevate andmete päist (string)
+         *      delimiter: märk, mis tähistab CSV failis andmete eraldajat (char)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      VecT: tarbimisandmete massiv, mis sisaldab aeg/tarbimine paare
          */
         private static VecT parseCSVUserData(
             string contents,
@@ -411,21 +361,15 @@ namespace AndmePyydja
             return v;
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // TARBIMISANDMETE CSV PARSERI VÄLJAKUTSUJA
+        /* Funktsioon laseb parsida tarbimisandmete CSV failist laetud teksti aeg/hind
+         * andmete massiiviks.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      contents: tarbimisandmete CSV failist loetud tekst (string)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      VecT: tarbimisandmete massiv, mis sisaldab aeg/tarbimine paare
          */
         public VecT parseUserData(string contents)
         {
@@ -436,21 +380,17 @@ namespace AndmePyydja
             );
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // PAKETINAMDETE CSV REA PARSER
+        /* Funktsioon parsib paketiandmete CSV failist eraldatud ühe rea.
+         * Kontrollitakse real olevate tokenite arvu, saadakse kätte paketile vastav
+         * teenusepakkuja nimi, paketi nimi, hinna marginaal, päevane/öine hind ning
+         * info selle kohta kas on tegu rohelise ja/või börsipaketiga.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      arguments: rea parsimise argumendid, sisaldab rida ning delimiteri, Item1 on rida, Item2 on delimiter (ParseCSVDataLineT)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      IPackageInfo: paketi kohta käiv informatsioon
          */
         private static IPackageInfo parseCSVPackageDataLine(ParseCSVDataLineT arguments)
         {
@@ -489,21 +429,16 @@ namespace AndmePyydja
             return info;
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // PAKETIANDMETE CSV PARSER
+        /* Funktsioon parsib CSV paketiandmeid IPackageInfo massiiviks.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
-         *      
-         * TAGASTUSVÄÄRTUSED:
+         *      contents: paketiandmete CSV failist loetud tekst (string)
+         *      tableBeginToken: sõne, mis tähistab CSV failis olevate andmete päist (string)
+         *      delimiter: märk, mis tähistab CSV failis andmete eraldajat (char)
          * 
+         * TAGASTUSVÄÄRTUSED:
+         *      PackageT: IPackageInfo tüüpi paketiandmete massiiv
          */
         private static PackageT parseCSVPackageData(
             string contents,
@@ -549,20 +484,14 @@ namespace AndmePyydja
         }
 
         // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        /* Funktsioon laseb parsida paketiandmete CSV failist laetud teksti
+         * IPackageInfo tüüpi paketiandmete massiiviks.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      contents: tarbimisandmete CSV failist loetud tekst (string)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      PackageT: IPackageInfo tüüpi paketiandmete massiiv
          */
         public PackageT parsePackage(string contents)
         {
@@ -573,23 +502,16 @@ namespace AndmePyydja
             );
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // PAKETIANDMETE CSV GENERAATOR
+        /* Funktsioon genereerib paketiandmete IPackageInfo tüüpi massiivist
+         * CSV faili kirjutada sobiva sõne.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      package: IPackageInfo tüüpi paketiandmete massiiv (PackageT)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      string: Paketiandmed "ilusal" CSV kujul sõnena
          */
-        // I'll be package CSV
         public string createPackageCSV(PackageT package)
         {
             string s = "Pakkuja; Nimi; Kuutasu (€); Marginaal (s/kWh); Baashind (s/kWh); Ööhind (s/kWh); BörsiPakett; Roheline\n";
@@ -603,23 +525,16 @@ namespace AndmePyydja
 
         //siit algab neti otsimine
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // UNIX AEG -> .NET AEG
+        /* Funktsioon muudab UNIXile omase täisarvu sekundites alates
+         * 1.1.1970 .NET raamistikule omaseks DateTime formaadiks.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      unixTimeStr: UNIXile omane täisarv, mis tähistab sekundid, sõne kujul (string)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      DateTime: UNIXi ajale vastav .NET aeg
          */
-        //muuda unix standard time DateTimeiks
         public DateTime UnixToDateTime(string unixTimeStr)
         {
             // long sest 64 bitti
@@ -629,23 +544,18 @@ namespace AndmePyydja
             return utcTime.AddHours(2);
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // ELERING API KUTSUJA
+        /* Funktsioon pöördub Elering API poole ning küsib soovitud ajavahemiku kohta
+         * börsihinna andmeid Eesti elektriturul. Andmed paigutatakse aeg/hind paaridena
+         * DatePriceT tüüpi massiivi.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      algus1: Algusaeg, millest alates börsiandmeid küsitakse (DateTime)
+         *      lopp1: Lõppaeg, kuhu maani börsiandmeid küsitakse (DateTime)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      VecT: massiiv, mis sisaldab aeg/hind paare börsiandmetest
          */
-        //tagastab vect DatePrice 
         public VecT HindAegInternet(DateTime algus1, DateTime lopp1)
         {
             string url = "https://dashboard.elering.ee/api/nps/price?";

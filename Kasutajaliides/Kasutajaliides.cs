@@ -1634,7 +1634,8 @@ namespace Kasutajaliides
          * toimub, siis inverteeritakse muutuja väärtus ning vastavalt saadud väärtusele muudetakse
          * kõik kasutajaliidese elemendid heledaks või tumedaks. Kui muutuja väärtuseks on "false",
          * muudetakse elemendid tumedaks ning väärtusega "true" muudetakse heledaks.
-         * Samuti kutsutakse välja funktsioonid drawGreenPacketColumn() ja updatePakettideVarvid().
+         * Samuti kutsutakse välja funktsioonid drawGreenPacketColumn(), mis värvib roheliseks
+         * rohepakettide tulba ja updatePakettideVarvid(), mis uuendab pakettide ridade värve.
          * 
          * PARAMEETRID (SISEND):
          *      sender: objekt, mille kohta sündmused kehtivad

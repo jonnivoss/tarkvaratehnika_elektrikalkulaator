@@ -47,21 +47,12 @@ namespace AndmeSalvestaja
             this.path = savepath;
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
-         * 
-         * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+        // FAILI LUGEMINE
+        /* Kui faili asukoht on määratletud, siis programm avab ning loeb failist andmed sisse.
+         * Väärtus tagastatakse olenevalt faili avamise/lugemise õnnestumisest/ebaõnnestumisest.
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      Tagastab boolean väärtuse
          */
         public bool loadFile()
         {
@@ -71,64 +62,48 @@ namespace AndmeSalvestaja
                 return false;
             }
 
-            try
+            try // Proovib lugeda avatud faili
             {
                 var contents = File.ReadAllText(this.path);
-                this.data = JsonConvert.DeserializeObject<CSerializable>(contents);
+                this.data = JsonConvert.DeserializeObject<CSerializable>(contents); // Deserialiseerib loetud failid
                 return true;
             }
-            catch (Exception)
+            catch (Exception) // Kui mingil põhjusel faili lugemine ebaõnnestub
             {
                 return false;
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
-         * 
-         * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
-         *      
+        // FAILI SALVESTAMINE
+        /* Kirjutab sisu faili ning salvestab selle valitud faili path'i.
+         *         
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      Tagastab boolean väärtuse
          */
         public bool saveFile()
         {
-            try
+            try // Proovib sisu faili salvestada
             {
                 var contents = JsonConvert.SerializeObject(this.data, Formatting.Indented);
                 File.WriteAllText(this.path, contents);
                 return true;
             }
-            catch (Exception)
+            catch (Exception) // Kui faili salvestamine ebaõnnestub
             {
                 return false;
             }
             
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        // SÄTETE FAILI MUUTMINE
         /* Funktsiooni kirjeldus siia!
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      setting: sätte indeks
+         *      value: säte
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      Tagstab boolean väärtuse  
          */
         public bool changeSetting(ASSetting setting, string value)
         {
@@ -149,21 +124,14 @@ namespace AndmeSalvestaja
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // SÄTETE HANKIMINE
+        /* Funktsioon tagastab sisestatud indeksiga soovitud sätte. 
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
-         *      
-         * TAGASTUSVÄÄRTUSED:
+         *      setting: sätte indeks
          * 
+         * TAGASTUSVÄÄRTUSED:
+         *      Tagastab sätte
          */
         public string getSetting(ASSetting setting)
         {
@@ -176,63 +144,36 @@ namespace AndmeSalvestaja
             return this.data.setMap[setting];
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // BÖRSIANDMETE MÄÄRAMINE
+        /* Funktsioon määrab börsiandmeteks sisse antud andmed. 
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
-         *      
+         *      data: börsiandmed
+         *  
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         public void setMarketData(VecT data)
         {
             this.data.marketData = data;
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
-         * 
-         * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+        // BÖRSIANDMETE HANKIMINE
+        /* Tagastab programmis seatud börsiandmed.
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      this.data.marketData: seatud börsiandmed
          */
         public VecT getMarketData()
         {
             return this.data.marketData;
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // KASUTUSMALLIDE HANKIMINE
+        /* Tagastab määratletud kasutusmallid.
          * 
-         * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
-         *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      this.data.useCases: eelnevalt määratud kasutusmallid
          */
         public VecUCT getUseCases()
         {

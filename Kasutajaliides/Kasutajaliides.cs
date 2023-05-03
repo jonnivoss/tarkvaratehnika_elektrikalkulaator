@@ -219,11 +219,11 @@ namespace Kasutajaliides
             averagePriceLine.Name = "priceLine";
             chartPrice.Annotations.Add(averagePriceLine);
 
-            string line = "Keskmine hind: " + VK.averagePrice.ToString();
+            /*string line = "Keskmine hind: " + VK.averagePrice.ToString();
             string line2 = "Max: " + chartPrice.ChartAreas["ChartArea1"].AxisY2.Maximum.ToString();
             txtDebug.AppendText(Environment.NewLine);
             txtDebug.AppendText(line);
-            txtDebug.AppendText(line2);
+            txtDebug.AppendText(line2);*/
 
 
             // pakettide graafikud
@@ -1237,21 +1237,19 @@ namespace Kasutajaliides
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // AJAKULU LAHTRI VÄÄRTUSE MUUTMINE
+        /* Funktsioon kutsutakse välja juhul kui muudetakse sisendit tekstikastis txtAjakulu.
+         * Funktsioon ise kutsub välja funktsioonid handleNumberBoxChanged() ja calcPrice().
+         * Esimeses töödeldakse sisend double väärtuseks ning kontrollitakse, et kasutaja  
+         * sisestatud väärtus ei oleks üleliigselt suur. Seejuures võetakse arvesse funktsiooni 
+         * teist argumenti. Teise funktsiooniga arvutatakse sisendi põhjal välja elektrihind.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: objekt, mille kohta sündmused kehtivad
+         *      e: sündmustele vastavad argumendid (EventArgs tüüpi)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         private void txtAjakulu_TextChanged(object sender, EventArgs e)
         {
@@ -1259,21 +1257,19 @@ namespace Kasutajaliides
             calcPrice();
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // VÕIMSUSE LAHTRI VÄÄRTUSE MUUTMINE
+        /* Funktsioon kutsutakse välja juhul kui muudetakse sisendit tekstikastis txtVoimsus.
+         * Funktsioon ise kutsub välja funktsioonid handleNumberBoxChanged() ja calcPrice().
+         * Esimeses töödeldakse sisend double väärtuseks ning kontrollitakse, et kasutaja  
+         * sisestatud väärtus ei oleks üleliigselt suur. Seejuures võetakse arvesse funktsiooni 
+         * teist argumenti. Teise funktsiooniga arvutatakse sisendi põhjal välja elektrihind.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: objekt, mille kohta sündmused kehtivad
+         *      e: sündmustele vastavad argumendid (EventArgs tüüpi)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         private void txtVoimsus_TextChanged(object sender, EventArgs e)
         {
@@ -1281,46 +1277,47 @@ namespace Kasutajaliides
             calcPrice();
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // KUUTASU LAHTRI VÄÄRTUSE MUUTMINE
+        /* Funktsioon kutsutakse välja juhul kui muudetakse sisendit tekstikastis txtMonthlyPrice.
+         * Funktsioon ise kutsub välja funktsioonid handleNumberBoxChanged() ja calcPrice().
+         * Esimeses töödeldakse sisend double väärtuseks ning kontrollitakse, et kasutaja  
+         * sisestatud väärtus ei oleks üleliigselt suur. Seejuures võetakse arvesse funktsiooni
+         * teist argumenti. Funktsiooni calcPrice() välja kutsumiseks kontrollitakse kõigepealt, 
+         * et raadionupp rbMonthlyCost oleks valitud. Vastasel juhul funktsiooni välja ei 
+         * kutsuta.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: objekt, mille kohta sündmused kehtivad
+         *      e: sündmustele vastavad argumendid (EventArgs tüüpi)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         private void txtMonthlyPrice_TextChanged(object sender, EventArgs e)
         {
-            this.handleNumberBoxChanged(ref txtMonthlyPrice, 1e4);
-            if (rbMonthlyCost.Checked)
+            this.handleNumberBoxChanged(ref txtMonthlyPrice, 1e4); // kontrollib sisestatud tähemärke
+            if (rbMonthlyCost.Checked) // kui kuutasu lahter on valitud
             {
-                calcPrice();
+                calcPrice(); // arvutakse hind
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // KASUTAJALIIDESE ELEMENTIDE SUURENDAMIS-/VÄHENDAMISNUPU VAJUTAMINE 
+        /* Funktsiooni btnNormalSize_Click() töö käigus kontrollitakse ning muudetakse globaalset 
+         * Boolean tüüpi muutujat state. Muutuja state väärtus on "true" või "false" vastavalt 
+         * elementide suurusele: "true" kui elemdid on suured ning "false" kui need on tavalise
+         * suurusega. Enamusel elementidel on kasutatud globaalseid väärtuseid Bigger ja Normal.
+         * Vaikimisi väärtused (font, fondi suurus): 
+         * Bigger = "Impact", 16
+         * Normal = "Impact", 12
+         * Soovi korral on võimalik väärtuseid muuta koodi alguses.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: objekt, mille kohta sündmused kehtivad
+         *      e: sündmustele vastavad argumendid (EventArgs tüüpi)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         private void btnNormalSize_Click(object sender, EventArgs e)
         {
@@ -1446,58 +1443,52 @@ namespace Kasutajaliides
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // TARBIMISANDMETE GRAAFIKUL NÄITAMISE LUBAMINE/KEELAMINE
+        /* Funktsioon muudab vastavalt kasti cbShowUsage olekule (lokaalne muutuja state) 
+         * tarbimisandmete kuvamist. Kui tarbimisandmete fail on rakenduses valitud ning kast 
+         * on aktiivne, kuvatakse graafikul tarbimisandmete joon. Peale igat olekumuutust 
+         * kutsutakse välja funktsioon updateGraph(), mis uuendab eelnimetatud joone nähtavust 
+         * vastavalt showUsage muutuja väärtusele.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: objekt, mille kohta sündmused kehtivad
+         *      e: sündmustele vastavad argumendid (EventArgs tüüpi)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         private void cbShowUsage_CheckedChanged(object sender, EventArgs e)
         {
-            var state = cbShowUsage.Checked;
-            if (state)
+            var state = cbShowUsage.Checked; // kas tarbimisandmed on graafikul kuvamiseks lubatud või mitte
+            if (state) // kontrollib muutujat
             {
-                this.showUsage = true;
+                this.showUsage = true; // lubab graafikul kuvamise
             }
             else
             {
-                this.showUsage = false;
+                this.showUsage = false; // keelab graafikul kuvamise
             }
-            updateGraph();
+            updateGraph(); // uuendab graafikut
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // KUUTASU TEKSTIKASTI SISESTAMINE
+        /* Funktsioon kontrollib peale igat sisestatud tähemärki, et see oleks õiges formaadis.
+         * Kohe, kui sisetatakse midagi või vajutatakse mingit klahvi, kutsutakse välja funktsioon
+         * handleNumberBoxKeyPress(), mis teostab kontrolli. 
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: objekt, mille kohta sündmused kehtivad
+         *      e: nupuvajutuse sündmustele vastavad argumendid (KeyPressEventArgs tüüpi)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -   
          */
         private void txtMonthlyPrice_KeyPress(object sender, KeyPressEventArgs e)
         {
             this.handleNumberBoxKeyPress(txtMonthlyPrice.Text, e);
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        // KASUTAJALIIDESE ELEMENTIDE SUURUSE MUUTMINE
         /* Funktsiooni kirjeldus siia!
          * 
          * PARAMEETRID (SISEND):
@@ -1526,21 +1517,20 @@ namespace Kasutajaliides
             element.Size = new Size(uusXlaius, uusYk6rgus);
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // DARKMODE NUPULE VAJUTAMINE
+        /* Funktsioon kasutab oma töös globaalset Boolean tüüpi muutujat isNotDarkMode. Kui nupuvajutus 
+         * toimub, siis inverteeritakse muutuja väärtus ning vastavalt saadud väärtusele muudetakse
+         * kõik kasutajaliidese elemendid heledaks või tumedaks. Kui muutuja väärtuseks on "false",
+         * muudetakse elemendid tumedaks ning väärtusega "true" muudetakse heledaks.
+         * Samuti kutsutakse välja funktsioonid drawGreenPacketColumn(), mis värvib roheliseks
+         * rohepakettide tulba ja updatePakettideVarvid(), mis uuendab pakettide ridade värve.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: objekt, mille kohta sündmused kehtivad
+         *      e: sündmustele vastavad argumendid (EventArgs tüüpi)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         private void btnDarkMode_Click(object sender, EventArgs e)
         {
@@ -1714,64 +1704,54 @@ namespace Kasutajaliides
 
 
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // PAKETTIDE CSV AVAMISE NUPUVAJUTUS
+        /* Nupuvajutusel kutsutakse välja funktsioon chooseFilePackages() ning vastavalt selle tulemusele
+         * (kas õnnestus fail leida või mitte) muudetakse sätetefailis pakettide faili path funktsiooniga
+         * changeSetting(). Seejärel avatakse fail funktsiooniga openCSVPackage().
+         * 
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: objekt, mille kohta sündmused kehtivad
+         *      e: sündmustele vastavad argumendid (EventArgs tüüpi)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         private void btnOpenPackages_Click(object sender, EventArgs e)
         {
-            if (AP.chooseFilePackages())
+            if (AP.chooseFilePackages()) // kui faili valimine õnnestub
             {
-                AS.changeSetting(AndmeSalvestaja.ASSetting.paketiAndmed, AP.packageFileName);
-                this.openCSVPackage();
+                AS.changeSetting(AndmeSalvestaja.ASSetting.paketiAndmed, AP.packageFileName); // muudetakse sätetefaili
+                this.openCSVPackage(); // avab pakettide CSV faili
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // PAKETTIDE CSV FAILI AVAMINE
+        /* Funktsioon loeb sisse faili sisu kasutades funktsiooni readPackageFile(). Kui lugemine ebaõnnestus 
+         * muudetakse lokaalne muutuja ret vääraks. Kui lugemine õnnestub, parsitakse saadud andmed funktsiooniga 
+         * parsePackage() ning lisatakse pakettide tabelisse. Kutustakse välja ka funktsioon updatePakettideTarbimishind(), 
+         * mis arvutab ja uuendab tarbimisandmete põhjal hinnad, ning funktsioon drawGreenPacketColumn().
          * 
-         * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
-         *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *  ret: boolean väärtus vastavalt faili lugemise õnnestumisele/ebaõnnestumisele
          */
         private bool openCSVPackage()
         {
-            bool ret = true;
-            string packageFileContents;
-            if (!AP.readPackageFile(out packageFileContents))
+            bool ret = true; // lokaalne muutuja tagastamiseks
+            string packageFileContents; // faili sisu
+            if (!AP.readPackageFile(out packageFileContents)) // kui faili ei õnnestunud lugeda
             {
                 ret = false;
             }
-            else
+            else // kui faili õnnestus lugeda 
             {
-                this.packageInfo = AP.parsePackage(packageFileContents);
+                this.packageInfo = AP.parsePackage(packageFileContents); // saadud sisu parsitakse
 
-                tablePackages.Rows.Clear();
+                tablePackages.Rows.Clear(); // tabeli sisu eemaldamine
                 int i = 0;
-                foreach (var item in this.packageInfo)
+                foreach (var item in this.packageInfo) // käiakse läbi saadud andmed
                 {
-                    tablePackages.Rows.Add(
+                    tablePackages.Rows.Add( // andmed lisatakse tabelisse
                         i,
                         item.providerName,
                         item.packageName,
@@ -1791,24 +1771,19 @@ namespace Kasutajaliides
 
                 this.drawGreenPacketColumn(ref tablePackages, 8);
             }
-            return ret;
+            return ret; // tagastab saadud vääratuse
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // KASUTAJALIIDESE ELEMENTIDE SUURUSE MUUTMINE
+        /* Funktsioon kutsub kõikide kasutajaliidese elementide peal välja funktsiooni resizeGuiElemnt() ning seeläbi 
+         * muudab elementide suurust. 
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: objekt, mille kohta sündmused kehtivad
+         *      e: sündmustele vastavad argumendid (EventArgs tüüpi)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         private void Kasutajaliides_Resize(object sender, EventArgs e)
         {
@@ -1864,59 +1839,54 @@ namespace Kasutajaliides
             Refresh(); // vajalik et ei tekiks "render glitche" (nt. ComboBox ei suurene korraks jms.)
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // PAKETTIDE TABELI REA PÄISE VALIMINE
+        /* Kui valitakse pakettide tableist mingi pakett, siis see lisatakse joonena graafikule ning samuti
+         * hindade tabelisse. Funktsioon määrab ära, millised paketid tuleb eemaldada nii tabelist kui ka 
+         * graafikult, kui need pole enam valitud.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: objekt, mille kohta sündmused kehtivad
+         *      e: DataGridViewCell hiire sündmustele vastavad argumendid (DataGridViewCellMouseEventArgs tüüpi)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         private void tablePackages_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            //MessageBox.Show("It works!");
-            isPackageSelected = tablePackages.SelectedRows.Count != 0;
-
+            isPackageSelected = tablePackages.SelectedRows.Count != 0; // kui pakette on valitud
 
             List<Series> removables = new List<Series>();
             List<DataGridViewColumn> removableColumns = new List<DataGridViewColumn>();
-            // Eemaldab vanad, mida enam pole valitud
+            // Eemaldab vanad pakettide jooned, mida enam pole valitud
             foreach (var series in chartPrice.Series)
             {
-                if (series.Name == "Elektrihind" || series.Name == "Tarbimine")
+                if (series.Name == "Elektrihind" || series.Name == "Tarbimine") // Et ei eemaldaks börsihinna ja tarbimise jooni
                 {
                     continue;
                 }
 
                 bool removeItem = true;
-                for (int j = 0; j < tablePackages.SelectedRows.Count; ++j)
+                for (int j = 0; j < tablePackages.SelectedRows.Count; ++j) // käib läbi valitud paketid
                 {
                     string seriesName = tablePackages.SelectedRows[j].Index.ToString() + ": " + tablePackages.SelectedRows[j].Cells[2].Value.ToString();
                     string seriesNameUsage = tablePackages.SelectedRows[j].Index.ToString() + ": " + tablePackages.SelectedRows[j].Cells[2].Value.ToString() + " tarbimisel";
-                    if (seriesName == series.Name || seriesNameUsage == series.Name)
+                    if (seriesName == series.Name || seriesNameUsage == series.Name) // kui paketi nimi on sama, mis joone nimi
                     {
-                        removeItem = false;
+                        removeItem = false; // võib eemaldada
                         break;
                     }
                 }
 
                 if (removeItem)
                 {
-                    removables.Add(series);
+                    removables.Add(series); // lisab joone eemaldatavate hulka
                 }
             }
 
-            foreach (DataGridViewColumn column in tablePrice.Columns)
+            // Eemaldab hinna tabelist paketi mida enam vaja ei ole
+            foreach (DataGridViewColumn column in tablePrice.Columns) // Käib läbi tulbad
             {
-                if (column.Equals(Aeg) || column.Equals(Hind))
+                if (column.Equals(Aeg) || column.Equals(Hind)) // Kellaaeg ja börsihind peavad jääma
                 {
                     continue;
                 }
@@ -1950,7 +1920,7 @@ namespace Kasutajaliides
             }
 
             // Lisab uued, mis on valitud
-            for (int i = 0; i < tablePackages.SelectedRows.Count; ++i)
+            for (int i = 0; i < tablePackages.SelectedRows.Count; ++i) 
             {
                 string packageName = tablePackages.SelectedRows[i].Index.ToString() + ": " + tablePackages.SelectedRows[i].Cells[2].Value.ToString();
                 if (chartPrice.Series.FindByName(packageName) != null)
@@ -1958,14 +1928,14 @@ namespace Kasutajaliides
                     continue;
                 }
 
-                Random r = new Random();
+                Random r = new Random(); // Suvaliste värvide saamiseks
 
-                chartPrice.Series.Add(packageName);
-                chartPrice.Series[packageName].ChartArea = "ChartArea1";
-                chartPrice.Series[packageName].YAxisType = AxisType.Secondary;
-                chartPrice.Series[packageName].Color     = Color.FromArgb(r.Next(256), r.Next(256), r.Next(256));
-                chartPrice.Series[packageName].Legend    = "Legend1";
-                chartPrice.Series[packageName].ChartType = SeriesChartType.Line;
+                chartPrice.Series.Add(packageName); // Joone lisamine
+                chartPrice.Series[packageName].ChartArea = "ChartArea1"; // Määrab diagrammi ala
+                chartPrice.Series[packageName].YAxisType = AxisType.Secondary; // Määrab telje tüübi 
+                chartPrice.Series[packageName].Color     = Color.FromArgb(r.Next(256), r.Next(256), r.Next(256)); // Suvaline värv
+                chartPrice.Series[packageName].Legend    = "Legend1"; // Määrab legendi
+                chartPrice.Series[packageName].ChartType = SeriesChartType.Line; // Määrab diagrammi tüübi
 
                 var packageCost = new List<double>();
                 foreach (var item in VK.priceTimeRange)
@@ -1988,7 +1958,7 @@ namespace Kasutajaliides
                         continue;
                     }
                     
-                    if (VK.userDataTimeRange.Count == 0)
+                    if (VK.userDataTimeRange.Count == 0) // Kui pole tarbimisandmeid, siis lisamine ebaõnnestub
                     {
                         Console.WriteLine("Ei saa graafikut lisada!");
                         continue;
@@ -2003,34 +1973,30 @@ namespace Kasutajaliides
                     chartPrice.Series[packageNameUsage].Legend = "Legend1";
                     chartPrice.Series[packageNameUsage].ChartType = SeriesChartType.Line;
 
-                    var newColumn = new DataGridViewTextBoxColumn();
-                    newColumn.HeaderText = packageNameUsage;
-                    newColumn.Name = packageNameUsage;
+                    var newColumn = new DataGridViewTextBoxColumn(); // Lisab tabelisse uue tulba
+                    newColumn.HeaderText = packageNameUsage;          // Määrab päise nimeks paketi nime 
+                    newColumn.Name = packageNameUsage;                 // Paketi nimi
 
-                    tablePrice.Columns.Add(newColumn);
+                    tablePrice.Columns.Add(newColumn);                 // Lisab paketi tabelisse
                 }
 
                 
             }
 
-            updateGraph();
+            updateGraph(); // Uuendab graafikut
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // TOPELTKLÕPS PAKETTIDE TABELI RIDADE PÄISES
+        /* Kui pakettide ridade päises tehakse topeltklõps, salvestatakse vastava rea indeks ning vastav rida tehakse
+         * mitteaktiivseks. Seejärel kutsutakse välja funktsioon tablePackages_RowHeaderMouseDoubleClick() ning
+         * pakett eemaldatakse hindade tabelist ja graafikult.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: objekt, mille kohta sündmused kehtivad
+         *      e: DataGridViewCell hiire sündmustele vastavad argumendid (DataGridViewCellMouseEventArgs tüüpi)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         private void tablePackages_RowHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -2093,21 +2059,15 @@ namespace Kasutajaliides
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // TIMER HINNA KONTROLLIMISEKS
+        /* Funktsioon kutsub välja funktsiooni updateCostNow(), mis uuendab praegust börsihinda.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: objekt, mille kohta sündmused kehtivad
+         *      e: sündmustele vastavad argumendid (EventArgs tüüpi)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         private void tmrCostNow_Tick(object sender, EventArgs e)
         {
@@ -2142,21 +2102,16 @@ namespace Kasutajaliides
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // EXPORT SALVESTAMISNUPU VAJUTAMINE
+        /* Kui vajutatakse salvestusnupu peale siis salvestatakse valitud faili programmis olevad andmed. Kui faili 
+         * pole valitud, annab programm sellest teada ning laseb seda teha. 
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: objekt, mille kohta sündmused kehtivad
+         *      e: sündmustele vastavad argumendid (EventArgs tüüpi)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         private void btnExportSave_Click(object sender, EventArgs e)
         {
@@ -2218,21 +2173,15 @@ namespace Kasutajaliides
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // EXPORT FAILI VALIMISNUPU VAJUTUS
+        /* Salvestab andmete eksportimiseks faili path'i.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      sender: objekt, mille kohta sündmused kehtivad
+         *      e: sündmustele vastavad argumendid (EventArgs tüüpi)
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         private void btnExportOpen_Click(object sender, EventArgs e)
         {
@@ -2275,21 +2224,17 @@ namespace Kasutajaliides
             state3 = false;
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // GRAAFIKUL ZOOMIMINE
+        /* Funktsioon muudab graafikul olevaid algus- ja lõppkuupäeva vastavalt ette antud parameetritele.
+         * Kui kõik andmeid pole olemas, siis funktsioon küsib API-lt uusi andmeid. Graafikut uuendatakse 
+         * (updateGraph()) ning hinnad arvutatakse uuesti (calcPrice()).
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      start: alguskuupäev
+         *      stop: lõppkuupäev
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         void priceChart_zoom(DateTime start, DateTime stop)
         {
@@ -2303,21 +2248,15 @@ namespace Kasutajaliides
             calcPrice();
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // ROHEPAKETTIDE ROHELISEKS VÄRVIMINE
+        /* Funktsioon värvib tabelis etteantud indeksiga rea rohepaketi tulba roheliseks, et eristada rohepakette.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      table: tabel, mille tulpa värvitakse
+         *      greenPacketRow: rohepaketi rea indeks
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         void drawGreenPacketColumn(ref DataGridView table, int greenPacketRow)
         {
@@ -2342,21 +2281,16 @@ namespace Kasutajaliides
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // REA VÄRVI TAASTAMINE
+        /* Funktsioon taastab rea esialgse värvi, jättes seejuures puutumata rohepaketi tulba.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      table: tabel, mille ridu taastatakse
+         *      rowIDX: rea indeks
+         *      skipRow: rohepaketi rea indeks
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         void resetRowColor(ref DataGridView table, int rowIdx, int skipRow)
         {
@@ -2371,21 +2305,18 @@ namespace Kasutajaliides
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
+        // REA VÄRVIMINE
         /* Funktsiooni kirjeldus siia!
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      table: tabel, mille ridu värvitakse
+         *      rowIdx: rea indeks
+         *      foreColor: teksti värv 
+         *      backColor: tausta värv
+         *      skipRow: rohepaketi rea indeks
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         void setRowColor(ref DataGridView table, int rowIdx, Color foreColor, Color backColor, int skipRow)
         {
@@ -2408,21 +2339,13 @@ namespace Kasutajaliides
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
-         * 
-         * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+        // SUURIMA JA VÄIKSEMA HETKEHINNAGA PAKETTIDE VÄRVIMINE
+        /* Funktsioon käib läbi pakettide tabeli ning värvib punaseks kõrgeima hinnaga paketi rea ja roheliseks
+         * madalaima hinnaga paketi rea. Funktsioon kasutab seejuures funktsiooni setRowColor() ning värvide 
+         * taastamiseks funktsiooni resetRowColor().
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         private void updatePakettideVarvid()
         {
@@ -2463,21 +2386,16 @@ namespace Kasutajaliides
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // PAKETTIDE HINDADE UUENDAMINE
+        /* Funktsioonga saab uuendada pakettide tabelis olevaid hindasid. Hetkehindasid on võimalik eemaldada 
+         * ning lõpphindu uuesti arvutada. Juhul kui hetkehinnad arvutatakse uuesti, taastatakse rea värv ning 
+         * kui lõpphind arvutatakse uuesti, siis uuendatakse ridade värve.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      time: 
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         private void updatePakettideHinnad(DateTime time)
         {
@@ -2506,21 +2424,16 @@ namespace Kasutajaliides
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // PAKETTIDE TABELIS MALLI HINNA UUENDAMINE
+        /* Tablisse lisatakse/eemaldatakse pakettide lõpphinnad vastavalt valitud kasutusmallile.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      startTime: tarbimise algusaeg
+         *      usageLength: tarbimise kestus
+         *      power: tarbimisel kasutatav võimsus
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         private void updatePakettideMallid(DateTime startTime, double usageLength, double power)
         {
@@ -2581,27 +2494,18 @@ namespace Kasutajaliides
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
-         * 
-         * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+        // PAKETTIDE TARBIMISHINNA UUENDAMINE
+        /* Kui kasutaja on üles laadinud ning valinud huvi pakkuva ajaperioodi, kuvatakse tabelisse kõikide pakettide
+         * tarbimishinnad valitud ajaperioodil.
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         private void updatePakettideTarbimishind()
         {
-            if (VK.userDataTimeRange.Count == 0)
+            if (VK.userDataTimeRange.Count == 0) // Kui tarbimisandmed puuduvad
             {
-                return;
+                return; // Katkestab funktsiooni töö
             }
             var stockCost = VK.createRange(this.priceData, VK.userDataTimeRange.First(), VK.userDataTimeRange.Last()); // Börsihinna väärtuste loomine
             var start = dateStartTime.Value;

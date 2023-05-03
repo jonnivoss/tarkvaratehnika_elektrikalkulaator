@@ -22,30 +22,26 @@ namespace VaheKiht
 
         public double averagePrice { get; private set; } = 0.0;
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // VAHEMIKU GENEREERIMINE
+        /* Loob antud andmetest (inData) vahemiku mingil ajaperioodil.
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
-         *      
+         *      inData: sisendandmed, millest luuakse vahemik
+         *      start: algusaeg
+         *      stop: lõppaeg
+         *   
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      data: loodud vahemik, genereerimine õnnestus
+         *      null: genereerimine ebaõnnestus
          */
         public VecT createRange(VecT inData, DateTime start, DateTime stop)
         {
-            if (start > stop)
+            if (start > stop) // Kui algusaeg on suurem kui lõppaeg
             {
                 return null;
             }
             VecT data = new VecT();
-            try
+            try // Proovib luua vahemikku
             {
                 foreach (var item in inData)
                 {
@@ -56,27 +52,22 @@ namespace VaheKiht
                 }
                 return data;
             }
-            catch (Exception)
+            catch (Exception) // Ei õnnestunud luua vahemikku
             {
                 return null;
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // TARBIMISANDMETE VAHEMIKU GENEREERIMINE
+        /* Loob antud andmetest (inData) tarbimisandmete vahemiku mingil ajaperioodil.  
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      inData: sisendandmed, millest luuakse tarbimisandmete vahemik
+         *      start: algusaeg
+         *      stop: lõppaeg
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      Tagastab boolean väärtuse olenevalt vahemiku loomise õnnestumisest/ebaõnnestusmiset
          */
         public bool createUserDataRange(VecT inData, DateTime start, DateTime stop)
         {
@@ -85,8 +76,8 @@ namespace VaheKiht
                 return false;
             }
 
-            userDataTimeRange.Clear();
-            userDataUsageRange.Clear();
+            userDataTimeRange.Clear(); // Eemaldab vanad andmed
+            userDataUsageRange.Clear(); 
             userDataRange = this.createRange(inData, start, stop);
 
             try
@@ -105,21 +96,16 @@ namespace VaheKiht
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
+        // BÖRSIANDMETE VAHEMIKU GENEREERIMINE
+        /* Loob antud andmetest (inData) börsiandmete vahemiku mingil ajaperioodil.  
          * 
          * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
+         *      inData: sisendandmed, millest luuakse tarbimisandmete vahemik
+         *      start: algusaeg
+         *      stop: lõppaeg
          *      
          * TAGASTUSVÄÄRTUSED:
-         * 
+         *      Tagastab boolean väärtuse olenevalt vahemiku loomise õnnestumisest/ebaõnnestusmiset
          */
         public bool createStockRange(VecT inData, DateTime start, DateTime stop)
         {
@@ -128,7 +114,7 @@ namespace VaheKiht
                 return false;
             }
 
-            priceTimeRange.Clear();
+            priceTimeRange.Clear(); // Eemaldab vanad andmed
             priceCostRange.Clear();
             this.priceRange = this.createRange(inData, start, stop);
             averagePrice = 0.0;
@@ -154,32 +140,22 @@ namespace VaheKiht
             }
         }
 
-        // SIIA PANE FUNKTSIOONI NIMI VÕI KIRJELDAV
-        /* Funktsiooni kirjeldus siia!
-         * 
-         * PARAMEETRID (SISEND):
-         *      a
-         *      b
-         *      c
-         *      
-         * PARAMEETRID (VÄLJUND):
-         *      d
-         *      e
-         *      f
-         *      
+        // VIIMASE PUNKTI LISAMINE GRAAFIKULE
+        /* Lisab andmetesse viimase punkti, et graafik oleks ilusam <3
+         *    
          * TAGASTUSVÄÄRTUSED:
-         * 
+         * -
          */
         public void addLastPoints()
         {
-            if (this.userDataTimeRange.Count > 0)
+            if (this.userDataTimeRange.Count > 0) // Kui on olemas tarbimisandmete kasutatav vahemik
             {
                 this.userDataTimeRange.Add(this.userDataTimeRange.Last().AddHours(1));
                 this.userDataUsageRange.Add(this.userDataUsageRange.Last());
                 this.userDataRange.Add(Tuple.Create(this.userDataTimeRange.Last(), this.userDataUsageRange.Last()));
             }
 
-            if (this.priceTimeRange.Count > 0)
+            if (this.priceTimeRange.Count > 0) // Kui on olemas börsiandmete kasutatav vahemik
             {
                 this.priceTimeRange.Add(this.priceTimeRange.Last().AddHours(1));
                 this.priceCostRange.Add(this.priceCostRange.Last());

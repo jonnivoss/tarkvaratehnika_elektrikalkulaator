@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Globalization;
 
 using VecT = System.Collections.Generic.List<System.Tuple<System.DateTime, double>>;
 using PackageT = System.Collections.Generic.List<AndmePyydja.IPackageInfo>;
@@ -2425,6 +2426,7 @@ namespace Kasutajaliides
         }
 
 
+
         //vaja tükeldada algusest lopuni iga nadala paeva kohta
         private void btnLeiaTrend_Click(object sender, EventArgs e)
         {
@@ -2442,10 +2444,7 @@ namespace Kasutajaliides
 
                 if ((dateStopTime.Value - dateStartTime.Value).TotalDays < 7.0)
                 {
-                    dateStartTime.Value = dateStopTime.Value.Date.AddDays(-6) + new TimeSpan(0, 0, 0);
-
-                    MessageBox.Show(dateStartTime.Value.ToString() + " " + dateStopTime.Value);
-                    
+                    dateStartTime.Value = dateStopTime.Value.Date.AddDays(-6) + new TimeSpan(0, 0, 0);                    
                 }
 
                 if (((dateStopTime.Value.Date - dateStartTime.Value.Date).TotalDays+1) % 7 != 0) 
@@ -2459,11 +2458,21 @@ namespace Kasutajaliides
                 {
                     keskmisteHindadeBin[(int)item.Item1.DayOfWeek] += item.Item2;
                 }
-                for (int i = 0; i < 7; i++)
+                double vaiksem = keskmisteHindadeBin[0] /= (ajutineVecT.Count / 7); ;
+                int dayOfWeekValue = 0;
+                for (int i = 1; i < 7; i++)
                 {
                     keskmisteHindadeBin[i] /= (ajutineVecT.Count / 7);
+                    if (keskmisteHindadeBin[i] < vaiksem)
+                    {
+                        dayOfWeekValue = i;
+                        vaiksem = keskmisteHindadeBin[i];
+                    }
                 }
-                MessageBox.Show(keskmisteHindadeBin.Min().ToString());
+                CultureInfo cultureInfo = new CultureInfo("et-EE"); // Estonian culture
+                string dayName = cultureInfo.DateTimeFormat.GetDayName((DayOfWeek)dayOfWeekValue);
+                
+                MessageBox.Show(dayName);
             }
             else 
             {

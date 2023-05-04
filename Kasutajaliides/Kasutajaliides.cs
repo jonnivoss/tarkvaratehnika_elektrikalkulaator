@@ -1685,6 +1685,9 @@ namespace Kasutajaliides
                 tablePackages.ForeColor = Color.Black;
                 tablePackages.DefaultCellStyle.BackColor = Color.White;
 
+                // Kuidas muuta nupud õiget värvi tagasi? -> UseVisualStyleBackColor property
+                // https://stackoverflow.com/questions/10569200/how-to-reset-to-default-button-backcolor
+
                 cbKasutusmall.BackColor = Color.White;
                 cbKasutusmall.ForeColor = Color.Black;
                 txtAjakulu.BackColor = SystemColors.Window;
@@ -1698,12 +1701,15 @@ namespace Kasutajaliides
                 txtDebug.BackColor = SystemColors.Window;
                 txtDebug.ForeColor = Color.Black;
                 btnAvaCSV.BackColor = SystemColors.Control;
+                btnAvaCSV.UseVisualStyleBackColor = true;
                 btnAvaCSV.ForeColor = Color.Black;
                 txtCostNow.BackColor = SystemColors.Window;
                 txtCostNow.ForeColor = Color.Black;
                 btnChangeSize.BackColor = SystemColors.Control;
+                btnChangeSize.UseVisualStyleBackColor = true;
                 btnChangeSize.ForeColor = Color.Black;
                 btnDarkMode.BackColor = SystemColors.Control;
+                btnDarkMode.UseVisualStyleBackColor = true;
                 btnDarkMode.ForeColor = Color.Black;
                 txtMonthlyPrice.BackColor = SystemColors.Window;
                 txtMonthlyPrice.ForeColor = Color.Black;
@@ -1719,13 +1725,16 @@ namespace Kasutajaliides
                 cbExportAppend.ForeColor = Color.Black;
                 btnExportSave.ForeColor = Color.Black;
                 btnExportSave.BackColor = SystemColors.Control;
+                btnExportSave.UseVisualStyleBackColor = true;
                 btnExportOpen.ForeColor = Color.Black;
                 btnExportOpen.BackColor = SystemColors.Control;
+                btnExportOpen.UseVisualStyleBackColor = true;
                 lblExportPath.ForeColor = Color.Black;
                 txtExportPath.ForeColor = Color.Black;
                 txtExportPath.BackColor = SystemColors.Window;
 
                 btnOpenPackages.BackColor = SystemColors.Control;
+                btnOpenPackages.UseVisualStyleBackColor = true;
                 btnOpenPackages.ForeColor = Color.Black;
 
                 toolTip.BackColor = SystemColors.Control;

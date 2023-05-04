@@ -668,7 +668,11 @@ namespace Kasutajaliides
                     }
                     else
                     {
-                        txtTarbimisAeg.Text = bestDate.ToString("dd.MM.yyyy HH:mm");
+                        // Kui parim tarbimisaeg on praegu, siis kuvab "Praegu"
+                        DateTime d = DateTime.Now;
+                        d = d.Date + TimeSpan.FromHours(d.Hour);
+
+                        txtTarbimisAeg.Text = (d == bestDate) ? "Präägu" : bestDate.ToString("dd.MM.yyyy HH:mm");
                     }
                 }
                 else

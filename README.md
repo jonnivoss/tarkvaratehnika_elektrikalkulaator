@@ -1,3 +1,4 @@
 # Tarkvaratehnika-elektrikalkulaator
-- Selles projektis me teeme eestis paikneva inimese jaoks olevat elektri hinna/kulu kalkulaatorit
-
+- Meeskonna Vortex loodud tarkvaralahenduse “Elektripaketi leidja ja kalkulaator” põhieesmärgiks on pakkuda minimalistlikku, selge ülesehitusega ja lihtsasti kasutatavat rakendust elektrienergia börsihinna ja kasutaja tarbimisandmete kuvamiseks, erinevate elektripakettide võrdlemiseks, majapidamises levinud elektriseadmete optimaalse kasutusaja leidmiseks nendele omase võimsuse ja kindla tarbimisperioodi põhjal jt.
+Rakendus on mõeldud kasutamiseks Eesti Vabariigis - börsihindade päringuid teostatakse AS Elering Dashboard API vahendusel, tarbimisandmed tuleb kasutajal iseseisvalt oma OÜ Elektrilevi kontost CSV faili vormis alla laadida ja rakendusele edastada.
+Projekti kui terviku läbimine võimaldas sellesse kaasatud tudengitel harjutada kaasaegset, agiilsetel meetoditel põhinevat tarkvara arendust. Õpiti kasutama versioonihaldustarkvara Git, projekti tööjärje (sh. backlog) haldustarkvara Mattermost, objektorienteeritud programmeerimiskeelt C#, interaktiivset programmeerimiskeskkonda Microsoft Visual Studio jms.

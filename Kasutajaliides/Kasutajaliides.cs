@@ -2435,14 +2435,35 @@ namespace Kasutajaliides
             if (cbTundVoiPaev.Checked == true)
             {
                 keskmisteHindadeBin = new double[7];
-                if ((dateStopTime.Value - dateStartTime.Value).TotalDays < 7)
+                for(int i = 0; i < 7; i++) 
                 {
-                    dateStartTime.Value = dateStopTime.Value.Date.AddDays(-7) + new TimeSpan(0,0,0);
-
-                    priceChart_zoom(dateStartTime.Value,dateStopTime.Value);
+                    keskmisteHindadeBin[i] = 0;
                 }
-                ajutineVecT = AP.HindAegInternet(dateStopTime.Value, dateStartTime.Value);
 
+                if ((dateStopTime.Value - dateStartTime.Value).TotalDays < 7.0)
+                {
+                    dateStartTime.Value = dateStopTime.Value.Date.AddDays(-6) + new TimeSpan(0, 0, 0);
+
+                    MessageBox.Show(dateStartTime.Value.ToString() + " " + dateStopTime.Value);
+                    
+                }
+
+                if (((dateStopTime.Value.Date - dateStartTime.Value.Date).TotalDays+1) % 7 != 0) 
+                {
+                    dateStartTime.Value = dateStartTime.Value.AddDays(((dateStopTime.Value.Date - dateStartTime.Value.Date).TotalDays + 1) % 7);
+                }
+                priceChart_zoom(dateStartTime.Value, dateStopTime.Value);
+                ajutineVecT = AP.HindAegInternet(dateStartTime.Value, dateStopTime.Value);
+
+                foreach (var item in ajutineVecT) 
+                {
+                    keskmisteHindadeBin[(int)item.Item1.DayOfWeek] += item.Item2;
+                }
+                for (int i = 0; i < 7; i++)
+                {
+                    keskmisteHindadeBin[i] /= (ajutineVecT.Count / 7);
+                }
+                MessageBox.Show(keskmisteHindadeBin.Min().ToString());
             }
             else 
             {

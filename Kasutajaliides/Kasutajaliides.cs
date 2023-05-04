@@ -2431,8 +2431,6 @@ namespace Kasutajaliides
         private void btnLeiaTrend_Click(object sender, EventArgs e)
         {
             VecT ajutineVecT = new VecT();
-            DateTime ajutineDateLopp = dateStopTime.Value;
-            DateTime ajutineDateAlgus = dateStartTime.Value;
             double[] keskmisteHindadeBin;
             if (cbTundVoiPaev.Checked == true)
             {
@@ -2476,7 +2474,28 @@ namespace Kasutajaliides
             }
             else 
             {
-                
+                keskmisteHindadeBin = new double[24];
+                for (int i = 0; i < 24; i++)
+                {
+                    keskmisteHindadeBin[i] = 0;
+                }
+
+                if ((dateStopTime.Value - dateStartTime.Value).TotalDays < 7.0)
+                {
+                    dateStartTime.Value = dateStopTime.Value.Date.AddDays(-6) + new TimeSpan(0, 0, 0);
+                }
+
+                priceChart_zoom(dateStartTime.Value, dateStopTime.Value);
+                ajutineVecT = AP.HindAegInternet(dateStartTime.Value, dateStopTime.Value);
+
+                foreach (var item in ajutineVecT)
+                {
+                    keskmisteHindadeBin[(int)item.Item1.Hour] += item.Item2;
+                }
+                for (int i = 0; i < 24; i++)
+                {
+                    txtDebug.AppendText(keskmisteHindadeBin[i].ToString() + Environment.NewLine);
+                }
             }
         }
 

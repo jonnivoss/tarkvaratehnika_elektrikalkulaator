@@ -452,7 +452,8 @@ namespace Kasutajaliides
                 
                 //leia x kordinaat kus hiir on
                 double x = ax.PixelPositionToValue(e.X);
-                double y = 0;
+                DateTime tooltipDate = default(DateTime);
+                double tooltipPrice = 0;
                 
                 //leia punkt millele x vastab ja salvesta selle y kordinaat
                 DateTime s = DateTime.FromOADate(x);
@@ -460,15 +461,50 @@ namespace Kasutajaliides
                 {
                     if (VK.priceTimeRange[i].Hour == s.Hour && VK.priceTimeRange[i].Date == s.Date)
                     {
-                        y = VK.priceCostRange[i];
-                        this.updatePakettideHinnad(VK.priceTimeRange[i]);
+                        tooltipPrice = VK.priceCostRange[i];
+                        tooltipDate  = VK.priceTimeRange[i];
+                        this.updatePakettideHinnad(tooltipDate);
+                        break;
+                    }
+                }
+                bool foundUsage = false;
+                double tooltipUsage = 0.0;
+                for (int i = 0; i < VK.userDataTimeRange.Count; ++i)
+                {
+                    if (VK.userDataTimeRange[i].Hour == s.Hour && VK.userDataTimeRange[i].Date == s.Date)
+                    {
+                        tooltipUsage = VK.userDataUsageRange[i];
+                        foundUsage = true;
                         break;
                     }
                 }
                 
                 //tt tekst
-                tooltipText = "hind: ";
-                tooltipText += y.ToString("0.000") + "\n" + s.ToString("kell HH:00") + "\n" + s.ToString("dd/MM/yy");
+                tooltipText = "börsihind: ";
+                tooltipText += tooltipPrice.ToString("0.000") + " s/kWh";
+                if (foundUsage)
+                {
+                    tooltipText += "\ntarbimine: " + tooltipUsage.ToString() + " kWh";
+                }
+
+                if (tooltipDate != default(DateTime))
+                {
+                    // Leitakse valitud ajahetkele vastav börsihind
+                    double stockPrice = VK.priceRange.Find(Tuple => Tuple.Item1 == tooltipDate).Item2;
+                    for (int i = 0; i < tablePackages.SelectedRows.Count; ++i)
+                    {
+                        var idx = tablePackages.SelectedRows[i].Index;
+                        // Arvutatakse paketti arvestades tarbija lõpphind
+                        double price = AR.finalPrice(stockPrice, this.packageInfo[idx], tooltipDate);
+
+                        // Lisab hinna tooltipi
+                        tooltipText += "\n" + idx.ToString() + " - " + tablePackages.SelectedRows[i].Cells[2].Value.ToString() + ": ";
+                        tooltipText += price.ToString("0.000") + " s/kWh";
+                    }
+                }
+
+                // Lisab valitud kella-aja kohta
+                tooltipText += "\n" + tooltipDate.ToString("kell HH:00") + "\n" + tooltipDate.ToString("dd/MM/yy");
 
                 if (e.X != this.lastX || e.Y != this.lastY)
                 {
@@ -2391,12 +2427,12 @@ namespace Kasutajaliides
         }
 
         // PAKETTIDE HINDADE UUENDAMINE
-        /* Funktsioonga saab uuendada pakettide tabelis olevaid hindasid. Hetkehindasid on võimalik eemaldada 
+        /* Funktsiooniga saab uuendada pakettide tabelis olevaid hindasid. Hetkehindasid on võimalik eemaldada 
          * ning lõpphindu uuesti arvutada. Juhul kui hetkehinnad arvutatakse uuesti, taastatakse rea värv ning 
          * kui lõpphind arvutatakse uuesti, siis uuendatakse ridade värve.
          * 
          * PARAMEETRID (SISEND):
-         *      time: 
+         *      time: Soovitud ajahetk, mida pakettide tabelisse kuvada (DateTime)
          *      
          * TAGASTUSVÄÄRTUSED:
          * -
@@ -2414,10 +2450,10 @@ namespace Kasutajaliides
             }
             else
             {
+                // Leitakse valitud ajahetkele vastav börsihind
+                double stockPrice = VK.priceRange.Find(Tuple => Tuple.Item1 == time).Item2;
                 for (int i = 0; i < tablePackages.Rows.Count; ++i)
                 {
-                    // Leitakse valitud ajahetkele vastav börsihind
-                    double stockPrice = VK.priceRange.Find(Tuple => Tuple.Item1 == time).Item2;
                     // Arvutatakse paketti arvestades tarbija lõpphind
                     double price = AR.finalPrice(stockPrice, this.packageInfo[i], time);
 

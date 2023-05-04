@@ -2424,6 +2424,23 @@ namespace Kasutajaliides
             }
         }
 
+        private void btnLeiaTrend_Click(object sender, EventArgs e)
+        {
+            VecT ajutineVecT = new VecT();
+            DateTime ajutineDateLopp = dateStopTime.Value;
+            DateTime ajutineDateAlgus = dateStartTime.Value;
+            MessageBox.Show(ajutineDateLopp.ToString());
+            if (cbTundVoiPaev.Checked == true)
+            {
+                
+            }
+            else 
+            {
+                
+            }
+        }
+
+
         // PAKETTIDE TABELIS MALLI HINNA UUENDAMINE
         /* Tablisse lisatakse/eemaldatakse pakettide lõpphinnad vastavalt valitud kasutusmallile.
          * 

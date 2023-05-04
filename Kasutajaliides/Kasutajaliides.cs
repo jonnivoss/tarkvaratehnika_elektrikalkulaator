@@ -2424,15 +2424,25 @@ namespace Kasutajaliides
             }
         }
 
+
+        //vaja tükeldada algusest lopuni iga nadala paeva kohta
         private void btnLeiaTrend_Click(object sender, EventArgs e)
         {
             VecT ajutineVecT = new VecT();
             DateTime ajutineDateLopp = dateStopTime.Value;
             DateTime ajutineDateAlgus = dateStartTime.Value;
-            MessageBox.Show(ajutineDateLopp.ToString());
+            double[] keskmisteHindadeBin;
             if (cbTundVoiPaev.Checked == true)
             {
-                
+                keskmisteHindadeBin = new double[7];
+                if ((dateStopTime.Value - dateStartTime.Value).TotalDays < 7)
+                {
+                    dateStartTime.Value = dateStopTime.Value.Date.AddDays(-7) + new TimeSpan(0,0,0);
+
+                    priceChart_zoom(dateStartTime.Value,dateStopTime.Value);
+                }
+                ajutineVecT = AP.HindAegInternet(dateStopTime.Value, dateStartTime.Value);
+
             }
             else 
             {

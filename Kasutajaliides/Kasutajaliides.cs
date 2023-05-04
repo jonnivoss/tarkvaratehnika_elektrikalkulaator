@@ -984,7 +984,6 @@ namespace Kasutajaliides
                 this.dateStopTime.Value = dateStopTime.Value;
             }
             priceChart_zoom(dateStartTime.Value, dateStopTime.Value); // uuendab ja suurendab graafikut!
-            calcPrice();
         }
 
         // ALGUSAJA VALIJA AVAMISE REAGEERIJA
@@ -1047,7 +1046,6 @@ namespace Kasutajaliides
                 this.dateStartTime.Value = dateStartTime.Value;
             }
             priceChart_zoom(dateStartTime.Value, dateStopTime.Value); // uuendab ja suurendab graafikut!
-            calcPrice();
         }
 
         // LÕPUAJA VALIJA AVAMISE REAGEERIJA
@@ -1689,35 +1687,35 @@ namespace Kasutajaliides
 
                 cbKasutusmall.BackColor = Color.White;
                 cbKasutusmall.ForeColor = Color.Black;
-                txtAjakulu.BackColor = Color.White;
+                txtAjakulu.BackColor = SystemColors.Window;
                 txtAjakulu.ForeColor = Color.Black;
-                txtVoimsus.BackColor = Color.White;
+                txtVoimsus.BackColor = SystemColors.Window;
                 txtVoimsus.ForeColor = Color.Black;
-                txtHind.BackColor = SystemColors.Control;
+                txtHind.BackColor = SystemColors.Window;
                 txtHind.ForeColor = Color.Black;
-                txtTarbimisAeg.BackColor = SystemColors.Control;
+                txtTarbimisAeg.BackColor = SystemColors.Window;
                 txtTarbimisAeg.ForeColor = Color.Black;
-                txtDebug.BackColor = Color.White;
+                txtDebug.BackColor = SystemColors.Window;
                 txtDebug.ForeColor = Color.Black;
                 btnAvaCSV.BackColor = SystemColors.Control;
                 btnAvaCSV.ForeColor = Color.Black;
-                txtCostNow.BackColor = SystemColors.Control;
+                txtCostNow.BackColor = SystemColors.Window;
                 txtCostNow.ForeColor = Color.Black;
                 btnChangeSize.BackColor = SystemColors.Control;
                 btnChangeSize.ForeColor = Color.Black;
                 btnDarkMode.BackColor = SystemColors.Control;
                 btnDarkMode.ForeColor = Color.Black;
-                txtMonthlyPrice.BackColor = SystemColors.Control;
+                txtMonthlyPrice.BackColor = SystemColors.Window;
                 txtMonthlyPrice.ForeColor = Color.Black;
                 groupPriceType.ForeColor = Color.Black;
 
                 groupExport.ForeColor = Color.Black;
                 lblExportDelimiter.ForeColor = Color.Black;
                 txtExportDelimiter.ForeColor = Color.Black;
-                txtExportDelimiter.BackColor = Color.White;
+                txtExportDelimiter.BackColor = SystemColors.Window;
                 lblExportQualifier.ForeColor = Color.Black;
                 txtExportQualifier.ForeColor = Color.Black;
-                txtExportQualifier.BackColor = Color.White;
+                txtExportQualifier.BackColor = SystemColors.Window;
                 cbExportAppend.ForeColor = Color.Black;
                 btnExportSave.ForeColor = Color.Black;
                 btnExportSave.BackColor = SystemColors.Control;
@@ -1725,7 +1723,7 @@ namespace Kasutajaliides
                 btnExportOpen.BackColor = SystemColors.Control;
                 lblExportPath.ForeColor = Color.Black;
                 txtExportPath.ForeColor = Color.Black;
-                txtExportPath.BackColor = Color.White;
+                txtExportPath.BackColor = SystemColors.Window;
 
                 btnOpenPackages.BackColor = SystemColors.Control;
                 btnOpenPackages.ForeColor = Color.Black;
@@ -2393,7 +2391,11 @@ namespace Kasutajaliides
             Tuple<int, double> minRida = Tuple.Create(0, Double.PositiveInfinity), maxRida = Tuple.Create(0, Double.NegativeInfinity);
             for (int i = 0; i < tablePackages.Rows.Count; ++i)
             {
-                var price = Double.Parse(tablePackages.Rows[i].Cells[9].Value.ToString());
+                double price;
+                if (!Double.TryParse(tablePackages.Rows[i].Cells[9].Value.ToString(), out price))
+                {
+                    break;
+                }
 
                 if (price < minRida.Item2)
                 {
@@ -2408,12 +2410,18 @@ namespace Kasutajaliides
             // Käib kogu tabeli läbi, sest võib eksisteerida mitu sama hinnaga müüjat
             for (int i = 0; i < tablePackages.Rows.Count; ++i)
             {
-                if (Math.Abs(Double.Parse(tablePackages.Rows[i].Cells[9].Value.ToString()) - minRida.Item2) < 0.0005)
+                double value;
+                if (!Double.TryParse(tablePackages.Rows[i].Cells[9].Value.ToString(), out value))
+                {
+                    Console.WriteLine("EL Kinder Bueno");
+                    break;
+                }
+                if (Math.Abs(value - minRida.Item2) < 0.0005)
                 {
                     this.setRowColor(ref tablePackages, i, isNotDarkMode ? chalkWhite : Color.Black, isNotDarkMode ? Color.DarkGreen : Color.LightGreen, 8);
                     //Console.WriteLine("Pakett " + i.ToString() + " on odavaim!");
                 }
-                else if (Math.Abs(Double.Parse(tablePackages.Rows[i].Cells[9].Value.ToString()) - maxRida.Item2) < 0.0005)
+                else if (Math.Abs(value - maxRida.Item2) < 0.0005)
                 {
                     this.setRowColor(ref tablePackages, i, isNotDarkMode ? Color.White : Color.Black, isNotDarkMode ? semiDarkRed : Color.Red, 8);
                     //Console.WriteLine("Pakett " + i.ToString() + " on kalleim!");

@@ -1,8 +1,9 @@
 {
   "setMap": {
-    "tarbijaAndmed": "D:\\tarbimine (1).csv",
-    "paketiAndmed": "D:\\elektripaketidtest.csv",
-    "suurendusLubatud": "0"
+    "tarbijaAndmed": "C:\\Users\\admin\\Documents\\TTU\\Tarkvaratehnika\\Projekt\\tarbimine_eestiEnergia.csv",
+    "paketiAndmed": "C:\\Users\\admin\\Documents\\TTU\\Tarkvaratehnika\\Projekt\\elektripaketidtest.csv",
+    "suurendusLubatud": "0",
+    "tumeTaust": "1"
   },
   "marketData": [],
   "useCases": {

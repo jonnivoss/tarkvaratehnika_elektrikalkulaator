@@ -15,6 +15,7 @@ namespace AndmeSalvestaja
         tarbijaAndmed,
         paketiAndmed,
         suurendusLubatud,
+        tumeTaust,
 
         size
     };

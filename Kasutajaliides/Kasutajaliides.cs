@@ -459,7 +459,8 @@ namespace Kasutajaliides
                 
                 //leia x kordinaat kus hiir on
                 double x = ax.PixelPositionToValue(e.X);
-                double y = 0;
+                DateTime tooltipDate = default(DateTime);
+                double tooltipPrice = 0;
                 
                 //leia punkt millele x vastab ja salvesta selle y kordinaat
                 DateTime s = DateTime.FromOADate(x);
@@ -467,15 +468,50 @@ namespace Kasutajaliides
                 {
                     if (VK.priceTimeRange[i].Hour == s.Hour && VK.priceTimeRange[i].Date == s.Date)
                     {
-                        y = VK.priceCostRange[i];
-                        this.updatePakettideHinnad(VK.priceTimeRange[i]);
+                        tooltipPrice = VK.priceCostRange[i];
+                        tooltipDate  = VK.priceTimeRange[i];
+                        this.updatePakettideHinnad(tooltipDate);
+                        break;
+                    }
+                }
+                bool foundUsage = false;
+                double tooltipUsage = 0.0;
+                for (int i = 0; i < VK.userDataTimeRange.Count; ++i)
+                {
+                    if (VK.userDataTimeRange[i].Hour == s.Hour && VK.userDataTimeRange[i].Date == s.Date)
+                    {
+                        tooltipUsage = VK.userDataUsageRange[i];
+                        foundUsage = true;
                         break;
                     }
                 }
                 
                 //tt tekst
-                tooltipText = "hind: ";
-                tooltipText += y.ToString("0.000") + "\n" + s.ToString("kell HH:00") + "\n" + s.ToString("dd/MM/yy");
+                tooltipText = "börsihind: ";
+                tooltipText += tooltipPrice.ToString("0.000") + " s/kWh";
+                if (foundUsage)
+                {
+                    tooltipText += "\ntarbimine: " + tooltipUsage.ToString() + " kWh";
+                }
+
+                if (tooltipDate != default(DateTime))
+                {
+                    // Leitakse valitud ajahetkele vastav börsihind
+                    double stockPrice = VK.priceRange.Find(Tuple => Tuple.Item1 == tooltipDate).Item2;
+                    for (int i = 0; i < tablePackages.SelectedRows.Count; ++i)
+                    {
+                        var idx = tablePackages.SelectedRows[i].Index;
+                        // Arvutatakse paketti arvestades tarbija lõpphind
+                        double price = AR.finalPrice(stockPrice, this.packageInfo[idx], tooltipDate);
+
+                        // Lisab hinna tooltipi
+                        tooltipText += "\n" + idx.ToString() + " - " + tablePackages.SelectedRows[i].Cells[2].Value.ToString() + ": ";
+                        tooltipText += price.ToString("0.000") + " s/kWh";
+                    }
+                }
+
+                // Lisab valitud kella-aja kohta
+                tooltipText += "\n" + tooltipDate.ToString("kell HH:00") + "\n" + tooltipDate.ToString("dd/MM/yy");
 
                 if (e.X != this.lastX || e.Y != this.lastY)
                 {
@@ -675,7 +711,11 @@ namespace Kasutajaliides
                     }
                     else
                     {
-                        txtTarbimisAeg.Text = bestDate.ToString("dd.MM.yyyy HH:mm");
+                        // Kui parim tarbimisaeg on praegu, siis kuvab "Praegu"
+                        DateTime d = DateTime.Now;
+                        d = d.Date + TimeSpan.FromHours(d.Hour);
+
+                        txtTarbimisAeg.Text = (d == bestDate) ? "Präägu" : bestDate.ToString("dd.MM.yyyy HH:mm");
                     }
                 }
                 else
@@ -754,6 +794,16 @@ namespace Kasutajaliides
 
             AP.userDataFileName = AS.getSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed);
             AP.packageFileName = AS.getSetting(AndmeSalvestaja.ASSetting.paketiAndmed);
+
+            isNotDarkMode = AS.getSetting(AndmeSalvestaja.ASSetting.tumeTaust) == "1";
+            btnDarkMode_Click(btnDarkMode, e);
+
+            state = AS.getSetting(AndmeSalvestaja.ASSetting.suurendusLubatud) == "1";
+            btnNormalSize_Click(btnChangeSize, e);
+
+            
+
+
             //priceData = AP.HindAegInternet(DateTime.Now.Date.AddDays(-60), DateTime.Now);
             //MessageBox.Show(priceTimeRange.Last().ToString());
             bool isUserData = openCSVUserData();
@@ -956,7 +1006,6 @@ namespace Kasutajaliides
                 this.dateStopTime.Value = dateStopTime.Value;
             }
             priceChart_zoom(dateStartTime.Value, dateStopTime.Value); // uuendab ja suurendab graafikut!
-            calcPrice();
         }
 
         // ALGUSAJA VALIJA AVAMISE REAGEERIJA
@@ -1019,7 +1068,6 @@ namespace Kasutajaliides
                 this.dateStartTime.Value = dateStartTime.Value;
             }
             priceChart_zoom(dateStartTime.Value, dateStopTime.Value); // uuendab ja suurendab graafikut!
-            calcPrice();
         }
 
         // LÕPUAJA VALIJA AVAMISE REAGEERIJA
@@ -1333,6 +1381,8 @@ namespace Kasutajaliides
          */
         private void btnNormalSize_Click(object sender, EventArgs e)
         {
+            AS.changeSetting(AndmeSalvestaja.ASSetting.suurendusLubatud, state ? "1" : "0");
+
             if (state)
             {
                 lblKasutusmall.Font = Bigger;
@@ -1562,6 +1612,8 @@ namespace Kasutajaliides
         {
             isNotDarkMode = !isNotDarkMode;
 
+            AS.changeSetting(AndmeSalvestaja.ASSetting.tumeTaust, isNotDarkMode ? "0" : "1");
+
             if (!isNotDarkMode)
             {
                 btnDarkMode.Text = "L";
@@ -1681,45 +1733,53 @@ namespace Kasutajaliides
                 tablePackages.ForeColor = Color.Black;
                 tablePackages.DefaultCellStyle.BackColor = Color.White;
 
+                // Kuidas muuta nupud õiget värvi tagasi? -> UseVisualStyleBackColor property
+                // https://stackoverflow.com/questions/10569200/how-to-reset-to-default-button-backcolor
+
                 cbKasutusmall.BackColor = Color.White;
                 cbKasutusmall.ForeColor = Color.Black;
-                txtAjakulu.BackColor = Color.White;
+                txtAjakulu.BackColor = SystemColors.Window;
                 txtAjakulu.ForeColor = Color.Black;
-                txtVoimsus.BackColor = Color.White;
+                txtVoimsus.BackColor = SystemColors.Window;
                 txtVoimsus.ForeColor = Color.Black;
-                txtHind.BackColor = SystemColors.Control;
+                txtHind.BackColor = SystemColors.Window;
                 txtHind.ForeColor = Color.Black;
-                txtTarbimisAeg.BackColor = SystemColors.Control;
+                txtTarbimisAeg.BackColor = SystemColors.Window;
                 txtTarbimisAeg.ForeColor = Color.Black;
-                txtDebug.BackColor = Color.White;
+                txtDebug.BackColor = SystemColors.Window;
                 txtDebug.ForeColor = Color.Black;
                 btnAvaCSV.BackColor = SystemColors.Control;
+                btnAvaCSV.UseVisualStyleBackColor = true;
                 btnAvaCSV.ForeColor = Color.Black;
-                txtCostNow.BackColor = SystemColors.Control;
+                txtCostNow.BackColor = SystemColors.Window;
                 txtCostNow.ForeColor = Color.Black;
                 btnChangeSize.BackColor = SystemColors.Control;
+                btnChangeSize.UseVisualStyleBackColor = true;
                 btnChangeSize.ForeColor = Color.Black;
                 btnDarkMode.BackColor = SystemColors.Control;
+                btnDarkMode.UseVisualStyleBackColor = true;
                 btnDarkMode.ForeColor = Color.Black;
-                txtMonthlyPrice.BackColor = SystemColors.Control;
+                txtMonthlyPrice.BackColor = SystemColors.Window;
                 txtMonthlyPrice.ForeColor = Color.Black;
                 groupPriceType.ForeColor = Color.Black;
 
                 groupExport.ForeColor = Color.Black;
                 lblExportDelimiter.ForeColor = Color.Black;
                 txtExportDelimiter.ForeColor = Color.Black;
-                txtExportDelimiter.BackColor = Color.White;
+                txtExportDelimiter.BackColor = SystemColors.Window;
                 lblExportQualifier.ForeColor = Color.Black;
                 txtExportQualifier.ForeColor = Color.Black;
-                txtExportQualifier.BackColor = Color.White;
+                txtExportQualifier.BackColor = SystemColors.Window;
                 cbExportAppend.ForeColor = Color.Black;
                 btnExportSave.ForeColor = Color.Black;
                 btnExportSave.BackColor = SystemColors.Control;
+                btnExportSave.UseVisualStyleBackColor = true;
                 btnExportOpen.ForeColor = Color.Black;
                 btnExportOpen.BackColor = SystemColors.Control;
+                btnExportOpen.UseVisualStyleBackColor = true;
                 lblExportPath.ForeColor = Color.Black;
                 txtExportPath.ForeColor = Color.Black;
-                txtExportPath.BackColor = Color.White;
+                txtExportPath.BackColor = SystemColors.Window;
 
                 groupTrendFinder.ForeColor = Color.Black;
                 lblTunnid.ForeColor = Color.Black;
@@ -1731,6 +1791,7 @@ namespace Kasutajaliides
                 cbTundVoiPaev.ForeColor = Color.Black;
 
                 btnOpenPackages.BackColor = SystemColors.Control;
+                btnOpenPackages.UseVisualStyleBackColor = true;
                 btnOpenPackages.ForeColor = Color.Black;
 
                 toolTip.BackColor = SystemColors.Control;
@@ -2402,7 +2463,11 @@ namespace Kasutajaliides
             Tuple<int, double> minRida = Tuple.Create(0, Double.PositiveInfinity), maxRida = Tuple.Create(0, Double.NegativeInfinity);
             for (int i = 0; i < tablePackages.Rows.Count; ++i)
             {
-                var price = Double.Parse(tablePackages.Rows[i].Cells[9].Value.ToString());
+                double price;
+                if (!Double.TryParse(tablePackages.Rows[i].Cells[9].Value.ToString(), out price))
+                {
+                    break;
+                }
 
                 if (price < minRida.Item2)
                 {
@@ -2417,12 +2482,18 @@ namespace Kasutajaliides
             // Käib kogu tabeli läbi, sest võib eksisteerida mitu sama hinnaga müüjat
             for (int i = 0; i < tablePackages.Rows.Count; ++i)
             {
-                if (Math.Abs(Double.Parse(tablePackages.Rows[i].Cells[9].Value.ToString()) - minRida.Item2) < 0.0005)
+                double value;
+                if (!Double.TryParse(tablePackages.Rows[i].Cells[9].Value.ToString(), out value))
+                {
+                    Console.WriteLine("EL Kinder Bueno");
+                    break;
+                }
+                if (Math.Abs(value - minRida.Item2) < 0.0005)
                 {
                     this.setRowColor(ref tablePackages, i, isNotDarkMode ? chalkWhite : Color.Black, isNotDarkMode ? Color.DarkGreen : Color.LightGreen, 8);
                     //Console.WriteLine("Pakett " + i.ToString() + " on odavaim!");
                 }
-                else if (Math.Abs(Double.Parse(tablePackages.Rows[i].Cells[9].Value.ToString()) - maxRida.Item2) < 0.0005)
+                else if (Math.Abs(value - maxRida.Item2) < 0.0005)
                 {
                     this.setRowColor(ref tablePackages, i, isNotDarkMode ? Color.White : Color.Black, isNotDarkMode ? semiDarkRed : Color.Red, 8);
                     //Console.WriteLine("Pakett " + i.ToString() + " on kalleim!");
@@ -2436,12 +2507,12 @@ namespace Kasutajaliides
         }
 
         // PAKETTIDE HINDADE UUENDAMINE
-        /* Funktsioonga saab uuendada pakettide tabelis olevaid hindasid. Hetkehindasid on võimalik eemaldada 
+        /* Funktsiooniga saab uuendada pakettide tabelis olevaid hindasid. Hetkehindasid on võimalik eemaldada 
          * ning lõpphindu uuesti arvutada. Juhul kui hetkehinnad arvutatakse uuesti, taastatakse rea värv ning 
          * kui lõpphind arvutatakse uuesti, siis uuendatakse ridade värve.
          * 
          * PARAMEETRID (SISEND):
-         *      time: 
+         *      time: Soovitud ajahetk, mida pakettide tabelisse kuvada (DateTime)
          *      
          * TAGASTUSVÄÄRTUSED:
          * -
@@ -2459,10 +2530,10 @@ namespace Kasutajaliides
             }
             else
             {
+                // Leitakse valitud ajahetkele vastav börsihind
+                double stockPrice = VK.priceRange.Find(Tuple => Tuple.Item1 == time).Item2;
                 for (int i = 0; i < tablePackages.Rows.Count; ++i)
                 {
-                    // Leitakse valitud ajahetkele vastav börsihind
-                    double stockPrice = VK.priceRange.Find(Tuple => Tuple.Item1 == time).Item2;
                     // Arvutatakse paketti arvestades tarbija lõpphind
                     double price = AR.finalPrice(stockPrice, this.packageInfo[i], time);
 

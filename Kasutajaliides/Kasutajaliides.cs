@@ -128,6 +128,12 @@ namespace Kasutajaliides
         Rectangle originalLabelExportPath;
         Rectangle originalTextExportPath;
 
+        Rectangle originalGroupTrendFinder;
+        Rectangle originalLabelTunnid;
+        Rectangle originalTextPerioodTundides;
+        Rectangle originalButtonLeiaTrend;
+        Rectangle originalCheckBoxTundVoiPaev;
+
         // GRAAFIKU UUENDAMISE FUNKTSIOON
         /* Funktsioon uuendab börsiandmete ja tarbijaandmete graafikuid kui võimalik.
          * Joonistab börsiandmete graafikule keskmise hinna joone ning värvib graafiku
@@ -811,6 +817,11 @@ namespace Kasutajaliides
                 originalButtonExportOpen = new Rectangle(btnExportOpen.Location.X, btnExportOpen.Location.Y, btnExportOpen.Size.Width, btnExportOpen.Size.Height);
                 originalLabelExportPath = new Rectangle(lblExportPath.Location.X, lblExportPath.Location.Y, lblExportPath.Size.Width, lblExportPath.Size.Height);
                 originalTextExportPath = new Rectangle(txtExportPath.Location.X, txtExportPath.Location.Y, txtExportPath.Size.Width, txtExportPath.Size.Height);
+                originalGroupTrendFinder = new Rectangle(groupTrendFinder.Location.X, groupTrendFinder.Location.Y, groupTrendFinder.Size.Width, groupTrendFinder.Size.Height);
+                originalLabelTunnid = new Rectangle(lblTunnid.Location.X, lblTunnid.Location.Y, lblTunnid.Size.Width, lblTunnid.Size.Height);
+                originalTextPerioodTundides = new Rectangle(txtPerioodTundides.Location.X, txtPerioodTundides.Location.Y, txtPerioodTundides.Size.Width, txtPerioodTundides.Size.Height);
+                originalButtonLeiaTrend = new Rectangle(btnLeiaTrend.Location.X, btnLeiaTrend.Location.Y, btnLeiaTrend.Size.Width, btnLeiaTrend.Size.Height);
+                originalCheckBoxTundVoiPaev = new Rectangle(cbTundVoiPaev.Location.X, cbTundVoiPaev.Location.Y, cbTundVoiPaev.Size.Width, cbTundVoiPaev.Size.Height);
             }
         }
 
@@ -1380,6 +1391,13 @@ namespace Kasutajaliides
                 btnExportOpen.Font = Bigger;
                 lblExportPath.Font = Bigger;
                 txtExportPath.Font = Bigger;
+
+                groupTrendFinder.Font = new Font("Impact", 12);
+                lblTunnid.Font = Bigger;
+                txtPerioodTundides.Font = Bigger;
+                btnLeiaTrend.Font = Bigger;
+                cbTundVoiPaev.Font = Bigger;
+
                 state = false;
             }
             else
@@ -1440,6 +1458,13 @@ namespace Kasutajaliides
                 btnExportOpen.Font = Normal;
                 lblExportPath.Font = Normal;
                 txtExportPath.Font = Normal;
+
+                groupTrendFinder.Font = new Font("Impact", 9);
+                lblTunnid.Font = Normal;
+                txtPerioodTundides.Font = Normal;
+                btnLeiaTrend.Font = Normal;
+                cbTundVoiPaev.Font = Normal;
+
                 state = true;
             }
         }
@@ -1610,6 +1635,14 @@ namespace Kasutajaliides
                 txtExportPath.ForeColor = chalkWhite;
                 txtExportPath.BackColor = midGrey;
 
+                groupTrendFinder.ForeColor = chalkWhite;
+                lblTunnid.ForeColor = chalkWhite;
+                txtPerioodTundides.ForeColor = chalkWhite;
+                txtPerioodTundides.BackColor = midGrey;
+                btnLeiaTrend.ForeColor = chalkWhite;
+                btnLeiaTrend.BackColor = midGrey;
+                cbTundVoiPaev.ForeColor = chalkWhite;
+
                 btnOpenPackages.ForeColor = chalkWhite;
                 btnOpenPackages.BackColor = midGrey;
 
@@ -1687,6 +1720,15 @@ namespace Kasutajaliides
                 lblExportPath.ForeColor = Color.Black;
                 txtExportPath.ForeColor = Color.Black;
                 txtExportPath.BackColor = Color.White;
+
+                groupTrendFinder.ForeColor = Color.Black;
+                lblTunnid.ForeColor = Color.Black;
+                txtPerioodTundides.ForeColor = Color.Black;
+                txtPerioodTundides.BackColor = SystemColors.Window;
+                btnLeiaTrend.ForeColor = Color.Black;
+                btnLeiaTrend.BackColor = SystemColors.Control;
+                btnLeiaTrend.UseVisualStyleBackColor = true;
+                cbTundVoiPaev.ForeColor = Color.Black;
 
                 btnOpenPackages.BackColor = SystemColors.Control;
                 btnOpenPackages.ForeColor = Color.Black;
@@ -1836,6 +1878,12 @@ namespace Kasutajaliides
             resizeGuiElement(originalButtonExportOpen, btnExportOpen);
             resizeGuiElement(originalLabelExportPath, lblExportPath);
             resizeGuiElement(originalTextExportPath, txtExportPath);
+
+            resizeGuiElement(originalGroupTrendFinder, groupTrendFinder);
+            resizeGuiElement(originalLabelTunnid, lblTunnid);
+            resizeGuiElement(originalTextPerioodTundides, txtPerioodTundides);
+            resizeGuiElement(originalButtonLeiaTrend, btnLeiaTrend);
+            resizeGuiElement(originalCheckBoxTundVoiPaev, cbTundVoiPaev);
 
             Refresh(); // vajalik et ei tekiks "render glitche" (nt. ComboBox ei suurene korraks jms.)
         }

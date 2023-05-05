@@ -98,7 +98,7 @@ namespace Kasutajaliides
             this.lblExportQualifier = new System.Windows.Forms.Label();
             this.txtExportDelimiter = new System.Windows.Forms.TextBox();
             this.lblExportDelimiter = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupTrendFinder = new System.Windows.Forms.GroupBox();
             this.txtPerioodTundides = new System.Windows.Forms.TextBox();
             this.lblTunnid = new System.Windows.Forms.Label();
             this.btnLeiaTrend = new System.Windows.Forms.Button();
@@ -108,7 +108,7 @@ namespace Kasutajaliides
             ((System.ComponentModel.ISupportInitialize)(this.tablePrice)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tablePackages)).BeginInit();
             this.groupExport.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.groupTrendFinder.SuspendLayout();
             this.SuspendLayout();
             // 
             // chartPrice
@@ -451,7 +451,7 @@ namespace Kasutajaliides
             // btnChangeSize
             // 
             this.btnChangeSize.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnChangeSize.Location = new System.Drawing.Point(1005, 653);
+            this.btnChangeSize.Location = new System.Drawing.Point(1004, 653);
             this.btnChangeSize.Name = "btnChangeSize";
             this.btnChangeSize.Size = new System.Drawing.Size(51, 41);
             this.btnChangeSize.TabIndex = 26;
@@ -703,7 +703,7 @@ namespace Kasutajaliides
             this.btnOpenPackages.Location = new System.Drawing.Point(695, 653);
             this.btnOpenPackages.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btnOpenPackages.Name = "btnOpenPackages";
-            this.btnOpenPackages.Size = new System.Drawing.Size(305, 41);
+            this.btnOpenPackages.Size = new System.Drawing.Size(304, 41);
             this.btnOpenPackages.TabIndex = 35;
             this.btnOpenPackages.Text = "Ava pakettide CŠV";
             this.btnOpenPackages.UseVisualStyleBackColor = true;
@@ -836,19 +836,19 @@ namespace Kasutajaliides
             this.lblExportDelimiter.TabIndex = 37;
             this.lblExportDelimiter.Text = "Eraldaja:";
             // 
-            // groupBox1
+            // groupTrendFinder
             // 
-            this.groupBox1.Controls.Add(this.txtPerioodTundides);
-            this.groupBox1.Controls.Add(this.lblTunnid);
-            this.groupBox1.Controls.Add(this.btnLeiaTrend);
-            this.groupBox1.Controls.Add(this.cbTundVoiPaev);
-            this.groupBox1.Font = new System.Drawing.Font("Impact", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.groupBox1.Location = new System.Drawing.Point(695, 548);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(303, 99);
-            this.groupBox1.TabIndex = 37;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Trendi leidmine";
+            this.groupTrendFinder.Controls.Add(this.txtPerioodTundides);
+            this.groupTrendFinder.Controls.Add(this.lblTunnid);
+            this.groupTrendFinder.Controls.Add(this.btnLeiaTrend);
+            this.groupTrendFinder.Controls.Add(this.cbTundVoiPaev);
+            this.groupTrendFinder.Font = new System.Drawing.Font("Impact", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.groupTrendFinder.Location = new System.Drawing.Point(695, 548);
+            this.groupTrendFinder.Name = "groupTrendFinder";
+            this.groupTrendFinder.Size = new System.Drawing.Size(303, 99);
+            this.groupTrendFinder.TabIndex = 37;
+            this.groupTrendFinder.TabStop = false;
+            this.groupTrendFinder.Text = "Trendi leidmine";
             // 
             // txtPerioodTundides
             // 
@@ -857,7 +857,7 @@ namespace Kasutajaliides
             this.txtPerioodTundides.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtPerioodTundides.MaxLength = 128;
             this.txtPerioodTundides.Name = "txtPerioodTundides";
-            this.txtPerioodTundides.Size = new System.Drawing.Size(108, 32);
+            this.txtPerioodTundides.Size = new System.Drawing.Size(144, 32);
             this.txtPerioodTundides.TabIndex = 41;
             this.txtPerioodTundides.TextChanged += new System.EventHandler(this.txtPerioodTundides_TextChanged);
             // 
@@ -865,7 +865,7 @@ namespace Kasutajaliides
             // 
             this.lblTunnid.AutoSize = true;
             this.lblTunnid.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.lblTunnid.Location = new System.Drawing.Point(0, 29);
+            this.lblTunnid.Location = new System.Drawing.Point(6, 24);
             this.lblTunnid.Name = "lblTunnid";
             this.lblTunnid.Size = new System.Drawing.Size(116, 25);
             this.lblTunnid.TabIndex = 40;
@@ -873,9 +873,10 @@ namespace Kasutajaliides
             // 
             // btnLeiaTrend
             // 
-            this.btnLeiaTrend.Location = new System.Drawing.Point(122, 29);
+            this.btnLeiaTrend.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.btnLeiaTrend.Location = new System.Drawing.Point(154, 16);
             this.btnLeiaTrend.Name = "btnLeiaTrend";
-            this.btnLeiaTrend.Size = new System.Drawing.Size(143, 29);
+            this.btnLeiaTrend.Size = new System.Drawing.Size(143, 41);
             this.btnLeiaTrend.TabIndex = 39;
             this.btnLeiaTrend.Text = "Leia";
             this.btnLeiaTrend.UseVisualStyleBackColor = true;
@@ -885,7 +886,7 @@ namespace Kasutajaliides
             // 
             this.cbTundVoiPaev.AutoSize = true;
             this.cbTundVoiPaev.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.cbTundVoiPaev.Location = new System.Drawing.Point(122, 63);
+            this.cbTundVoiPaev.Location = new System.Drawing.Point(154, 63);
             this.cbTundVoiPaev.Name = "cbTundVoiPaev";
             this.cbTundVoiPaev.Size = new System.Drawing.Size(137, 29);
             this.cbTundVoiPaev.TabIndex = 0;
@@ -898,7 +899,7 @@ namespace Kasutajaliides
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1067, 963);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupTrendFinder);
             this.Controls.Add(this.groupExport);
             this.Controls.Add(this.btnOpenPackages);
             this.Controls.Add(this.tablePackages);
@@ -947,8 +948,8 @@ namespace Kasutajaliides
             ((System.ComponentModel.ISupportInitialize)(this.tablePackages)).EndInit();
             this.groupExport.ResumeLayout(false);
             this.groupExport.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupTrendFinder.ResumeLayout(false);
+            this.groupTrendFinder.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1017,7 +1018,7 @@ namespace Kasutajaliides
         private System.Windows.Forms.DataGridViewTextBoxColumn EndPrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn UsageCost;
         private System.Windows.Forms.DataGridViewTextBoxColumn TemplateCost;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupTrendFinder;
         private System.Windows.Forms.Label lblTunnid;
         private System.Windows.Forms.Button btnLeiaTrend;
         private System.Windows.Forms.CheckBox cbTundVoiPaev;

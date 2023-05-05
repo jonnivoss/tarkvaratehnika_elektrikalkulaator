@@ -2530,11 +2530,18 @@ namespace Kasutajaliides
                 }
 
                 double ajutineOutDouble = 0;
-                int test = AR.smallestIntegral(ajutineVecT,1.0, periood,ajutineDateAlgus,ajutineDate,out ajutineOutDouble, out algusAeg);
-                if (test == 0)
+                int testSmallest = AR.smallestIntegral(ajutineVecT,1.0, periood,ajutineDateAlgus,ajutineDate,out ajutineOutDouble, out algusAeg);
+                
+                if (testSmallest == 0)
                 {
 
                     MessageBox.Show("Tavaliselt odavaim tarbimis aeg on: " + algusAeg.ToString("HH") + " - " + algusAeg.AddHours(Convert.ToInt32(periood)).ToString("HH"));
+                }
+                int testLargest = AR.largestIntegral(ajutineVecT, 1.0, periood, ajutineDateAlgus, ajutineDate, out ajutineOutDouble, out algusAeg);
+                if (testLargest == 0)
+                {
+
+                    MessageBox.Show("Tavaliselt kalleim tarbimis aeg on: " + algusAeg.ToString("HH") + " - " + algusAeg.AddHours(Convert.ToInt32(periood)).ToString("HH"));
                 }
             }
         }

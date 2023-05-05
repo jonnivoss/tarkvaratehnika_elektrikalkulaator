@@ -2544,123 +2544,179 @@ namespace Kasutajaliides
             }
         }
 
-
+        // TUNNI VÕI PÄEVA PERIOODI VALIMINE
+        /* Funktsioon muudab txtPerioodTundides välja kas aktiivseks või mitte aktiivseks
+         * 
+         * PARAMEETRID (SISEND):
+         *      sender: objekt, mille kohta sündmused kehtivad (object)
+         *      e: sündmustele vastavad parameetrid (EventArgs)
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * -
+         */
         private void cbTundVoiPaev_CheckedChanged(object sender, EventArgs e)
         {
                 txtPerioodTundides.Enabled = !cbTundVoiPaev.Checked;
         }
 
+        // TUNDIDE ARVU PIIRAMINE TXTPERIOODTUNDIDES
+        /* Funktsioon paneb maksimaalse piiri numbrite kirjutamisele sisse
+         * 
+         * PARAMEETRID (SISEND):
+         *      sender: objekt, mille kohta sündmused kehtivad (object)
+         *      e: sündmustele vastavad parameetrid (EventArgs)
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * -
+         */
         private void txtPerioodTundides_TextChanged(object sender, EventArgs e)
         {
             this.handleNumberBoxChanged(ref txtPerioodTundides, 24);
         }
 
-        //vaja tükeldada algusest lopuni iga nadala paeva kohta
+        // BÖRSIHINNA TRENDI LEIDMINE
+        /* leiab valitud ajavahemikus kõige odavama ja kallima tundide vahemiku või päeva
+         * 
+         * PARAMEETRID (SISEND):
+         *      sender: objekt, mille kohta sündmused kehtivad (object)
+         *      e: sündmustele vastavad parameetrid (EventArgs)
+         *      
+         * TAGASTUSVÄÄRTUSED:
+         * -
+         */
         private void btnLeiaTrend_Click(object sender, EventArgs e)
         {
+            //Uus ajutine VecT kuhu salvestada börsi hinda
             VecT ajutineVecT = new VecT();
+            //Jada double arve kuhu salvestatakse hinnad
             double[] keskmisteHindadeBin;
+            //Kui checkbox cbTundVoiPaev on valitud siis
             if (cbTundVoiPaev.Checked == true)
             {
+                //Tee jadale 7 kasti iga päeva jaoks üks
                 keskmisteHindadeBin = new double[7];
+                //Nulli nende väärtused
                 for(int i = 0; i < 7; i++) 
                 {
                     keskmisteHindadeBin[i] = 0;
                 }
-
+                //Kui alguse ja lõpu vahel on vähem kui 7 päeva vahet siis liigutatakse algust tahapoole
                 if ((dateStopTime.Value - dateStartTime.Value).TotalDays < 7.0)
                 {
                     dateStartTime.Value = dateStopTime.Value.Date.AddDays(-6) + new TimeSpan(0, 0, 0);                    
                 }
-
+                //Kui algus ja lõpp aja vahel on mitte 7 jaguv arv päevi
+                //siis liigutatakse algust edasi nii palju et oleks 7 jaguv arv päevi vahet
                 if (((dateStopTime.Value.Date - dateStartTime.Value.Date).TotalDays+1) % 7 != 0) 
                 {
                     dateStartTime.Value = dateStartTime.Value.AddDays(((dateStopTime.Value.Date - dateStartTime.Value.Date).TotalDays + 1) % 7);
                 }
+                //Uuendab graafikut
                 priceChart_zoom(dateStartTime.Value, dateStopTime.Value);
+                //Küsib selle ajaperioodi börsi andmed
                 ajutineVecT = AP.HindAegInternet(dateStartTime.Value, dateStopTime.Value);
-
-                foreach (var item in ajutineVecT) 
+                //Kontrollib kas sai internetist andmeid 
+                if (ajutineVecT.Count != 0)
                 {
-                    keskmisteHindadeBin[(int)item.Item1.DayOfWeek] += item.Item2;
-                }
-                double vaiksem = keskmisteHindadeBin[0] /= (ajutineVecT.Count / 7);
-                double suurim = keskmisteHindadeBin[0] /= (ajutineVecT.Count / 7);
-                int dayOfWeekValueSuurim = 0;
-                int dayOfWeekValueVaikseim = 0;
-                for (int i = 1; i < 7; i++)
-                {
-                    keskmisteHindadeBin[i] /= (ajutineVecT.Count / 7);
-                    if (keskmisteHindadeBin[i] < vaiksem)
+                    //Liidab iga päeva tunni elektri hinna selle päeva "binni"
+                    foreach (var item in ajutineVecT)
                     {
-                        dayOfWeekValueVaikseim = i;
-                        vaiksem = keskmisteHindadeBin[i];
+                        keskmisteHindadeBin[(int)item.Item1.DayOfWeek] += item.Item2;
                     }
-                    if (keskmisteHindadeBin[i] > suurim)
+                    //Ajutised muutujad
+                    double vaiksem = keskmisteHindadeBin[0] /= (ajutineVecT.Count / 7);
+                    double suurim = keskmisteHindadeBin[0] /= (ajutineVecT.Count / 7);
+                    int dayOfWeekValueSuurim = 0;
+                    int dayOfWeekValueVaikseim = 0;
+                    //Leiab kalleima ja odavaima päeva
+                    for (int i = 1; i < 7; i++)
                     {
-                        dayOfWeekValueSuurim = i;
-                        suurim = keskmisteHindadeBin[i];
+                        keskmisteHindadeBin[i] /= (ajutineVecT.Count / 7);
+                        if (keskmisteHindadeBin[i] < vaiksem)
+                        {
+                            dayOfWeekValueVaikseim = i;
+                            vaiksem = keskmisteHindadeBin[i];
+                        }
+                        if (keskmisteHindadeBin[i] > suurim)
+                        {
+                            dayOfWeekValueSuurim = i;
+                            suurim = keskmisteHindadeBin[i];
+                        }
                     }
-                }
-                CultureInfo cultureInfo = new CultureInfo("et-EE"); // Estonian culture
-                string dayNameVaikseim = cultureInfo.DateTimeFormat.GetDayName((DayOfWeek)dayOfWeekValueVaikseim);
-                string dayNameSuurim = cultureInfo.DateTimeFormat.GetDayName((DayOfWeek)dayOfWeekValueSuurim);
+                    //Leitud kalleima ja odavaima päeva indeksiga trükitakse messageboxiga välja need eesti keeles
+                    CultureInfo cultureInfo = new CultureInfo("et-EE"); // Estonian culture
+                    string dayNameVaikseim = cultureInfo.DateTimeFormat.GetDayName((DayOfWeek)dayOfWeekValueVaikseim);
+                    string dayNameSuurim = cultureInfo.DateTimeFormat.GetDayName((DayOfWeek)dayOfWeekValueSuurim);
 
-                MessageBox.Show("Tavaliselt odavaim tarbimis päev on: " + dayNameVaikseim + "," + Environment.NewLine + "Tavaliselt kalleim tarbimis päev on: " + dayNameSuurim);
+                    MessageBox.Show("Tavaliselt odavaim tarbimis päev on: " + dayNameVaikseim + "," + Environment.NewLine + "Tavaliselt kalleim tarbimis päev on: " + dayNameSuurim);
+                }
             }
             else 
             {
+                //Tee jadale 24 kasti iga tunni jaoks üks
                 keskmisteHindadeBin = new double[24];
+                //Nulli nende väärtused
                 for (int i = 0; i < 24; i++)
                 {
                     keskmisteHindadeBin[i] = 0;
                 }
-
-                if ((dateStopTime.Value - dateStartTime.Value).TotalDays < 7.0)
+                //Kui alguse ja lõpu vahel on vähem kui 24 tundi vahet siis liigutatakse algus ja lõpp 24 tunnisele vahele
+                if ((dateStopTime.Value - dateStartTime.Value).TotalHours < 24.0)
                 {
-                    dateStartTime.Value = dateStopTime.Value.Date.AddDays(-6) + new TimeSpan(0, 0, 0);
+                    dateStartTime.Value += new TimeSpan(0, 0, 0);
+                    dateStopTime.Value += new TimeSpan(23, 0, 0);
                 }
-
+                //Uuenda graafikut
                 priceChart_zoom(dateStartTime.Value, dateStopTime.Value);
+                //Küsib selle ajaperioodi börsi andmed
                 ajutineVecT = AP.HindAegInternet(dateStartTime.Value, dateStopTime.Value);
+                //Kontrollib kas sai internetist andmeid
+                if (ajutineVecT.Count != 0)
+                {
+                    //Liidab iga tunni andmed tema "binni"
+                    foreach (var item in ajutineVecT)
+                    {
+                        keskmisteHindadeBin[(int)item.Item1.Hour] += item.Item2;
+                    }
+                    //ajutised muutujad
+                    ajutineVecT.Clear();
+                    ajutineVecT = new VecT();
+                    DateTime ajutineDate = new DateTime(2000, 1, 1, 0, 0, 0);
+                    DateTime ajutineDateAlgus = new DateTime(2000, 1, 1, 0, 0, 0);
+                    DateTime algusAeg = new DateTime(2000, 1, 1, 0, 0, 0);
+                    //Täidab ajutise VecT "binni" ehk keskmisteHindadeBin andmetega
+                    for (int i = 0; i < 24; i++)
+                    {
+                        ajutineVecT.Add(Tuple.Create(ajutineDate, keskmisteHindadeBin[i]));
+                        ajutineDate = ajutineDate.AddHours(1);
+                    }
+                    //Vaatab kas on kirjutatud ajaperiood mida otsitakse
+                    double periood = 0.0;
+                    if (!string.IsNullOrEmpty(txtPerioodTundides.Text))
+                    {
+                        periood = Double.Parse(txtPerioodTundides.Text);
+                    }
+                    //Kui ei ole siis default on 1 tund
+                    else
+                    {
+                        periood = 1.0;
+                    }
 
-                foreach (var item in ajutineVecT)
-                {
-                    keskmisteHindadeBin[(int)item.Item1.Hour] += item.Item2;
-                }
-                ajutineVecT.Clear();
-                ajutineVecT = new VecT();
-                DateTime ajutineDate = new DateTime(2000, 1, 1, 0, 0, 0);
-                DateTime ajutineDateAlgus = new DateTime(2000, 1, 1, 0, 0, 0);
-                DateTime algusAeg = new DateTime(2000, 1, 1, 0, 0, 0);
-                for (int i = 0; i < 24; i++)
-                {
-                    ajutineVecT.Add(Tuple.Create(ajutineDate, keskmisteHindadeBin[i]));
-                    ajutineDate = ajutineDate.AddHours(1);
-                }
-                double periood = 0.0;
-                if (!string.IsNullOrEmpty(txtPerioodTundides.Text))
-                {
-                    periood = Double.Parse(txtPerioodTundides.Text);
-                }
-                else
-                {
-                    periood = 1.0;
-                }
-
-                double ajutineOutDouble = 0;
-                int testSmallest = AR.smallestIntegral(ajutineVecT,1.0, periood,ajutineDateAlgus,ajutineDate,out ajutineOutDouble, out algusAeg);
-                
-                if (testSmallest == 0)
-                {
-
-                    MessageBox.Show("Tavaliselt odavaim tarbimis aeg on: " + algusAeg.ToString("HH") + " - " + algusAeg.AddHours(Convert.ToInt32(periood)).ToString("HH"));
-                }
-                int testLargest = AR.largestIntegral(ajutineVecT, 1.0, periood, ajutineDateAlgus, ajutineDate, out ajutineOutDouble, out algusAeg);
-                if (testLargest == 0)
-                {
-
-                    MessageBox.Show("Tavaliselt kalleim tarbimis aeg on: " + algusAeg.ToString("HH") + " - " + algusAeg.AddHours(Convert.ToInt32(periood)).ToString("HH"));
+                    //Küsib väikseima hinnaga integrali
+                    double ajutineOutDouble = 0;
+                    int testSmallest = AR.smallestIntegral(ajutineVecT, 1.0, periood, ajutineDateAlgus, ajutineDate, out ajutineOutDouble, out algusAeg);
+                    //Kuvab selle tekstina MessageBoxis
+                    if (testSmallest == 0)
+                    {
+                        MessageBox.Show("Tavaliselt odavaim tarbimis aeg on: " + algusAeg.ToString("HH") + " - " + algusAeg.AddHours(Convert.ToInt32(periood)).ToString("HH"));
+                    }
+                    //küsib suurima hinnaga integrali
+                    int testLargest = AR.largestIntegral(ajutineVecT, 1.0, periood, ajutineDateAlgus, ajutineDate, out ajutineOutDouble, out algusAeg);
+                    //Kuvab selle tekstina MessageBoxis
+                    if (testLargest == 0)
+                    {
+                        MessageBox.Show("Tavaliselt kalleim tarbimis aeg on: " + algusAeg.ToString("HH") + " - " + algusAeg.AddHours(Convert.ToInt32(periood)).ToString("HH"));
+                    }
                 }
             }
         }

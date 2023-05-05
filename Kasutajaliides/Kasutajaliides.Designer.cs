@@ -98,11 +98,17 @@ namespace Kasutajaliides
             this.lblExportQualifier = new System.Windows.Forms.Label();
             this.txtExportDelimiter = new System.Windows.Forms.TextBox();
             this.lblExportDelimiter = new System.Windows.Forms.Label();
+            this.groupTrendFinder = new System.Windows.Forms.GroupBox();
+            this.txtPerioodTundides = new System.Windows.Forms.TextBox();
+            this.lblTunnid = new System.Windows.Forms.Label();
+            this.btnLeiaTrend = new System.Windows.Forms.Button();
+            this.cbTundVoiPaev = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.chartPrice)).BeginInit();
             this.groupPriceType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablePrice)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tablePackages)).BeginInit();
             this.groupExport.SuspendLayout();
+            this.groupTrendFinder.SuspendLayout();
             this.SuspendLayout();
             // 
             // chartPrice
@@ -226,7 +232,7 @@ namespace Kasutajaliides
             // txtVoimsus
             // 
             this.txtVoimsus.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtVoimsus.Location = new System.Drawing.Point(15, 200);
+            this.txtVoimsus.Location = new System.Drawing.Point(11, 201);
             this.txtVoimsus.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtVoimsus.MaxLength = 128;
             this.txtVoimsus.Name = "txtVoimsus";
@@ -346,7 +352,7 @@ namespace Kasutajaliides
             this.rbStockPrice.AutoSize = true;
             this.rbStockPrice.Checked = true;
             this.rbStockPrice.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbStockPrice.Location = new System.Drawing.Point(10, 33);
+            this.rbStockPrice.Location = new System.Drawing.Point(11, 41);
             this.rbStockPrice.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.rbStockPrice.Name = "rbStockPrice";
             this.rbStockPrice.Size = new System.Drawing.Size(110, 29);
@@ -360,7 +366,7 @@ namespace Kasutajaliides
             // 
             this.rbMonthlyCost.AutoSize = true;
             this.rbMonthlyCost.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rbMonthlyCost.Location = new System.Drawing.Point(10, 75);
+            this.rbMonthlyCost.Location = new System.Drawing.Point(11, 83);
             this.rbMonthlyCost.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.rbMonthlyCost.Name = "rbMonthlyCost";
             this.rbMonthlyCost.Size = new System.Drawing.Size(99, 29);
@@ -372,7 +378,7 @@ namespace Kasutajaliides
             // 
             this.txtMonthlyPrice.Enabled = false;
             this.txtMonthlyPrice.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.txtMonthlyPrice.Location = new System.Drawing.Point(126, 74);
+            this.txtMonthlyPrice.Location = new System.Drawing.Point(127, 82);
             this.txtMonthlyPrice.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtMonthlyPrice.MaxLength = 128;
             this.txtMonthlyPrice.Name = "txtMonthlyPrice";
@@ -392,7 +398,7 @@ namespace Kasutajaliides
             this.groupPriceType.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.groupPriceType.Name = "groupPriceType";
             this.groupPriceType.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.groupPriceType.Size = new System.Drawing.Size(382, 118);
+            this.groupPriceType.Size = new System.Drawing.Size(382, 146);
             this.groupPriceType.TabIndex = 23;
             this.groupPriceType.TabStop = false;
             this.groupPriceType.Text = "Hinnatüüp";
@@ -401,7 +407,7 @@ namespace Kasutajaliides
             // 
             this.lblRate.AutoSize = true;
             this.lblRate.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRate.Location = new System.Drawing.Point(299, 77);
+            this.lblRate.Location = new System.Drawing.Point(300, 85);
             this.lblRate.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblRate.Name = "lblRate";
             this.lblRate.Size = new System.Drawing.Size(65, 25);
@@ -445,7 +451,7 @@ namespace Kasutajaliides
             // btnChangeSize
             // 
             this.btnChangeSize.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnChangeSize.Location = new System.Drawing.Point(1000, 625);
+            this.btnChangeSize.Location = new System.Drawing.Point(1004, 653);
             this.btnChangeSize.Name = "btnChangeSize";
             this.btnChangeSize.Size = new System.Drawing.Size(51, 41);
             this.btnChangeSize.TabIndex = 26;
@@ -556,7 +562,7 @@ namespace Kasutajaliides
             // btnDarkMode
             // 
             this.btnDarkMode.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDarkMode.Location = new System.Drawing.Point(1000, 575);
+            this.btnDarkMode.Location = new System.Drawing.Point(1004, 606);
             this.btnDarkMode.Name = "btnDarkMode";
             this.btnDarkMode.Size = new System.Drawing.Size(51, 41);
             this.btnDarkMode.TabIndex = 33;
@@ -583,7 +589,7 @@ namespace Kasutajaliides
             this.UsageCost,
             this.TemplateCost});
             this.tablePackages.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tablePackages.Location = new System.Drawing.Point(0, 744);
+            this.tablePackages.Location = new System.Drawing.Point(0, 772);
             this.tablePackages.Name = "tablePackages";
             this.tablePackages.ReadOnly = true;
             this.tablePackages.RowHeadersWidth = 51;
@@ -694,10 +700,10 @@ namespace Kasutajaliides
             // btnOpenPackages
             // 
             this.btnOpenPackages.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOpenPackages.Location = new System.Drawing.Point(727, 625);
+            this.btnOpenPackages.Location = new System.Drawing.Point(695, 653);
             this.btnOpenPackages.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btnOpenPackages.Name = "btnOpenPackages";
-            this.btnOpenPackages.Size = new System.Drawing.Size(268, 41);
+            this.btnOpenPackages.Size = new System.Drawing.Size(304, 41);
             this.btnOpenPackages.TabIndex = 35;
             this.btnOpenPackages.Text = "Ava pakettide CSV";
             this.btnOpenPackages.UseVisualStyleBackColor = true;
@@ -721,7 +727,7 @@ namespace Kasutajaliides
             this.groupExport.Controls.Add(this.txtExportDelimiter);
             this.groupExport.Controls.Add(this.lblExportDelimiter);
             this.groupExport.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupExport.Location = new System.Drawing.Point(0, 672);
+            this.groupExport.Location = new System.Drawing.Point(0, 700);
             this.groupExport.Name = "groupExport";
             this.groupExport.Size = new System.Drawing.Size(1067, 72);
             this.groupExport.TabIndex = 36;
@@ -830,11 +836,70 @@ namespace Kasutajaliides
             this.lblExportDelimiter.TabIndex = 37;
             this.lblExportDelimiter.Text = "Eraldaja:";
             // 
+            // groupTrendFinder
+            // 
+            this.groupTrendFinder.Controls.Add(this.txtPerioodTundides);
+            this.groupTrendFinder.Controls.Add(this.lblTunnid);
+            this.groupTrendFinder.Controls.Add(this.btnLeiaTrend);
+            this.groupTrendFinder.Controls.Add(this.cbTundVoiPaev);
+            this.groupTrendFinder.Font = new System.Drawing.Font("Impact", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.groupTrendFinder.Location = new System.Drawing.Point(695, 548);
+            this.groupTrendFinder.Name = "groupTrendFinder";
+            this.groupTrendFinder.Size = new System.Drawing.Size(303, 99);
+            this.groupTrendFinder.TabIndex = 37;
+            this.groupTrendFinder.TabStop = false;
+            this.groupTrendFinder.Text = "Trendi leidmine";
+            // 
+            // txtPerioodTundides
+            // 
+            this.txtPerioodTundides.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPerioodTundides.Location = new System.Drawing.Point(5, 61);
+            this.txtPerioodTundides.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.txtPerioodTundides.MaxLength = 128;
+            this.txtPerioodTundides.Name = "txtPerioodTundides";
+            this.txtPerioodTundides.Size = new System.Drawing.Size(144, 32);
+            this.txtPerioodTundides.TabIndex = 41;
+            this.txtPerioodTundides.TextChanged += new System.EventHandler(this.txtPerioodTundides_TextChanged);
+            // 
+            // lblTunnid
+            // 
+            this.lblTunnid.AutoSize = true;
+            this.lblTunnid.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.lblTunnid.Location = new System.Drawing.Point(6, 24);
+            this.lblTunnid.Name = "lblTunnid";
+            this.lblTunnid.Size = new System.Drawing.Size(116, 25);
+            this.lblTunnid.TabIndex = 40;
+            this.lblTunnid.Text = "Aeg tundides";
+            // 
+            // btnLeiaTrend
+            // 
+            this.btnLeiaTrend.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.btnLeiaTrend.Location = new System.Drawing.Point(154, 16);
+            this.btnLeiaTrend.Name = "btnLeiaTrend";
+            this.btnLeiaTrend.Size = new System.Drawing.Size(143, 41);
+            this.btnLeiaTrend.TabIndex = 39;
+            this.btnLeiaTrend.Text = "Leia";
+            this.btnLeiaTrend.UseVisualStyleBackColor = true;
+            this.btnLeiaTrend.Click += new System.EventHandler(this.btnLeiaTrend_Click);
+            // 
+            // cbTundVoiPaev
+            // 
+            this.cbTundVoiPaev.AutoSize = true;
+            this.cbTundVoiPaev.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.cbTundVoiPaev.Location = new System.Drawing.Point(154, 63);
+            this.cbTundVoiPaev.Name = "cbTundVoiPaev";
+            this.cbTundVoiPaev.Size = new System.Drawing.Size(137, 29);
+            this.cbTundVoiPaev.TabIndex = 0;
+            this.cbTundVoiPaev.Text = "Päeva kaupa";
+            this.cbTundVoiPaev.UseVisualStyleBackColor = true;
+            this.cbTundVoiPaev.CheckedChanged += new System.EventHandler(this.cbTundVoiPaev_CheckedChanged);
+            // 
             // Kasutajaliides
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1067, 935);
+            this.ClientSize = new System.Drawing.Size(1067, 963);
+            this.Controls.Add(this.groupTrendFinder);
             this.Controls.Add(this.groupExport);
             this.Controls.Add(this.btnOpenPackages);
             this.Controls.Add(this.tablePackages);
@@ -883,6 +948,8 @@ namespace Kasutajaliides
             ((System.ComponentModel.ISupportInitialize)(this.tablePackages)).EndInit();
             this.groupExport.ResumeLayout(false);
             this.groupExport.PerformLayout();
+            this.groupTrendFinder.ResumeLayout(false);
+            this.groupTrendFinder.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -951,5 +1018,10 @@ namespace Kasutajaliides
         private System.Windows.Forms.DataGridViewTextBoxColumn EndPrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn UsageCost;
         private System.Windows.Forms.DataGridViewTextBoxColumn TemplateCost;
+        private System.Windows.Forms.GroupBox groupTrendFinder;
+        private System.Windows.Forms.Label lblTunnid;
+        private System.Windows.Forms.Button btnLeiaTrend;
+        private System.Windows.Forms.CheckBox cbTundVoiPaev;
+        private System.Windows.Forms.TextBox txtPerioodTundides;
     }
 }

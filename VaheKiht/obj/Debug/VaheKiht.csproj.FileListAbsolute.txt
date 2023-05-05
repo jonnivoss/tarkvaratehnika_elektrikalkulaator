@@ -15,3 +15,10 @@ C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\VaheKiht\obj\
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\VaheKiht\obj\Debug\VaheKiht.csproj.CoreCompileInputs.cache
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\VaheKiht\obj\Debug\VaheKiht.dll
 C:\Users\Enceladus\Source\Repos\Tarkvaratehnika-elektrikalkulaator\VaheKiht\obj\Debug\VaheKiht.pdb
+C:\Users\joona\source\repos\Tarkvaratehnika-elektrikalkulaator\VaheKiht\bin\Debug\VaheKiht.dll
+C:\Users\joona\source\repos\Tarkvaratehnika-elektrikalkulaator\VaheKiht\bin\Debug\VaheKiht.pdb
+C:\Users\joona\source\repos\Tarkvaratehnika-elektrikalkulaator\VaheKiht\obj\Debug\VaheKiht.csproj.AssemblyReference.cache
+C:\Users\joona\source\repos\Tarkvaratehnika-elektrikalkulaator\VaheKiht\obj\Debug\VaheKiht.csproj.CoreCompileInputs.cache
+C:\Users\joona\source\repos\Tarkvaratehnika-elektrikalkulaator\VaheKiht\obj\Debug\VaheKiht.dll
+C:\Users\joona\source\repos\Tarkvaratehnika-elektrikalkulaator\VaheKiht\obj\Debug\VaheKiht.pdb
+C:\Users\admin\source\repos\Tarkvaratehnika-elektrikalkulaator\VaheKiht\obj\Debug\VaheKiht.csproj.AssemblyReference.cache

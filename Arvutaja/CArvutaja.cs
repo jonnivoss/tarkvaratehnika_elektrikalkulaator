@@ -194,8 +194,8 @@ namespace Arvutaja
          *      start: vaadeldava ajavahemiku algusaeg (DateTime tüüpi)
          *      stop: vaadeldava ajavahemiku lõppaeg (DateTime tüüpi)
          * PARAMEETRID (VÄLJUNDID):
-         *      outSmallestIntegral: viit minimaalse hinna tagastamiseks (out double)
-         *      outOptimalDate: viit optimaalse algusaja tagastamiseks (out DateTime)
+         *      outLargestIntegral: viit maksimaalse hinna tagastamiseks (out double)
+         *      outSubOptimalDate: viit eba optimaalse algusaja tagastamiseks (out DateTime)
          * 
          * TÄISARVULISED TAGASTUSVÄÄRTUSED:
          *      0: funktsiooni töö kulges edukalt

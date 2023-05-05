@@ -2465,21 +2465,29 @@ namespace Kasutajaliides
                 {
                     keskmisteHindadeBin[(int)item.Item1.DayOfWeek] += item.Item2;
                 }
-                double vaiksem = keskmisteHindadeBin[0] /= (ajutineVecT.Count / 7); ;
-                int dayOfWeekValue = 0;
+                double vaiksem = keskmisteHindadeBin[0] /= (ajutineVecT.Count / 7);
+                double suurim = keskmisteHindadeBin[0] /= (ajutineVecT.Count / 7);
+                int dayOfWeekValueSuurim = 0;
+                int dayOfWeekValueVaikseim = 0;
                 for (int i = 1; i < 7; i++)
                 {
                     keskmisteHindadeBin[i] /= (ajutineVecT.Count / 7);
                     if (keskmisteHindadeBin[i] < vaiksem)
                     {
-                        dayOfWeekValue = i;
+                        dayOfWeekValueVaikseim = i;
                         vaiksem = keskmisteHindadeBin[i];
+                    }
+                    if (keskmisteHindadeBin[i] > suurim)
+                    {
+                        dayOfWeekValueSuurim = i;
+                        suurim = keskmisteHindadeBin[i];
                     }
                 }
                 CultureInfo cultureInfo = new CultureInfo("et-EE"); // Estonian culture
-                string dayName = cultureInfo.DateTimeFormat.GetDayName((DayOfWeek)dayOfWeekValue);
-                
-                MessageBox.Show("Tavaliselt odavaim tarbimis päev on: " + dayName);
+                string dayNameVaikseim = cultureInfo.DateTimeFormat.GetDayName((DayOfWeek)dayOfWeekValueVaikseim);
+                string dayNameSuurim = cultureInfo.DateTimeFormat.GetDayName((DayOfWeek)dayOfWeekValueSuurim);
+
+                MessageBox.Show("Tavaliselt odavaim tarbimis päev on: " + dayNameVaikseim + "," + Environment.NewLine + "Tavaliselt kalleim tarbimis päev on: " + dayNameSuurim);
             }
             else 
             {

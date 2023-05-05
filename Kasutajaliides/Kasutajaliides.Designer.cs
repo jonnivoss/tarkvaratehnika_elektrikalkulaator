@@ -99,10 +99,10 @@ namespace Kasutajaliides
             this.txtExportDelimiter = new System.Windows.Forms.TextBox();
             this.lblExportDelimiter = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cbTundVoiPaev = new System.Windows.Forms.CheckBox();
-            this.txtPerioodiPikkus = new System.Windows.Forms.MaskedTextBox();
-            this.btnLeiaTrend = new System.Windows.Forms.Button();
             this.lblTunnid = new System.Windows.Forms.Label();
+            this.btnLeiaTrend = new System.Windows.Forms.Button();
+            this.cbTundVoiPaev = new System.Windows.Forms.CheckBox();
+            this.txtPerioodTundides = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.chartPrice)).BeginInit();
             this.groupPriceType.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablePrice)).BeginInit();
@@ -232,7 +232,7 @@ namespace Kasutajaliides
             // txtVoimsus
             // 
             this.txtVoimsus.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtVoimsus.Location = new System.Drawing.Point(15, 200);
+            this.txtVoimsus.Location = new System.Drawing.Point(11, 201);
             this.txtVoimsus.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtVoimsus.MaxLength = 128;
             this.txtVoimsus.Name = "txtVoimsus";
@@ -838,9 +838,9 @@ namespace Kasutajaliides
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txtPerioodTundides);
             this.groupBox1.Controls.Add(this.lblTunnid);
             this.groupBox1.Controls.Add(this.btnLeiaTrend);
-            this.groupBox1.Controls.Add(this.txtPerioodiPikkus);
             this.groupBox1.Controls.Add(this.cbTundVoiPaev);
             this.groupBox1.Location = new System.Drawing.Point(727, 548);
             this.groupBox1.Name = "groupBox1";
@@ -849,22 +849,14 @@ namespace Kasutajaliides
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Trendi leidmine";
             // 
-            // cbTundVoiPaev
+            // lblTunnid
             // 
-            this.cbTundVoiPaev.AutoSize = true;
-            this.cbTundVoiPaev.Location = new System.Drawing.Point(155, 44);
-            this.cbTundVoiPaev.Name = "cbTundVoiPaev";
-            this.cbTundVoiPaev.Size = new System.Drawing.Size(93, 19);
-            this.cbTundVoiPaev.TabIndex = 0;
-            this.cbTundVoiPaev.Text = "Päaeva kaupa";
-            this.cbTundVoiPaev.UseVisualStyleBackColor = true;
-            // 
-            // txtPerioodiPikkus
-            // 
-            this.txtPerioodiPikkus.Location = new System.Drawing.Point(7, 44);
-            this.txtPerioodiPikkus.Name = "txtPerioodiPikkus";
-            this.txtPerioodiPikkus.Size = new System.Drawing.Size(100, 21);
-            this.txtPerioodiPikkus.TabIndex = 38;
+            this.lblTunnid.AutoSize = true;
+            this.lblTunnid.Location = new System.Drawing.Point(6, 21);
+            this.lblTunnid.Name = "lblTunnid";
+            this.lblTunnid.Size = new System.Drawing.Size(68, 15);
+            this.lblTunnid.TabIndex = 40;
+            this.lblTunnid.Text = "Aeg tundides";
             // 
             // btnLeiaTrend
             // 
@@ -876,14 +868,27 @@ namespace Kasutajaliides
             this.btnLeiaTrend.UseVisualStyleBackColor = true;
             this.btnLeiaTrend.Click += new System.EventHandler(this.btnLeiaTrend_Click);
             // 
-            // lblTunnid
+            // cbTundVoiPaev
             // 
-            this.lblTunnid.AutoSize = true;
-            this.lblTunnid.Location = new System.Drawing.Point(6, 25);
-            this.lblTunnid.Name = "lblTunnid";
-            this.lblTunnid.Size = new System.Drawing.Size(68, 15);
-            this.lblTunnid.TabIndex = 40;
-            this.lblTunnid.Text = "Aeg tundides";
+            this.cbTundVoiPaev.AutoSize = true;
+            this.cbTundVoiPaev.Location = new System.Drawing.Point(155, 44);
+            this.cbTundVoiPaev.Name = "cbTundVoiPaev";
+            this.cbTundVoiPaev.Size = new System.Drawing.Size(93, 19);
+            this.cbTundVoiPaev.TabIndex = 0;
+            this.cbTundVoiPaev.Text = "Päaeva kaupa";
+            this.cbTundVoiPaev.UseVisualStyleBackColor = true;
+            this.cbTundVoiPaev.CheckedChanged += new System.EventHandler(this.cbTundVoiPaev_CheckedChanged);
+            // 
+            // txtPerioodTundides
+            // 
+            this.txtPerioodTundides.Font = new System.Drawing.Font("Impact", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPerioodTundides.Location = new System.Drawing.Point(5, 38);
+            this.txtPerioodTundides.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.txtPerioodTundides.MaxLength = 128;
+            this.txtPerioodTundides.Name = "txtPerioodTundides";
+            this.txtPerioodTundides.Size = new System.Drawing.Size(108, 27);
+            this.txtPerioodTundides.TabIndex = 41;
+            this.txtPerioodTundides.TextChanged += new System.EventHandler(this.txtPerioodTundides_TextChanged);
             // 
             // Kasutajaliides
             // 
@@ -1012,7 +1017,7 @@ namespace Kasutajaliides
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label lblTunnid;
         private System.Windows.Forms.Button btnLeiaTrend;
-        private System.Windows.Forms.MaskedTextBox txtPerioodiPikkus;
         private System.Windows.Forms.CheckBox cbTundVoiPaev;
+        private System.Windows.Forms.TextBox txtPerioodTundides;
     }
 }

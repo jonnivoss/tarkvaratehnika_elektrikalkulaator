@@ -2426,6 +2426,15 @@ namespace Kasutajaliides
         }
 
 
+        private void cbTundVoiPaev_CheckedChanged(object sender, EventArgs e)
+        {
+                txtPerioodTundides.Enabled = !cbTundVoiPaev.Checked;
+        }
+
+        private void txtPerioodTundides_TextChanged(object sender, EventArgs e)
+        {
+            this.handleNumberBoxChanged(ref txtPerioodTundides, 24);
+        }
 
         //vaja tükeldada algusest lopuni iga nadala paeva kohta
         private void btnLeiaTrend_Click(object sender, EventArgs e)
@@ -2492,12 +2501,17 @@ namespace Kasutajaliides
                 {
                     keskmisteHindadeBin[(int)item.Item1.Hour] += item.Item2;
                 }
+                ajutineVecT.Clear();
+                ajutineVecT = new VecT();
+                DateTime ajutineDate = new DateTime(2000, 0, 0, 0, 0, 0);
                 for (int i = 0; i < 24; i++)
                 {
-                    txtDebug.AppendText(keskmisteHindadeBin[i].ToString() + Environment.NewLine);
+                    ajutineVecT.Add(ajutineDate, keskmisteHindadeBin[i]);
+                    ajutineDate.AddHours(1);
                 }
             }
         }
+
 
 
         // PAKETTIDE TABELIS MALLI HINNA UUENDAMINE

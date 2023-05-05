@@ -787,6 +787,16 @@ namespace Kasutajaliides
 
             AP.userDataFileName = AS.getSetting(AndmeSalvestaja.ASSetting.tarbijaAndmed);
             AP.packageFileName = AS.getSetting(AndmeSalvestaja.ASSetting.paketiAndmed);
+
+            isNotDarkMode = AS.getSetting(AndmeSalvestaja.ASSetting.tumeTaust) == "1";
+            btnDarkMode_Click(btnDarkMode, e);
+
+            state = AS.getSetting(AndmeSalvestaja.ASSetting.suurendusLubatud) == "1";
+            btnNormalSize_Click(btnChangeSize, e);
+
+            
+
+
             //priceData = AP.HindAegInternet(DateTime.Now.Date.AddDays(-60), DateTime.Now);
             //MessageBox.Show(priceTimeRange.Last().ToString());
             bool isUserData = openCSVUserData();
@@ -1359,6 +1369,8 @@ namespace Kasutajaliides
          */
         private void btnNormalSize_Click(object sender, EventArgs e)
         {
+            AS.changeSetting(AndmeSalvestaja.ASSetting.suurendusLubatud, state ? "1" : "0");
+
             if (state)
             {
                 lblKasutusmall.Font = Bigger;
@@ -1573,6 +1585,8 @@ namespace Kasutajaliides
         private void btnDarkMode_Click(object sender, EventArgs e)
         {
             isNotDarkMode = !isNotDarkMode;
+
+            AS.changeSetting(AndmeSalvestaja.ASSetting.tumeTaust, isNotDarkMode ? "0" : "1");
 
             if (!isNotDarkMode)
             {

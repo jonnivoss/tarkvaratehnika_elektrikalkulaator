@@ -2479,7 +2479,7 @@ namespace Kasutajaliides
                 CultureInfo cultureInfo = new CultureInfo("et-EE"); // Estonian culture
                 string dayName = cultureInfo.DateTimeFormat.GetDayName((DayOfWeek)dayOfWeekValue);
                 
-                MessageBox.Show(dayName);
+                MessageBox.Show("Tavaliselt odavaim tarbimis päev on: " + dayName);
             }
             else 
             {
@@ -2503,11 +2503,30 @@ namespace Kasutajaliides
                 }
                 ajutineVecT.Clear();
                 ajutineVecT = new VecT();
-                DateTime ajutineDate = new DateTime(2000, 0, 0, 0, 0, 0);
+                DateTime ajutineDate = new DateTime(2000, 1, 1, 0, 0, 0);
+                DateTime ajutineDateAlgus = new DateTime(2000, 1, 1, 0, 0, 0);
+                DateTime algusAeg = new DateTime(2000, 1, 1, 0, 0, 0);
                 for (int i = 0; i < 24; i++)
                 {
-                    ajutineVecT.Add(ajutineDate, keskmisteHindadeBin[i]);
-                    ajutineDate.AddHours(1);
+                    ajutineVecT.Add(Tuple.Create(ajutineDate, keskmisteHindadeBin[i]));
+                    ajutineDate = ajutineDate.AddHours(1);
+                }
+                double periood = 0.0;
+                if (!string.IsNullOrEmpty(txtPerioodTundides.Text))
+                {
+                    periood = Double.Parse(txtPerioodTundides.Text);
+                }
+                else
+                {
+                    periood = 1.0;
+                }
+
+                double ajutineOutDouble = 0;
+                int test = AR.smallestIntegral(ajutineVecT,1.0, periood,ajutineDateAlgus,ajutineDate,out ajutineOutDouble, out algusAeg);
+                if (test == 0)
+                {
+
+                    MessageBox.Show("Tavaliselt odavaim tarbimis aeg on: " + algusAeg.ToString("HH") + " - " + algusAeg.AddHours(Convert.ToInt32(periood)).ToString("HH"));
                 }
             }
         }

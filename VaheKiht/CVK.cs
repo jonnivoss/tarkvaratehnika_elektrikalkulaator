@@ -26,12 +26,12 @@ namespace VaheKiht
         /* Loob antud andmetest (inData) vahemiku mingil ajaperioodil.
          * 
          * PARAMEETRID (SISEND):
-         *      inData: sisendandmed, millest luuakse vahemik
-         *      start: algusaeg
-         *      stop: lõppaeg
+         *      inData: sisendandmed, millest luuakse vahemik (VecT)
+         *      start: algusaeg (DateTime)
+         *      stop: lõppaeg (DateTime)
          *   
          * TAGASTUSVÄÄRTUSED:
-         *      data: loodud vahemik, genereerimine õnnestus
+         *      data: loodud vahemik, genereerimine õnnestus (VecT)
          *      null: genereerimine ebaõnnestus
          */
         public VecT createRange(VecT inData, DateTime start, DateTime stop)
@@ -62,9 +62,9 @@ namespace VaheKiht
         /* Loob antud andmetest (inData) tarbimisandmete vahemiku mingil ajaperioodil.  
          * 
          * PARAMEETRID (SISEND):
-         *      inData: sisendandmed, millest luuakse tarbimisandmete vahemik
-         *      start: algusaeg
-         *      stop: lõppaeg
+         *      inData: sisendandmed, millest luuakse tarbimisandmete vahemik (VecT)
+         *      start: algusaeg (DateTime)
+         *      stop: lõppaeg (DateTime)
          *      
          * TAGASTUSVÄÄRTUSED:
          *      Tagastab boolean väärtuse olenevalt vahemiku loomise õnnestumisest/ebaõnnestusmiset
@@ -100,9 +100,9 @@ namespace VaheKiht
         /* Loob antud andmetest (inData) börsiandmete vahemiku mingil ajaperioodil.  
          * 
          * PARAMEETRID (SISEND):
-         *      inData: sisendandmed, millest luuakse tarbimisandmete vahemik
-         *      start: algusaeg
-         *      stop: lõppaeg
+         *      inData: sisendandmed, millest luuakse tarbimisandmete vahemik (VecT)
+         *      start: algusaeg (DateTime)
+         *      stop: lõppaeg (DateTime)
          *      
          * TAGASTUSVÄÄRTUSED:
          *      Tagastab boolean väärtuse olenevalt vahemiku loomise õnnestumisest/ebaõnnestusmiset

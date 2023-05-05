@@ -28,6 +28,16 @@ namespace Arvutaja
             out System.DateTime outOptimalDate
         );
 
+        int largestIntegral(
+            VecT priceData,
+            double power,
+            double usageLength,
+            System.DateTime start,
+            System.DateTime stop,
+            out double outLargestIntegral,
+            out System.DateTime outSubOptimalDate
+        );
+
         int average(
             VecT andmed,
             System.DateTime alumine,

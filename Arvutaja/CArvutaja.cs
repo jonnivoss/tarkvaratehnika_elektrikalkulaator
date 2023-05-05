@@ -100,7 +100,7 @@ namespace Arvutaja
         // VÄHIMA TARBIMISHINNA LEIDMISEKS VÄHIMA INTEGRAALI ARVUTAJA
         /* Funktsioon võtab parameetriteks elektrihinna andmestruktuuri, kodumasina tarbimisvõimsuse, tarbimisaja,
          * vaadeldava ajavahemiku algusaja ja lõppaja ning viidad minimaalse tarbimishinna ja vastava soovitatud 
-         * algusaja tagastamiseks. Valitud tarbimismalli järgi arvutatakse, millal oleks odavaim antud kodumasinat kasutada
+         * algusaja tagastamiseks. Valitud tarbimismalli järgi arvutatakse, millal oleks odavaim antud kodumasinat kasutada,
          * leitakse ja tagastatakse vastav hind ning tarbimise algusaeg.
          * 
          * PARAMEETRID (SISENDID):
@@ -118,7 +118,15 @@ namespace Arvutaja
          *      1: viga - algusaja väärtus on suurem lõppaja väärtusest
          *      2: võimalik viga integreerimisel
          */
-        public int smallestIntegral(VecT priceData, double power, double usageLength, System.DateTime start, System.DateTime stop, out double outSmallestIntegral, out System.DateTime outOptimalDate)
+        public int smallestIntegral(
+            VecT priceData,
+            double power,
+            double usageLength,
+            System.DateTime start,
+            System.DateTime stop,
+            out double outSmallestIntegral,
+            out System.DateTime outOptimalDate
+        )
         {
             if (start > stop)
             {
@@ -151,7 +159,7 @@ namespace Arvutaja
                     if (integral < bestIntegral)
                     {
                         bestIntegral = integral;
-                        bestDate = start;
+                        bestDate     = start;
                     }
                 }
 
@@ -169,6 +177,90 @@ namespace Arvutaja
 
             outSmallestIntegral = bestIntegral;
             outOptimalDate      = bestDate;
+
+            return 0;
+        }
+
+        // SUURIMA TARBIMISHINNA LEIDMISEKS SUURIMA INTEGRAALI ARVUTAJA
+        /* Funktsioon võtab parameetriteks elektrihinna andmestruktuuri, kodumasina tarbimisvõimsuse, tarbimisaja,
+         * vaadeldava ajavahemiku algusaja ja lõppaja ning viidad maksimaalse tarbimishinna ja vastava soovitatud 
+         * algusaja tagastamiseks. Valitud tarbimismalli järgi arvutatakse, millal oleks kalleim antud kodumasinat kasutada,
+         * leitakse ja tagastatakse vastav hind ning tarbimise algusaeg.
+         * 
+         * PARAMEETRID (SISENDID):
+         *      priceData: elektrihind (VecT tüüpi andmestruktuur)
+         *      power: tarbimisvõimsus kilovattides (double)
+         *      usageLength: kasutusaeg tundides (double)
+         *      start: vaadeldava ajavahemiku algusaeg (DateTime tüüpi)
+         *      stop: vaadeldava ajavahemiku lõppaeg (DateTime tüüpi)
+         * PARAMEETRID (VÄLJUNDID):
+         *      outSmallestIntegral: viit minimaalse hinna tagastamiseks (out double)
+         *      outOptimalDate: viit optimaalse algusaja tagastamiseks (out DateTime)
+         * 
+         * TÄISARVULISED TAGASTUSVÄÄRTUSED:
+         *      0: funktsiooni töö kulges edukalt
+         *      1: viga - algusaja väärtus on suurem lõppaja väärtusest
+         *      2: võimalik viga integreerimisel
+         */
+        public int largestIntegral(
+            VecT priceData,
+            double power,
+            double usageLength,
+            System.DateTime start,
+            System.DateTime stop,
+            out double outLargestIntegral,
+            out System.DateTime outSubOptimalDate
+        )
+        {
+            if (start > stop)
+            {
+                outLargestIntegral = double.PositiveInfinity;
+                outSubOptimalDate  = default(System.DateTime);
+                return 1;
+            }
+
+            double worstIntegral = 0.0;
+            DateTime worstDate = start;
+            DateTime usageEnd  = start + TimeSpan.FromHours(Math.Ceiling(usageLength));
+
+            // Proovib sobitada kasutusmalli hinnaandmete graafikule ja seda nii, et
+            // kumbki dataset ei läheks üksteise piiridest välja
+            while (usageEnd <= stop)
+            {
+                VecT tempUsageData = this.generateUsageData(start, usageLength, power);
+
+                // Integreerib
+                if (tempUsageData.Count == 0)
+                {
+                    outLargestIntegral = Double.PositiveInfinity;
+                    outSubOptimalDate  = default(System.DateTime);
+                    return 2;
+                }
+
+                double integral;
+                if (this.integral(tempUsageData, priceData, tempUsageData.First().Item1, tempUsageData.Last().Item1, out integral) == 0)
+                {
+                    if (integral > worstIntegral)
+                    {
+                        worstIntegral = integral;
+                        worstDate     = start;
+                    }
+                }
+
+                start    = start.AddHours(1);
+                usageEnd = usageEnd.AddHours(1);
+            }
+
+            // while loop tõenäoliselt ei käivitunudki või oli integreerimisega probleem :/
+            if (worstIntegral == 0.0)
+            {
+                outLargestIntegral = Double.PositiveInfinity;
+                outSubOptimalDate  = default(System.DateTime);
+                return 2;
+            }
+
+            outLargestIntegral = worstIntegral;
+            outSubOptimalDate  = worstDate;
 
             return 0;
         }

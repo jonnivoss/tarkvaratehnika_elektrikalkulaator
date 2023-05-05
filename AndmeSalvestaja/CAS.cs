@@ -12,9 +12,10 @@ namespace AndmeSalvestaja
     {
         public Dictionary<ASSetting, string> setMap { get; set; } = new Dictionary<ASSetting, string>
         {
-            { ASSetting.tarbijaAndmed,    "" }, // tarbijaandmete CSV asukoht
-            { ASSetting.paketiAndmed,     "" }, // paketiandmete CSV asukoht
-            { ASSetting.suurendusLubatud, "0" } // mäletab kas suurendus on lubatud
+            { ASSetting.tarbijaAndmed,    "" },  // tarbijaandmete CSV asukoht
+            { ASSetting.paketiAndmed,     "" },  // paketiandmete CSV asukoht
+            { ASSetting.suurendusLubatud, "0" }, // mäletab kas suurendus on lubatud
+            { ASSetting.tumeTaust,        "0" }  // dark mode
         };
         public VecT marketData { get; set; } = new VecT { };
         // Default kasutusmallid

@@ -276,7 +276,7 @@ namespace Kasutajaliides
             this.btnAvaCSV.Name = "btnAvaCSV";
             this.btnAvaCSV.Size = new System.Drawing.Size(130, 41);
             this.btnAvaCSV.TabIndex = 12;
-            this.btnAvaCSV.Text = "Ava CŠV fail";
+            this.btnAvaCSV.Text = "Ava CSV fail";
             this.btnAvaCSV.UseVisualStyleBackColor = true;
             this.btnAvaCSV.Click += new System.EventHandler(this.btnAvaCSV_Click);
             // 
@@ -322,9 +322,9 @@ namespace Kasutajaliides
             this.cbShowPrice.Location = new System.Drawing.Point(11, 513);
             this.cbShowPrice.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbShowPrice.Name = "cbShowPrice";
-            this.cbShowPrice.Size = new System.Drawing.Size(166, 29);
+            this.cbShowPrice.Size = new System.Drawing.Size(154, 29);
             this.cbShowPrice.TabIndex = 18;
-            this.cbShowPrice.Text = "Kuva elektrihind";
+            this.cbShowPrice.Text = "Kuva börsihind";
             this.cbShowPrice.UseVisualStyleBackColor = true;
             this.cbShowPrice.CheckedChanged += new System.EventHandler(this.cbShowPrice_CheckedChanged);
             // 
@@ -699,7 +699,7 @@ namespace Kasutajaliides
             this.btnOpenPackages.Name = "btnOpenPackages";
             this.btnOpenPackages.Size = new System.Drawing.Size(268, 41);
             this.btnOpenPackages.TabIndex = 35;
-            this.btnOpenPackages.Text = "Ava pakettide CŠV";
+            this.btnOpenPackages.Text = "Ava pakettide CSV";
             this.btnOpenPackages.UseVisualStyleBackColor = true;
             this.btnOpenPackages.Click += new System.EventHandler(this.btnOpenPackages_Click);
             // 

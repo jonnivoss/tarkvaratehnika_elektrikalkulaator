@@ -729,7 +729,7 @@ namespace Kasutajaliides
 
             this.BackColor = SystemColors.Control;
 
-            this.MinimumSize = new Size(1083, 905);
+            this.MinimumSize = new Size(1085, 1010);
             // Lisab tüüp-kasutusmallid
             txtHind.Text = "-";
             tablePrice.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;

@@ -550,18 +550,18 @@ namespace AndmePyydja
          * DatePriceT tüüpi massiivi.
          * 
          * PARAMEETRID (SISEND):
-         *      algus1: Algusaeg, millest alates börsiandmeid küsitakse (DateTime)
-         *      lopp1: Lõppaeg, kuhu maani börsiandmeid küsitakse (DateTime)
+         *      algus: Algusaeg, millest alates börsiandmeid küsitakse (DateTime)
+         *      lopp: Lõppaeg, kuhu maani börsiandmeid küsitakse (DateTime)
          *      
          * TAGASTUSVÄÄRTUSED:
          *      VecT: massiiv, mis sisaldab aeg/hind paare börsiandmetest
          */
-        public VecT HindAegInternet(DateTime algus1, DateTime lopp1)
+        public VecT HindAegInternet(DateTime algus, DateTime lopp)
         {
             string url = "https://dashboard.elering.ee/api/nps/price?";
             VecT nett = new VecT();
-            DateTime algus = algus1.AddHours(-2);
-            DateTime lopp = lopp1.AddHours(-2);
+            algus = algus.AddHours(-2);
+            lopp = lopp.AddHours(-2);
 
             using (var httpClient = new HttpClient())
             {

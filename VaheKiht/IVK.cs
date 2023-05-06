@@ -14,9 +14,16 @@ namespace VaheKiht
         List<double> userDataUsageRange { get; }
         VecT userDataRange { get; }
 
+        DateTime userDataRangeStart { get; }
+        DateTime userDataRangeStop { get; }
+
         List<DateTime> priceTimeRange { get; }
         List<double> priceCostRange { get; }
         VecT priceRange { get; }
+
+        DateTime priceRangeStart { get; }
+        DateTime priceRangeStop { get; }
+
         double averagePrice { get; }
 
 

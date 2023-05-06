@@ -219,7 +219,7 @@ namespace Arvutaja
                 return 1;
             }
 
-            double worstIntegral = 0.0;
+            double worstIntegral = Double.NegativeInfinity;
             DateTime worstDate = start;
             DateTime usageEnd  = start + TimeSpan.FromHours(Math.Ceiling(usageLength));
 
@@ -252,7 +252,7 @@ namespace Arvutaja
             }
 
             // while loop tõenäoliselt ei käivitunudki või oli integreerimisega probleem :/
-            if (worstIntegral == 0.0)
+            if (worstIntegral == Double.NegativeInfinity)
             {
                 outLargestIntegral = Double.PositiveInfinity;
                 outSubOptimalDate  = default(System.DateTime);

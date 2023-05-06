@@ -178,12 +178,6 @@ namespace Kasutajaliides
                 chartPrice.Series["Elektrihind"].Points.DataBindXY(VK.priceTimeRange, VK.priceCostRange);
             }
 
-            tablePrice.Rows.Clear();
-            for (int i = 0; i < VK.priceTimeRange.Count; ++i)
-            {
-                tablePrice.Rows.Add(VK.priceTimeRange[i], VK.priceCostRange[i]);
-            }
-
             if (showStock)
             {
                 for (int i = 0; i < VK.priceCostRange.Count; i++) // Käib valitud ajaintervalli hinnad läbi
@@ -307,10 +301,11 @@ namespace Kasutajaliides
                                 stockCostWithMarginals.Add(newPrice);
                             }
 
-                            var stockUsageCost = VK.userDataUsageRange.Zip(stockCostWithMarginals, (u, c) => new { Usage = u, Cost = c });
+                            var stockUsageCost = VK.userDataRange.Zip(stockCostWithMarginals, (u, c) => new { Usage = u, Cost = c });
                             foreach (var uc in stockUsageCost)
                             {
-                                packageUsageCost.Add(uc.Usage * uc.Cost);
+                                //Console.WriteLine("suc: " + uc.Usage.Item2.ToString() + "; " + uc.Cost.ToString());
+                                packageUsageCost.Add(uc.Usage.Item2 * uc.Cost);
                             }
                         }
                         else // kui ei ole tegemist börsipaketiga
@@ -337,16 +332,46 @@ namespace Kasutajaliides
                             chartPrice.Series[packageNameUsage].Enabled = true;
                             txtDebug.AppendText("Alustan tabelisse lisamist");
                             tablePrice.Rows.Clear();
-                            for (int c = 0; c < VK.userDataTimeRange.Count; ++c)
+
+                            var realCosts = packageUsageCost;
+                            if (realCosts.Count > 1)
                             {
-                                tablePrice.Rows.Add(VK.priceTimeRange[c], VK.priceCostRange[c], packageUsageCost[c]);
-                                //tablePrice.Rows.Add(costPerKwh[i], packageUsageCost[i]);
+                                realCosts.RemoveAt(realCosts.Count - 1);
+                            }
+
+                            // Paneb tarbimise simulatsiooniandmed tabelisse, kui andmed puuduvad, paneb "-"
+
+                            if (VK.priceTimeRange.Count > 1)
+                            {
+                                for (int c = 0, iCost = 0; c < (VK.priceTimeRange.Count - 1); ++c)
+                                {
+                                    string cost = "-";
+                                    if (((iCost != 0) || (VK.priceTimeRange[c] >= VK.userDataRangeStart)) && (iCost < realCosts.Count))
+                                    {
+                                        cost = realCosts[iCost].ToString("0.000");
+                                        ++iCost;
+                                    }
+                                    tablePrice.Rows.Add(VK.priceTimeRange[c], VK.priceCostRange[c], cost);
+                                }
                             }
                             txtDebug.AppendText("Tabelisse lisatud");
                         }
                         catch (Exception)
                         {
+
                         }
+                    }
+                }
+            }
+            else
+            {
+                // Lisab tavalise tabeli jaotuse, viimane punkt massiivis on fiktiivne, seda ei lisata
+                if (VK.priceTimeRange.Count > 1)
+                {
+                    tablePrice.Rows.Clear();
+                    for (int i = 0; i < (VK.priceTimeRange.Count - 1); ++i)
+                    {
+                        tablePrice.Rows.Add(VK.priceTimeRange[i], VK.priceCostRange[i]);
                     }
                 }
             }
@@ -2084,7 +2109,7 @@ namespace Kasutajaliides
                     chartPrice.Series[packageNameUsage].ChartType = SeriesChartType.Line;
 
                     var newColumn = new DataGridViewTextBoxColumn(); // Lisab tabelisse uue tulba
-                    newColumn.HeaderText = packageNameUsage;          // Määrab päise nimeks paketi nime 
+                    newColumn.HeaderText = packageNameUsage + " (s)";          // Määrab päise nimeks paketi nime 
                     newColumn.Name = packageNameUsage;                 // Paketi nimi
 
                     tablePrice.Columns.Add(newColumn);                 // Lisab paketi tabelisse
@@ -2256,21 +2281,27 @@ namespace Kasutajaliides
             // Proovib kirjutada faili tabeli andmed
             var isAppend = cbExportAppend.Checked;
 
+            // Eksisteerib kolmas paketiandmete tulp
+            var hasPackage = tablePrice.Columns.Count == 3;
+
             List<string[]> exportStrings = new List<string[]>();
             // Tabeli header
-            exportStrings.Add(new string[] { "Aeg", "Börsihind (s/kWh)" });
-            foreach (var item in VK.priceRange)
+            exportStrings.Add(new string[] { "Aeg", "Börsihind (s/kWh)", "Paketikulu (s)" });
+            for (int i = 0; i < tablePrice.Rows.Count; ++i)
             {
-                exportStrings.Add(new string[] { item.Item1.ToString(), item.Item2.ToString("0.000") });
+                var row = tablePrice.Rows[i];
+                var packagePrice = hasPackage ? row.Cells[2].Value.ToString() : "-";
+                exportStrings.Add(new string[]{ row.Cells[0].Value.ToString(), row.Cells[1].Value.ToString(), packagePrice });
             }
 
-            // Teeb 2-dimensionaalse array, mis hoiab exportString.Count * 2 stringi
-            var exportData = Array.CreateInstance(typeof(string), exportStrings.Count, 2);
+            // Teeb 2-dimensionaalse array, mis hoiab exportString.Count * 3 stringi
+            var exportData = Array.CreateInstance(typeof(string), exportStrings.Count, 3);
             // Täidab selle array
             for (int i = 0; i < exportStrings.Count; ++i)
             {
                 exportData.SetValue(exportStrings[i][0], i, 0);
                 exportData.SetValue(exportStrings[i][1], i, 1);
+                exportData.SetValue(exportStrings[i][2], i, 2);
             }
 
             CSV.delimiter = txtExportDelimiter.Text;
@@ -2806,9 +2837,9 @@ namespace Kasutajaliides
             {
                 return; // Katkestab funktsiooni töö
             }
-            var stockCost = VK.createRange(this.priceData, VK.userDataTimeRange.First(), VK.userDataTimeRange.Last()); // Börsihinna väärtuste loomine
+            var stockCost = VK.createRange(this.priceData, VK.userDataRangeStart, VK.userDataRangeStop); // Börsihinna väärtuste loomine
             var start = dateStartTime.Value;
-            var stop = dateStopTime.Value;
+            var stop  = dateStopTime.Value;
             try
             {
                 for (int c = 0; c < tablePackages.Rows.Count; ++c) // Loop läbi tabeli kõikide ridade
@@ -2826,13 +2857,14 @@ namespace Kasutajaliides
                         {
                             break;
                         }
-                        packageUsageCost.Add(us.Usage * AR.finalPrice(us.Stock.Item2, packageInfo[c], us.Stock.Item1)); // Arvutab iga tunni hinna ja lisb listi
+                        //Console.WriteLine(us.Stock.Item1.ToString() + ": " + us.Usage.ToString() + "; " + us.Stock.Item2.ToString());
+                        packageUsageCost.Add(us.Usage * AR.finalPrice(us.Stock.Item2, packageInfo[c], us.Stock.Item1)); // Arvutab iga tunni hinna ja lisab listi
                     }
                     foreach (var item in packageUsageCost)
                     {
                         cost += item; // Liidab tunnihinnad 
                     }
-                    tablePackages.Rows[c].Cells[10].Value = ((cost + Convert.ToDouble(tablePackages.Rows[c].Cells[3].Value)) / 100).ToString("0.00"); // Lisab saadud hinna pakettide tabelisse 
+                    tablePackages.Rows[c].Cells[10].Value = (cost / 100).ToString("0.00"); // Lisab saadud hinna pakettide tabelisse 
                 }
             }
             catch (Exception)

@@ -2256,21 +2256,27 @@ namespace Kasutajaliides
             // Proovib kirjutada faili tabeli andmed
             var isAppend = cbExportAppend.Checked;
 
+            // Eksisteerib kolmas paketiandmete tulp
+            var hasPackage = tablePrice.Columns.Count == 3;
+
             List<string[]> exportStrings = new List<string[]>();
             // Tabeli header
-            exportStrings.Add(new string[] { "Aeg", "Börsihind (s/kWh)" });
-            foreach (var item in VK.priceRange)
+            exportStrings.Add(new string[] { "Aeg", "Börsihind (s/kWh)", "Paketikulu (s)" });
+            for (int i = 0; i < tablePrice.Rows.Count; ++i)
             {
-                exportStrings.Add(new string[] { item.Item1.ToString(), item.Item2.ToString("0.000") });
+                var row = tablePrice.Rows[i];
+                var packagePrice = hasPackage ? row.Cells[2].Value.ToString() : "-";
+                exportStrings.Add(new string[]{ row.Cells[0].Value.ToString(), row.Cells[1].Value.ToString(), packagePrice });
             }
 
-            // Teeb 2-dimensionaalse array, mis hoiab exportString.Count * 2 stringi
-            var exportData = Array.CreateInstance(typeof(string), exportStrings.Count, 2);
+            // Teeb 2-dimensionaalse array, mis hoiab exportString.Count * 3 stringi
+            var exportData = Array.CreateInstance(typeof(string), exportStrings.Count, 3);
             // Täidab selle array
             for (int i = 0; i < exportStrings.Count; ++i)
             {
                 exportData.SetValue(exportStrings[i][0], i, 0);
                 exportData.SetValue(exportStrings[i][1], i, 1);
+                exportData.SetValue(exportStrings[i][2], i, 2);
             }
 
             CSV.delimiter = txtExportDelimiter.Text;

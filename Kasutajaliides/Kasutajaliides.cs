@@ -341,12 +341,17 @@ namespace Kasutajaliides
 
                             // Paneb tarbimise simulatsiooniandmed tabelisse, kui andmed puuduvad, paneb "-"
 
-                            if (VK.userDataTimeRange.Count > 1)
+                            if (VK.priceTimeRange.Count > 1)
                             {
-                                for (int c = 0; c < (VK.userDataTimeRange.Count - 1); ++c)
+                                for (int c = 0, iCost = 0; c < (VK.priceTimeRange.Count - 1); ++c)
                                 {
-                                    tablePrice.Rows.Add(VK.priceTimeRange[c], VK.priceCostRange[c], realCosts[c]);
-                                    //tablePrice.Rows.Add(costPerKwh[i], packageUsageCost[i]);
+                                    string cost = "-";
+                                    if (((iCost != 0) || (VK.priceTimeRange[c] >= VK.userDataRangeStart)) && (iCost < realCosts.Count))
+                                    {
+                                        cost = realCosts[iCost].ToString("0.000");
+                                        ++iCost;
+                                    }
+                                    tablePrice.Rows.Add(VK.priceTimeRange[c], VK.priceCostRange[c], cost);
                                 }
                             }
                             txtDebug.AppendText("Tabelisse lisatud");
@@ -2104,7 +2109,7 @@ namespace Kasutajaliides
                     chartPrice.Series[packageNameUsage].ChartType = SeriesChartType.Line;
 
                     var newColumn = new DataGridViewTextBoxColumn(); // Lisab tabelisse uue tulba
-                    newColumn.HeaderText = packageNameUsage;          // Määrab päise nimeks paketi nime 
+                    newColumn.HeaderText = packageNameUsage + " (s)";          // Määrab päise nimeks paketi nime 
                     newColumn.Name = packageNameUsage;                 // Paketi nimi
 
                     tablePrice.Columns.Add(newColumn);                 // Lisab paketi tabelisse

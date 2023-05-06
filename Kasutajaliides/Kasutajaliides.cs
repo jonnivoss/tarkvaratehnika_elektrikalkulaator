@@ -179,9 +179,12 @@ namespace Kasutajaliides
             }
 
             tablePrice.Rows.Clear();
-            for (int i = 0; i < VK.priceTimeRange.Count; ++i)
+            if (VK.priceTimeRange.Count > 0)
             {
-                tablePrice.Rows.Add(VK.priceTimeRange[i], VK.priceCostRange[i]);
+                for (int i = 0; i < (VK.priceTimeRange.Count - 1); ++i)
+                {
+                    tablePrice.Rows.Add(VK.priceTimeRange[i], VK.priceCostRange[i]);
+                }
             }
 
             if (showStock)

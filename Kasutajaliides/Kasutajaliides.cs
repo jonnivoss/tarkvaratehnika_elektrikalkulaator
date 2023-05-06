@@ -339,7 +339,7 @@ namespace Kasutajaliides
                                 realCosts.RemoveAt(realCosts.Count - 1);
                             }
 
-                            // Paneb tarbimise simulatsiooniandmed tabelisse, kui andmed puuduvad paneb "-"
+                            // Paneb tarbimise simulatsiooniandmed tabelisse, kui andmed puuduvad, paneb "-"
 
                             if (VK.userDataTimeRange.Count > 1)
                             {

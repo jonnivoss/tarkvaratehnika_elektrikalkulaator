@@ -93,8 +93,16 @@ namespace VaheKiht
                     userDataTimeRange.Add(item.Item1);
                     userDataUsageRange.Add(item.Item2);
                 }
-                this.userDataRangeStart = userDataTimeRange.First();
-                this.userDataRangeStop = userDataTimeRange.Last();
+                if (userDataTimeRange.Count > 0)
+                {
+                    this.userDataRangeStart = userDataTimeRange.First();
+                    this.userDataRangeStop  = userDataTimeRange.Last();
+                }
+                else
+                {
+                    this.userDataRangeStart = default(DateTime);
+                    this.userDataRangeStop  = default(DateTime);
+                }
                 return true;
             }
             catch (Exception)
@@ -139,8 +147,16 @@ namespace VaheKiht
                 // Jagab kokkuliidetud hinnad hindade arvuga ==> keskmine hind
                 averagePrice /= this.priceRange.Count;
 
-                this.priceRangeStart = priceTimeRange.First();
-                this.priceRangeStop = priceTimeRange.Last();
+                if (this.priceTimeRange.Count > 0)
+                {
+                    this.priceRangeStart = priceTimeRange.First();
+                    this.priceRangeStop  = priceTimeRange.Last();
+                }
+                else
+                {
+                    this.priceRangeStart = default(DateTime);
+                    this.priceRangeStop  = default(DateTime);
+                }
 
                 return true;
             }

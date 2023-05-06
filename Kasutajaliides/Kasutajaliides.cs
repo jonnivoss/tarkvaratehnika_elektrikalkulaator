@@ -178,15 +178,6 @@ namespace Kasutajaliides
                 chartPrice.Series["Elektrihind"].Points.DataBindXY(VK.priceTimeRange, VK.priceCostRange);
             }
 
-            tablePrice.Rows.Clear();
-            if (VK.priceTimeRange.Count > 0)
-            {
-                for (int i = 0; i < (VK.priceTimeRange.Count - 1); ++i)
-                {
-                    tablePrice.Rows.Add(VK.priceTimeRange[i], VK.priceCostRange[i]);
-                }
-            }
-
             if (showStock)
             {
                 for (int i = 0; i < VK.priceCostRange.Count; i++) // Käib valitud ajaintervalli hinnad läbi
@@ -310,10 +301,11 @@ namespace Kasutajaliides
                                 stockCostWithMarginals.Add(newPrice);
                             }
 
-                            var stockUsageCost = VK.userDataUsageRange.Zip(stockCostWithMarginals, (u, c) => new { Usage = u, Cost = c });
+                            var stockUsageCost = VK.userDataRange.Zip(stockCostWithMarginals, (u, c) => new { Usage = u, Cost = c });
                             foreach (var uc in stockUsageCost)
                             {
-                                packageUsageCost.Add(uc.Usage * uc.Cost);
+                                //Console.WriteLine("suc: " + uc.Usage.Item2.ToString() + "; " + uc.Cost.ToString());
+                                packageUsageCost.Add(uc.Usage.Item2 * uc.Cost);
                             }
                         }
                         else // kui ei ole tegemist börsipaketiga
@@ -340,16 +332,41 @@ namespace Kasutajaliides
                             chartPrice.Series[packageNameUsage].Enabled = true;
                             txtDebug.AppendText("Alustan tabelisse lisamist");
                             tablePrice.Rows.Clear();
-                            for (int c = 0; c < VK.userDataTimeRange.Count; ++c)
+
+                            var realCosts = packageUsageCost;
+                            if (realCosts.Count > 1)
                             {
-                                tablePrice.Rows.Add(VK.priceTimeRange[c], VK.priceCostRange[c], packageUsageCost[c]);
-                                //tablePrice.Rows.Add(costPerKwh[i], packageUsageCost[i]);
+                                realCosts.RemoveAt(realCosts.Count - 1);
+                            }
+
+                            // Paneb tarbimise simulatsiooniandmed tabelisse, kui andmed puuduvad paneb "-"
+
+                            if (VK.userDataTimeRange.Count > 1)
+                            {
+                                for (int c = 0; c < (VK.userDataTimeRange.Count - 1); ++c)
+                                {
+                                    tablePrice.Rows.Add(VK.priceTimeRange[c], VK.priceCostRange[c], realCosts[c]);
+                                    //tablePrice.Rows.Add(costPerKwh[i], packageUsageCost[i]);
+                                }
                             }
                             txtDebug.AppendText("Tabelisse lisatud");
                         }
                         catch (Exception)
                         {
+
                         }
+                    }
+                }
+            }
+            else
+            {
+                // Lisab tavalise tabeli jaotuse, viimane punkt massiivis on fiktiivne, seda ei lisata
+                if (VK.priceTimeRange.Count > 1)
+                {
+                    tablePrice.Rows.Clear();
+                    for (int i = 0; i < (VK.priceTimeRange.Count - 1); ++i)
+                    {
+                        tablePrice.Rows.Add(VK.priceTimeRange[i], VK.priceCostRange[i]);
                     }
                 }
             }
@@ -2815,9 +2832,9 @@ namespace Kasutajaliides
             {
                 return; // Katkestab funktsiooni töö
             }
-            var stockCost = VK.createRange(this.priceData, VK.userDataTimeRange.First(), VK.userDataTimeRange.Last()); // Börsihinna väärtuste loomine
+            var stockCost = VK.createRange(this.priceData, VK.userDataRangeStart, VK.userDataRangeStop); // Börsihinna väärtuste loomine
             var start = dateStartTime.Value;
-            var stop = dateStopTime.Value;
+            var stop  = dateStopTime.Value;
             try
             {
                 for (int c = 0; c < tablePackages.Rows.Count; ++c) // Loop läbi tabeli kõikide ridade
@@ -2835,13 +2852,14 @@ namespace Kasutajaliides
                         {
                             break;
                         }
-                        packageUsageCost.Add(us.Usage * AR.finalPrice(us.Stock.Item2, packageInfo[c], us.Stock.Item1)); // Arvutab iga tunni hinna ja lisb listi
+                        //Console.WriteLine(us.Stock.Item1.ToString() + ": " + us.Usage.ToString() + "; " + us.Stock.Item2.ToString());
+                        packageUsageCost.Add(us.Usage * AR.finalPrice(us.Stock.Item2, packageInfo[c], us.Stock.Item1)); // Arvutab iga tunni hinna ja lisab listi
                     }
                     foreach (var item in packageUsageCost)
                     {
                         cost += item; // Liidab tunnihinnad 
                     }
-                    tablePackages.Rows[c].Cells[10].Value = ((cost + Convert.ToDouble(tablePackages.Rows[c].Cells[3].Value)) / 100).ToString("0.00"); // Lisab saadud hinna pakettide tabelisse 
+                    tablePackages.Rows[c].Cells[10].Value = (cost / 100).ToString("0.00"); // Lisab saadud hinna pakettide tabelisse 
                 }
             }
             catch (Exception)

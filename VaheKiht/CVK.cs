@@ -16,9 +16,15 @@ namespace VaheKiht
         // Peab olema private setter, sest muidu muutub võimatuks initsialiseerimine = märgiga
         public VecT userDataRange { get; private set; } = new VecT();
 
+        public DateTime userDataRangeStart { get; private set; }
+        public DateTime userDataRangeStop { get; private set; }
+
         public List<DateTime> priceTimeRange { get; } = new List<DateTime>();
         public List<double> priceCostRange { get; } = new List<double>();
         public VecT priceRange { get; private set; } = new VecT();
+
+        public DateTime priceRangeStart { get; private set; }
+        public DateTime priceRangeStop { get; private set; }
 
         public double averagePrice { get; private set; } = 0.0;
 
@@ -87,6 +93,8 @@ namespace VaheKiht
                     userDataTimeRange.Add(item.Item1);
                     userDataUsageRange.Add(item.Item2);
                 }
+                this.userDataRangeStart = userDataTimeRange.First();
+                this.userDataRangeStop = userDataTimeRange.Last();
                 return true;
             }
             catch (Exception)
@@ -130,6 +138,9 @@ namespace VaheKiht
                 }
                 // Jagab kokkuliidetud hinnad hindade arvuga ==> keskmine hind
                 averagePrice /= this.priceRange.Count;
+
+                this.priceRangeStart = priceTimeRange.First();
+                this.priceRangeStop = priceTimeRange.Last();
 
                 return true;
             }
